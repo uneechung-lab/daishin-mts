@@ -22,9 +22,6 @@ const stockData = {
     viDown: 25000,
     market: 'KOSPI',
     hogaList: [
-      { price: 30050, percent: '+8.09%', type: 'ask', size: 80 },
-      { price: 30000, percent: '+7.91%', type: 'ask', size: 150 },
-      { price: 29950, percent: '+7.73%', type: 'ask', size: 90 },
       { price: 29900, percent: '+7.55%', type: 'ask', size: 310 },
       { price: 29850, percent: '+7.37%', type: 'ask', size: 420 },
       { price: 29800, percent: '+7.19%', type: 'ask', size: 120 },
@@ -38,10 +35,7 @@ const stockData = {
       { price: 29400, percent: '+5.76%', type: 'bid', size: 15400 },
       { price: 29350, percent: '+5.58%', type: 'bid', size: 22000 },
       { price: 29300, percent: '+5.40%', type: 'bid', size: 18000 },
-      { price: 29250, percent: '+5.22%', type: 'bid', size: 14200 },
-      { price: 29200, percent: '+5.04%', type: 'bid', size: 9800 },
-      { price: 29150, percent: '+4.86%', type: 'bid', size: 7500 },
-      { price: 29100, percent: '+4.68%', type: 'bid', size: 3200 }
+      { price: 29250, percent: '+5.22%', type: 'bid', size: 14200 }
     ],
     chartData: [
       { time: '09:00', open: 27800, close: 28200, high: 28500, low: 27700, vol: 15000 },
