@@ -378,7 +378,7 @@ function PhoneEmulator({
               color: isDark ? '#fff' : '#222222', 
               letterSpacing: '-0.3px' 
             }}>
-              {selectedStock}
+              {selectedStock === '신대증 30' ? 'DAISHIN343 K200' : selectedStock}
             </span>
             {isToBe && selectedStock === '대신증권' && (
               <span style={{
