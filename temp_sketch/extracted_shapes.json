@@ -1,0 +1,1314 @@
+[
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 640
+    },
+    "fillColor": "#f9f9f9 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 640
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 24,
+      "width": 360,
+      "height": 44
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 24,
+      "width": 360,
+      "height": 44
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 50,
+      "y": 31,
+      "width": 42,
+      "height": 30
+    },
+    "fillColor": "#fbe0de (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 50,
+      "y": 33,
+      "width": 56,
+      "height": 24
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 68,
+      "width": 360,
+      "height": 68
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 15,
+      "y": 71,
+      "width": 10,
+      "height": 30
+    },
+    "fillColor": "#f9f9f9 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "shapePath",
+    "frame": {
+      "x": 19.5,
+      "y": 71.50027596891528,
+      "width": 1,
+      "height": 14.49478017893212
+    },
+    "fillColor": "",
+    "borderColors": [
+      "#de201e (100%) (width: 1)"
+    ]
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 167,
+      "y": 73.5,
+      "width": 1,
+      "height": 9.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 181,
+      "y": 73.5,
+      "width": 1,
+      "height": 9.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Chart",
+    "class": "rectangle",
+    "frame": {
+      "x": 15,
+      "y": 78,
+      "width": 10,
+      "height": 8
+    },
+    "fillColor": "#de201e (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Area",
+    "class": "rectangle",
+    "frame": {
+      "x": 15,
+      "y": 121,
+      "width": 194,
+      "height": 15
+    },
+    "fillColor": "",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 135.5,
+      "width": 360,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 136,
+      "width": 360,
+      "height": 44
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Area",
+    "class": "rectangle",
+    "frame": {
+      "x": 318,
+      "y": 136,
+      "width": 42,
+      "height": 44
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Split",
+    "class": "rectangle",
+    "frame": {
+      "x": 318,
+      "y": 146,
+      "width": 0.5,
+      "height": 24
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 173.99999999999977,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 98,
+      "y": 173.99999999999977,
+      "width": 22,
+      "height": 38
+    },
+    "fillColor": "#d5e4f7 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 174,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 174,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Selected",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 178,
+      "width": 56,
+      "height": 2
+    },
+    "fillColor": "#222222 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 179.49999999999997,
+      "width": 360,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 211.49999999999977,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 211.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 211.99999999999977,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 86,
+      "y": 211.99999999999977,
+      "width": 34,
+      "height": 38
+    },
+    "fillColor": "#d5e4f7 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 212,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 212,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 249.49999999999977,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 249.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 249.99999999999955,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 112,
+      "y": 249.99999999999955,
+      "width": 8,
+      "height": 38
+    },
+    "fillColor": "#d5e4f7 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 250,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 250,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 8,
+      "y": 257,
+      "width": 24,
+      "height": 24
+    },
+    "fillColor": "#2366ca (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 287.49999999999955,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 287.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 287.99999999999955,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 8,
+      "y": 287.99999999999955,
+      "width": 112,
+      "height": 38
+    },
+    "fillColor": "#d5e4f7 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 288,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 288,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Area",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 311,
+      "width": 120,
+      "height": 15
+    },
+    "fillColor": "",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 325.49999999999955,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 325.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 326,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 81,
+      "y": 326,
+      "width": 39,
+      "height": 38
+    },
+    "fillColor": "#d5e4f7 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 326,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#e9f1fb (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 326,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Focus",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 326,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "",
+    "borderColors": [
+      "#222222 (100%) (width: 2)"
+    ]
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 326,
+      "width": 60,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line ",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 326,
+      "width": 60,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 326,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 300,
+      "y": 326,
+      "width": 60,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 300,
+      "y": 326,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line ",
+    "class": "rectangle",
+    "frame": {
+      "x": 300,
+      "y": 326,
+      "width": 60,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 8,
+      "y": 333,
+      "width": 32,
+      "height": 24
+    },
+    "fillColor": "#2366ca (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 363.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 363.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 363.5,
+      "width": 60,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 300,
+      "y": 363.5,
+      "width": 60,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Area",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 364,
+      "width": 120,
+      "height": 15
+    },
+    "fillColor": "",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 364,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 364,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 364,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 364,
+      "width": 112,
+      "height": 38
+    },
+    "fillColor": "#fbe0de (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 364,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 401.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 401.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 402,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 402,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 402,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 402,
+      "width": 20,
+      "height": 38
+    },
+    "fillColor": "#fbe0de (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 402,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 312,
+      "y": 409,
+      "width": 40,
+      "height": 24
+    },
+    "fillColor": "#de201e (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 439.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 439.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 440,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 440,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 440,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 440,
+      "width": 50,
+      "height": 38
+    },
+    "fillColor": "#fbe0de (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 440,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 320,
+      "y": 447,
+      "width": 32,
+      "height": 24
+    },
+    "fillColor": "#de201e (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 477.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 477.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 478,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 478,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 478,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 478,
+      "width": 20,
+      "height": 38
+    },
+    "fillColor": "#fbe0de (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 478,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 515.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 515.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 516,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 516,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 516,
+      "width": 120,
+      "height": 38
+    },
+    "fillColor": "#fdefee (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Progress BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 516,
+      "width": 20,
+      "height": 38
+    },
+    "fillColor": "#fbe0de (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 516,
+      "width": 0.5,
+      "height": 38
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 553.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 553.5,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 592,
+      "width": 120,
+      "height": 24
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line T",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 592,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 592,
+      "width": 120,
+      "height": 24
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 592,
+      "width": 0.5,
+      "height": 24
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line T",
+    "class": "rectangle",
+    "frame": {
+      "x": 120,
+      "y": 592,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 592,
+      "width": 120,
+      "height": 24
+    },
+    "fillColor": "#ffffff (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line V",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 592,
+      "width": 0.5,
+      "height": 24
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line T",
+    "class": "rectangle",
+    "frame": {
+      "x": 240,
+      "y": 592,
+      "width": 120,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "BG",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 616,
+      "width": 360,
+      "height": 24
+    },
+    "fillColor": "#f2f2f2 (100%)",
+    "borderColors": []
+  },
+  {
+    "name": "Line",
+    "class": "rectangle",
+    "frame": {
+      "x": 0,
+      "y": 616,
+      "width": 360,
+      "height": 0.5
+    },
+    "fillColor": "#dddddd (100%)",
+    "borderColors": []
+  }
+]

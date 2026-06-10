@@ -1,0 +1,1237 @@
+[
+  {
+    "name": "대신증권",
+    "frame": {
+      "x": 114,
+      "y": 32,
+      "width": 73,
+      "height": 26
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "위험",
+    "frame": {
+      "x": 60,
+      "y": 37,
+      "width": 22,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "대신증권",
+    "frame": {
+      "x": 100,
+      "y": 38,
+      "width": 80,
+      "height": 17
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 17,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "위험자산",
+    "frame": {
+      "x": 60,
+      "y": 40.5,
+      "width": 36,
+      "height": 10
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "15,800",
+    "frame": {
+      "x": 33,
+      "y": 71,
+      "width": 112,
+      "height": 30
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 36,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "신/대/증 40",
+    "frame": {
+      "x": 145,
+      "y": 71,
+      "width": 64,
+      "height": 12
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#666666 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "신",
+    "frame": {
+      "x": 156,
+      "y": 71,
+      "width": 9,
+      "height": 12
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#666666 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "대",
+    "frame": {
+      "x": 170,
+      "y": 71,
+      "width": 9,
+      "height": 12
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#666666 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "증",
+    "frame": {
+      "x": 184,
+      "y": 71,
+      "width": 9,
+      "height": 12
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#666666 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "40",
+    "frame": {
+      "x": 197,
+      "y": 71,
+      "width": 12,
+      "height": 12
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "KOSPI/증권",
+    "frame": {
+      "x": 145,
+      "y": 84,
+      "width": 64,
+      "height": 12
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "VI 관리",
+    "frame": {
+      "x": 145,
+      "y": 84,
+      "width": 64,
+      "height": 12
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "14,530,327",
+    "frame": {
+      "x": 145,
+      "y": 97,
+      "width": 64,
+      "height": 24
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "600(5.49%)",
+    "frame": {
+      "x": 33,
+      "y": 103,
+      "width": 112,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 14,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "호가",
+    "frame": {
+      "x": 15,
+      "y": 148,
+      "width": 26,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "거래원",
+    "frame": {
+      "x": 71,
+      "y": 148,
+      "width": 38,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#aaaaaa (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "시간",
+    "frame": {
+      "x": 139,
+      "y": 148,
+      "width": 26,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#aaaaaa (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "일자",
+    "frame": {
+      "x": 195,
+      "y": 148,
+      "width": 26,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#aaaaaa (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "차트",
+    "frame": {
+      "x": 251,
+      "y": 148,
+      "width": 26,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#aaaaaa (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "수급",
+    "frame": {
+      "x": 307,
+      "y": 148,
+      "width": 26,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#aaaaaa (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "고가",
+    "frame": {
+      "x": 248,
+      "y": 168,
+      "width": 36,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#222222 (100%)",
+    "textAlignment": ""
+  },
+  {
+    "name": "154,300",
+    "frame": {
+      "x": 292,
+      "y": 168,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "(+0.98%)",
+    "frame": {
+      "x": 292,
+      "y": 182,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "1,653",
+    "frame": {
+      "x": 56,
+      "y": 183.99999999999977,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "15,810",
+    "frame": {
+      "x": 128,
+      "y": 184,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "저가",
+    "frame": {
+      "x": 248,
+      "y": 200,
+      "width": 36,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#222222 (100%)",
+    "textAlignment": ""
+  },
+  {
+    "name": "154,300",
+    "frame": {
+      "x": 292,
+      "y": 200,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "200MA",
+    "frame": {
+      "x": 122,
+      "y": 202,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#aa00ff (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "(-3.05%)",
+    "frame": {
+      "x": 292,
+      "y": 214,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "2,495",
+    "frame": {
+      "x": 56,
+      "y": 221.9999999999997,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "15,810",
+    "frame": {
+      "x": 128,
+      "y": 222.00000000000023,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "120MA",
+    "frame": {
+      "x": 122,
+      "y": 240,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "상한",
+    "frame": {
+      "x": 262,
+      "y": 243,
+      "width": 22,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "157,000",
+    "frame": {
+      "x": 292,
+      "y": 243,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "812",
+    "frame": {
+      "x": 56,
+      "y": 259.99999999999943,
+      "width": 56,
+      "height": 17.99999999999997
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "15,800",
+    "frame": {
+      "x": 128,
+      "y": 260.00000000000034,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "하한",
+    "frame": {
+      "x": 262,
+      "y": 261,
+      "width": 22,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "140,000",
+    "frame": {
+      "x": 292,
+      "y": 261,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "8",
+    "frame": {
+      "x": 16,
+      "y": 262,
+      "width": 8,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#ffffff (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "상승VI",
+    "frame": {
+      "x": 248,
+      "y": 279,
+      "width": 36,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "157,000",
+    "frame": {
+      "x": 292,
+      "y": 279,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "시 고 저",
+    "frame": {
+      "x": 122,
+      "y": 290,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "하락VI",
+    "frame": {
+      "x": 248,
+      "y": 297,
+      "width": 36,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 10,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "154,300",
+    "frame": {
+      "x": 292,
+      "y": 297,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "7,635",
+    "frame": {
+      "x": 56,
+      "y": 297.99999999999955,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "15,805",
+    "frame": {
+      "x": 128,
+      "y": 297.9999999999999,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "상승VI",
+    "frame": {
+      "x": 122,
+      "y": 316,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "10 호가",
+    "frame": {
+      "x": 248,
+      "y": 331,
+      "width": 26,
+      "height": 28
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 12,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "종목 잔고",
+    "frame": {
+      "x": 308,
+      "y": 331,
+      "width": 26,
+      "height": 28
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 12,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "0.00%",
+    "frame": {
+      "x": 191,
+      "y": 336,
+      "width": 41,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 12,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "2,951",
+    "frame": {
+      "x": 56,
+      "y": 336.00000000000006,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "15,800",
+    "frame": {
+      "x": 128,
+      "y": 336.0000000000001,
+      "width": 104,
+      "height": 17.99999999999997
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "88",
+    "frame": {
+      "x": 16,
+      "y": 338,
+      "width": 16,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#ffffff (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "16,030",
+    "frame": {
+      "x": 248,
+      "y": 374,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": ""
+  },
+  {
+    "name": "15,795",
+    "frame": {
+      "x": 128,
+      "y": 374.0000000000002,
+      "width": 104,
+      "height": 18.00000000000003
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 379,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "10",
+    "frame": {
+      "x": 74,
+      "y": 379,
+      "width": 38,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "60MA",
+    "frame": {
+      "x": 122,
+      "y": 392,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#00c853 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 397,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "1",
+    "frame": {
+      "x": 74,
+      "y": 397,
+      "width": 38,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "15,790",
+    "frame": {
+      "x": 128,
+      "y": 411.9999999999998,
+      "width": 104,
+      "height": 18.00000000000003
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "1,495",
+    "frame": {
+      "x": 248,
+      "y": 412,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": ""
+  },
+  {
+    "name": "330",
+    "frame": {
+      "x": 320,
+      "y": 414,
+      "width": 24,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#ffffff (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 415,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "5",
+    "frame": {
+      "x": 74,
+      "y": 415,
+      "width": 38,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "20MA",
+    "frame": {
+      "x": 122,
+      "y": 430,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 433,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "6",
+    "frame": {
+      "x": 74,
+      "y": 433.00000000000045,
+      "width": 38,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "15,785",
+    "frame": {
+      "x": 128,
+      "y": 450,
+      "width": 104,
+      "height": 18.00000000000006
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 451,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "3,341",
+    "frame": {
+      "x": 248,
+      "y": 451,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": ""
+  },
+  {
+    "name": "44",
+    "frame": {
+      "x": 74,
+      "y": 451.00000000000045,
+      "width": 38,
+      "height": 14.00000000000001
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "88",
+    "frame": {
+      "x": 328,
+      "y": 452,
+      "width": 16,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#ffffff (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "5MA",
+    "frame": {
+      "x": 122,
+      "y": 468,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 469,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "88,836",
+    "frame": {
+      "x": 74,
+      "y": 469,
+      "width": 38,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 487,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "10",
+    "frame": {
+      "x": 74,
+      "y": 487.00000000000045,
+      "width": 38,
+      "height": 13.99999999999999
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "1,495",
+    "frame": {
+      "x": 248,
+      "y": 488,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": ""
+  },
+  {
+    "name": "15,780",
+    "frame": {
+      "x": 128,
+      "y": 488.0000000000002,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 505,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "25",
+    "frame": {
+      "x": 76,
+      "y": 505,
+      "width": 36,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "하락VI",
+    "frame": {
+      "x": 122,
+      "y": 506,
+      "width": 116,
+      "height": 8
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 8,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 523,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "10",
+    "frame": {
+      "x": 76,
+      "y": 523,
+      "width": 36,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "1,495",
+    "frame": {
+      "x": 248,
+      "y": 526,
+      "width": 56,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 16,
+    "textColor": "#222222 (100%)",
+    "textAlignment": ""
+  },
+  {
+    "name": "15,780",
+    "frame": {
+      "x": 128,
+      "y": 526.0000000000005,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 18,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "*154,790",
+    "frame": {
+      "x": 8,
+      "y": 541,
+      "width": 60,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#277ade (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "25",
+    "frame": {
+      "x": 76,
+      "y": 541,
+      "width": 36,
+      "height": 14
+    },
+    "fontName": "DS_SDGothicNeoa-dRg",
+    "fontSize": 12,
+    "textColor": "#e12d28 (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "50,777",
+    "frame": {
+      "x": 8,
+      "y": 595,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 1
+  },
+  {
+    "name": "10:47",
+    "frame": {
+      "x": 128,
+      "y": 595,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "50,745",
+    "frame": {
+      "x": 248,
+      "y": 595,
+      "width": 104,
+      "height": 18
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#de201e (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "KOSDAQ",
+    "frame": {
+      "x": 60,
+      "y": 618,
+      "width": 58,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#222222 (100%)",
+    "textAlignment": 0
+  },
+  {
+    "name": "3,374.03",
+    "frame": {
+      "x": 128,
+      "y": 618,
+      "width": 59,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 2
+  },
+  {
+    "name": "23.14(1.19%)",
+    "frame": {
+      "x": 215,
+      "y": 618,
+      "width": 85,
+      "height": 20
+    },
+    "fontName": "DS_SDGothicNeoa-fSm",
+    "fontSize": 14,
+    "textColor": "#2366ca (100%)",
+    "textAlignment": 0
+  }
+]
