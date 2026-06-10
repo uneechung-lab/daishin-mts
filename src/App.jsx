@@ -22,6 +22,11 @@ const stockData = {
     viDown: 25000,
     market: 'KOSPI',
     hogaList: [
+      { price: 30050, percent: '+8.09%', type: 'ask', size: 80 },
+      { price: 30000, percent: '+7.91%', type: 'ask', size: 150 },
+      { price: 29950, percent: '+7.73%', type: 'ask', size: 90 },
+      { price: 29900, percent: '+7.55%', type: 'ask', size: 310 },
+      { price: 29850, percent: '+7.37%', type: 'ask', size: 420 },
       { price: 29800, percent: '+7.19%', type: 'ask', size: 120 },
       { price: 29750, percent: '+7.01%', type: 'ask', size: 240 },
       { price: 29700, percent: '+6.83%', type: 'ask', size: 856 },
@@ -31,7 +36,12 @@ const stockData = {
       { price: 29500, percent: '+6.12%', type: 'bid', size: 6800 },
       { price: 29450, percent: '+5.94%', type: 'bid', size: 11000 },
       { price: 29400, percent: '+5.76%', type: 'bid', size: 15400 },
-      { price: 29350, percent: '+5.58%', type: 'bid', size: 22000 }
+      { price: 29350, percent: '+5.58%', type: 'bid', size: 22000 },
+      { price: 29300, percent: '+5.40%', type: 'bid', size: 18000 },
+      { price: 29250, percent: '+5.22%', type: 'bid', size: 14200 },
+      { price: 29200, percent: '+5.04%', type: 'bid', size: 9800 },
+      { price: 29150, percent: '+4.86%', type: 'bid', size: 7500 },
+      { price: 29100, percent: '+4.68%', type: 'bid', size: 3200 }
     ],
     chartData: [
       { time: '09:00', open: 27800, close: 28200, high: 28500, low: 27700, vol: 15000 },
@@ -1297,6 +1307,7 @@ function PhoneEmulator({
                       const borderRightColor = isDark ? '1px solid #1e293b' : '1px solid #e2e8f0';
                       
                       const barWidth = ((h.size / maxBidSize) * 100) + '%';
+                      const tickContainerHeight = (bids.length * 34 - 12) + 'px';
                       
                       return (
                         <tr key={"bid-" + i} style={{ height: rowHeight, borderBottom: borderColor }}>
@@ -1313,7 +1324,7 @@ function PhoneEmulator({
                               <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                height: '260px',
+                                height: tickContainerHeight,
                                 overflowY: 'hidden',
                                 gap: '2px',
                                 lineHeight: '1.2'
