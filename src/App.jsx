@@ -1651,8 +1651,7 @@ function AsIsCurrentPriceView({ setAsIsSubScreen, isDark }) {
     flexDirection: 'column',
     height: '100%',
     backgroundColor: '#ffffff',
-    color: '#333333',
-    fontFamily: 'sans-serif'
+    color: '#333333'
   };
 
   const headerStyle = {
@@ -1855,8 +1854,7 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
     flexDirection: 'column',
     height: '100%',
     backgroundColor: '#ffffff',
-    color: '#333333',
-    fontFamily: 'sans-serif'
+    color: '#333333'
   };
 
   const headerStyle = {
@@ -2058,7 +2056,7 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
   );
 }
 
-function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
+function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen }) {
   const [activeTab, setActiveTab] = useState('1주일 매수고객순'); // '1주일 매수고객순', '1주일 매수금액순'
 
   const containerStyle = {
@@ -2066,8 +2064,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
     flexDirection: 'column',
     height: '100%',
     backgroundColor: isDark ? '#0b0f19' : '#ffffff',
-    color: isDark ? '#cbd5e1' : '#333333',
-    fontFamily: 'sans-serif'
+    color: isDark ? '#cbd5e1' : '#333333'
   };
 
   const headerStyle = {
@@ -2227,7 +2224,27 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
 
       {/* Horizontal Tabs Menu */}
       <div style={menuTabsStyle}>
-        <span style={menuTabItemStyle(true)}>추천</span>
+        <span style={{ ...menuTabItemStyle(true), position: 'relative' }}>
+          추천
+          {isDrawerOpen && (
+            <div style={{
+              position: 'absolute',
+              top: '0px',
+              right: '-6px',
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#ffffff',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.15)'
+            }}>1</div>
+          )}
+        </span>
         <span style={menuTabItemStyle(false)}>보유</span>
         <span style={menuTabItemStyle(false)}>GO배당GO금리</span>
         <span style={menuTabItemStyle(false)}>TDF</span>
@@ -2235,7 +2252,13 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
       </div>
 
       {/* Search Input Area */}
-      <div style={searchContainerStyle}>
+      <div 
+        onClick={() => {
+          setToBePrevSubScreen('etfMall');
+          setToBeSubScreen('stockSearch');
+        }}
+        style={{ ...searchContainerStyle, cursor: 'pointer' }}
+      >
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -2245,7 +2268,8 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
           height: '36px',
           boxSizing: 'border-box',
           gap: '8px',
-          backgroundColor: isDark ? '#121826' : '#ffffff'
+          backgroundColor: isDark ? '#121826' : '#ffffff',
+          position: 'relative'
         }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbbbbb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
             <circle cx="11" cy="11" r="8" />
@@ -2266,6 +2290,25 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
               height: '100%'
             }}
           />
+          {isDrawerOpen && (
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              right: '10px',
+              transform: 'translateY(-50%)',
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#ffffff',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.15)'
+            }}>2</div>
+          )}
         </div>
       </div>
 
@@ -2276,13 +2319,13 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
         <div style={{ padding: '14px 14px 0 14px' }}>
           {/* Title */}
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-            <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>퇴직연금 투자자의 선택</span>
+            <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>퇴직연금 ETF 순위</span>
           </div>
 
           {/* 거래 고객순 / 거래 금액순 Tabs */}
           <div style={{ display: 'flex', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
-            {['거래 고객순', '거래 금액순'].map((tab) => {
-              const isActive = tab === '거래 고객순';
+            {['수익률', '거래량', '거래대금'].map((tab) => {
+              const isActive = tab === '수익률';
               return (
                 <span key={tab} style={{
                   padding: '8px 0',
@@ -2309,14 +2352,20 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
             { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
             { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  }
           ].map((item, idx) => (
-            <div key={idx} style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '12px 14px',
-              borderBottom: idx < 4 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-              cursor: 'pointer',
-              gap: '10px'
-            }}>
+            <div key={idx} 
+              onClick={() => {
+                if (item.name === 'TIGER 미국S&P500') {
+                  setToBeSubScreen('tigerDetail');
+                }
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '12px 14px',
+                borderBottom: idx < 4 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                cursor: 'pointer',
+                gap: '10px'
+              }}>
               {/* Rank number */}
               <span style={{
                 fontSize: '1.05rem',
@@ -2330,15 +2379,49 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
               {/* Left: ETF Name + subtitle */}
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
                 {/* ETF Name only */}
-                <span style={{
-                  fontSize: '0.85rem',
-                  fontWeight: '600',
-                  color: isDark ? '#e2e8f0' : '#111111',
-                  letterSpacing: '-0.2px',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}>{item.name}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{
+                    fontSize: '0.85rem',
+                    fontWeight: '600',
+                    color: isDark ? '#e2e8f0' : '#111111',
+                    letterSpacing: '-0.2px',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}>{item.name}</span>
+                  {idx === 0 && isDrawerOpen && (
+                    <div style={{
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#ffffff',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                      flexShrink: 0
+                    }}>3</div>
+                  )}
+                  {idx === 2 && isDrawerOpen && (
+                    <div style={{
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#ffffff',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                      flexShrink: 0
+                    }}>4</div>
+                  )}
+                </div>
                 {/* 투자한도 + code (no box) */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span style={{
@@ -2377,6 +2460,89 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Grey Bar Separator */}
+        <div style={{
+          height: '8px',
+          backgroundColor: isDark ? '#121826' : '#f1f5f9',
+          flexShrink: 0
+        }} />
+
+        {/* GO배당GO금리 퇴직연금 ETF Section */}
+        <div style={{ padding: '16px 0 0 0', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
+          <div style={{ padding: '0 14px', marginBottom: '12px' }}>
+            <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>GO배당GO금리</span>
+          </div>
+          <div>
+            {[
+              { name: 'TIGER 코리아배당다우존스', code: 'A0052D0', limit: '투자한도70%', price: 16320, pct: -1.27, positive: false },
+              { name: 'PLUS 고배당주', code: 'A161510', limit: '투자한도70%', price: 26325, pct: -1.52, positive: false },
+              { name: 'RISE 금융채액티브', code: 'A336160', limit: '투자한도100%', price: 100595, pct: -0.05, positive: false },
+              { name: 'TIME Korea플러스배당액티브', code: 'A441800', limit: '투자한도70%', price: 37090, pct: 0.68, positive: true },
+              { name: 'KODEX 한국부동산리츠인프라', code: 'A476800', limit: '투자한도100%', price: 4455, pct: 0.34, positive: true },
+              { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27290, pct: 0.65, positive: true }
+            ].map((item, idx) => (
+              <div key={idx} style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '12px 14px',
+                borderBottom: idx < 5 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                cursor: 'pointer',
+                gap: '10px'
+              }}>
+                {/* Left: ETF Name + subtitle */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{
+                      fontSize: '0.85rem',
+                      fontWeight: '600',
+                      color: isDark ? '#e2e8f0' : '#111111',
+                      letterSpacing: '-0.2px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}>{item.name}</span>
+                  </div>
+                  {/* 투자한도 + code */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{
+                      fontSize: '0.72rem',
+                      fontWeight: '500',
+                      color: '#3b82f6',
+                      letterSpacing: '-0.1px'
+                    }}>{item.limit}</span>
+                    <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
+                    <span style={{
+                      fontSize: '0.72rem',
+                      color: isDark ? '#64748b' : '#888888',
+                      letterSpacing: '-0.1px'
+                    }}>{item.code}</span>
+                  </div>
+                </div>
+
+                {/* Right: Price + arrow pct */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '3px' }}>
+                  <span style={{
+                    fontSize: '0.92rem',
+                    fontWeight: '600',
+                    color: isDark ? '#e2e8f0' : '#111111',
+                    letterSpacing: '-0.3px'
+                  }}>{item.price.toLocaleString()}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
+                      {item.positive ? '▲' : '▼'}
+                    </span>
+                    <span style={{
+                      fontSize: '0.8rem',
+                      fontWeight: '600',
+                      color: item.positive ? '#de201e' : '#2366ca'
+                    }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -2418,6 +2584,855 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark }) {
   );
 }
 
+function ToBeTigerDetailView({ setToBeSubScreen, isDark, setToBePrevSubScreen }) {
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+    color: isDark ? '#cbd5e1' : '#333333',
+    position: 'relative',
+    userSelect: 'none'
+  };
+
+  const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    height: '46px',
+    padding: '0 12px',
+    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+    backgroundColor: isDark ? '#121826' : '#ffffff'
+  };
+
+  const priceSectionStyle = {
+    padding: '8px 14px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+  };
+
+  const krxTabStyle = {
+    padding: '10px 16px',
+    fontSize: '0.88rem',
+    fontWeight: '800',
+    color: '#ffffff',
+    backgroundColor: isDark ? '#1e293b' : '#22252a',
+    borderRadius: '0px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    whiteSpace: 'nowrap'
+  };
+
+  const infoTabStyle = (active) => ({
+    flex: 1,
+    padding: '8px 4px',
+    fontSize: '0.82rem',
+    fontWeight: active ? '800' : '500',
+    color: active ? (isDark ? '#ffffff' : '#222222') : (isDark ? '#94a3b8' : '#777777'),
+    borderBottom: active ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #222222') : '2.5px solid transparent',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    whiteSpace: 'nowrap'
+  });
+
+  const subTabItemStyle = (active) => ({
+    flex: 1,
+    textAlign: 'center',
+    padding: '10px 0',
+    fontSize: '0.82rem',
+    fontWeight: active ? '800' : '500',
+    color: active ? (isDark ? '#ffffff' : '#222222') : (isDark ? '#64748b' : '#777777'),
+    borderBottom: active ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #222222') : '2.5px solid transparent',
+    cursor: 'pointer'
+  });
+
+  return (
+    <div style={containerStyle}>
+      {/* Galaxy S20 Central Punch-hole Camera */}
+      <div style={{
+        width: '8px',
+        height: '8px',
+        backgroundColor: '#000000',
+        borderRadius: '50%',
+        position: 'absolute',
+        top: '12px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 999
+      }} />
+
+      {/* Phone Status Bar */}
+      <div style={{
+        height: '32px',
+        padding: '0 20px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: isDark ? '#121826' : '#ffffff',
+        color: isDark ? '#cbd5e1' : '#475569',
+        fontSize: '0.75rem',
+        flexShrink: 0
+      }}>
+        <span style={{ fontWeight: '700' }}>SKT 10:27</span>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ opacity: 0.8 }}><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ opacity: 0.8 }}><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+            <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+            <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+            <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+            <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+          </div>
+          <div style={{
+            border: isDark ? '1px solid #cbd5e1' : '1px solid #475569',
+            borderRadius: '3px',
+            padding: '0px 3px',
+            fontSize: '0.62rem',
+            fontWeight: '900',
+            height: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: isDark ? '#cbd5e1' : '#475569',
+            color: isDark ? '#0b0f19' : '#fff',
+            lineHeight: 1
+          }}>
+            100
+          </div>
+        </div>
+      </div>
+
+      {/* Header */}
+      <div style={headerStyle}>
+        <button 
+          onClick={() => setToBeSubScreen('menu')}
+          style={{ border: 'none', background: 'none', padding: '0 10px 0 0', cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit' }}
+        >
+          {/* Hamburger menu icon instead of back arrow */}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flex: 1, justifyContent: 'flex-start' }}>
+          <span style={{ fontWeight: '800', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>TIGER 미국S&P500</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ color: isDark ? '#94a3b8' : '#777777' }}>
+            <path d="M7 10l5 5 5-5z" />
+          </svg>
+        </div>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', color: isDark ? '#94a3b8' : '#333333' }}>
+          <div 
+            onClick={() => {
+              setToBePrevSubScreen('tigerDetail');
+              setToBeSubScreen('stockSearch');
+            }}
+            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+        </div>
+      </div>
+
+      {/* Main content area (scrollable) */}
+      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        
+        {/* Price & Trade Buttons Row */}
+        <div style={priceSectionStyle}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#00c3a5', padding: '1px 3px', borderRadius: '2px' }}>KRX</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {/* Candlestick (봉차트) Icon */}
+              <div style={{
+                display: 'inline-flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '6px',
+                height: '24px',
+                position: 'relative',
+                marginRight: '6px',
+                alignSelf: 'center'
+              }}>
+                <div style={{ width: '2px', height: '100%', backgroundColor: '#de201e', position: 'absolute' }}></div>
+                <div style={{ width: '6px', height: '14px', backgroundColor: '#de201e', zIndex: 1 }}></div>
+              </div>
+              <span style={{ fontSize: '2.15rem', fontWeight: 'normal', color: '#de201e', letterSpacing: '-0.5px', lineHeight: 1 }}>28,325</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', color: '#de201e', fontSize: '0.75rem', fontWeight: '700', lineHeight: 1.1 }}>
+                <span style={{ fontSize: '0.65rem' }}>▲ 60</span>
+                <span>(0.21%)</span>
+              </div>
+              <div style={{ display: 'flex', gap: '4px' }}>
+                <button style={{ backgroundColor: '#2b66d2', color: '#ffffff', border: 'none', width: '58px', height: '48px', fontSize: '0.92rem', fontWeight: '800', cursor: 'pointer' }}>매도</button>
+                <button style={{ backgroundColor: '#de201e', color: '#ffffff', border: 'none', width: '58px', height: '48px', fontSize: '0.92rem', fontWeight: '800', cursor: 'pointer' }}>매수</button>
+              </div>
+            </div>
+          </div>
+          {/* Slider dots & Notice Banner */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '6px' }}>
+            <div style={{ display: 'flex', gap: '4px' }}>
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#222' }}></span>
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#ccc' }}></span>
+            </div>
+            <span style={{ color: '#de201e', fontSize: '0.7rem', fontWeight: '600' }}>ⓘ RIA 공제 축소 상품</span>
+          </div>
+        </div>
+
+        {/* Sub Info Row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 14px', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', fontSize: '0.74rem', backgroundColor: isDark ? '#121826' : '#f8fafc' }}>
+          <span style={{ color: isDark ? '#94a3b8' : '#555555', fontWeight: '600' }}>신 대 증 40</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontSize: '0.58rem', fontWeight: 'bold', color: '#00c3a5', border: '1px solid #00c3a5', padding: '0px 2px', borderRadius: '2px', lineHeight: '1' }}>KRX</span>
+            <div style={{ fontWeight: '700', color: isDark ? '#e2e8f0' : '#111111' }}>
+              7,707,508 <span style={{ color: '#2b66d2', fontSize: '0.74rem', fontWeight: '600' }}>(16.97%)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Market Select Tabs */}
+        <div style={{ display: 'flex', height: '40px', alignItems: 'center', backgroundColor: isDark ? '#121826' : '#ffffff', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
+          <div style={{ display: 'flex', height: '100%', flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+            <div style={krxTabStyle}>KRX</div>
+            <div style={infoTabStyle(true)}>호가</div>
+            <div style={infoTabStyle(false)}>거래원</div>
+            <div style={infoTabStyle(false)}>시간</div>
+            <div style={infoTabStyle(false)}>일자</div>
+            <div style={infoTabStyle(false)}>차트</div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '0 10px', height: '100%', borderLeft: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9" /></svg>
+          </div>
+        </div>
+
+        {/* Order Book Table */}
+        <div style={{ flex: 1, backgroundColor: isDark ? '#0b0f19' : '#ffffff', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed', borderSpacing: 0 }}>
+              <tbody>
+                {[
+                  { size: 757, price: 28375, pct: '+0.39%', label: 'S&P 500', val: '0.00' },
+                  { size: 1541, price: 28370, pct: '+0.37%', label: 'NAV', val: '28,071.93(-143.86)', valColor: '#2b66d2' },
+                  { size: 831, price: 28365, pct: '+0.35%', label: '추적오차율', val: '+0.10', valColor: '#de201e' },
+                  { size: 1453, price: 28360, pct: '+0.34%', label: '괴리율', val: '+0.90', valColor: '#de201e' },
+                  { size: 1757, price: 28355, pct: '+0.32%', label: '거래량', val: '7,707,508', valColor: '#2b66d2', subVal: '(16.97%)' },
+                  { size: 18122, price: 28350, pct: '+0.30%', label: '체결강도', val: '93.40%' },
+                  { size: 24867, price: 28345, pct: '+0.28%', label: '전종', val: '28,265' },
+                  { size: 30444, price: 28340, pct: '+0.27%', label: '전거', val: '4,542만' },
+                  { size: 81612, price: 28335, pct: '+0.25%', hasTag: '고', label: '시가', val: '28,265' },
+                  { size: 141807, price: 28330, pct: '+0.23%', label: '고가\n저가', val: '28,335\n28,265', isHighLow: true }
+                ].map((row, i) => {
+                  const maxAskSize = 141807;
+                  const barWidth = ((row.size / maxAskSize) * 100) + '%';
+                  return (
+                    <tr key={'ask-' + i} style={{ height: '34px', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9' }}>
+                      {/* Left: Ask size */}
+                      <td style={{
+                        width: '30%',
+                        position: 'relative',
+                        backgroundColor: isDark ? '#111b2b' : '#edf4fe',
+                        borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                        textAlign: 'right',
+                        paddingRight: '8px',
+                        verticalAlign: 'middle'
+                      }}>
+                        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: barWidth, backgroundColor: isDark ? '#1b2d47' : '#d2e4ff', zIndex: 1 }} />
+                        <span style={{ position: 'relative', zIndex: 2, fontSize: '0.8rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333' }}>
+                          {row.size.toLocaleString()}
+                          {row.hasTag && <span style={{ color: '#de201e', fontSize: '0.6rem', fontWeight: 'bold', marginLeft: '2px', verticalAlign: 'top' }}>{row.hasTag}</span>}
+                        </span>
+                      </td>
+                      {/* Center: Price */}
+                      <td style={{
+                        width: '40%',
+                        borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                        backgroundColor: isDark ? '#111b2b' : '#edf4fe',
+                        color: '#de201e',
+                        textAlign: 'center',
+                        fontSize: '0.82rem',
+                        fontWeight: '800',
+                        verticalAlign: 'middle'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px' }}>
+                          <span>{row.price.toLocaleString()}</span>
+                          <span style={{ fontSize: '0.68rem', fontWeight: '600' }}>{row.pct}</span>
+                        </div>
+                      </td>
+                      {/* Right: Market Info Panel */}
+                      <td style={{
+                        width: '30%',
+                        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+                        fontSize: '0.65rem',
+                        color: isDark ? '#94a3b8' : '#555555',
+                        padding: '2px 6px',
+                        verticalAlign: 'middle'
+                      }}>
+                        {row.isHighLow ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <span>고가</span>
+                              <span style={{ color: '#de201e', fontWeight: '600' }}>28,335</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <span>저가</span>
+                              <span style={{ color: '#333333', fontWeight: '600' }}>28,265</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                            <span style={{ fontWeight: '500' }}>{row.label}</span>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.1 }}>
+                              <span style={{ color: row.valColor || 'inherit', fontWeight: '600' }}>{row.val}</span>
+                              {row.subVal && <span style={{ color: row.valColor || 'inherit', fontSize: '0.6rem' }}>{row.subVal}</span>}
+                            </div>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+
+                {/* Spread Line */}
+                <tr style={{ height: '34px', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9' }}>
+                  <td style={{ width: '30%', borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingLeft: '8px', verticalAlign: 'middle' }}>
+                    {/* Empty or simple dot slide indicator */}
+                    <div style={{ display: 'flex', gap: '3px' }}>
+                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#999' }}></span>
+                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#ddd' }}></span>
+                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#ddd' }}></span>
+                    </div>
+                  </td>
+                  <td style={{
+                    width: '40%',
+                    borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                    textAlign: 'center',
+                    fontSize: '0.82rem',
+                    fontWeight: '800',
+                    color: '#de201e',
+                    verticalAlign: 'middle',
+                    backgroundColor: isDark ? '#121826' : '#ffffff'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px' }}>
+                      <span>28,327</span>
+                      <span style={{ fontSize: '0.68rem', fontWeight: '600' }}>+0.22%</span>
+                    </div>
+                  </td>
+                  <td style={{ width: '30%', padding: '0 6px', verticalAlign: 'middle', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: isDark ? '1px solid #334155' : '1px solid #ccd0d7', borderRadius: '2px', padding: '1px 4px', fontSize: '0.68rem', fontWeight: '700', cursor: 'pointer' }}>
+                      <span>10호가</span>
+                      <span>▼</span>
+                    </div>
+                  </td>
+                </tr>
+
+                {/* Bid Rows */}
+                {[
+                  { price: 28325, pct: '+0.21%', size: 96333, isCurrent: true, label: '상한', val: '36,740', color: '#de201e', label2: '하한', val2: '19,790', color2: '#2b66d2' },
+                  { price: 28320, pct: '+0.19%', size: 118054, label: '상승VI', val: '31,095', color: '#de201e', label2: '하락VI', val2: '25,435', color2: '#2b66d2' },
+                  { price: 28315, pct: '+0.18%', size: 145044, isNxt: true }
+                ].map((row, i) => {
+                  const maxBidSize = 145044;
+                  const barWidth = ((row.size / maxBidSize) * 100) + '%';
+                  return (
+                    <tr key={'bid-' + i} style={{ height: '34px', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9' }}>
+                      {/* Left column: Recent Transaction Feed or 증 badge */}
+                      <td style={{ 
+                        width: '30%', 
+                        borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', 
+                        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+                        fontSize: '0.62rem',
+                        padding: '1px 6px',
+                        verticalAlign: 'middle',
+                        lineHeight: 1.1
+                      }}>
+                        {i === 0 && (
+                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#de201e' }}>
+                              <span>28,325</span>
+                              <span>5</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#de201e' }}>
+                              <span>28,325</span>
+                              <span>5</span>
+                            </div>
+                          </div>
+                        )}
+                        {i === 1 && (
+                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#de201e' }}>
+                              <span>28,330</span>
+                              <span>14</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#de201e' }}>
+                              <span>28,330</span>
+                              <span>1</span>
+                            </div>
+                          </div>
+                        )}
+                        {i === 2 && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span style={{ fontSize: '0.58rem', fontWeight: 'bold', color: '#047857', border: '1px solid #047857', padding: '0px 2px', borderRadius: '2px', lineHeight: '1' }}>증</span>
+                          </div>
+                        )}
+                      </td>
+                      {/* Center column: Price */}
+                      <td style={{
+                        width: '40%',
+                        borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                        backgroundColor: isDark ? '#2b1b1b' : '#ffefef',
+                        color: '#de201e',
+                        textAlign: 'center',
+                        fontSize: '0.82rem',
+                        fontWeight: '800',
+                        verticalAlign: 'middle',
+                        border: row.isCurrent ? '2px solid #111111' : 'none'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px' }}>
+                          <span>{row.price.toLocaleString()}</span>
+                          <span style={{ fontSize: '0.68rem', fontWeight: '600' }}>{row.pct}</span>
+                        </div>
+                      </td>
+                      {/* Right column: Bid size or special badges */}
+                      <td style={{
+                        width: '30%',
+                        position: 'relative',
+                        backgroundColor: isDark ? '#2b1b1b' : '#ffefef',
+                        textAlign: 'left',
+                        paddingLeft: '8px',
+                        verticalAlign: 'middle'
+                      }}>
+                        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: barWidth, backgroundColor: isDark ? '#4c2626' : '#ffd0d0', zIndex: 1 }} />
+                        <span style={{ position: 'relative', zIndex: 2, fontSize: '0.8rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333' }}>
+                          {row.size.toLocaleString()}
+                        </span>
+                        
+                        {/* Overlay market VI values on the right side if they exist */}
+                        {!row.isNxt && (
+                          <div style={{
+                            position: 'absolute',
+                            right: '6px',
+                            top: 0,
+                            bottom: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            fontSize: '0.62rem',
+                            zIndex: 3,
+                            lineHeight: 1.1,
+                            pointerEvents: 'none',
+                            color: '#555555'
+                          }}>
+                            <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end' }}>
+                              <span>{row.label}</span>
+                              <span style={{ color: row.color, fontWeight: '600' }}>{row.val}</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end' }}>
+                              <span>{row.label2}</span>
+                              <span style={{ color: row.color2, fontWeight: '600' }}>{row.val2}</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {row.isNxt && (
+                          <div style={{
+                            position: 'absolute',
+                            right: '6px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            zIndex: 3
+                          }}>
+                            <span style={{ fontSize: '0.58rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#e28700', padding: '1px 3px', borderRadius: '2px' }}>NXT</span>
+                            <span style={{ fontSize: '0.62rem', color: '#777777', fontWeight: '600' }}>거래불가</span>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Cumulative Row */}
+          <div style={{
+            height: '30px',
+            borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+            backgroundColor: isDark ? '#121826' : '#ffffff',
+            display: 'flex',
+            alignItems: 'center',
+            fontSize: '0.76rem',
+            fontWeight: '700',
+            color: isDark ? '#cbd5e1' : '#475569',
+            flexShrink: 0
+          }}>
+            <div style={{ width: '30%', textAlign: 'right', paddingRight: '8px', backgroundColor: '#d2e4ff', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', color: '#2b66d2' }}>303,191</div>
+            <div style={{ width: '40%', textAlign: 'center' }}>10:27</div>
+            <div style={{ width: '30%', textAlign: 'left', paddingLeft: '8px', backgroundColor: '#ffd0d0', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', color: '#de201e' }}>604,039</div>
+          </div>
+        </div>
+
+        {/* Nasdaq Composite Banner */}
+        <div style={{
+          height: '32px',
+          backgroundColor: '#f1f5f9',
+          color: '#333333',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0 14px',
+          fontSize: '0.78rem',
+          fontWeight: '700',
+          flexShrink: 0,
+          borderTop: '1px solid #e2e8f0'
+        }}>
+          <span>나스닥 종합</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ color: '#2b66d2' }}>26,021.66</span>
+            <span style={{ color: '#2b66d2', display: 'flex', alignItems: 'center', gap: '2px' }}>▼ 354.68 (1.34%)</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Menu Bar */}
+      <div style={{
+        height: '54px',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+        backgroundColor: isDark ? '#121826' : '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        fontSize: '0.72rem',
+        fontWeight: 'bold',
+        color: isDark ? '#64748b' : '#555555',
+        flexShrink: 0,
+        position: 'relative'
+      }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', cursor: 'pointer' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+          <span>관심</span>
+          <span>종목</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px', color: '#00c3a5' }}>
+          <span>주식</span>
+          <span>현재가</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+          <span>주식</span>
+          <span>차트</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+          <span>주식</span>
+          <span>주문</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+          <span>주식</span>
+          <span>잔고</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+          <span>주식미체</span>
+          <span>/체결</span>
+        </div>
+        {/* Floating return indicator / back arrow next to the tabs */}
+        <div 
+          onClick={() => setToBeSubScreen('etfMall')}
+          style={{
+            position: 'absolute',
+            right: '8px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '26px',
+            height: '26px',
+            borderRadius: '50%',
+            backgroundColor: '#f1f5f9',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 10 4 15 9 20" />
+            <path d="M20 4v7a4 4 0 0 1-4 4H4" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Android Back/Navigation Bar */}
+      <div style={{
+        height: '36px',
+        backgroundColor: isDark ? '#0b0f19' : '#000000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        padding: '0 40px',
+        color: '#ffffff',
+        flexShrink: 0
+      }}>
+        <div style={{ display: 'flex', gap: '3px', cursor: 'pointer' }}>
+          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
+          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
+          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
+        </div>
+        <div style={{
+          width: '12px',
+          height: '12px',
+          border: '2px solid #94a3b8',
+          borderRadius: '3px',
+          cursor: 'pointer'
+        }}></div>
+        <div 
+          onClick={() => setToBeSubScreen('etfMall')}
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="3"><polyline points="15 18 9 12 15 6" /></svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark }) {
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+    color: isDark ? '#cbd5e1' : '#333333',
+    position: 'relative',
+    userSelect: 'none'
+  };
+
+  const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    height: '46px',
+    padding: '0 12px',
+    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+    backgroundColor: isDark ? '#121826' : '#ffffff'
+  };
+
+  const tabStyle = (active) => ({
+    flex: 1,
+    textAlign: 'center',
+    padding: '12px 0',
+    fontSize: '0.88rem',
+    fontWeight: active ? '800' : '500',
+    color: active ? (isDark ? '#ffffff' : '#222222') : (isDark ? '#64748b' : '#888888'),
+    borderBottom: active ? (isDark ? '2.5px solid #222222' : '2.5px solid #222222') : (isDark ? '1px solid #1e293b' : '1px solid #e2e8f0'),
+    cursor: 'pointer'
+  });
+
+  const stocks = [
+    { name: 'BNK 27-12 특수채(AAA이상)액티', code: 'A0193M0' },
+    { name: 'SOL 우주항공밸류체인', code: 'A0207G0' },
+    { name: 'KIWOOM 미국우주데이터센터인프', code: 'A0207Z0' },
+    { name: 'KODEX 현대차로보틱스밸류체인TO', code: 'A0204D0' },
+    { name: 'DAISHIN343 금융&지주고배당', code: 'A0189Z0' },
+    { name: 'ACE 고배당주Plus커버드콜액티브', code: 'A0199C0' },
+    { name: 'MIDAS 코스닥액티브', code: 'A0191B0' },
+    { name: 'TIME 글로벌휴머니드로봇산업', code: 'A0185L0' },
+    { name: 'IBK 코스닥150', code: 'A0190X0' }
+  ];
+
+  return (
+    <div style={containerStyle}>
+      {/* Galaxy S20 Central Punch-hole Camera */}
+      <div style={{
+        width: '8px',
+        height: '8px',
+        backgroundColor: '#000000',
+        borderRadius: '50%',
+        position: 'absolute',
+        top: '12px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 999
+      }} />
+
+      {/* Phone Status Bar */}
+      <div style={{
+        height: '32px',
+        padding: '0 20px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: isDark ? '#121826' : '#ffffff',
+        color: isDark ? '#cbd5e1' : '#475569',
+        fontSize: '0.75rem',
+        flexShrink: 0
+      }}>
+        <span style={{ fontWeight: '700' }}>SKT 10:27</span>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+          <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+            <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+            <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+            <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+            <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#cbd5e1' : '#475569' }}></div>
+          </div>
+          <div style={{
+            border: isDark ? '1px solid #cbd5e1' : '1px solid #475569',
+            borderRadius: '3px',
+            padding: '0px 3px',
+            fontSize: '0.62rem',
+            fontWeight: '900',
+            height: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: isDark ? '#cbd5e1' : '#475569',
+            color: isDark ? '#0b0f19' : '#fff',
+            lineHeight: 1
+          }}>
+            100
+          </div>
+        </div>
+      </div>
+
+      {/* Header */}
+      <div style={headerStyle}>
+        <button 
+          onClick={() => setToBeSubScreen(toBePrevSubScreen)}
+          style={{ border: 'none', background: 'none', padding: '0 12px 0 0', cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit' }}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+        <span style={{ fontWeight: '800', fontSize: '1.02rem', flex: 1, textAlign: 'center', marginLeft: '-34px' }}>종목 검색</span>
+      </div>
+
+      {/* Top Tabs */}
+      <div style={{ display: 'flex', backgroundColor: isDark ? '#121826' : '#ffffff' }}>
+        <div style={tabStyle(true)}>ETF</div>
+        <div style={tabStyle(false)}>ETN</div>
+        <div style={tabStyle(false)}>리츠</div>
+      </div>
+
+      {/* Search Input Filter Row */}
+      <div style={{ display: 'flex', gap: '8px', padding: '10px 14px', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', backgroundColor: isDark ? '#0b0f19' : '#ffffff', alignItems: 'center' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          border: isDark ? '1px solid #334155' : '1px solid #ccd0d7',
+          borderRadius: '4px',
+          padding: '0 8px',
+          height: '34px',
+          width: '85px',
+          fontSize: '0.8rem',
+          fontWeight: '600',
+          cursor: 'pointer',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          <span>전체</span>
+          <span>▼</span>
+        </div>
+        
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          border: isDark ? '1px solid #334155' : '1px solid #ccd0d7',
+          borderRadius: '4px',
+          padding: '0 10px',
+          height: '34px',
+          gap: '6px',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+          <input 
+            type="text"
+            placeholder="종목명(공백 제외), 종목코드"
+            disabled
+            style={{
+              border: 'none',
+              background: 'none',
+              width: '100%',
+              outline: 'none',
+              fontSize: '0.78rem',
+              color: isDark ? '#ffffff' : '#222222'
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Stock List */}
+      <div style={{ flex: 1, overflowY: 'auto', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
+        {stocks.map((stock, idx) => (
+          <div 
+            key={idx}
+            onClick={() => setToBeSubScreen(toBePrevSubScreen)}
+            style={{
+              padding: '14px 16px',
+              borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px'
+            }}
+          >
+            <span style={{ fontSize: '0.88rem', fontWeight: '700', color: isDark ? '#cbd5e1' : '#333333' }}>{stock.name}</span>
+            <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', fontWeight: '500' }}>{stock.code}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Android Bottom Navigation Bar */}
+      <div style={{
+        height: '36px',
+        backgroundColor: isDark ? '#0b0f19' : '#000000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        padding: '0 40px',
+        color: '#ffffff',
+        flexShrink: 0
+      }}>
+        <div style={{ display: 'flex', gap: '3px', cursor: 'pointer' }}>
+          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
+          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
+          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
+        </div>
+        <div style={{
+          width: '12px',
+          height: '12px',
+          border: '2px solid #94a3b8',
+          borderRadius: '3px',
+          cursor: 'pointer'
+        }}></div>
+        <div 
+          onClick={() => setToBeSubScreen(toBePrevSubScreen)}
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="3"><polyline points="15 18 9 12 15 6" /></svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [isDark, setIsDark] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -2433,6 +3448,8 @@ function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
+  const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
+  const [isAsIsToBeExpanded, setIsAsIsToBeExpanded] = useState(true);
 
   // Account states (shared across emulators)
   const [accountBalance, setAccountBalance] = useState({
@@ -2456,6 +3473,14 @@ function App() {
   useEffect(() => {
     setOrderPrice(stockData[selectedStock].price);
   }, [selectedStock]);
+
+  useEffect(() => {
+    if (toBeSubScreen === 'etfMall') {
+      setIsAsIsToBeExpanded(false);
+    } else {
+      setIsAsIsToBeExpanded(true);
+    }
+  }, [toBeSubScreen]);
 
   const addNotification = (message, type = 'success') => {
     const id = Date.now();
@@ -2609,7 +3634,7 @@ function App() {
                         }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>손지영님</span>
+                              <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
                               <span style={{ 
                                 display: 'inline-flex', 
                                 alignItems: 'center', 
@@ -2909,7 +3934,11 @@ function App() {
                   position: 'relative'
                 }}>
                   {toBeSubScreen === 'etfMall' ? (
-                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} />
+                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} />
+                  ) : toBeSubScreen === 'tigerDetail' ? (
+                    <ToBeTigerDetailView setToBeSubScreen={setToBeSubScreen} isDark={isDark} setToBePrevSubScreen={setToBePrevSubScreen} />
+                  ) : toBeSubScreen === 'stockSearch' ? (
+                    <ToBeStockSearchView setToBeSubScreen={setToBeSubScreen} toBePrevSubScreen={toBePrevSubScreen} isDark={isDark} />
                   ) : (
                     <>
                       {/* Status Bar */}
@@ -2934,7 +3963,7 @@ function App() {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>손지영님</span>
+                        <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
                         <span style={{ 
                           display: 'inline-flex', 
                           alignItems: 'center', 
@@ -3368,61 +4397,126 @@ function App() {
           {activeScreen === 1 ? (
             /* Descriptions for Screen 1 */
             <>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
-                    <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>단일 시장 시세 및 결과 조회</span>
+              {isAsIsToBeExpanded && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>다단계의 복잡한 검색 진입 경로</span>
+                    </div>
+                    <ul style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '78px', wordBreak: 'keep-all', listStyleType: 'disc' }}>
+                      <li style={{ marginBottom: '6px' }}>경로 1: 메뉴 [ETF/리츠 현재가] &gt; 현재가 화면에서 [매수] 버튼 클릭 &gt; 주문화면 내 '종목 돋보기' 버튼 클릭 &gt; 종목 검색 및 변경</li>
+                      <li style={{ marginBottom: '6px' }}>경로 2: 메뉴 [ETF/리츠 주문] &gt; 주문화면 &gt; '종목 돋보기' 버튼 클릭 &gt; 종목 검색</li>
+                      <li>시사점: 현재는 종목 검색 화면으로 진입하기까지의 뎁스가 다소 복잡하고 돋보기 버튼에 의존하고 있음</li>
+                    </ul>
                   </div>
-                  <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
-                    기존 검색 화면에서는 오직 KRX(한국거래소) 단일 시장 기준의 종목 정보와 최종 시세만을 확인하고 주문할 수 있습니다.
-                  </p>
-                </div>
-        
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
-                    <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>이중 시장 실시간 시세 비교 및 SOR 탐색</span>
+          
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>ETF몰(ETF 전용 종목 검색기) 메뉴 및 화면 신설</span>
+                    </div>
+                    <ul style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '78px', wordBreak: 'keep-all', listStyleType: 'disc' }}>
+                      <li style={{ marginBottom: '6px' }}>기존 '퇴직연금 ETF 전용 현재가' 화면을 폐기하고, 일반 트레이딩에서 사용하는 '전체 현재가' 화면과 연동하여 일원화</li>
+                      <li>
+                        ETF몰 메뉴 및 화면 신설
+                        <ul style={{ margin: '4px 0 0 0', paddingLeft: '22px', listStyleType: 'circle' }}>
+                          <li style={{ marginBottom: '2px' }}>상단 탭 세분화</li>
+                          <li style={{ marginBottom: '2px' }}>검색창 기능 강화</li>
+                          <li>종목 리스트 UX 강화</li>
+                        </ul>
+                      </li>
+                    </ul>
                   </div>
-                  <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
-                    종목 검색 결과 리스트에서 KRX와 대체거래소(NXT)의 실시간 현재가와 등락률을 즉시 나란히 비교하며, 최적의 유리한 매매 시장(SOR 표시)을 실시간으로 알려줍니다.
-                  </p>
                 </div>
+              )}
+
+              <div 
+                onClick={() => setIsAsIsToBeExpanded(!isAsIsToBeExpanded)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '8px 0',
+                  userSelect: 'none',
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  transition: 'opacity 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                {isAsIsToBeExpanded ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="18 15 12 9 6 15" />
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                )}
               </div>
         
-              <div style={{
-                backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
-                borderRadius: '12px',
-                padding: '20px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '14px',
-                border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)'
-              }}>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
-                  주요 핵심 구현 사항
-                </h3>
-                <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>1</span>
-                    <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>실시간 이중 시장 카드화:</strong> 검색 종목별로 KRX/NXT의 실시간 호가 데이터를 격자형 비교 레이아웃으로 직관적으로 제공합니다.
-                    </div>
-                  </li>
-                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>2</span>
-                    <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>SOR (최적 주문) 유리 마크:</strong> 두 마켓 중 투자자에게 가격 측면에서 실시간으로 가장 유리한 거래소에 빨간색 <span style={{ color: '#de201e', fontWeight: 'bold' }}>[유리]</span> 태그가 표시됩니다.
-                    </div>
-                  </li>
-                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>3</span>
-                    <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>빠른 필터 칩(Pills):</strong> 상단 전체 시장, KRX 코스피, NXT 대체거래소 필터 칩을 통해 특정 거래소 종목만 한눈에 필터링해 볼 수 있습니다.
-                    </div>
-                  </li>
-                </ul>
-              </div>
+              {toBeSubScreen === 'etfMall' && (
+                <div style={{
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '14px',
+                  border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
+                  marginTop: '22px'
+                }}>
+                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
+                    주요 핵심 구현 사항
+                  </h3>
+                  <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>1</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>투자 목적별 상단 탭 세분화</strong>
+                        <div style={{ marginTop: '4px', paddingLeft: '8px' }}>
+                          - 추천(수익률/거래 상위)<br />
+                          - 보유(실제 보유 종목 및 평단 대비 수익률)<br />
+                          - 고배당고금리(배당 지표)<br />
+                          - TDF(은퇴 목표시점별 조회) 탭 제공.
+                        </div>
+                      </div>
+                    </li>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>2</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>검색 필터 & 카테고리 강화</strong>
+                        <div style={{ marginTop: '4px', paddingLeft: '8px' }}>
+                          - 요건 정의 중...
+                        </div>
+                      </div>
+                    </li>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>3</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>종목 리스트 UX 고도화</strong>
+                        <div style={{ marginTop: '4px', paddingLeft: '8px' }}>
+                          - 투자한도 제한(70%, 100%)<br />
+                          - 자산·시장 구분<br />
+                          - 보유/미보유 종목 UI 이원화
+                        </div>
+                      </div>
+                    </li>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>4</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>전체 현재가 화면 연동</strong>
+                        <div style={{ marginTop: '4px', paddingLeft: '8px' }}>
+                          - 일반 트레이딩에서 사용하는 '전체 현재가' 화면 연동
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </>
           ) : (
             /* Descriptions for Screen 2 (Original) */
