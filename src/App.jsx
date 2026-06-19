@@ -2144,10 +2144,23 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
   );
 }
 
-function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen }) {
+function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab }) {
   const [activeTab, setActiveTab] = useState('1주일 매수고객순'); // '1주일 매수고객순', '1주일 매수금액순'
   const [sortOption, setSortOption] = useState('1주일');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [selectedChip, setSelectedChip] = useState('전체');
+  const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
+  const [ownedSortOption, setOwnedSortOption] = useState('수익률 높은 순');
+  const [ownedDisplayOption, setOwnedDisplayOption] = useState('평가금');
+  const [isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen] = useState(false);
+  const [isFavoriteBsheetOpen, setIsFavoriteBsheetOpen] = useState(false);
+  const [favoritePosition, setFavoritePosition] = useState('bottom');
+  const [pendingFavoriteCode, setPendingFavoriteCode] = useState(null);
+  const toggleFavorite = (code) => {
+    setFavorites(prev => 
+      prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]
+    );
+  };
 
   const containerStyle = {
     display: 'flex',
@@ -2174,6 +2187,17 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
     backgroundColor: isDark ? '#121826' : '#ffffff',
     fontSize: '0.82rem'
+  };
+
+  const sectionHeaderStyle = {
+    padding: '6px 14px',
+    marginTop: '8px',
+    backgroundColor: isDark ? '#171e2e' : '#f1f3f5',
+    fontSize: '0.82rem',
+    fontWeight: '500',
+    color: isDark ? '#94a3b8' : '#777777',
+    border: 'none',
+    textAlign: 'left'
   };
 
   const menuTabItemStyle = (active) => ({
@@ -2244,6 +2268,350 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
   const currentList = activeTab === '1주일 매수고객순' ? customerRank : amountRank;
 
+  const recentViewedList = [
+    { name: 'TIGER 미국우주테크', code: 'A0185L0', limit: '투자한도70%', price: 109760, pct: -5.17, positive: false },
+    { name: 'SOL AI반도체TOP2플러스', code: 'A0207Z0', limit: '투자한도70%', price: 12840, pct: 2.56, positive: true },
+    { name: 'KODEX 미국나스닥100레버리지', code: 'A0225D0', limit: '투자한도70%', price: 19850, pct: 4.12, positive: true },
+    { name: 'ACE 미국S&P500채권혼합', code: 'A0226E0', limit: '투자한도100%', price: 11450, pct: 0.25, positive: true },
+    { name: 'KBSTAR 미국S&P500', code: 'A0227F0', limit: '투자한도70%', price: 18900, pct: -0.45, positive: false },
+    { name: 'TIGER 일본반도체FACTSET', code: 'A0228G0', limit: '투자한도70%', price: 13540, pct: -1.25, positive: false },
+    { name: 'SOL 미국30년국채커버드콜', code: 'A0229H0', limit: '투자한도100%', price: 9240, pct: 0.65, positive: true },
+    { name: 'KODEX 반도체', code: 'A009120', limit: '투자한도70%', price: 34100, pct: 2.45, positive: true }
+  ];
+
+  const ownedList = [
+    { name: 'KODEX 현대차로보틱스밸류체인TO', code: 'A0204D0', limit: '투자한도70%', price: 15300, pct: 3.0, positive: true, quantity: 10, avgPrice: 14850 },
+    { name: 'DAISHIN343 금융&지주고배당', code: 'A0189Z0', limit: '투자한도70%', price: 125400, pct: -0.5, positive: false, quantity: 5, avgPrice: 126030 },
+    { name: '대신글로벌코어리츠', code: 'A390140', limit: '투자한도100%', price: 2950, pct: 1.2, positive: true, quantity: 100, avgPrice: 2915 },
+    { name: 'TIGER 미국S&P500', code: 'A0191B0', limit: '투자한도70%', price: 28325, pct: 0.21, positive: true, quantity: 20, avgPrice: 28165 },
+    { name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0192C0', limit: '투자한도100%', price: 14550, pct: 1.11, positive: true, quantity: 50, avgPrice: 14390 },
+    { name: 'ACE 미국나스닥100', code: 'A0193D0', limit: '투자한도70%', price: 21050, pct: -1.05, positive: false, quantity: 15, avgPrice: 21270 },
+    { name: 'KODEX 200', code: 'A005930', limit: '투자한도100%', price: 32450, pct: -0.37, positive: false, quantity: 30, avgPrice: 32570 }
+  ];
+
+  const getSortedOwnedList = () => {
+    let list = [...ownedList];
+    if (ownedSortOption === '평가금액 많은 순') {
+      list.sort((a, b) => (b.quantity * b.price) - (a.quantity * a.price));
+    } else if (ownedSortOption === '수익률 높은 순') {
+      list.sort((a, b) => b.pct - a.pct);
+    } else if (ownedSortOption === '수익률 낮은 순') {
+      list.sort((a, b) => a.pct - b.pct);
+    }
+    return list;
+  };
+
+  const recentViewedOwnedList = [
+    ownedList[0],
+    ownedList[2],
+    ownedList[3],
+    ownedList[4]
+  ];
+
+  const tdfList = [
+    { name: 'KB온국민TDF2055', code: 'A0198F0', limit: '투자한도100%', price: 13500, pct: 0.85, positive: true },
+    { name: '신한마음편한TDF2050', code: 'A0199G0', limit: '투자한도100%', price: 12200, pct: -0.15, positive: false },
+    { name: '미래에셋전략배분TDF2045', code: 'A0201A0', limit: '투자한도100%', price: 14800, pct: 1.1, positive: true },
+    { name: '삼성ETF를담은TDF2050', code: 'A0202B0', limit: '투자한도100%', price: 11950, pct: 0.35, positive: true },
+    { name: '하나평생소득TDF2040', code: 'A0203C0', limit: '투자한도100%', price: 12640, pct: -0.05, positive: false },
+    { name: '한국투자TDF알아서2050', code: 'A0204E0', limit: '투자한도100%', price: 15120, pct: 1.25, positive: true },
+    { name: '키움키워드TDF2045', code: 'A0205F0', limit: '투자한도100%', price: 10840, pct: -0.75, positive: false }
+  ];
+
+  const goDividendList = [
+    { name: 'TIGER 코리아배당다우존스', code: 'A0052D0', limit: '투자한도70%', price: 16320, pct: -1.27, positive: false },
+    { name: 'PLUS 고배당주', code: 'A161510', limit: '투자한도70%', price: 26325, pct: -1.52, positive: false },
+    { name: 'RISE 금융채액티브', code: 'A336160', limit: '투자한도100%', price: 100595, pct: -0.05, positive: false },
+    { name: 'TIME Korea플러스배당액티브', code: 'A441800', limit: '투자한도70%', price: 37090, pct: 0.68, positive: true },
+    { name: 'KODEX 한국부동산리츠인프라', code: 'A476800', limit: '투자한도100%', price: 4455, pct: 0.34, positive: true },
+    { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27290, pct: 0.65, positive: true },
+    { name: 'ACE 미국고배당소비재', code: 'A0210A0', limit: '투자한도70%', price: 11840, pct: 0.15, positive: true },
+    { name: 'SOL 미국배당다우존스', code: 'A0211B0', limit: '투자한도70%', price: 10450, pct: 0.95, positive: true },
+    { name: 'KBSTAR 200고배당커버드콜', code: 'A0212C0', limit: '투자한도70%', price: 8640, pct: -0.35, positive: false }
+  ];
+
+  // Merge lists to form a general list
+  const allList = [
+    { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true  },
+    { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true  },
+    { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false },
+    { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
+    { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  },
+    ...recentViewedList,
+    ...ownedList,
+    ...tdfList,
+    ...goDividendList
+  ].filter((item, index, self) => 
+    self.findIndex(t => t.name === item.name) === index
+  );
+
+  const filterByChip = (list) => {
+    if (selectedChip === '전체') return list;
+    return list.filter(item => {
+      if (selectedChip === 'ETF') {
+        return item.name.includes('ETF') || item.name.includes('반도체') || item.name.includes('채권') || item.name.includes('S&P500') || item.name.includes('우주') || item.name.includes('배당') || item.name.includes('TDF');
+      }
+      if (selectedChip === 'ETN') {
+        return item.name.includes('ETN');
+      }
+      if (selectedChip === '리츠') {
+        return item.name.includes('리츠') || item.name.includes('부동산');
+      }
+      return true;
+    });
+  };
+
+  const renderEmptyState = () => (
+    <div style={{ padding: '40px 20px', textAlign: 'center', color: isDark ? '#64748b' : '#999999', fontSize: '0.88rem' }}>
+      해당 조건의 종목이 없습니다.
+    </div>
+  );
+
+  const renderStockList = (list) => {
+    return filterByChip(list).length === 0 ? renderEmptyState() : filterByChip(list).map((item, idx, arr) => {
+      const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
+      return (
+        <div key={idx} 
+          onClick={() => {
+            setToBePrevSubScreen('etfMall');
+            setToBeSubScreen('tigerDetail');
+          }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            padding: '12px 10px 12px 14px',
+            borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+            cursor: 'pointer',
+            gap: '8px',
+            position: 'relative'
+          }}
+        >
+          {/* 원숫자 1번을 수량/평단가 앞에 위치시킴 */}
+          {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
+            <div style={{
+              position: 'absolute',
+              left: '1px',
+              top: '36px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '17px',
+              height: '17px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#fff',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              zIndex: 12
+            }}>1</div>
+          )}
+
+          {/* Col 1 */}
+          <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
+            <span style={{
+              fontSize: item.name.length > 12 ? '0.74rem' : '0.85rem',
+              fontWeight: '600',
+              color: isDark ? '#e2e8f0' : '#111111',
+              letterSpacing: '-0.2px',
+              wordBreak: 'keep-all',
+              whiteSpace: 'normal',
+              lineHeight: '1.2'
+            }}>{item.name}</span>
+            {item.quantity !== undefined && item.avgPrice !== undefined && (
+              <div style={{ display: 'flex', alignItems: 'center', marginTop: '1px' }}>
+                <span style={{ fontSize: '0.72rem', color: isDark ? '#94a3b8' : '#555555' }}>
+                  {item.quantity}주 · 내 평균 {item.avgPrice.toLocaleString()}원
+                </span>
+              </div>
+            )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6' }}>{item.limit.replace('투자한도', '')}</span>
+              <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
+              <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888' }}>
+                {item.code} · {item.name.includes('리츠') || item.name.includes('부동산') ? '리츠' : (item.name.includes('ETN') ? 'ETN' : 'ETF')} · {item.name.match(/미국|글로벌|S&P500|나스닥|인도|차이나|베트남/) ? '해외' : '국내'}
+              </span>
+            </div>
+          </div>
+
+          {/* Col 2 & 3 Group */}
+          {item.quantity !== undefined && item.avgPrice !== undefined && ownedDisplayOption === '평가금' ? (
+            /* 평가금 선택 시 단일 그룹으로 이미지처럼 정보 표기 */
+            (() => {
+              const valuationAmount = item.quantity * item.price;
+              const profitLoss = (item.price - item.avgPrice) * item.quantity;
+              const returnRate = ((item.price - item.avgPrice) / item.avgPrice) * 100;
+              const isProfit = profitLoss > 0;
+              const isLoss = profitLoss < 0;
+              const color = isProfit ? '#de201e' : (isLoss ? '#2366ca' : (isDark ? '#e2e8f0' : '#111111'));
+              const sign = isProfit ? '+' : '';
+
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                  {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
+                    <div style={{
+                      position: 'absolute',
+                      left: '-24px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '17px',
+                      height: '17px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#fff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      zIndex: 11
+                    }}>3</div>
+                  )}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                    {/* 평가금액 */}
+                    <span style={{
+                      fontSize: '0.92rem',
+                      fontWeight: '700',
+                      color: isDark ? '#e2e8f0' : '#111111',
+                      letterSpacing: '-0.3px'
+                    }}>
+                      {valuationAmount.toLocaleString()}원
+                    </span>
+                    {/* 수익률 및 평가손익 */}
+                    <span style={{
+                      fontSize: '0.74rem',
+                      fontWeight: '600',
+                      color: color,
+                      letterSpacing: '-0.1px'
+                    }}>
+                      {sign}{returnRate.toFixed(2)}% ({sign}{profitLoss.toLocaleString()}원)
+                    </span>
+                  </div>
+                </div>
+              );
+            })()
+          ) : (
+            /* 기존 Col 2 & 3 Group */
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+              {/* Col 2 */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
+                  <span style={{
+                    fontSize: '0.92rem',
+                    fontWeight: '700',
+                    color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
+                    letterSpacing: '-0.3px'
+                  }}>{item.price.toLocaleString()}</span>
+                  <span style={{
+                    fontSize: '0.72rem',
+                    color: isDark ? '#64748b' : '#888888',
+                    letterSpacing: '-0.1px'
+                  }}>
+                    {(item.volume || 109760).toLocaleString()}
+                  </span>
+                </div>
+                
+                {/* K / N Stack */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                  <div style={{
+                    width: '12px',
+                    height: '12px',
+                    border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                    backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                    color: isDark ? '#52c4a5' : '#007a5a',
+                    fontSize: '8px',
+                    fontWeight: '800',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '1px',
+                    lineHeight: 1
+                  }}>K</div>
+                  <div style={{
+                    width: '12px',
+                    height: '12px',
+                    backgroundColor: '#d99a06',
+                    color: '#ffffff',
+                    fontSize: '8px',
+                    fontWeight: '800',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '1px',
+                    lineHeight: 1
+                  }}>N</div>
+                </div>
+
+                {/* Arrow next to badges */}
+                <span style={{
+                  fontSize: '0.62rem',
+                  color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
+                  marginLeft: '2px',
+                  flexShrink: 0
+                }}>
+                  {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
+                </span>
+              </div>
+
+              {/* Col 3 */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                <span style={{
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '2px'
+                }}>
+                  {absChange.toLocaleString()}
+                </span>
+                <span style={{
+                  fontSize: '0.75rem',
+                  fontWeight: '600',
+                  color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
+                }}>{item.positive ? '+' : ''}{item.pct}%</span>
+              </div>
+            </div>
+          )}
+
+          {/* Col 4 */}
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <div 
+              style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setPendingFavoriteCode(item.code);
+                setIsFavoriteBsheetOpen(true);
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </div>
+            {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
+              <div style={{
+                position: 'absolute',
+                left: '-18px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '17px',
+                height: '17px',
+                borderRadius: '50%',
+                backgroundColor: '#00c3a5',
+                color: '#fff',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                zIndex: 11
+              }}>5</div>
+            )}
+          </div>
+        </div>
+      );
+    });
+  };
+
   return (
     <div style={containerStyle}>
       {/* Galaxy S20 Central Punch-hole Camera */}
@@ -2300,317 +2668,837 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
       {/* Header */}
       <div style={headerStyle}>
-        <button 
-          onClick={() => setToBeSubScreen('menu')}
-          style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <span style={{ fontWeight: '700', fontSize: '1.15rem', flex: 1, textAlign: 'center', pointerEvents: 'none' }}>ETF/리츠 몰</span>
-        <button 
-          onClick={() => {
-            setToBePrevSubScreen('etfMall');
-            setToBeSubScreen('stockSearch');
-          }}
-          style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-        </button>
+        {etfMallNavMode === 'search' ? (
+          <button 
+            onClick={() => {
+              setEtfMallNavMode('default');
+              setToBeSubScreen('tigerDetail');
+            }}
+            style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </button>
+        ) : (
+          <button 
+            onClick={() => setToBeSubScreen('menu')}
+            style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+        )}
+        <span style={{ fontWeight: '700', fontSize: '1.15rem', flex: 1, textAlign: 'center', pointerEvents: 'none' }}>
+          {etfMallNavMode === 'search' ? '종목검색' : 'ETF/리츠 몰'}
+        </span>
+        <div style={{ width: '22px' }} />
       </div>
 
       {/* Horizontal Tabs Menu */}
       <div style={menuTabsStyle}>
-        <span style={{ ...menuTabItemStyle(true), position: 'relative' }}>
-          추천
-          {isDrawerOpen && (
-            <div style={{
-              position: 'absolute',
-              top: '0px',
-              right: '-6px',
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              backgroundColor: '#00c3a5',
-              color: '#ffffff',
-              fontSize: '11px',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.15)'
-            }}>1</div>
-          )}
-        </span>
-        <span style={menuTabItemStyle(false)}>보유</span>
-        <span style={menuTabItemStyle(false)}>GO배당GO금리</span>
-        <span style={menuTabItemStyle(false)}>TDF</span>
-        <span style={menuTabItemStyle(false)}>전체</span>
+        {['추천', '보유', 'GO배당GO금리', 'TDF', '전체'].map((tab) => (
+          <span 
+            key={tab} 
+            onClick={() => setActiveMallTab(tab)}
+            style={{ ...menuTabItemStyle(activeMallTab === tab), position: 'relative' }}
+          >
+            {tab}
+            {tab === '추천' && activeMallTab === '추천' && (
+              <div style={{
+                position: 'absolute',
+                top: '-4px',
+                right: '-10px',
+                width: '17px',
+                height: '17px',
+                borderRadius: '50%',
+                backgroundColor: '#00c3a5',
+                color: '#ffffff',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                zIndex: 15
+              }}>1</div>
+            )}
+          </span>
+        ))}
       </div>
 
-
-
-      {/* Ranking and List Area */}
-      <div style={{ ...rankingSectionStyle, padding: '0' }}>
-
-        {/* Section Title + Tabs */}
-        <div style={{ padding: '14px 14px 0 14px' }}>
-          {/* Title */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>퇴직연금 ETF 순위</span>
-            <div 
-              onClick={() => setIsBottomSheetOpen(true)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
-                fontSize: '0.76rem',
-                fontWeight: '600',
-                color: isDark ? '#94a3b8' : '#555555',
-                cursor: 'pointer',
-                padding: '4px 8px',
-                borderRadius: '4px',
-                backgroundColor: isDark ? '#1e293b' : '#f8fafc',
-                border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
-                userSelect: 'none'
-              }}
-            >
-              <span>{sortOption}</span>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '1px' }}><polyline points="6 9 12 15 18 9" /></svg>
-            </div>
-          </div>
-
-          {/* 거래 고객순 / 거래 금액순 Tabs */}
-          <div style={{ display: 'flex', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
-            {['수익률', '거래량', '거래대금'].map((tab) => {
-              const isActive = tab === '수익률';
-              return (
-                <span key={tab} style={{
-                  padding: '8px 0',
-                  marginRight: '20px',
-                  fontSize: '0.88rem',
-                  fontWeight: isActive ? '700' : '400',
-                  color: isActive ? (isDark ? '#ffffff' : '#111111') : (isDark ? '#64748b' : '#999999'),
-                  borderBottom: isActive ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #111111') : '2.5px solid transparent',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap'
-                }}>{tab}</span>
-              );
-            })}
-          </div>
+      {/* Search Input Filter Row with Chips (from Stock Search screen) */}
+      <div style={{ 
+        padding: '10px 14px 4px 14px', 
+        borderBottom: 'none', 
+        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px'
+      }}>
+        <div 
+          onClick={() => {
+            setToBePrevSubScreen('etfMall');
+            setToBeSubScreen('stockSearch');
+          }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            border: isDark ? '1px solid #334155' : '1px solid #d1d5db',
+            borderRadius: '8px',
+            padding: '0 12px',
+            height: '38px',
+            gap: '8px',
+            backgroundColor: isDark ? '#121826' : '#ffffff',
+            cursor: 'pointer'
+          }}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="2.5" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+          <input 
+            type="text"
+            placeholder="종목명, 종목코드, 초성입력"
+            disabled
+            style={{
+              border: 'none',
+              background: 'none',
+              width: '100%',
+              outline: 'none',
+              fontSize: '0.82rem',
+              color: isDark ? '#ffffff' : '#222222',
+              cursor: 'pointer'
+            }}
+          />
         </div>
 
-
-        {/* ETF Ranked List */}
-        <div>
-          {[
-            { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true  },
-            { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true  },
-            { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false },
-            { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
-            { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  }
-          ].map((item, idx) => (
-            <div key={idx} 
-              onClick={() => {
-                if (item.name === 'TIGER 미국S&P500') {
-                  setToBeSubScreen('tigerDetail');
-                }
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '12px 14px',
-                borderBottom: idx < 4 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                cursor: 'pointer',
-                gap: '10px'
-              }}>
-              {/* Rank number */}
-              <span style={{
-                fontSize: '1.05rem',
-                fontWeight: '800',
-                fontStyle: 'italic',
-                color: isDark ? '#ffffff' : '#111111',
-                width: '18px',
-                flexShrink: 0
-              }}>{item.rank}</span>
-
-              {/* Left: ETF Name + subtitle */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
-                {/* ETF Name only */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{
-                    fontSize: '0.85rem',
-                    fontWeight: '600',
-                    color: isDark ? '#e2e8f0' : '#111111',
-                    letterSpacing: '-0.2px',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap'
-                  }}>{item.name}</span>
-                  {idx === 0 && isDrawerOpen && (
-                    <div style={{
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#ffffff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                      flexShrink: 0
-                    }}>2</div>
-                  )}
-                  {idx === 2 && isDrawerOpen && (
-                    <div style={{
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#ffffff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                      flexShrink: 0
-                    }}>3</div>
-                  )}
-                </div>
-                {/* 투자한도 + code (no box) */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span style={{
-                    fontSize: '0.72rem',
-                    fontWeight: '500',
-                    color: '#3b82f6',
-                    letterSpacing: '-0.1px'
-                  }}>{item.limit}</span>
-                  <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
-                  <span style={{
-                    fontSize: '0.72rem',
-                    color: isDark ? '#64748b' : '#888888',
-                    letterSpacing: '-0.1px'
-                  }}>{item.code}</span>
-                </div>
-              </div>
-
-              {/* Right: Price (top) + Arrow+Pct (bottom) */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '3px' }}>
-                <span style={{
-                  fontSize: '0.92rem',
+        {/* Filter Chips Row */}
+        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+          {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
+            const isSelected = selectedChip === chip;
+            return (
+              <span
+                key={chip}
+                onClick={() => setSelectedChip(chip)}
+                style={{
+                  padding: '9px 18px',
+                  borderRadius: '24px',
+                  fontSize: '0.78rem',
                   fontWeight: '600',
-                  color: isDark ? '#e2e8f0' : '#111111',
-                  letterSpacing: '-0.3px'
-                }}>{item.price.toLocaleString()}</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                  <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
-                    {item.positive ? '▲' : '▼'}
-                  </span>
-                  <span style={{
-                    fontSize: '0.8rem',
+                  cursor: 'pointer',
+                  backgroundColor: isSelected 
+                    ? (isDark ? '#334155' : '#e0e0e0') 
+                    : (isDark ? '#1e293b' : '#f1f1f1'),
+                  color: isSelected 
+                    ? (isDark ? '#ffffff' : '#111111') 
+                    : (isDark ? '#94a3b8' : '#666666'),
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                {chip}
+              </span>
+            );
+          })}
+        </div>
+      </div>      {/* Ranking and List Area */}
+      <div style={{ ...rankingSectionStyle, padding: '0' }}>
+        {activeMallTab === '추천' && (
+          <>
+            {/* Section Title + Tabs */}
+            <div style={{ padding: '14px 14px 0 14px' }}>
+              {/* Title */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>퇴직연금 ETF 순위</span>
+                <div 
+                  onClick={() => setIsBottomSheetOpen(true)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontSize: '0.76rem',
                     fontWeight: '600',
-                    color: item.positive ? '#de201e' : '#2366ca'
-                  }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                    color: isDark ? '#94a3b8' : '#555555',
+                    cursor: 'pointer',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+                    border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+                    userSelect: 'none'
+                  }}
+                >
+                  <span>{sortOption}</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '1px' }}><polyline points="6 9 12 15 18 9" /></svg>
                 </div>
               </div>
+
+              {/* 거래 고객순 / 거래 금액순 Tabs */}
+              <div style={{ display: 'flex', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
+                {['수익률', '거래량', '거래대금'].map((tab) => {
+                  const isActive = tab === '수익률';
+                  return (
+                    <span key={tab} style={{
+                      padding: '8px 0',
+                      marginRight: '20px',
+                      fontSize: '0.88rem',
+                      fontWeight: isActive ? '700' : '400',
+                      color: isActive ? (isDark ? '#ffffff' : '#111111') : (isDark ? '#64748b' : '#999999'),
+                      borderBottom: isActive ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #111111') : '2.5px solid transparent',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap'
+                    }}>{tab}</span>
+                  );
+                })}
+              </div>
             </div>
-          ))}
-        </div>
 
-        {/* Grey Bar Separator */}
-        <div style={{
-          height: '8px',
-          backgroundColor: isDark ? '#121826' : '#f1f5f9',
-          flexShrink: 0
-        }} />
+            {/* ETF Ranked List */}
+            <div>
+              {filterByChip([
+                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true  },
+                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true  },
+                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false },
+                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
+                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  }
+              ]).length === 0 ? renderEmptyState() : filterByChip([
+                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true  },
+                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true  },
+                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false },
+                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
+                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  }
+              ]).map((item, idx, arr) => (
+                <div key={idx} 
+                  onClick={() => {
+                    setToBePrevSubScreen('etfMall');
+                    setToBeSubScreen('tigerDetail');
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 14px',
+                    borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                    cursor: 'pointer',
+                    gap: '10px'
+                  }}>
+                  {/* Rank number */}
+                  <span style={{
+                    fontSize: '1.05rem',
+                    fontWeight: '800',
+                    fontStyle: 'italic',
+                    color: isDark ? '#ffffff' : '#111111',
+                    width: '18px',
+                    flexShrink: 0
+                  }}>{item.rank}</span>
 
-        {/* GO배당GO금리 퇴직연금 ETF Section */}
-        <div style={{ padding: '16px 0 0 0', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
-          <div style={{ padding: '0 14px', marginBottom: '12px' }}>
-            <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>GO배당GO금리</span>
-          </div>
-          <div>
-            {[
-              { name: 'TIGER 코리아배당다우존스', code: 'A0052D0', limit: '투자한도70%', price: 16320, pct: -1.27, positive: false },
-              { name: 'PLUS 고배당주', code: 'A161510', limit: '투자한도70%', price: 26325, pct: -1.52, positive: false },
-              { name: 'RISE 금융채액티브', code: 'A336160', limit: '투자한도100%', price: 100595, pct: -0.05, positive: false },
-              { name: 'TIME Korea플러스배당액티브', code: 'A441800', limit: '투자한도70%', price: 37090, pct: 0.68, positive: true },
-              { name: 'KODEX 한국부동산리츠인프라', code: 'A476800', limit: '투자한도100%', price: 4455, pct: 0.34, positive: true },
-              { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27290, pct: 0.65, positive: true }
-            ].map((item, idx) => (
-              <div key={idx} style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '12px 14px',
-                borderBottom: idx < 5 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                cursor: 'pointer',
-                gap: '10px'
-              }}>
-                {/* Left: ETF Name + subtitle */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {/* Left: ETF Name + subtitle */}
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
+                    {/* ETF Name only */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{
+                        fontSize: item.name.length > 12 ? '0.74rem' : '0.85rem',
+                        fontWeight: '600',
+                        color: isDark ? '#e2e8f0' : '#111111',
+                        letterSpacing: '-0.2px',
+                        wordBreak: 'keep-all',
+                        whiteSpace: 'normal',
+                        lineHeight: '1.2'
+                      }}>{item.name}</span>
+                      {item.rank === 1 && isDrawerOpen && (
+                        <div style={{
+                          width: '18px',
+                          height: '18px',
+                          borderRadius: '50%',
+                          backgroundColor: '#00c3a5',
+                          color: '#ffffff',
+                          fontSize: '11px',
+                          fontWeight: 'bold',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                          flexShrink: 0
+                        }}>2</div>
+                      )}
+                      {item.rank === 3 && isDrawerOpen && (
+                        <div style={{
+                          width: '18px',
+                          height: '18px',
+                          borderRadius: '50%',
+                          backgroundColor: '#00c3a5',
+                          color: '#ffffff',
+                          fontSize: '11px',
+                          fontWeight: 'bold',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                          flexShrink: 0
+                        }}>3</div>
+                      )}
+                    </div>
+                    {/* 투자한도 + code (no box) */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: '500',
+                        color: '#3b82f6',
+                        letterSpacing: '-0.1px'
+                      }}>{item.limit}</span>
+                      <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
+                      <span style={{
+                        fontSize: '0.72rem',
+                        color: isDark ? '#64748b' : '#888888',
+                        letterSpacing: '-0.1px'
+                      }}>{item.code}</span>
+                    </div>
+                  </div>
+
+                  {/* Right: Price (top) + Arrow+Pct (bottom) */}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '3px' }}>
                     <span style={{
-                      fontSize: '0.85rem',
+                      fontSize: '0.92rem',
                       fontWeight: '600',
                       color: isDark ? '#e2e8f0' : '#111111',
-                      letterSpacing: '-0.2px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
-                    }}>{item.name}</span>
-                  </div>
-                  {/* 투자한도 + code */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <span style={{
-                      fontSize: '0.72rem',
-                      fontWeight: '500',
-                      color: '#3b82f6',
-                      letterSpacing: '-0.1px'
-                    }}>{item.limit}</span>
-                    <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
-                    <span style={{
-                      fontSize: '0.72rem',
-                      color: isDark ? '#64748b' : '#888888',
-                      letterSpacing: '-0.1px'
-                    }}>{item.code}</span>
+                      letterSpacing: '-0.3px'
+                    }}>{item.price.toLocaleString()}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                      <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
+                        {item.positive ? '▲' : '▼'}
+                      </span>
+                      <span style={{
+                        fontSize: '0.8rem',
+                        fontWeight: '600',
+                        color: item.positive ? '#de201e' : '#2366ca'
+                      }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                {/* Right: Price + arrow pct */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '3px' }}>
-                  <span style={{
-                    fontSize: '0.92rem',
-                    fontWeight: '600',
-                    color: isDark ? '#e2e8f0' : '#111111',
-                    letterSpacing: '-0.3px'
-                  }}>{item.price.toLocaleString()}</span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                    <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
-                      {item.positive ? '▲' : '▼'}
-                    </span>
-                    <span style={{
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      color: item.positive ? '#de201e' : '#2366ca'
-                    }}>{item.positive ? '+' : ''}{item.pct}%</span>
-                  </div>
-                </div>
+            {/* Grey Bar Separator */}
+            <div style={{
+              height: '8px',
+              backgroundColor: isDark ? '#121826' : '#f1f5f9',
+              flexShrink: 0
+            }} />
+
+            {/* GO배당GO금리 퇴직연금 ETF Section */}
+            <div style={{ padding: '16px 0 0 0', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
+              <div style={{ padding: '0 14px', marginBottom: '12px' }}>
+                <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>GO배당GO금리</span>
               </div>
-            ))}
+              <div>
+                {filterByChip(goDividendList).length === 0 ? renderEmptyState() : filterByChip(goDividendList).map((item, idx, arr) => (
+                  <div key={idx} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 14px',
+                    borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                    cursor: 'pointer',
+                    gap: '10px'
+                  }}>
+                    {/* Left: ETF Name + subtitle */}
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{
+                          fontSize: '0.85rem',
+                          fontWeight: '600',
+                          color: isDark ? '#e2e8f0' : '#111111',
+                          letterSpacing: '-0.2px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap'
+                        }}>{item.name}</span>
+                      </div>
+                      {/* 투자한도 + code */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: '500',
+                          color: '#3b82f6',
+                          letterSpacing: '-0.1px'
+                        }}>{item.limit}</span>
+                        <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
+                        <span style={{
+                          fontSize: '0.72rem',
+                          color: isDark ? '#64748b' : '#888888',
+                          letterSpacing: '-0.1px'
+                        }}>{item.code}</span>
+                      </div>
+                    </div>
+
+                    {/* Right: Price + arrow pct */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '3px' }}>
+                      <span style={{
+                        fontSize: '0.92rem',
+                        fontWeight: '600',
+                        color: isDark ? '#e2e8f0' : '#111111',
+                        letterSpacing: '-0.3px'
+                      }}>{item.price.toLocaleString()}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
+                          {item.positive ? '▲' : '▼'}
+                        </span>
+                        <span style={{
+                          fontSize: '0.8rem',
+                          fontWeight: '600',
+                          color: item.positive ? '#de201e' : '#2366ca'
+                        }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* 보유 Tab View */}
+        {activeMallTab === '보유' && (
+          <div style={{ padding: '0px 0' }}>
+            {/* 정렬 & 옵션 선택 Row */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 12px 8px 12px',
+              backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+              borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+              position: 'sticky',
+              top: 0,
+              zIndex: 10
+            }}>
+              {/* 수익률 정렬 Dropdown */}
+              <div 
+                onClick={() => setIsOwnedSortBsheetOpen(true)}
+                style={{
+                  flex: 1, 
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                  border: isDark ? '1px solid #334155' : '1px solid #cccccc',
+                  borderRadius: '4px',
+                  fontSize: '0.8rem',
+                  fontWeight: '500',
+                  color: isDark ? '#e2e8f0' : '#111111',
+                  padding: '0 24px 0 10px',
+                  cursor: 'pointer',
+                  height: '30px',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <span>{ownedSortOption}</span>
+                <span style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  fontSize: '0.55rem',
+                  pointerEvents: 'none',
+                  color: isDark ? '#94a3b8' : '#777777'
+                }}>▼</span>
+                {isDrawerOpen && activeMallTab === '보유' && (
+                  <div style={{
+                    position: 'absolute',
+                    right: '25px',
+                    top: '-10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '17px',
+                    height: '17px',
+                    borderRadius: '50%',
+                    backgroundColor: '#00c3a5',
+                    color: '#fff',
+                    fontSize: '11px',
+                    fontWeight: 'bold',
+                    zIndex: 11
+                  }}>2</div>
+                )}
+              </div>
+
+              {/* 평가금 / 현재가 Toggle Button Group */}
+              <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                <div style={{
+                  display: 'flex',
+                  borderRadius: '4px',
+                  overflow: 'hidden',
+                  border: isDark ? '1px solid #334155' : '1px solid #cccccc',
+                  height: '30px'
+                }}>
+                  <button
+                    onClick={() => setOwnedDisplayOption('평가금')}
+                    style={{
+                      border: 'none',
+                      padding: '0 12px',
+                      fontSize: '0.78rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      backgroundColor: ownedDisplayOption === '평가금' 
+                        ? (isDark ? '#475569' : '#555e69') 
+                        : (isDark ? '#1e293b' : '#ffffff'),
+                      color: ownedDisplayOption === '평가금' 
+                        ? '#ffffff' 
+                        : (isDark ? '#94a3b8' : '#777777'),
+                      transition: 'all 0.2s',
+                      outline: 'none'
+                    }}
+                  >
+                    평가금
+                  </button>
+                  <button
+                    onClick={() => setOwnedDisplayOption('현재가')}
+                    style={{
+                      border: 'none',
+                      borderLeft: isDark ? '1px solid #334155' : '1px solid #cccccc',
+                      padding: '0 12px',
+                      fontSize: '0.78rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      backgroundColor: ownedDisplayOption === '현재가' 
+                        ? (isDark ? '#475569' : '#555e69') 
+                        : (isDark ? '#1e293b' : '#ffffff'),
+                      color: ownedDisplayOption === '현재가' 
+                        ? '#ffffff' 
+                        : (isDark ? '#94a3b8' : '#777777'),
+                      transition: 'all 0.2s',
+                      outline: 'none'
+                    }}
+                  >
+                    현재가
+                  </button>
+                </div>
+                {isDrawerOpen && activeMallTab === '보유' && (
+                  <>
+                    {/* 평가금 버튼용 배지 3 */}
+                    <div style={{
+                      position: 'absolute',
+                      left: '16px',
+                      top: '-10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '17px',
+                      height: '17px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#fff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      zIndex: 11
+                    }}>3</div>
+                    {/* 현재가 버튼용 배지 4 */}
+                    <div style={{
+                      position: 'absolute',
+                      right: '16px',
+                      top: '-10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '17px',
+                      height: '17px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#fff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      zIndex: 11
+                    }}>4</div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* 보유 종목 리스트 */}
+            <div>
+              {renderStockList(getSortedOwnedList())}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* GO배당GO금리 Tab View */}
+        {activeMallTab === 'GO배당GO금리' && (
+          <div style={{ padding: '0px 0' }}>
+            {/* 최근 본 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              최근 본 종목
+            </div>
+            <div>
+              {renderStockList(recentViewedList)}
+            </div>
+
+            {/* 인기 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              인기 종목
+            </div>
+            <div>
+              {renderStockList(goDividendList)}
+            </div>
+          </div>
+        )}
+
+        {/* TDF Tab View */}
+        {activeMallTab === 'TDF' && (
+          <div style={{ padding: '0px 0' }}>
+            {/* 최근 본 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              최근 본 종목
+            </div>
+            <div>
+              {renderStockList(recentViewedList)}
+            </div>
+
+            {/* 인기 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              인기 종목
+            </div>
+            <div>
+              {renderStockList(tdfList)}
+            </div>
+          </div>
+        )}
+
+        {/* 전체 Tab View */}
+        {activeMallTab === '전체' && (
+          <div style={{ padding: '0px 0' }}>
+            {/* 최근 본 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              최근 본 종목
+            </div>
+            <div>
+              {renderStockList(recentViewedList)}
+            </div>
+
+            {/* 인기 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              인기 종목
+            </div>
+            <div>
+              {renderStockList(allList)}
+            </div>
+          </div>
+        )}
       </div>
 
 
+
+      {/* 보유 탭 정렬 바텀시트 */}
+      {isOwnedSortBsheetOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            onClick={() => setIsOwnedSortBsheetOpen(false)}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              zIndex: 9999,
+              backdropFilter: 'blur(1px)'
+            }}
+          />
+          {/* Bottom Sheet Menu */}
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            padding: '24px 20px 24px 20px',
+            zIndex: 10000,
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            boxSizing: 'border-box',
+            animation: 'ownedSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+          }}>
+            <style>{`
+              @keyframes ownedSlideUp {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+              }
+            `}</style>
+            <div style={{
+              fontSize: '1.05rem',
+              fontWeight: '700',
+              color: isDark ? '#ffffff' : '#111111',
+              marginBottom: '18px',
+              letterSpacing: '-0.3px'
+            }}>
+              정렬 기준 선택
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {[
+                '수익률 높은 순',
+                '평가금액 많은 순',
+                '수익률 낮은 순'
+              ].map((option) => {
+                const isSelected = ownedSortOption === option;
+                return (
+                  <div
+                    key={option}
+                    onClick={() => {
+                      setOwnedSortOption(option);
+                      setIsOwnedSortBsheetOpen(false);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '14px 0',
+                      borderBottom: isDark ? '1px solid #334155' : '1px solid #f1f5f9',
+                      cursor: 'pointer',
+                      color: isSelected ? (isDark ? '#ffffff' : '#000000') : (isDark ? '#94a3b8' : '#777777'),
+                      fontWeight: isSelected ? '700' : '400',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    <span>{option}</span>
+                    {isSelected && (
+                      <span style={{ fontSize: '1rem', fontWeight: 'bold' }}>✓</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* 관심종목 추가 바텀시트 */}
+      {isFavoriteBsheetOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            onClick={() => setIsFavoriteBsheetOpen(false)}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              zIndex: 9999,
+              backdropFilter: 'blur(1px)'
+            }}
+          />
+          {/* Bottom Sheet Menu */}
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            padding: '24px 20px 24px 20px',
+            zIndex: 10000,
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            boxSizing: 'border-box',
+            animation: 'favSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+          }}>
+            <style>{`
+              @keyframes favSlideUp {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+              }
+            `}</style>
+            
+            {/* Title */}
+            <div style={{
+              fontSize: '1.05rem',
+              fontWeight: '700',
+              color: isDark ? '#ffffff' : '#111111',
+              marginBottom: '18px',
+              letterSpacing: '-0.3px'
+            }}>
+              관심종목 추가
+            </div>
+
+            {/* 그룹1 선택 Row */}
+            <div 
+              onClick={() => {
+                if (pendingFavoriteCode) {
+                  toggleFavorite(pendingFavoriteCode);
+                }
+                setIsFavoriteBsheetOpen(false);
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '14px 0',
+                cursor: 'pointer',
+                borderBottom: isDark ? '1px solid #334155' : '1px solid #f1f5f9'
+              }}
+            >
+              <span style={{ fontSize: '0.95rem', fontWeight: '600', color: isDark ? '#ffffff' : '#222222' }}>그룹1</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '0.85rem', color: isDark ? '#94a3b8' : '#777777' }}>
+                  {favorites.length} 종목
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" strokeWidth="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+              </div>
+            </div>
+
+            {/* 추가할 위치 선택 Section */}
+            <div style={{ marginTop: '20px' }}>
+              <div style={{
+                fontSize: '0.95rem',
+                fontWeight: '700',
+                color: isDark ? '#ffffff' : '#111111',
+                marginBottom: '14px',
+                letterSpacing: '-0.3px'
+              }}>
+                추가할 위치 선택
+              </div>
+              <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+                {/* 맨 아래 추가 */}
+                <div 
+                  onClick={() => setFavoritePosition('bottom')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                >
+                  <div style={{
+                    width: '16px',
+                    height: '16px',
+                    borderRadius: '50%',
+                    border: favoritePosition === 'bottom' 
+                      ? (isDark ? '5px solid #3b82f6' : '5px solid #111111') 
+                      : (isDark ? '2px solid #475569' : '2px solid #cccccc'),
+                    boxSizing: 'border-box'
+                  }} />
+                  <span style={{ fontSize: '0.85rem', fontWeight: '500', color: isDark ? '#cbd5e1' : '#333333' }}>맨 아래 추가</span>
+                </div>
+
+                {/* 맨 위에 추가 */}
+                <div 
+                  onClick={() => setFavoritePosition('top')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                >
+                  <div style={{
+                    width: '16px',
+                    height: '16px',
+                    borderRadius: '50%',
+                    border: favoritePosition === 'top' 
+                      ? (isDark ? '5px solid #3b82f6' : '5px solid #111111') 
+                      : (isDark ? '2px solid #475569' : '2px solid #cccccc'),
+                    boxSizing: 'border-box'
+                  }} />
+                  <span style={{ fontSize: '0.85rem', fontWeight: '500', color: isDark ? '#cbd5e1' : '#333333' }}>맨 위에 추가</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Android Navigation Bar */}
       <div style={{
@@ -2648,7 +3536,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   );
 }
 
-function ToBeTigerDetailView({ setToBeSubScreen, isDark, setToBePrevSubScreen, isDrawerOpen }) {
+function ToBeTigerDetailView({ setToBeSubScreen, isDark, setToBePrevSubScreen, isDrawerOpen, setEtfMallNavMode }) {
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -2837,8 +3725,9 @@ function ToBeTigerDetailView({ setToBeSubScreen, isDark, setToBePrevSubScreen, i
             )}
             <div 
               onClick={() => {
+                setEtfMallNavMode('search');
                 setToBePrevSubScreen('tigerDetail');
-                setToBeSubScreen('stockSearch');
+                setToBeSubScreen('etfMall');
               }}
               style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
             >
@@ -3763,6 +4652,8 @@ function App() {
   const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
+  const [etfMallNavMode, setEtfMallNavMode] = useState('default'); // 'default' or 'search'
+  const [activeMallTab, setActiveMallTab] = useState('추천');
   const [isAsIsToBeExpanded, setIsAsIsToBeExpanded] = useState(false);
   const [enteredViaEtfMall, setEnteredViaEtfMall] = useState(false);
 
@@ -4263,9 +5154,9 @@ function App() {
                   position: 'relative'
                 }}>
                   {toBeSubScreen === 'etfMall' ? (
-                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} />
+                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} />
                   ) : toBeSubScreen === 'tigerDetail' ? (
-                    <ToBeTigerDetailView setToBeSubScreen={setToBeSubScreen} isDark={isDark} setToBePrevSubScreen={setToBePrevSubScreen} isDrawerOpen={isDrawerOpen} />
+                    <ToBeTigerDetailView setToBeSubScreen={setToBeSubScreen} isDark={isDark} setToBePrevSubScreen={setToBePrevSubScreen} isDrawerOpen={isDrawerOpen} setEtfMallNavMode={setEtfMallNavMode} />
                   ) : toBeSubScreen === 'stockSearch' ? (
                     <ToBeStockSearchView setToBeSubScreen={setToBeSubScreen} toBePrevSubScreen={toBePrevSubScreen} isDark={isDark} enteredViaEtfMall={enteredViaEtfMall} />
                   ) : (
@@ -4850,7 +5741,7 @@ function App() {
                 )}
               </div>
         
-              {toBeSubScreen === 'etfMall' && (
+              {toBeSubScreen === 'etfMall' && activeMallTab !== '보유' && (
                 <div style={{
                   backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
                   borderRadius: '12px',
@@ -4894,6 +5785,70 @@ function App() {
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>전체 현재가 화면 연동</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
                           <li>일반 트레이딩에서 사용하는 '전체 현재가' 화면 연동</li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              )}
+
+              {toBeSubScreen === 'etfMall' && activeMallTab === '보유' && (
+                <div style={{
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '14px',
+                  border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
+                  marginTop: '22px'
+                }}>
+                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
+                    주요 핵심 구현 사항
+                  </h3>
+                  <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>보유 주수 및 평균매입단가 표시</strong>
+                        <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                          <li>실제 보유 종목의 종목코드 행 하단에 `(수량)주 · 평균 (평단가)원` 형식의 세부 보유 정보 표기</li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>정렬기준 선택</strong>
+                        <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                          <li>좌측 정렬 선택 버튼 클릭 시 바텀시트 정렬 옵션 메뉴(`수익률 높은 순`, `평가금액 많은 순`, `수익률 낮은 순`) 호출 및 정렬 스위칭</li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>평가금 선택 시 통합 UI 연동</strong>
+                        <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                          <li>우측 토글에서 [평가금] 선택 시, 종목당 보유 수량과 평단가를 결합한 실시간 총 평가금액 및 손익금액(수익률) 일체형 통합 블록 활성화</li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>현재가 선택 시 고유 레이아웃 복원</strong>
+                        <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                          <li>우측 토글에서 [현재가] 선택 시, 평가금액 통합 블록이 비활성화되며 기존의 개별 [현재가/거래량] 및 [대비금액/대비율] 고유 레이아웃 형태로 자동 복원</li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>5</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>관심종목(별표) 등록 바텀시트 연동</strong>
+                        <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                          <li>종목 우측 별표 아이콘 클릭 시 관심종목 그룹 지정 및 추가할 위치 선택이 가능한 관심종목 추가 바텀시트 연동</li>
                         </ul>
                       </div>
                     </li>
