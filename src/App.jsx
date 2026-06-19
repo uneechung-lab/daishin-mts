@@ -2708,7 +2708,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             style={{ ...menuTabItemStyle(activeMallTab === tab), position: 'relative' }}
           >
             {tab}
-            {tab === '추천' && activeMallTab === '추천' && (
+            {tab === '추천' && activeMallTab === '추천' && isDrawerOpen && (
               <div style={{
                 position: 'absolute',
                 top: '-4px',
@@ -5741,7 +5741,7 @@ function App() {
                 )}
               </div>
         
-              {toBeSubScreen === 'etfMall' && activeMallTab !== '보유' && (
+              {toBeSubScreen === 'etfMall' && activeMallTab === '추천' && (
                 <div style={{
                   backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
                   borderRadius: '12px',
