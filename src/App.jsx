@@ -2320,16 +2320,19 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     { name: '키움키워드TDF2045', code: 'A0205F0', limit: '투자한도100%', price: 10840, pct: -0.75, positive: false }
   ];
 
+  const recentViewedTdfList = [
+    tdfList[0],
+    tdfList[2],
+    tdfList[5]
+  ];
+
   const goDividendList = [
-    { name: 'TIGER 코리아배당다우존스', code: 'A0052D0', limit: '투자한도70%', price: 16320, pct: -1.27, positive: false },
-    { name: 'PLUS 고배당주', code: 'A161510', limit: '투자한도70%', price: 26325, pct: -1.52, positive: false },
-    { name: 'RISE 금융채액티브', code: 'A336160', limit: '투자한도100%', price: 100595, pct: -0.05, positive: false },
-    { name: 'TIME Korea플러스배당액티브', code: 'A441800', limit: '투자한도70%', price: 37090, pct: 0.68, positive: true },
-    { name: 'KODEX 한국부동산리츠인프라', code: 'A476800', limit: '투자한도100%', price: 4455, pct: 0.34, positive: true },
-    { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27290, pct: 0.65, positive: true },
-    { name: 'ACE 미국고배당소비재', code: 'A0210A0', limit: '투자한도70%', price: 11840, pct: 0.15, positive: true },
-    { name: 'SOL 미국배당다우존스', code: 'A0211B0', limit: '투자한도70%', price: 10450, pct: 0.95, positive: true },
-    { name: 'KBSTAR 200고배당커버드콜', code: 'A0212C0', limit: '투자한도70%', price: 8640, pct: -0.35, positive: false }
+    { name: 'TIGER 코리아배당다우존스', code: 'A0052D0', limit: '투자한도70%', price: 15355, pct: -3.25, positive: false },
+    { name: 'PLUS 고배당주', code: 'A161510', limit: '투자한도70%', price: 24885, pct: -2.89, positive: false },
+    { name: 'RISE 금융채액티브', code: 'A336160', limit: '투자한도100%', price: 100340, pct: -0.14, positive: false },
+    { name: 'TIME Korea플러스배당액티브', code: 'A441800', limit: '투자한도70%', price: 37420, pct: 0.35, positive: true },
+    { name: 'KODEX 한국부동산리츠인프라', code: 'A476800', limit: '투자한도100%', price: 4260, pct: -1.50, positive: false },
+    { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27545, pct: 1.21, positive: true }
   ];
 
   // Merge lists to form a general list
@@ -2433,10 +2436,10 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                 </span>
               </div>
             )}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6' }}>{item.limit.replace('투자한도', '')}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>{item.limit.replace('투자한도', '')}</span>
               <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
-              <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888' }}>
+              <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
                 {item.code} · {item.name.includes('리츠') || item.name.includes('부동산') ? '리츠' : (item.name.includes('ETN') ? 'ETN' : 'ETF')} · {item.name.match(/미국|글로벌|S&P500|나스닥|인도|차이나|베트남/) ? '해외' : '국내'}
               </span>
             </div>
@@ -3235,7 +3238,18 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               </div>
             </div>
 
-            {/* 보유 종목 리스트 */}
+            {/* 최근 본 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              최근 본 종목
+            </div>
+            <div>
+              {renderStockList(recentViewedOwnedList.slice(0, 3))}
+            </div>
+
+            {/* 인기 종목 Section */}
+            <div style={sectionHeaderStyle}>
+              인기 종목
+            </div>
             <div>
               {renderStockList(getSortedOwnedList())}
             </div>
@@ -3245,14 +3259,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {/* GO배당GO금리 Tab View */}
         {activeMallTab === 'GO배당GO금리' && (
           <div style={{ padding: '0px 0' }}>
-            {/* 최근 본 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              최근 본 종목
-            </div>
-            <div>
-              {renderStockList(recentViewedList)}
-            </div>
-
             {/* 인기 종목 Section */}
             <div style={sectionHeaderStyle}>
               인기 종목
@@ -3271,7 +3277,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               최근 본 종목
             </div>
             <div>
-              {renderStockList(recentViewedList)}
+              {renderStockList(recentViewedTdfList.slice(0, 3))}
             </div>
 
             {/* 인기 종목 Section */}
@@ -3292,7 +3298,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               최근 본 종목
             </div>
             <div>
-              {renderStockList(recentViewedList)}
+              {renderStockList(recentViewedList.slice(0, 3))}
             </div>
 
             {/* 인기 종목 Section */}
@@ -4793,6 +4799,7 @@ function App() {
   const [activeMallTab, setActiveMallTab] = useState('추천');
   const [isAsIsToBeExpanded, setIsAsIsToBeExpanded] = useState(false);
   const [enteredViaEtfMall, setEnteredViaEtfMall] = useState(false);
+  const [isSearchEnhancementModalOpen, setIsSearchEnhancementModalOpen] = useState(false);
 
   useEffect(() => {
     if (activeScreen === 2) {
@@ -5840,7 +5847,19 @@ function App() {
                             ETF몰 메뉴 및 화면 신설
                             <ul style={{ margin: '4px 0 0 0', paddingLeft: '22px', listStyleType: 'circle' }}>
                               <li style={{ marginBottom: '2px' }}>상단 탭 세분화</li>
-                              <li style={{ marginBottom: '2px' }}>검색창 기능 강화</li>
+                              <li 
+                                onClick={() => setIsSearchEnhancementModalOpen(true)}
+                                style={{ 
+                                  marginBottom: '2px', 
+                                  cursor: 'pointer', 
+                                  color: '#00c3a5', 
+                                  textDecoration: 'underline',
+                                  fontWeight: '600'
+                                }}
+                                title="상세 정보 모달 열기"
+                              >
+                                검색창 기능 강화...
+                              </li>
                               <li>종목 리스트 UX 강화</li>
                             </ul>
                           </li>
@@ -6133,6 +6152,187 @@ function App() {
           </div>
         ))}
       </div>
+
+      {/* Modal for 검색창 기능 강화 */}
+      {isSearchEnhancementModalOpen && (
+        <>
+          {/* Backdrop with premium blur */}
+          <div 
+            onClick={() => setIsSearchEnhancementModalOpen(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: isDark ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0.45)',
+              backdropFilter: 'blur(8px)',
+              zIndex: 100000,
+              animation: 'fadeIn 0.25s ease-out'
+            }}
+          />
+          {/* Modal Container */}
+          <div style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '90%',
+            maxWidth: '650px',
+            maxHeight: '85vh',
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderRadius: '16px',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)',
+            zIndex: 100001,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+            animation: 'scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
+          }}>
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '20px 24px',
+              borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+              backgroundColor: isDark ? '#0f172a' : '#f8fafc'
+            }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: '800', color: isDark ? '#ffffff' : '#0f172a' }}>
+                퇴직연금 종목 검색기 고도화
+              </span>
+              <button 
+                onClick={() => setIsSearchEnhancementModalOpen(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '24px',
+                  fontWeight: '300',
+                  color: isDark ? '#94a3b8' : '#64748b',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  lineHeight: '1'
+                }}
+              >
+                &times;
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{
+              padding: '28px 24px',
+              overflowY: 'auto',
+              fontSize: '0.98rem',
+              lineHeight: '1.7',
+              color: isDark ? '#cbd5e1' : '#334155',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px',
+              textAlign: 'left',
+              wordBreak: 'keep-all'
+            }}>
+              <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <h2 style={{ fontSize: '1.15rem', fontWeight: '700', margin: '0', color: isDark ? '#e2e8f0' : '#0f172a' }}>
+                  1. 개요
+                </h2>
+                <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <li>
+                    <strong>현황 및 문제점:</strong> 현재 퇴직연금 종목 검색기는 대소문자 구분이 잘 안 되는 등 일반 트레이딩(리테일) 화면에 비해 성능 및 편의성이 떨어짐. 검색 시마다 매번 서버를 호출하여 정보를 받는 구조임.
+                  </li>
+                  <li>
+                    <strong>개선 목표:</strong> 기존 리테일 트레이딩 시스템과 유사한 수준으로 성능을 끌어올리고 검색 기능을 다양화(고도화)하고자 함.
+                  </li>
+                </ul>
+              </section>
+
+              <section style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '10px' }}>
+                <h2 style={{ fontSize: '1.15rem', fontWeight: '700', margin: '0', color: isDark ? '#e2e8f0' : '#0f172a' }}>
+                  2. 기술적 구현 방식 및 쟁점 사항
+                </h2>
+                
+                <div style={{
+                  backgroundColor: isDark ? 'rgba(56, 189, 248, 0.06)' : 'rgba(2, 102, 218, 0.04)',
+                  padding: '16px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '6px'
+                }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: '700', margin: '0 0 4px 0', color: isDark ? '#38bdf8' : '#0266da' }}>
+                    ① 검색 방식 전환 (서버 호출 ➡️ 클라이언트 캐싱)
+                  </h3>
+                  <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <li>
+                      <strong>리테일 방식 벤치마킹:</strong> 리테일 앱은 실행 시 주식/ETF의 기본 정보를 클라이언트(프론트엔드)에 미리 다 받아둔 후, 옵션에 따라 내부 리스트를 갱신하는 방식을 사용 중임.
+                    </li>
+                    <li>
+                      <strong>적용 방안:</strong> 글로벌 클라이언트가 가진 정보에 '퇴직연금 플래그(Flag) 값'만 추가할 수 있다면, 서버와 매번 왔다 갔다 할 필요 없이 프론트엔드 내에서 심플하게 구현 가능할 것으로 예상됨. (단, IT 팀과 상의 필요)
+                    </li>
+                  </ul>
+                </div>
+
+                <div style={{
+                  backgroundColor: isDark ? 'rgba(234, 179, 8, 0.06)' : 'rgba(217, 119, 6, 0.04)',
+                  padding: '16px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '6px'
+                }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: '700', margin: '0 0 4px 0', color: isDark ? '#eab308' : '#d97706' }}>
+                    ② 추가 화면 정보 노출 및 데이터 동기화
+                  </h3>
+                  <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <li>
+                      <strong>요구사항:</strong> 단순 종목명 검색을 넘어 <strong>전일 대비 금액, 현재가, 평균 단가(평가 금액)</strong> 등의 추가 정보를 검색 결과 목록에 함께 보여주기를 원함.
+                    </li>
+                    <li>
+                      <strong>해결 과제:</strong>
+                      <ul style={{ margin: '4px 0 0 0', paddingLeft: '20px', listStyleType: 'circle', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                        <li>'현재가' 및 '전일 대비' 정보는 앱 실행 시 받은 목록을 기반으로 검색 후, 필요시 서버에서 목록 단위로 데이터를 한 번 더 받아오는 작업이 필요함.</li>
+                        <li><strong>'평균 단가/평가 금액' 노출의 문제점:</strong> 사용자가 보유한 항목에 대한 정보이므로 반드시 <strong>로그인</strong>이 전제되어야 함. 또한 고객 기준으로 복수 계좌를 모두 조회해야 하므로 리소스 및 데이터 처리 측면에서 이슈가 발생할 수 있음.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+            
+            {/* Modal Footer */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              padding: '16px 24px',
+              borderTop: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+              backgroundColor: isDark ? '#0f172a' : '#f8fafc'
+            }}>
+              <button 
+                onClick={() => setIsSearchEnhancementModalOpen(false)}
+                style={{
+                  backgroundColor: isDark ? '#38bdf8' : '#0266da',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '10px 20px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                  transition: 'background-color 0.2s'
+                }}
+                onMouseOver={(e) => e.target.style.backgroundColor = isDark ? '#0284c7' : '#0250b0'}
+                onMouseOut={(e) => e.target.style.backgroundColor = isDark ? '#38bdf8' : '#0266da'}
+              >
+                닫기
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
