@@ -1898,7 +1898,8 @@ function AsIsCurrentPriceView({ setAsIsSubScreen, isDark }) {
                 '1개월',
                 '3개월',
                 '6개월',
-                '1년'
+                '1년',
+                '3년'
               ].map((option) => {
                 const isSelected = sortOption === option;
                 return (
@@ -2149,6 +2150,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   const [sortOption, setSortOption] = useState('1주일');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedChip, setSelectedChip] = useState('전체');
+  const [searchQuery, setSearchQuery] = useState('');
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [ownedSortOption, setOwnedSortOption] = useState('수익률 높은 순');
   const [ownedDisplayOption, setOwnedDisplayOption] = useState('평가금');
@@ -2346,19 +2348,26 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   );
 
   const filterByChip = (list) => {
-    if (selectedChip === '전체') return list;
-    return list.filter(item => {
-      if (selectedChip === 'ETF') {
-        return item.name.includes('ETF') || item.name.includes('반도체') || item.name.includes('채권') || item.name.includes('S&P500') || item.name.includes('우주') || item.name.includes('배당') || item.name.includes('TDF');
-      }
-      if (selectedChip === 'ETN') {
-        return item.name.includes('ETN');
-      }
-      if (selectedChip === '리츠') {
-        return item.name.includes('리츠') || item.name.includes('부동산');
-      }
-      return true;
-    });
+    let filtered = list;
+    if (selectedChip !== '전체') {
+      filtered = list.filter(item => {
+        if (selectedChip === 'ETF') {
+          return item.name.includes('ETF') || item.name.includes('반도체') || item.name.includes('채권') || item.name.includes('S&P500') || item.name.includes('우주') || item.name.includes('배당') || item.name.includes('TDF');
+        }
+        if (selectedChip === 'ETN') {
+          return item.name.includes('ETN');
+        }
+        if (selectedChip === '리츠') {
+          return item.name.includes('리츠') || item.name.includes('부동산');
+        }
+        return true;
+      });
+    }
+    if (searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(item => item.name.toLowerCase().includes(q) || item.code.toLowerCase().includes(q));
+    }
+    return filtered;
   };
 
   const renderEmptyState = () => (
@@ -2741,10 +2750,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         gap: '10px'
       }}>
         <div 
-          onClick={() => {
-            setToBePrevSubScreen('etfMall');
-            setToBeSubScreen('stockSearch');
-          }}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -2753,25 +2758,42 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             padding: '0 12px',
             height: '38px',
             gap: '8px',
-            backgroundColor: isDark ? '#121826' : '#ffffff',
-            cursor: 'pointer'
+            backgroundColor: isDark ? '#121826' : '#ffffff'
           }}
         >
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="2.5" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
           <input 
             type="text"
             placeholder="종목명, 종목코드, 초성입력"
-            disabled
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               border: 'none',
               background: 'none',
               width: '100%',
               outline: 'none',
               fontSize: '0.82rem',
-              color: isDark ? '#ffffff' : '#222222',
-              cursor: 'pointer'
+              color: isDark ? '#ffffff' : '#222222'
             }}
           />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              style={{
+                border: 'none',
+                background: 'none',
+                color: isDark ? '#94a3b8' : '#888888',
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+                padding: '4px 0px 4px 8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ✕
+            </button>
+          )}
         </div>
 
         {/* Filter Chips Row */}
@@ -3495,6 +3517,94 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                   <span style={{ fontSize: '0.85rem', fontWeight: '500', color: isDark ? '#cbd5e1' : '#333333' }}>맨 위에 추가</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* 1주일/1개월 등 기간 정렬 바텀시트 */}
+      {isBottomSheetOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            onClick={() => setIsBottomSheetOpen(false)}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              zIndex: 9999,
+              backdropFilter: 'blur(1px)'
+            }}
+          />
+          {/* Bottom Sheet Menu */}
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            padding: '24px 20px 24px 20px',
+            zIndex: 10000,
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            boxSizing: 'border-box',
+            animation: 'sortSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+          }}>
+            <style>{`
+              @keyframes sortSlideUp {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+              }
+            `}</style>
+            <div style={{
+              fontSize: '1.05rem',
+              fontWeight: '700',
+              color: isDark ? '#ffffff' : '#111111',
+              marginBottom: '18px',
+              letterSpacing: '-0.3px'
+            }}>
+              조회 기간
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {[
+                '1주일',
+                '1개월',
+                '3개월',
+                '6개월',
+                '1년',
+                '3년'
+              ].map((option) => {
+                const isSelected = sortOption === option;
+                return (
+                  <div
+                    key={option}
+                    onClick={() => {
+                      setSortOption(option);
+                      setIsBottomSheetOpen(false);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '14px 0',
+                      borderBottom: isDark ? '1px solid #334155' : '1px solid #f1f5f9',
+                      cursor: 'pointer',
+                      color: isSelected ? (isDark ? '#ffffff' : '#000000') : (isDark ? '#94a3b8' : '#777777'),
+                      fontWeight: isSelected ? '700' : '400',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    <span>{option}</span>
+                    {isSelected && (
+                      <span style={{ fontSize: '1rem', fontWeight: 'bold' }}>✓</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </>
@@ -4256,6 +4366,7 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
   const tabs = isEtfOnly ? ['추천', '보유', 'GO배당GO금리', 'TDF', '전체'] : ['국내주식', '해외주식', 'ETF', '리츠'];
   const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [selectedChip, setSelectedChip] = useState('전체');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const getFilteredStocks = () => {
     if (isEtfOnly) {
@@ -4311,13 +4422,20 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
   };
 
   const getChippedStocks = (stockList) => {
-    if (selectedChip === '전체') return stockList;
-    return stockList.filter(s => {
-      if (selectedChip === 'ETF') return s.name.includes('ETF') || s.name.includes('밸류') || s.name.includes('인프') || s.name.includes('액티') || s.name.includes('S&P500') || s.name.includes('코스닥') || s.name.includes('TDF');
-      if (selectedChip === 'ETN') return s.name.includes('ETN');
-      if (selectedChip === '리츠') return s.name.includes('리츠');
-      return true;
-    });
+    let result = stockList;
+    if (selectedChip !== '전체') {
+      result = stockList.filter(s => {
+        if (selectedChip === 'ETF') return s.name.includes('ETF') || s.name.includes('밸류') || s.name.includes('인프') || s.name.includes('액티') || s.name.includes('S&P500') || s.name.includes('코스닥') || s.name.includes('TDF');
+        if (selectedChip === 'ETN') return s.name.includes('ETN');
+        if (selectedChip === '리츠') return s.name.includes('리츠');
+        return true;
+      });
+    }
+    if (searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(s => s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q));
+    }
+    return result;
   };
 
   const displayStocks = getChippedStocks(getFilteredStocks()).map((stock) => {
@@ -4444,7 +4562,8 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
           <input 
             type="text"
             placeholder="종목명, 종목코드, 초성입력"
-            disabled
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               border: 'none',
               background: 'none',
@@ -4454,6 +4573,24 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
               color: isDark ? '#ffffff' : '#222222'
             }}
           />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              style={{
+                border: 'none',
+                background: 'none',
+                color: isDark ? '#94a3b8' : '#888888',
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+                padding: '4px 0px 4px 8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ✕
+            </button>
+          )}
         </div>
 
         {/* Filter Chips Row */}
