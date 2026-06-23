@@ -1594,39 +1594,6 @@ function PhoneEmulator({
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: isDark ? '#cbd5e1' : '#333' }}><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
         </button>
       </div>
-
-      {/* Android Navigation Keys Bar */}
-      <div style={{
-        height: '32px',
-        backgroundColor: isDark ? '#0b0f19' : '#f8fafc',
-        borderTop: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        padding: '0 40px'
-      }}>
-        {/* ||| key */}
-        <div style={{ display: 'flex', gap: '3px', cursor: 'pointer' }}>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-        </div>
-        {/* O key */}
-        <div style={{
-          width: '12px',
-          height: '12px',
-          border: '2px solid #94a3b8',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}></div>
-        {/* < key */}
-        <div 
-          onClick={onBackClick}
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="3"><polyline points="15 18 9 12 15 6" /></svg>
-        </div>
-      </div>
     </>
   );
 
