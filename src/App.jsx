@@ -1637,7 +1637,6 @@ function PhoneEmulator({
   return (
     <div style={{
       ...styles.phoneMockup,
-      borderColor: isDark ? '#334155' : '#1e293b',
       backgroundColor: isDark ? '#0b0f19' : '#fff'
     }}>
       {content}
@@ -4966,7 +4965,6 @@ function App() {
                 }}>AS IS</div>
                 <div style={{
                   ...styles.phoneMockup,
-                  borderColor: isDark ? '#334155' : '#1e293b',
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
                   height: '800px',
@@ -5289,7 +5287,6 @@ function App() {
                 
                 <div style={{
                   ...styles.phoneMockup,
-                  borderColor: isDark ? '#334155' : '#1e293b',
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
                   height: '800px',
@@ -6378,8 +6375,8 @@ const styles = {
   phoneMockup: {
     width: '360px',
     height: '800px',
-    borderRadius: '24px',
-    border: '6px solid #22252a',
+    borderRadius: '0px',
+    border: '1px solid var(--border-color, #dddddd)',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
