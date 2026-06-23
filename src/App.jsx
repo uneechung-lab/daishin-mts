@@ -6423,7 +6423,7 @@ const styles = {
     width: '360px',
     height: '800px',
     borderRadius: '0px',
-    border: '1px solid var(--border-color, #dddddd)',
+    border: '1px solid #000000',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
