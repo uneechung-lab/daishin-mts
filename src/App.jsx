@@ -4800,6 +4800,53 @@ function App() {
   const [enteredViaEtfMall, setEnteredViaEtfMall] = useState(false);
   const [isSearchEnhancementModalOpen, setIsSearchEnhancementModalOpen] = useState(false);
 
+  // URL Parameter Synchronization
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    
+    const screenParam = params.get('screen');
+    if (screenParam) {
+      const num = parseInt(screenParam, 10);
+      if (num >= 1 && num <= 9) setActiveScreen(num);
+    }
+    
+    const asisParam = params.get('asis');
+    if (asisParam) setAsIsSubScreen(asisParam);
+    
+    const tobeParam = params.get('tobe');
+    if (tobeParam) setToBeSubScreen(tobeParam);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('screen', activeScreen);
+    params.set('asis', asIsSubScreen);
+    params.set('tobe', toBeSubScreen);
+    
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    if (window.location.search !== `?${params.toString()}`) {
+      window.history.pushState({}, '', newUrl);
+    }
+  }, [activeScreen, asIsSubScreen, toBeSubScreen]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const screenParam = params.get('screen');
+      if (screenParam) {
+        const num = parseInt(screenParam, 10);
+        if (num >= 1 && num <= 9) setActiveScreen(num);
+      }
+      const asisParam = params.get('asis');
+      if (asisParam) setAsIsSubScreen(asisParam);
+      const tobeParam = params.get('tobe');
+      if (tobeParam) setToBeSubScreen(tobeParam);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   useEffect(() => {
     if (activeScreen === 2) {
       // Screen 2 always has "주요 핵심 구현 사항"
