@@ -3581,39 +3581,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           </div>
         </>
       )}
-
-      {/* Android Navigation Bar */}
-      <div style={{
-        height: '32px',
-        backgroundColor: isDark ? '#0b0f19' : '#000000',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        padding: '0 40px',
-        color: '#ffffff'
-      }}>
-        {/* ||| key */}
-        <div style={{ display: 'flex', gap: '3px', cursor: 'pointer' }}>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-        </div>
-        {/* O key */}
-        <div style={{
-          width: '12px',
-          height: '12px',
-          border: '2px solid #94a3b8',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}></div>
-        {/* < key */}
-        <div 
-          onClick={() => setToBeSubScreen('menu')}
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="3"><polyline points="15 18 9 12 15 6" /></svg>
-        </div>
-      </div>
     </div>
   );
 }
@@ -4254,36 +4221,6 @@ function ToBeTigerDetailView({ setToBeSubScreen, isDark, setToBePrevSubScreen, i
         </div>
       </div>
 
-      {/* Android Back/Navigation Bar */}
-      <div style={{
-        height: '36px',
-        backgroundColor: isDark ? '#0b0f19' : '#000000',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        padding: '0 40px',
-        color: '#ffffff',
-        flexShrink: 0
-      }}>
-        <div style={{ display: 'flex', gap: '3px', cursor: 'pointer' }}>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-        </div>
-        <div style={{
-          width: '12px',
-          height: '12px',
-          border: '2px solid #94a3b8',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}></div>
-        <div 
-          onClick={() => setToBeSubScreen('etfMall')}
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="3"><polyline points="15 18 9 12 15 6" /></svg>
-        </div>
-      </div>
     </div>
   );
 }
@@ -4709,37 +4646,6 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
             </div>
           );
         })}
-      </div>
-
-      {/* Android Bottom Navigation Bar */}
-      <div style={{
-        height: '36px',
-        backgroundColor: isDark ? '#0b0f19' : '#000000',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        padding: '0 40px',
-        color: '#ffffff',
-        flexShrink: 0
-      }}>
-        <div style={{ display: 'flex', gap: '3px', cursor: 'pointer' }}>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-          <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8', borderRadius: '1px' }}></div>
-        </div>
-        <div style={{
-          width: '12px',
-          height: '12px',
-          border: '2px solid #94a3b8',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}></div>
-        <div 
-          onClick={() => setToBeSubScreen(toBePrevSubScreen)}
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="3"><polyline points="15 18 9 12 15 6" /></svg>
-        </div>
       </div>
     </div>
   );
