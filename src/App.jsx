@@ -2942,23 +2942,56 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                     </div>
                   </div>
 
-                  {/* Right: Price (top) + Arrow+Pct (bottom) */}
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '3px' }}>
-                    <span style={{
-                      fontSize: '0.92rem',
-                      fontWeight: '600',
-                      color: isDark ? '#e2e8f0' : '#111111',
-                      letterSpacing: '-0.3px'
-                    }}>{item.price.toLocaleString()}</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                      <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
-                        {item.positive ? '▲' : '▼'}
-                      </span>
+                  {/* Right: Price (top) + Arrow+Pct (bottom) with K/N market icon stack */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
                       <span style={{
-                        fontSize: '0.8rem',
+                        fontSize: '0.92rem',
                         fontWeight: '600',
-                        color: item.positive ? '#de201e' : '#2366ca'
-                      }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                        color: isDark ? '#e2e8f0' : '#111111',
+                        letterSpacing: '-0.3px'
+                      }}>{item.price.toLocaleString()}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
+                          {item.positive ? '▲' : '▼'}
+                        </span>
+                        <span style={{
+                          fontSize: '0.8rem',
+                          fontWeight: '600',
+                          color: item.positive ? '#de201e' : '#2366ca'
+                        }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                      </div>
+                    </div>
+                    
+                    {/* K / N Stack */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                      <div style={{
+                        width: '12px',
+                        height: '12px',
+                        border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                        backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                        color: isDark ? '#52c4a5' : '#007a5a',
+                        fontSize: '8px',
+                        fontWeight: '800',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: '1px',
+                        lineHeight: 1
+                      }}>K</div>
+                      <div style={{
+                        width: '12px',
+                        height: '12px',
+                        backgroundColor: '#d99a06',
+                        color: '#ffffff',
+                        fontSize: '8px',
+                        fontWeight: '800',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: '1px',
+                        lineHeight: 1
+                      }}>N</div>
                     </div>
                   </div>
 
@@ -3033,23 +3066,56 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                       </div>
                     </div>
 
-                    {/* Right: Price + arrow pct */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, gap: '3px' }}>
-                      <span style={{
-                        fontSize: '0.92rem',
-                        fontWeight: '600',
-                        color: isDark ? '#e2e8f0' : '#111111',
-                        letterSpacing: '-0.3px'
-                      }}>{item.price.toLocaleString()}</span>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                        <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
-                          {item.positive ? '▲' : '▼'}
-                        </span>
+                    {/* Right: Price + arrow pct with K/N market icon stack */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
                         <span style={{
-                          fontSize: '0.8rem',
+                          fontSize: '0.92rem',
                           fontWeight: '600',
-                          color: item.positive ? '#de201e' : '#2366ca'
-                        }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                          color: isDark ? '#e2e8f0' : '#111111',
+                          letterSpacing: '-0.3px'
+                        }}>{item.price.toLocaleString()}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                          <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
+                            {item.positive ? '▲' : '▼'}
+                          </span>
+                          <span style={{
+                            fontSize: '0.8rem',
+                            fontWeight: '600',
+                            color: item.positive ? '#de201e' : '#2366ca'
+                          }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                        </div>
+                      </div>
+                      
+                      {/* K / N Stack */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                        <div style={{
+                          width: '12px',
+                          height: '12px',
+                          border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                          backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                          color: isDark ? '#52c4a5' : '#007a5a',
+                          fontSize: '8px',
+                          fontWeight: '800',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '1px',
+                          lineHeight: 1
+                        }}>K</div>
+                        <div style={{
+                          width: '12px',
+                          height: '12px',
+                          backgroundColor: '#d99a06',
+                          color: '#ffffff',
+                          fontSize: '8px',
+                          fontWeight: '800',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '1px',
+                          lineHeight: 1
+                        }}>N</div>
                       </div>
                     </div>
 
