@@ -2335,6 +2335,20 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     self.findIndex(t => t.name === item.name) === index
   );
 
+  const getChoseong = (str) => {
+    const CHOSEONG = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
+      const code = str.charCodeAt(i) - 0xAC00;
+      if (code >= 0 && code <= 11171) {
+        result += CHOSEONG[Math.floor(code / 588)];
+      } else {
+        result += str.charAt(i);
+      }
+    }
+    return result;
+  };
+
   const filterByChip = (list) => {
     let filtered = list;
     if (selectedChip !== '전체') {
@@ -2353,7 +2367,14 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     }
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
-      filtered = filtered.filter(item => item.name.toLowerCase().includes(q) || item.code.toLowerCase().includes(q));
+      if (/^[ㄱ-ㅎ\s]+$/.test(q)) {
+        filtered = filtered.filter(item => {
+          const nameChoseong = getChoseong(item.name);
+          return nameChoseong.includes(q) || item.code.toLowerCase().includes(q);
+        });
+      } else {
+        filtered = filtered.filter(item => item.name.toLowerCase().includes(q) || item.code.toLowerCase().includes(q));
+      }
     }
     return filtered;
   };
