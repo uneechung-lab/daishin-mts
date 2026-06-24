@@ -2961,6 +2961,22 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                       }}>{item.positive ? '+' : ''}{item.pct}%</span>
                     </div>
                   </div>
+
+                  {/* Col 4: Favorite star icon */}
+                  <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
+                    <div 
+                      style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPendingFavoriteCode(item.code);
+                        setIsFavoriteBsheetOpen(true);
+                      }}
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -3034,6 +3050,22 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                           fontWeight: '600',
                           color: item.positive ? '#de201e' : '#2366ca'
                         }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                      </div>
+                    </div>
+
+                    {/* Col 4: Favorite star icon */}
+                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
+                      <div 
+                        style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPendingFavoriteCode(item.code);
+                          setIsFavoriteBsheetOpen(true);
+                        }}
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
                       </div>
                     </div>
                   </div>
