@@ -2111,7 +2111,7 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
   );
 }
 
-function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab }) {
+function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption }) {
   const [activeTab, setActiveTab] = useState('1주일 매수고객순'); // '1주일 매수고객순', '1주일 매수금액순'
   const [sortOption, setSortOption] = useState('1주일');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
@@ -2119,7 +2119,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   const [searchQuery, setSearchQuery] = useState('');
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [ownedSortOption, setOwnedSortOption] = useState('수익률 높은 순');
-  const [ownedDisplayOption, setOwnedDisplayOption] = useState('평가금');
   const [isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen] = useState(false);
   const [isFavoriteBsheetOpen, setIsFavoriteBsheetOpen] = useState(false);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
@@ -4669,6 +4668,7 @@ function App() {
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
   const [etfMallNavMode, setEtfMallNavMode] = useState('default'); // 'default' or 'search'
   const [activeMallTab, setActiveMallTab] = useState('추천');
+  const [ownedDisplayOption, setOwnedDisplayOption] = useState('평가금');
   const [isAsIsToBeExpanded, setIsAsIsToBeExpanded] = useState(false);
   const [enteredViaEtfMall, setEnteredViaEtfMall] = useState(false);
   const [isSearchEnhancementModalOpen, setIsSearchEnhancementModalOpen] = useState(false);
@@ -4691,6 +4691,9 @@ function App() {
 
     const mallTabParam = params.get('mallTab');
     if (mallTabParam) setActiveMallTab(mallTabParam);
+
+    const ownedDisplayParam = params.get('ownedDisplay');
+    if (ownedDisplayParam) setOwnedDisplayOption(ownedDisplayParam);
   }, []);
 
   useEffect(() => {
@@ -4699,12 +4702,13 @@ function App() {
     params.set('asis', asIsSubScreen);
     params.set('tobe', toBeSubScreen);
     params.set('mallTab', activeMallTab);
+    params.set('ownedDisplay', ownedDisplayOption);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.pushState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -4720,6 +4724,8 @@ function App() {
       if (tobeParam) setToBeSubScreen(tobeParam);
       const mallTabParam = params.get('mallTab');
       if (mallTabParam) setActiveMallTab(mallTabParam);
+      const ownedDisplayParam = params.get('ownedDisplay');
+      if (ownedDisplayParam) setOwnedDisplayOption(ownedDisplayParam);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -5221,7 +5227,7 @@ function App() {
                   position: 'relative'
                 }}>
                   {toBeSubScreen === 'etfMall' ? (
-                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} />
+                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} ownedDisplayOption={ownedDisplayOption} setOwnedDisplayOption={setOwnedDisplayOption} />
                   ) : toBeSubScreen === 'tigerDetail' ? (
                     <ToBeTigerDetailView setToBeSubScreen={setToBeSubScreen} isDark={isDark} setToBePrevSubScreen={setToBePrevSubScreen} isDrawerOpen={isDrawerOpen} setEtfMallNavMode={setEtfMallNavMode} />
                   ) : toBeSubScreen === 'stockSearch' ? (
