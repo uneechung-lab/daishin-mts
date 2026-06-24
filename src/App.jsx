@@ -2964,7 +2964,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                     </div>
                     
                     {/* K / N Stack */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0, marginLeft: '2px' }}>
                       <div style={{
                         width: '12px',
                         height: '12px',
@@ -3088,7 +3088,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                       </div>
                       
                       {/* K / N Stack */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0, marginLeft: '2px' }}>
                         <div style={{
                           width: '12px',
                           height: '12px',
