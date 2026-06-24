@@ -5910,7 +5910,8 @@ function App() {
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
                           <li style={{ marginBottom: '2px' }}>투자한도 제한(70%, 100%)</li>
                           <li style={{ marginBottom: '2px' }}>자산·시장 구분</li>
-                          <li>보유/미보유 종목 UI 이원화</li>
+                          <li style={{ marginBottom: '2px' }}>보유/미보유 종목 UI 이원화</li>
+                          <li>관심 종목 추가 기능</li>
                         </ul>
                       </div>
                     </li>
