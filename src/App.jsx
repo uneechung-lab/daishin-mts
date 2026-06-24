@@ -2134,12 +2134,11 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark, searchQuery, setSearchQ
   );
 }
 
-function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption, ownedSortOption, setOwnedSortOption, isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen, isFavoriteBsheetOpen, setIsFavoriteBsheetOpen }) {
+function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption, ownedSortOption, setOwnedSortOption, isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen, isFavoriteBsheetOpen, setIsFavoriteBsheetOpen, searchQuery, setSearchQuery }) {
   const [activeTab, setActiveTab] = useState('1주일 매수고객순'); // '1주일 매수고객순', '1주일 매수금액순'
   const [sortOption, setSortOption] = useState('1주일');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedChip, setSelectedChip] = useState('전체');
-  const [searchQuery, setSearchQuery] = useState('');
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
   const [pendingFavoriteCode, setPendingFavoriteCode] = useState(null);
@@ -4812,6 +4811,7 @@ function App() {
   const [isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen] = useState(false);
   const [isFavoriteBsheetOpen, setIsFavoriteBsheetOpen] = useState(false);
   const [asisSearchQuery, setAsisSearchQuery] = useState('');
+  const [tobeSearchQuery, setTobeSearchQuery] = useState('');
   const [isAsIsToBeExpanded, setIsAsIsToBeExpanded] = useState(false);
   const [enteredViaEtfMall, setEnteredViaEtfMall] = useState(false);
   const [isSearchEnhancementModalOpen, setIsSearchEnhancementModalOpen] = useState(false);
@@ -4849,6 +4849,9 @@ function App() {
 
     const asisQueryParam = params.get('asisQuery');
     if (asisQueryParam) setAsisSearchQuery(asisQueryParam);
+
+    const tobeQueryParam = params.get('tobeQuery');
+    if (tobeQueryParam) setTobeSearchQuery(tobeQueryParam);
   }, []);
 
   useEffect(() => {
@@ -4862,12 +4865,13 @@ function App() {
     params.set('ownedBsheet', isOwnedSortBsheetOpen ? 'true' : 'false');
     params.set('favBsheet', isFavoriteBsheetOpen ? 'true' : 'false');
     params.set('asisQuery', asisSearchQuery);
+    params.set('tobeQuery', tobeSearchQuery);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -4893,6 +4897,8 @@ function App() {
       if (favBsheetParam) setIsFavoriteBsheetOpen(favBsheetParam === 'true');
       const asisQueryParam = params.get('asisQuery');
       if (asisQueryParam) setAsisSearchQuery(asisQueryParam);
+      const tobeQueryParam = params.get('tobeQuery');
+      if (tobeQueryParam) setTobeSearchQuery(tobeQueryParam);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -5394,7 +5400,7 @@ function App() {
                   position: 'relative'
                 }}>
                   {toBeSubScreen === 'etfMall' ? (
-                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} ownedDisplayOption={ownedDisplayOption} setOwnedDisplayOption={setOwnedDisplayOption} ownedSortOption={ownedSortOption} setOwnedSortOption={setOwnedSortOption} isOwnedSortBsheetOpen={isOwnedSortBsheetOpen} setIsOwnedSortBsheetOpen={setIsOwnedSortBsheetOpen} isFavoriteBsheetOpen={isFavoriteBsheetOpen} setIsFavoriteBsheetOpen={setIsFavoriteBsheetOpen} />
+                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} ownedDisplayOption={ownedDisplayOption} setOwnedDisplayOption={setOwnedDisplayOption} ownedSortOption={ownedSortOption} setOwnedSortOption={setOwnedSortOption} isOwnedSortBsheetOpen={isOwnedSortBsheetOpen} setIsOwnedSortBsheetOpen={setIsOwnedSortBsheetOpen} isFavoriteBsheetOpen={isFavoriteBsheetOpen} setIsFavoriteBsheetOpen={setIsFavoriteBsheetOpen} searchQuery={tobeSearchQuery} setSearchQuery={setTobeSearchQuery} />
                   ) : toBeSubScreen === 'tigerDetail' ? (
                     <ToBeTigerDetailView setToBeSubScreen={setToBeSubScreen} isDark={isDark} setToBePrevSubScreen={setToBePrevSubScreen} isDrawerOpen={isDrawerOpen} setEtfMallNavMode={setEtfMallNavMode} />
                   ) : toBeSubScreen === 'stockSearch' ? (
