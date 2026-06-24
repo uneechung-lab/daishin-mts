@@ -5887,7 +5887,7 @@ function App() {
                           <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>ETF몰(ETF 전용 종목 검색기) 메뉴 및 화면 신설</span>
                         </div>
                         <ul style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '78px', wordBreak: 'keep-all', listStyleType: 'disc' }}>
-                          <li style={{ marginBottom: '6px' }}>기존 '퇴직연금 ETF 전용 현재가' 화면을 폐기하고, 일반 트레이딩에서 사용하는 '전체 현재가' 화면과 연동하여 일원화</li>
+                          <li style={{ marginBottom: '6px' }}>기존 '퇴직연금 ETF 전용 현재가' 화면을 폐기하고, 일반 트레이딩에서 사용하는 '현재가' 화면과 연동하여 일원화</li>
                           <li>
                             ETF몰 메뉴 및 화면 신설
                             <ul style={{ margin: '4px 0 0 0', paddingLeft: '22px', listStyleType: 'circle' }}>
@@ -5984,9 +5984,9 @@ function App() {
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                       <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                       <div>
-                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>전체 현재가 화면 연동</strong>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>(트레이딩)현재가 화면 연동</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
-                          <li>일반 트레이딩에서 사용하는 '전체 현재가' 화면 연동</li>
+                          <li>일반 트레이딩에서 사용하는 '현재가' 화면 연동</li>
                         </ul>
                       </div>
                     </li>
