@@ -4688,6 +4688,9 @@ function App() {
     
     const tobeParam = params.get('tobe');
     if (tobeParam) setToBeSubScreen(tobeParam);
+
+    const mallTabParam = params.get('mallTab');
+    if (mallTabParam) setActiveMallTab(mallTabParam);
   }, []);
 
   useEffect(() => {
@@ -4695,12 +4698,13 @@ function App() {
     params.set('screen', activeScreen);
     params.set('asis', asIsSubScreen);
     params.set('tobe', toBeSubScreen);
+    params.set('mallTab', activeMallTab);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.pushState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -4714,6 +4718,8 @@ function App() {
       if (asisParam) setAsIsSubScreen(asisParam);
       const tobeParam = params.get('tobe');
       if (tobeParam) setToBeSubScreen(tobeParam);
+      const mallTabParam = params.get('mallTab');
+      if (mallTabParam) setActiveMallTab(mallTabParam);
     };
 
     window.addEventListener('popstate', handlePopState);
