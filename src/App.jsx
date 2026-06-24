@@ -5936,7 +5936,7 @@ function App() {
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>현재가 선택 시 고유 레이아웃 복원</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
-                          <li>우측 토글에서 [현재가] 선택 시, 평가금액 통합 블록이 비활성화되며 기존의 개별 [현재가/거래량] 및 [대비금액/대비율] 고유 레이아웃 형태로 자동 복원</li>
+                          <li>우측 토글에서 [현재가] 선택 시, 평가금액 통합 블록이 개별 [현재가/거래량] 및 [대비금액/대비율] 형태로 전환</li>
                         </ul>
                       </div>
                     </li>
