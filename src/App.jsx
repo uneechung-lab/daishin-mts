@@ -1903,7 +1903,8 @@ function AsIsCurrentPriceView({ setAsIsSubScreen, isDark }) {
   );
 }
 
-function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
+function AsIsStockSearchView({ setAsIsSubScreen, isDark, searchQuery, setSearchQuery }) {
+
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -1955,6 +1956,10 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
     { name: 'MIDAS 코스닥액티브', code: 'A0191B0' },
     { name: 'TIME 글로벌휴머노이드로봇산업', code: 'A0185L0' }
   ];
+
+  const filteredStocks = searchQuery.trim() === ''
+    ? stocks
+    : stocks.filter(s => s.name.toLowerCase().includes(searchQuery.toLowerCase()) || s.code.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div style={containerStyle}>
@@ -2077,7 +2082,8 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
           <input
             type="text"
             placeholder="종목명(공백 제외), 종목코드"
-            disabled
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               border: 'none',
               background: 'none',
@@ -2092,20 +2098,37 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
         </div>
       </div>
 
-
-
       {/* List */}
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-        {stocks.map((s, idx) => (
-          <div 
-            key={idx} 
-            onClick={() => setAsIsSubScreen('currentPrice')}
-            style={{ padding: '14px 16px', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '4px' }}
-          >
-            <span style={{ fontSize: '1.05rem', fontWeight: '600', color: '#222' }}>{s.name}</span>
-            <span style={{ fontSize: '0.82rem', color: '#888' }}>{s.code}</span>
+        {searchQuery.trim() !== '' && /^[ㄱ-ㅎ\s]+$/.test(searchQuery) ? (
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            padding: '24px',
+            color: '#888888',
+            fontSize: '0.88rem',
+            lineHeight: '1.6'
+          }}>
+            <span style={{ fontSize: '0.95rem', fontWeight: '500', color: '#6b7280', marginBottom: '4px' }}>검색 결과가 없습니다.</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: '500', color: '#6b7280', marginBottom: '4px' }}>초성검색은 지원되지 않습니다.</span>
+            <span style={{ fontSize: '0.88rem', color: '#9ca3af' }}>종목명 또는 종목코드로 다시 검색해보세요.</span>
           </div>
-        ))}
+        ) : (
+          filteredStocks.map((s, idx) => (
+            <div 
+              key={idx} 
+              onClick={() => setAsIsSubScreen('currentPrice')}
+              style={{ padding: '14px 16px', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '4px' }}
+            >
+              <span style={{ fontSize: '1.05rem', fontWeight: '600', color: '#222' }}>{s.name}</span>
+              <span style={{ fontSize: '0.82rem', color: '#888' }}>{s.code}</span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
@@ -4767,6 +4790,7 @@ function App() {
   const [ownedSortOption, setOwnedSortOption] = useState('수익률 높은 순');
   const [isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen] = useState(false);
   const [isFavoriteBsheetOpen, setIsFavoriteBsheetOpen] = useState(false);
+  const [asisSearchQuery, setAsisSearchQuery] = useState('');
   const [isAsIsToBeExpanded, setIsAsIsToBeExpanded] = useState(false);
   const [enteredViaEtfMall, setEnteredViaEtfMall] = useState(false);
   const [isSearchEnhancementModalOpen, setIsSearchEnhancementModalOpen] = useState(false);
@@ -4801,6 +4825,9 @@ function App() {
 
     const favBsheetParam = params.get('favBsheet');
     if (favBsheetParam) setIsFavoriteBsheetOpen(favBsheetParam === 'true');
+
+    const asisQueryParam = params.get('asisQuery');
+    if (asisQueryParam) setAsisSearchQuery(asisQueryParam);
   }, []);
 
   useEffect(() => {
@@ -4813,12 +4840,13 @@ function App() {
     params.set('ownedSort', ownedSortOption);
     params.set('ownedBsheet', isOwnedSortBsheetOpen ? 'true' : 'false');
     params.set('favBsheet', isFavoriteBsheetOpen ? 'true' : 'false');
+    params.set('asisQuery', asisSearchQuery);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -4842,6 +4870,8 @@ function App() {
       if (ownedBsheetParam) setIsOwnedSortBsheetOpen(ownedBsheetParam === 'true');
       const favBsheetParam = params.get('favBsheet');
       if (favBsheetParam) setIsFavoriteBsheetOpen(favBsheetParam === 'true');
+      const asisQueryParam = params.get('asisQuery');
+      if (asisQueryParam) setAsisSearchQuery(asisQueryParam);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -5287,7 +5317,7 @@ function App() {
                         </div>
                       </>
                     ) : asIsSubScreen === 'stockSearch' ? (
-                      <AsIsStockSearchView setAsIsSubScreen={setAsIsSubScreen} isDark={isDark} />
+                      <AsIsStockSearchView setAsIsSubScreen={setAsIsSubScreen} isDark={isDark} searchQuery={asisSearchQuery} setSearchQuery={setAsisSearchQuery} />
                     ) : (
                       <PhoneEmulator
                         isToBe={false}
