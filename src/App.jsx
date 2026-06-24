@@ -2111,14 +2111,13 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark }) {
   );
 }
 
-function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption, ownedSortOption, setOwnedSortOption, isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen }) {
+function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption, ownedSortOption, setOwnedSortOption, isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen, isFavoriteBsheetOpen, setIsFavoriteBsheetOpen }) {
   const [activeTab, setActiveTab] = useState('1주일 매수고객순'); // '1주일 매수고객순', '1주일 매수금액순'
   const [sortOption, setSortOption] = useState('1주일');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedChip, setSelectedChip] = useState('전체');
   const [searchQuery, setSearchQuery] = useState('');
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
-  const [isFavoriteBsheetOpen, setIsFavoriteBsheetOpen] = useState(false);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
   const [pendingFavoriteCode, setPendingFavoriteCode] = useState(null);
   const toggleFavorite = (code) => {
@@ -4669,6 +4668,7 @@ function App() {
   const [ownedDisplayOption, setOwnedDisplayOption] = useState('평가금');
   const [ownedSortOption, setOwnedSortOption] = useState('수익률 높은 순');
   const [isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen] = useState(false);
+  const [isFavoriteBsheetOpen, setIsFavoriteBsheetOpen] = useState(false);
   const [isAsIsToBeExpanded, setIsAsIsToBeExpanded] = useState(false);
   const [enteredViaEtfMall, setEnteredViaEtfMall] = useState(false);
   const [isSearchEnhancementModalOpen, setIsSearchEnhancementModalOpen] = useState(false);
@@ -4700,6 +4700,9 @@ function App() {
 
     const ownedBsheetParam = params.get('ownedBsheet');
     if (ownedBsheetParam) setIsOwnedSortBsheetOpen(ownedBsheetParam === 'true');
+
+    const favBsheetParam = params.get('favBsheet');
+    if (favBsheetParam) setIsFavoriteBsheetOpen(favBsheetParam === 'true');
   }, []);
 
   useEffect(() => {
@@ -4711,12 +4714,13 @@ function App() {
     params.set('ownedDisplay', ownedDisplayOption);
     params.set('ownedSort', ownedSortOption);
     params.set('ownedBsheet', isOwnedSortBsheetOpen ? 'true' : 'false');
+    params.set('favBsheet', isFavoriteBsheetOpen ? 'true' : 'false');
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -4738,6 +4742,8 @@ function App() {
       if (ownedSortParam) setOwnedSortOption(ownedSortParam);
       const ownedBsheetParam = params.get('ownedBsheet');
       if (ownedBsheetParam) setIsOwnedSortBsheetOpen(ownedBsheetParam === 'true');
+      const favBsheetParam = params.get('favBsheet');
+      if (favBsheetParam) setIsFavoriteBsheetOpen(favBsheetParam === 'true');
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -5239,7 +5245,7 @@ function App() {
                   position: 'relative'
                 }}>
                   {toBeSubScreen === 'etfMall' ? (
-                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} ownedDisplayOption={ownedDisplayOption} setOwnedDisplayOption={setOwnedDisplayOption} ownedSortOption={ownedSortOption} setOwnedSortOption={setOwnedSortOption} isOwnedSortBsheetOpen={isOwnedSortBsheetOpen} setIsOwnedSortBsheetOpen={setIsOwnedSortBsheetOpen} />
+                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} ownedDisplayOption={ownedDisplayOption} setOwnedDisplayOption={setOwnedDisplayOption} ownedSortOption={ownedSortOption} setOwnedSortOption={setOwnedSortOption} isOwnedSortBsheetOpen={isOwnedSortBsheetOpen} setIsOwnedSortBsheetOpen={setIsOwnedSortBsheetOpen} isFavoriteBsheetOpen={isFavoriteBsheetOpen} setIsFavoriteBsheetOpen={setIsFavoriteBsheetOpen} />
                   ) : toBeSubScreen === 'tigerDetail' ? (
                     <ToBeTigerDetailView setToBeSubScreen={setToBeSubScreen} isDark={isDark} setToBePrevSubScreen={setToBePrevSubScreen} isDrawerOpen={isDrawerOpen} setEtfMallNavMode={setEtfMallNavMode} />
                   ) : toBeSubScreen === 'stockSearch' ? (
