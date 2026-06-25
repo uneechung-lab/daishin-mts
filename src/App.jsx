@@ -4804,7 +4804,13 @@ function App() {
   const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
-  const [etfMallNavMode, setEtfMallNavMode] = useState('default'); // 'default' or 'search'
+  const [etfMallNavMode, setEtfMallNavMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const navParam = params.get('etfMallNavMode');
+    if (navParam) return navParam;
+    const screenParam = params.get('screen');
+    return (!screenParam || screenParam === '1') ? 'search' : 'default';
+  });
   const [activeMallTab, setActiveMallTab] = useState('추천');
   const [ownedDisplayOption, setOwnedDisplayOption] = useState('평가금');
   const [ownedSortOption, setOwnedSortOption] = useState('수익률 높은 순');
@@ -4852,6 +4858,13 @@ function App() {
 
     const tobeQueryParam = params.get('tobeQuery');
     if (tobeQueryParam) setTobeSearchQuery(tobeQueryParam);
+
+    const etfMallNavModeParam = params.get('etfMallNavMode');
+    if (etfMallNavModeParam) {
+      setEtfMallNavMode(etfMallNavModeParam);
+    } else if (screenParam === '1' || (!screenParam && activeScreen === 1)) {
+      setEtfMallNavMode('search');
+    }
   }, []);
 
   useEffect(() => {
@@ -4866,12 +4879,13 @@ function App() {
     params.set('favBsheet', isFavoriteBsheetOpen ? 'true' : 'false');
     params.set('asisQuery', asisSearchQuery);
     params.set('tobeQuery', tobeSearchQuery);
+    params.set('etfMallNavMode', etfMallNavMode);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -4899,6 +4913,8 @@ function App() {
       if (asisQueryParam) setAsisSearchQuery(asisQueryParam);
       const tobeQueryParam = params.get('tobeQuery');
       if (tobeQueryParam) setTobeSearchQuery(tobeQueryParam);
+      const etfMallNavModeParam = params.get('etfMallNavMode');
+      if (etfMallNavModeParam) setEtfMallNavMode(etfMallNavModeParam);
     };
 
     window.addEventListener('popstate', handlePopState);
