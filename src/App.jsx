@@ -5811,6 +5811,9 @@ function App() {
     const tobeParam = params.get('tobe');
     if (tobeParam) setToBeSubScreen(tobeParam);
 
+    const screen4SubParam = params.get('screen4SubScreen');
+    if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
+
     const mallTabParam = params.get('mallTab');
     if (mallTabParam) setActiveMallTab(mallTabParam);
 
@@ -5845,6 +5848,7 @@ function App() {
     params.set('screen', activeScreen);
     params.set('asis', asIsSubScreen);
     params.set('tobe', toBeSubScreen);
+    params.set('screen4SubScreen', screen4SubScreen);
     params.set('mallTab', activeMallTab);
     params.set('ownedDisplay', ownedDisplayOption);
     params.set('ownedSort', ownedSortOption);
@@ -5858,7 +5862,7 @@ function App() {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -5872,6 +5876,8 @@ function App() {
       if (asisParam) setAsIsSubScreen(asisParam);
       const tobeParam = params.get('tobe');
       if (tobeParam) setToBeSubScreen(tobeParam);
+      const screen4SubParam = params.get('screen4SubScreen');
+      if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const mallTabParam = params.get('mallTab');
       if (mallTabParam) setActiveMallTab(mallTabParam);
       const ownedDisplayParam = params.get('ownedDisplay');
