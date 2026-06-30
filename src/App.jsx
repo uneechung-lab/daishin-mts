@@ -4788,7 +4788,977 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
   );
 }
 
+
+function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
+  const [selectedDay, setSelectedDay] = useState('25일');
+  const [agreed, setAgreed] = useState(true);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showMethodPicker, setShowMethodPicker] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState('기간 선택형');
+  const [customAmount, setCustomAmount] = useState('');
+  const [customPeriod, setCustomPeriod] = useState('');
+  const [showPeriodPicker, setShowPeriodPicker] = useState(false);
+  const [selectedPeriod, setSelectedPeriod] = useState('월');
+  const [showBankPicker, setShowBankPicker] = useState(false);
+  const [selectedBank, setSelectedBank] = useState('');
+  const [selectedYear, setSelectedYear] = useState(2032);
+  const [selectedMonth, setSelectedMonth] = useState(2);
+  const [selectedDate, setSelectedDate] = useState(23);
+  const [startDateStr, setStartDateStr] = useState(isToBe ? '2032.02.23' : '2032.02');
+
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+    color: isDark ? '#cbd5e1' : '#333333',
+    fontFamily: 'sans-serif',
+    boxSizing: 'border-box',
+    position: 'relative'
+  };
+
+  const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+    backgroundColor: isDark ? '#111827' : '#ffffff',
+    height: '44px',
+    boxSizing: 'border-box'
+  };
+
+  const contentStyle = {
+    flex: 1,
+    overflowY: 'auto',
+    padding: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+    boxSizing: 'border-box'
+  };
+
+  const footerStyle = {
+    padding: '16px',
+    backgroundColor: isDark ? '#111827' : '#ffffff',
+    borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px'
+  };
+
+  const buttonRowStyle = {
+    display: 'flex',
+    gap: '8px',
+    marginTop: '6px'
+  };
+
+  const dateButtonStyle = (day) => ({
+    flex: 1,
+    padding: '10px 0',
+    borderRadius: '4px',
+    border: selectedDay === day 
+      ? '1px solid #2563eb' 
+      : (isDark ? '1px solid #334155' : '1px solid #e2e8f0'),
+    backgroundColor: selectedDay === day 
+      ? (isDark ? 'rgba(37, 99, 235, 0.15)' : '#f0f7ff') 
+      : 'transparent',
+    color: selectedDay === day 
+      ? '#2563eb' 
+      : (isDark ? '#94a3b8' : '#64748b'),
+    fontSize: '0.85rem',
+    fontWeight: '700',
+    cursor: 'pointer',
+    textAlign: 'center'
+  });
+
+  const inputStyle = {
+    width: '100%',
+    padding: '10px 12px',
+    borderRadius: '4px',
+    border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+    backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+    color: isDark ? '#f8fafc' : '#0f172a',
+    fontSize: '0.92rem',
+    fontWeight: '500',
+    fontFamily: 'SF Pro Display, -apple-system, Roboto, sans-serif',
+    boxSizing: 'border-box',
+    marginTop: '6px'
+  };
+
+  const selectStyle = {
+    ...inputStyle,
+    appearance: 'none',
+    backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")`,
+    backgroundPosition: 'right 10px center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '1.25rem'
+  };
+
+  const labelStyle = {
+    fontSize: '0.78rem',
+    fontWeight: '500',
+    color: isDark ? '#94a3b8' : '#64748b'
+  };
+
+  const titleStyle = {
+    fontSize: '1rem',
+    fontWeight: '600',
+    color: isDark ? '#f8fafc' : '#0f172a'
+  };
+
+  const handleConfirmDate = () => {
+    const formattedMonth = String(selectedMonth).padStart(2, '0');
+    const formattedDate = String(selectedDate).padStart(2, '0');
+    if (isToBe) {
+      setStartDateStr(`${selectedYear}.${formattedMonth}.${formattedDate}`);
+    } else {
+      setStartDateStr(`${selectedYear}.${formattedMonth}`);
+    }
+    setShowDatePicker(false);
+  };
+
+  return (
+    <div style={containerStyle}>
+      {/* Top Phone Header Mock */}
+      <div style={{
+        height: '24px',
+        padding: '0 16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+        fontSize: '0.7rem',
+        fontWeight: '700',
+        color: isDark ? '#94a3b8' : '#64748b'
+      }}>
+        <span>SKT 2:28</span>
+        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+          <span>100</span>
+        </div>
+      </div>
+
+      {/* Header */}
+      <div style={headerStyle}>
+        {isToBe && onBackClick ? (
+          <button 
+            onClick={onBackClick}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        ) : (
+          <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        )}
+        <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>연금수령 신청</span>
+        <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      {/* Content */}
+      <div style={contentStyle}>
+        {/* Account Dropdown */}
+        <div>
+          <select style={selectStyle}>
+            <option>200-233354(41) 김대신</option>
+          </select>
+        </div>
+
+        {/* Section Title */}
+        <div style={{ ...titleStyle, borderBottom: 'none', paddingBottom: 0 }}>
+          연금수령 신청내역
+        </div>
+
+        {/* 기산일자 */}
+        <div>
+          <label style={labelStyle}>연금수령 기산일자</label>
+          <input type="text" value="2032.02.23" readOnly style={{ ...inputStyle, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+        </div>
+
+        {/* 개시 일자 */}
+        <div>
+          <label style={labelStyle}>수령 개시 일자</label>
+          {isToBe ? (
+            <div 
+              onClick={() => {
+                setSelectedYear(2032);
+                setSelectedMonth(2);
+                setSelectedDate(23);
+                setShowDatePicker(true);
+              }}
+              style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            >
+              {startDateStr}
+            </div>
+          ) : (
+            <div 
+              onClick={() => {
+                setSelectedYear(2032);
+                setSelectedMonth(2);
+                setSelectedDate(23);
+                setShowDatePicker(true);
+              }}
+              style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            >
+              {startDateStr}
+            </div>
+          )}
+        </div>
+
+        {/* 수령 희망일 */}
+        {!isToBe && (
+          <div>
+            <div style={buttonRowStyle}>
+              {['5일', '10일', '15일', '20일', '25일'].map(day => (
+                <div 
+                  key={day} 
+                  onClick={() => setSelectedDay(day)} 
+                  style={dateButtonStyle(day)}
+                >
+                  {day}
+                </div>
+              ))}
+            </div>
+            <span style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>
+              ※ [ 연금수령 기산일자 ] 이후의 5,10,15,20,25일 중 선택 가능
+            </span>
+          </div>
+        )}
+
+        {isToBe && (
+          <div style={{ marginTop: '-8px' }}>
+            <span style={{ fontSize: '0.74rem', color: '#6b7280', display: 'block', lineHeight: '1.4' }}>
+              ※ 개시일자는 신청일로부터 최장 60일 이내로 설정 가능
+            </span>
+          </div>
+        )}
+
+        {/* 수령 주기 / 수령 방법 (유형) 순서 분기 처리 */}
+        {isToBe ? (
+          <>
+            {/* TO BE: 수령 방법 (위로 이동) */}
+            <div>
+              <label style={labelStyle}>수령 방법</label>
+              <div 
+                onClick={() => setShowMethodPicker(true)}
+                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              >
+                {selectedMethod}
+              </div>
+              {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
+              {selectedMethod === '기간 선택형' && (
+                <input 
+                  type="text" 
+                  value={customPeriod} 
+                  onChange={(e) => setCustomPeriod(e.target.value)} 
+                  placeholder="10 년" 
+                  style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                />
+              )}
+              {selectedMethod === '한도 수령형' && (
+                <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+              )}
+              {selectedMethod === '금액 선택형' && (
+                <>
+                  <input 
+                    type="text" 
+                    value={customAmount} 
+                    onChange={(e) => setCustomAmount(e.target.value)}
+                    placeholder="2,500,000 원" 
+                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                  />
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                    <input type="text" placeholder="계좌번호 직접입력" style={{ ...inputStyle, flex: 1, marginTop: 0 }} />
+                    <button style={{
+                      padding: '0 12px',
+                      borderRadius: '4px',
+                      border: '1px solid #e2e8f0',
+                      backgroundColor: '#ffffff',
+                      color: '#4b5563',
+                      fontSize: '0.75rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}>계좌확인</button>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* TO BE: 수령 주기 */}
+            <div>
+              <label style={labelStyle}>수령 주기</label>
+              <div 
+                onClick={() => setShowPeriodPicker(true)}
+                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              >
+                {selectedPeriod}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* AS IS: 수령 주기 */}
+            <div>
+              <label style={labelStyle}>수령 주기</label>
+              <div 
+                onClick={() => setShowPeriodPicker(true)}
+                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              >
+                {selectedPeriod}
+              </div>
+            </div>
+
+            {/* AS IS: 수령 방법 */}
+            <div>
+              <label style={labelStyle}>수령 방법</label>
+              <div 
+                onClick={() => setShowMethodPicker(true)}
+                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              >
+                {selectedMethod}
+              </div>
+              
+              {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
+              {selectedMethod === '기간 선택형' && (
+                <input 
+                  type="text" 
+                  value={customPeriod} 
+                  onChange={(e) => setCustomPeriod(e.target.value)} 
+                  placeholder="10 년" 
+                  style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                />
+              )}
+              {selectedMethod === '한도 수령형' && (
+                <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+              )}
+              {selectedMethod === '금액 선택형' && (
+                <>
+                  <input 
+                    type="text" 
+                    value={customAmount} 
+                    onChange={(e) => setCustomAmount(e.target.value)}
+                    placeholder="2,500,000 원" 
+                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                  />
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                    <input type="text" placeholder="계좌번호 직접입력" style={{ ...inputStyle, flex: 1, marginTop: 0 }} />
+                    <button style={{
+                      padding: '0 12px',
+                      borderRadius: '4px',
+                      border: '1px solid #e2e8f0',
+                      backgroundColor: '#ffffff',
+                      color: '#4b5563',
+                      fontSize: '0.75rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}>계좌확인</button>
+                  </div>
+                </>
+              )}
+            </div>
+          </>
+        )}
+
+        {/* 수령계좌 정보 */}
+        <div>
+          <label style={labelStyle}>수령계좌 정보</label>
+          <div 
+            onClick={() => setShowBankPicker(true)}
+            style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center', color: selectedBank ? (isDark ? '#cbd5e1' : '#333333') : '#a0aec0' }}
+          >
+            {selectedBank || '수령계좌 선택'}
+          </div>
+          <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+            <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, flex: 1, marginTop: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+            <button style={{
+              padding: '0 12px',
+              borderRadius: '4px',
+              border: '1px solid #e2e8f0',
+              backgroundColor: '#ffffff',
+              color: '#94a3b8',
+              fontSize: '0.75rem',
+              fontWeight: '700',
+              cursor: 'not-allowed'
+            }}>확인완료</button>
+          </div>
+          <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
+            계좌가 확인되었습니다.
+          </span>
+        </div>
+
+        {/* 연락처 */}
+        <div>
+          <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
+          <input type="text" value="01087486503" style={inputStyle} />
+        </div>
+
+        {/* 즉시 인출 금액 */}
+        <div>
+          <label style={labelStyle}>즉시 인출 금액(선택)</label>
+          <input type="text" placeholder="금액 입력" style={{ ...inputStyle, backgroundColor: 'transparent' }} />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div style={footerStyle}>
+        {/* Checkbox agreement */}
+        <label style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}>
+          <input 
+            type="checkbox" 
+            checked={agreed} 
+            onChange={(e) => setAgreed(e.target.checked)} 
+            style={{ marginTop: '3px' }} 
+          />
+          <span style={{ fontSize: '0.72rem', color: '#2563eb', fontWeight: '600', lineHeight: '1.4' }}>
+            연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
+          </span>
+        </label>
+
+        {/* Submit button */}
+        <button style={{
+          width: '100%',
+          padding: '14px 0',
+          backgroundColor: '#1e293b',
+          color: '#ffffff',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '0.95rem',
+          fontWeight: '700',
+          cursor: 'pointer'
+        }}>
+          신청
+        </button>
+      </div>
+
+      {/* S&P500 Footer bar */}
+      <div style={{
+        height: '24px',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+        backgroundColor: isDark ? '#111827' : '#f8fafc',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 12px',
+        fontSize: '0.7rem'
+      }}>
+        <span style={{ fontWeight: '600' }}>S&P500</span>
+        <span style={{ color: '#de201e', fontWeight: '700' }}>7,440.43 ▲ 86.41 (1.18%)</span>
+      </div>
+
+      {/* Navigation Footer */}
+      <div style={{
+        height: '48px',
+        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        fontSize: '0.62rem',
+        fontWeight: '700',
+        color: isDark ? '#94a3b8' : '#475569'
+      }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        </div>
+        <div style={{ cursor: 'pointer' }}>보유상품현황</div>
+        <div style={{ cursor: 'pointer' }}>ETF/리츠잔고</div>
+        <div style={{ cursor: 'pointer' }}>ETF/리츠체결/미체결</div>
+        <div style={{ cursor: 'pointer' }}>ETF/리츠주문</div>
+      </div>
+
+      {/* Date Picker Modal Overlay */}
+      {showDatePicker && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box'
+        }}>
+          {/* Modal Container */}
+          <div style={{
+            width: '280px',
+            backgroundColor: '#ffffff',
+            borderRadius: '12px',
+            boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            border: '1px solid #e2e8f0'
+          }}>
+            {/* Picker Wheels Area */}
+            <div style={{
+              display: 'flex',
+              padding: '24px 16px',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              position: 'relative',
+              backgroundColor: '#ffffff',
+              height: '160px',
+              boxSizing: 'border-box'
+            }}>
+              {/* Highlight Lines */}
+              <div style={{
+                position: 'absolute',
+                top: '62px',
+                left: '16px',
+                right: '16px',
+                height: '1.5px',
+                backgroundColor: '#3b82f6',
+                pointerEvents: 'none'
+              }} />
+              <div style={{
+                position: 'absolute',
+                top: '94px',
+                left: '16px',
+                right: '16px',
+                height: '1.5px',
+                backgroundColor: '#3b82f6',
+                pointerEvents: 'none'
+              }} />
+
+              {/* Year Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                <span 
+                  onClick={() => setSelectedYear(2031)}
+                  style={{ fontSize: '0.88rem', color: selectedYear === 2031 ? '#a0aec0' : '#d2d6dc', cursor: 'pointer', transition: 'color 0.2s' }}
+                >
+                  2031
+                </span>
+                <span style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#1a202c' }}>
+                  2032
+                </span>
+                <span 
+                  onClick={() => setSelectedYear(2033)}
+                  style={{ fontSize: '0.88rem', color: selectedYear === 2033 ? '#a0aec0' : '#d2d6dc', cursor: 'pointer', transition: 'color 0.2s' }}
+                >
+                  2033
+                </span>
+              </div>
+
+              {/* Month Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                <span 
+                  onClick={() => setSelectedMonth(prev => Math.max(1, prev - 1))}
+                  style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                >
+                  {selectedMonth - 1 < 1 ? 12 : selectedMonth - 1}
+                </span>
+                <span style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#1a202c' }}>
+                  {selectedMonth}
+                </span>
+                <span 
+                  onClick={() => setSelectedMonth(prev => Math.min(12, prev + 1))}
+                  style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                >
+                  {selectedMonth + 1 > 12 ? 1 : selectedMonth + 1}
+                </span>
+              </div>
+
+              {/* Date Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                <span 
+                  onClick={() => setSelectedDate(prev => Math.max(1, prev - 1))}
+                  style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                >
+                  {selectedDate - 1 < 1 ? 31 : selectedDate - 1}
+                </span>
+                <span style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#1a202c' }}>
+                  {String(selectedDate).padStart(2, '0')}
+                </span>
+                <span 
+                  onClick={() => setSelectedDate(prev => Math.min(31, prev + 1))}
+                  style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                >
+                  {selectedDate + 1 > 31 ? 1 : selectedDate + 1}
+                </span>
+              </div>
+            </div>
+
+            {/* Buttons Area */}
+            <div style={{
+              display: 'flex',
+              borderTop: '1px solid #f0f4f8',
+              height: '48px',
+              backgroundColor: '#fbfcfd'
+            }}>
+              <button 
+                onClick={() => setShowDatePicker(false)}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  background: 'none',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  color: '#4a5568',
+                  cursor: 'pointer',
+                  borderRight: '1px solid #f0f4f8'
+                }}
+              >
+                취소
+              </button>
+              <button 
+                onClick={handleConfirmDate}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  background: 'none',
+                  fontSize: '0.9rem',
+                  fontWeight: '700',
+                  color: '#2b6cb0',
+                  cursor: 'pointer'
+                }}
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Method Picker Overlay Page */}
+      {showMethodPicker && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#ffffff',
+          zIndex: 1000,
+          display: 'flex',
+          flexDirection: 'column',
+          boxSizing: 'border-box',
+          color: '#333333'
+        }}>
+          {/* Header Close button */}
+          <div style={{
+            display: 'flex',
+            padding: '16px',
+            boxSizing: 'border-box'
+          }}>
+            <button 
+              onClick={() => setShowMethodPicker(false)}
+              style={{
+                border: 'none',
+                background: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                color: '#333333',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Title Area */}
+          <div style={{ padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span style={{ fontSize: '1.45rem', fontWeight: '600', color: '#1a202c', letterSpacing: '-0.5px' }}>수령방법을</span>
+            <span style={{ fontSize: '1.45rem', fontWeight: '600', color: '#1a202c', letterSpacing: '-0.5px' }}>선택해 주세요</span>
+          </div>
+
+          {/* Selection Items Container */}
+          <div style={{
+            flex: 1,
+            overflowY: 'auto',
+            padding: '12px 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            boxSizing: 'border-box'
+          }}>
+            {/* 1. 기간 선택형 */}
+            <div 
+              onClick={() => {
+                setSelectedMethod('기간 선택형');
+                setShowMethodPicker(false);
+              }}
+              style={{
+                padding: '20px',
+                borderRadius: '8px',
+                border: selectedMethod === '기간 선택형' ? '1.5px solid #2563eb' : '1px solid #e2e8f0',
+                backgroundColor: '#ffffff',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px'
+              }}
+            >
+              <span style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1a202c' }}>기간 선택형</span>
+              <span style={{ fontSize: '0.78rem', color: '#718096', lineHeight: '1.4', wordBreak: 'keep-all' }}>
+                연금을 수령할 기간을 지정하고 그 기간동안 산정된 금액을 수령하는 방법
+              </span>
+            </div>
+
+            {/* 2. 한도 수령형 (TO BE 에서는 제거) */}
+            {!isToBe && (
+              <div 
+                onClick={() => {
+                  setSelectedMethod('한도 수령형');
+                  setShowMethodPicker(false);
+                }}
+                style={{
+                  padding: '20px',
+                  borderRadius: '8px',
+                  border: selectedMethod === '한도 수령형' ? '1.5px solid #2563eb' : '1px solid #e2e8f0',
+                  backgroundColor: '#ffffff',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px'
+                }}
+              >
+                <span style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1a202c' }}>한도 수령형</span>
+                <span style={{ fontSize: '0.78rem', color: '#718096', lineHeight: '1.4', wordBreak: 'keep-all' }}>
+                  세법상 정해진 연금수령한도액 내에서 수령기간에 따라 연금을 수령하는 방법
+                </span>
+              </div>
+            )}
+
+            {/* 3. 금액 선택형 */}
+            <div 
+              onClick={() => {
+                setSelectedMethod('금액 선택형');
+                setShowMethodPicker(false);
+              }}
+              style={{
+                padding: '20px',
+                borderRadius: '8px',
+                border: selectedMethod === '금액 선택형' ? '1.5px solid #2563eb' : '1px solid #e2e8f0',
+                backgroundColor: '#ffffff',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px'
+              }}
+            >
+              <span style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1a202c' }}>금액 선택형</span>
+              <span style={{ fontSize: '0.78rem', color: '#718096', lineHeight: '1.4', wordBreak: 'keep-all' }}>
+                수령할 금액을 지정하여 연금을 수령하는 방법
+              </span>
+            </div>
+
+            <span style={{
+              fontSize: '0.72rem',
+              color: '#a0aec0',
+              lineHeight: '1.4',
+              marginTop: '8px',
+              wordBreak: 'keep-all'
+            }}>
+              ※ 기간 선택형과 금액 선택형의 경우 퇴직/기타 소득세가 발생할 수 있습니다.
+            </span>
+          </div>
+        </div>
+      )}
+      {/* Period Picker Overlay (수령 주기 선택 모달) */}
+      {showPeriodPicker && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'flex-end',
+          boxSizing: 'border-box'
+        }}>
+          {/* Bottom Sheet Container */}
+          <div style={{
+            width: '100%',
+            backgroundColor: '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            padding: '24px 20px',
+            boxSizing: 'border-box',
+            animation: 'slideUp 0.25s ease-out'
+          }}>
+            {/* Title */}
+            <div style={{ fontSize: '1.2rem', fontWeight: '800', color: '#1a202c', marginBottom: '20px' }}>
+              수령 주기 선택
+            </div>
+            
+            {/* Option List */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              {['월', '분기', '반기', '년'].map((period) => (
+                <div 
+                  key={period} 
+                  onClick={() => {
+                    setSelectedPeriod(period);
+                    setShowPeriodPicker(false);
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '16px 0',
+                    fontSize: '1.02rem',
+                    fontWeight: selectedPeriod === period ? '700' : '500',
+                    color: selectedPeriod === period ? '#111827' : '#4b5563',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span>{period}</span>
+                  {selectedPeriod === period && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bank Picker Overlay (금융기관 선택 모달 - 바텀시트 레이아웃) */}
+      {showBankPicker && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'flex-end',
+          boxSizing: 'border-box'
+        }}>
+          {/* Bottom Sheet Container */}
+          <div style={{
+            width: '100%',
+            height: 'calc(100% - 68px)', // 헤더 영역 바로 아래까지 오도록 높이 지정
+            backgroundColor: '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            padding: '24px 20px 12px 20px',
+            boxSizing: 'border-box',
+            animation: 'slideUp 0.25s ease-out'
+          }}>
+            {/* Header Close button */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginBottom: '10px'
+            }}>
+              <button 
+                onClick={() => setShowBankPicker(false)}
+                style={{
+                  border: 'none',
+                  background: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  color: '#333333'
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Title Area */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '16px' }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: '800', color: '#1a202c', letterSpacing: '-0.5px' }}>금융기관 선택</span>
+              <span style={{ fontSize: '0.9rem', fontWeight: '600', color: '#718096', marginTop: '12px' }}>은행</span>
+            </div>
+
+            {/* Bank List Container */}
+            <div style={{
+              flex: 1,
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px',
+              paddingBottom: '20px',
+              boxSizing: 'border-box'
+            }}>
+              {[
+                { name: '경남은행', code: '039', color: '#d32f2f' },
+                { name: '광주은행', code: '034', color: '#0288d1' },
+                { name: '국민은행', code: '004', color: '#fbc02d' },
+                { name: '기업은행', code: '003', color: '#1976d2' },
+                { name: '도이치은행', code: '055', color: '#0d47a1' },
+                { name: '부산은행', code: '032', color: '#d32f2f' },
+                { name: '비엔피파리바은행', code: '056', color: '#388e3c' },
+                { name: '산림조합중앙회', code: '064', color: '#388e3c' },
+                { name: '산업은행', code: '002', color: '#0288d1' },
+                { name: '새마을금고', code: '045', color: '#1976d2' },
+                { name: '수협은행', code: '007', code: '#0288d1' },
+                { name: '신한은행', code: '088', color: '#1565c0' }
+              ].map((bank) => (
+                <div 
+                  key={bank.name} 
+                  onClick={() => {
+                    setSelectedBank(bank.name);
+                    setShowBankPicker(false);
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    cursor: 'pointer',
+                    padding: '4px 0'
+                  }}
+                >
+                  {/* Simulated circular icon representing the bank */}
+                  <div style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    backgroundColor: bank.color,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#ffffff',
+                    fontSize: '0.62rem',
+                    fontWeight: '800'
+                  }}>
+                    {bank.name.substring(0, 2)}
+                  </div>
+                  <span style={{ fontSize: '1.02rem', fontWeight: '500', color: '#1a202c' }}>
+                    {bank.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function App() {
+
   const [isDark, setIsDark] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [selectedStock, setSelectedStock] = useState('신대증 30');
@@ -4803,6 +5773,9 @@ function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
+  const [screen4SubScreen, setScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
+  const [asIsSelectedMenuCategory, setAsIsSelectedMenuCategory] = useState('IRP/퇴직연금');
+  const [toBeSelectedMenuCategory, setToBeSelectedMenuCategory] = useState('연금수령');
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
   const [etfMallNavMode, setEtfMallNavMode] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -5479,7 +6452,7 @@ function App() {
                         {/* Settings Icon */}
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
                           <circle cx="12" cy="12" r="3" />
-                          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
                         </svg>
                         {/* Close Icon */}
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
@@ -5544,7 +6517,7 @@ function App() {
                   </div>
 
                   {/* Split Content Area (Left Side Menu / Right Main List) */}
-                  <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+                  <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
                     {/* Left Submenu Navigation */}
                     <div style={{
                       width: '115px',
@@ -5554,7 +6527,8 @@ function App() {
                       flexDirection: 'column',
                       justifyContent: 'space-between',
                       paddingBottom: '12px',
-                      boxSizing: 'border-box'
+                      boxSizing: 'border-box',
+                      position: 'relative'
                     }}>
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         {[
@@ -5576,6 +6550,26 @@ function App() {
                             {sub.name}
                           </div>
                         ))}
+                      </div>
+
+                      {/* RIA Flag Banner */}
+                      <div style={{ padding: '8px' }}>
+                        <div style={{
+                          background: 'linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%)',
+                          borderRadius: '8px',
+                          padding: '6px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: '#ffffff',
+                          boxShadow: '0 4px 6px rgba(6, 182, 212, 0.25)',
+                          cursor: 'pointer'
+                        }}>
+                          <span style={{ fontSize: '1.25rem' }}>🇰🇷</span>
+                          <span style={{ fontSize: '0.68rem', fontWeight: '900', color: '#1e3a8a', lineHeight: '1.1' }}>
+                            RIA<br/>가입
+                          </span>
+                        </div>
                       </div>
                     </div>
 
@@ -5729,6 +6723,413 @@ function App() {
               ETF 주문화면 내 종목검색화면
             </div>
           </div>
+        ) : activeScreen === 4 ? (
+          /* Screen 4: 연금수령 신청 */
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '32px',
+            flexShrink: 0
+          }}>
+            {/* Emulators Row */}
+            <div style={{
+              display: 'flex',
+              gap: '60px',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              {/* AS IS Emulator */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>AS IS</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative'
+                }}>
+                  <PensionReceiptRequestView isDark={isDark} />
+                </div>
+              </div>
+
+              {/* TO BE Emulator */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>TO BE</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative'
+                }}>
+                  {screen4SubScreen === 'menu' ? (
+                    <>
+                      {/* Status Bar */}
+                      <div style={{
+                        ...styles.phoneHeaderBar,
+                        backgroundColor: '#4750b3',
+                        color: '#ffffff',
+                        borderBottom: 'none'
+                      }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
+                        <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+                      </div>
+
+                      {/* Top user bar (French Blue Theme) */}
+                      <div style={{
+                        backgroundColor: '#4750b3',
+                        padding: '16px 15px 12px 15px',
+                        color: '#ffffff',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '12px'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
+                            <span style={{ 
+                              display: 'inline-flex', 
+                              alignItems: 'center', 
+                              fontSize: '0.82rem', 
+                              opacity: 0.9, 
+                              cursor: 'pointer', 
+                              gap: '2px', 
+                              color: '#ffffff',
+                              border: 'none',
+                              padding: 0,
+                              background: 'none'
+                            }}>
+                              내 정보
+                              <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                            {/* Home White Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                              <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                            {/* Bell Icon with Red Dot */}
+                            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                              </svg>
+                              <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#de201e', width: '5px', height: '5px', borderRadius: '50%' }}></span>
+                            </div>
+                            {/* Settings Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                              <circle cx="12" cy="12" r="3" />
+                              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                            </svg>
+                            {/* Close Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                              <line x1="18" y1="6" x2="6" y2="18" />
+                              <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Menu Search Bar */}
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          backgroundColor: '#ffffff',
+                          borderRadius: '4px',
+                          padding: '8px 12px',
+                          gap: '8px'
+                        }}>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                          <input
+                            type="text"
+                            placeholder="메뉴를 검색하세요."
+                            disabled
+                            style={{
+                              border: 'none',
+                              background: 'none',
+                              outline: 'none',
+                              width: '100%',
+                              fontSize: '0.82rem',
+                              fontWeight: '600'
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Main Category Tabs */}
+                      <div style={{
+                        display: 'flex',
+                        borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                        backgroundColor: isDark ? '#121826' : '#ffffff'
+                      }}>
+                        {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
+                          const isSelected = tab === '연금';
+                          return (
+                            <div
+                              key={tab}
+                              style={{
+                                flex: 1,
+                                textAlign: 'center',
+                                padding: '13px 0',
+                                fontSize: '0.96rem',
+                                fontWeight: isSelected ? '800' : '500',
+                                color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
+                                borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {tab}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Split Content Area (Left Side Menu / Right Main List) */}
+                      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+                        {/* Left Submenu Navigation */}
+                        <div style={{
+                          width: '115px',
+                          backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
+                          borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          paddingBottom: '12px',
+                          boxSizing: 'border-box',
+                          position: 'relative'
+                        }}>
+                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            {[
+                              { name: 'IRP/퇴직연금' },
+                              { name: '연금저축' },
+                              { name: '연금수령' },
+                              { name: '공지사항' }
+                            ].map((sub, idx) => {
+                              const isSelected = sub.name === toBeSelectedMenuCategory;
+                              return (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    padding: '18px 12px',
+                                    fontSize: '0.96rem',
+                                    fontWeight: isSelected ? '800' : '500',
+                                    color: isSelected ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
+                                    backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
+                                    cursor: 'default'
+                                  }}
+                                >
+                                  {sub.name}
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          {/* RIA Flag Banner */}
+                          <div style={{ padding: '8px' }}>
+                            <div style={{
+                              background: 'linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%)',
+                              borderRadius: '8px',
+                              padding: '6px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              color: '#ffffff',
+                              boxShadow: '0 4px 6px rgba(6, 182, 212, 0.25)',
+                              cursor: 'pointer'
+                            }}>
+                              <span style={{ fontSize: '1.25rem' }}>🇰🇷</span>
+                              <span style={{ fontSize: '0.68rem', fontWeight: '900', color: '#1e3a8a', lineHeight: '1.1' }}>
+                                RIA<br/>가입
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Main Menu Items */}
+                        <div style={{
+                          flex: 1,
+                          padding: '18px 16px',
+                          overflowY: 'auto',
+                          backgroundColor: isDark ? '#121826' : '#ffffff',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '24px',
+                          boxSizing: 'border-box'
+                        }}>
+                          {toBeSelectedMenuCategory === '연금저축' ? (
+                            <>
+                              {/* 1. 연금저축 */}
+                              <div>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>연금저축</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                                  {[
+                                    { name: '연금저축 가입' },
+                                    { name: '타사 연금저축 가져오기' },
+                                    { name: '연금펀드 자동매수 신청' }
+                                  ].map((item, idx) => (
+                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                      <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* 2. MY 연금 */}
+                              <div>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 연금</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                                  {[
+                                    { name: '연금저축 보유잔고' },
+                                    { name: '연금저축 한도/기간 설정' },
+                                    { name: '연금저축 출금' }
+                                  ].map((item, idx) => (
+                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                      <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* 4. ETF/리츠 */}
+                              <div>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>ETF/리츠</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                                  {[
+                                    { name: 'ETF/리츠 잔고' },
+                                    { name: 'ETF/리츠 주문' },
+                                    { name: 'ETF/리츠 현재가' }
+                                  ].map((item, idx) => (
+                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                      <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </>
+                          ) : toBeSelectedMenuCategory === '연금수령' ? (
+                            <>
+                              <div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                              {[
+                                { name: '연금수령 신청' },
+                                { name: '연금수령 신청 조회/취소' },
+                                { name: '연금수령 현황' },
+                                { name: '연금개시 시뮬레이션' },
+                              ].map((item, idx) => (
+                                <div 
+                                  key={idx} 
+                                  onClick={() => {
+                                    if (item.name === '연금수령 신청') {
+                                      setScreen4SubScreen('requestForm');
+                                    }
+                                  }}
+                                  style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                                >
+                                  <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                </div>
+                              ))}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>IRP</div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                                {[
+                                  { name: 'IRP 가입' },
+                                  { name: '타사 IRP 가져오기' },
+                                  { name: '타사 IRP 가져오기 조회/취소' }
+                                ].map((item, idx) => (
+                                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                    <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Drawer Bottom Action Footer */}
+                      <div style={{
+                        height: '48px',
+                        backgroundColor: '#000000',
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        color: '#ffffff',
+                        fontSize: '0.78rem',
+                        fontWeight: '700',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+                      }}>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                            <line x1="12" y1="2" x2="12" y2="12" />
+                          </svg>
+                          <span>고객지원</span>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <span>이벤트</span>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <span>업무/거래신청</span>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
+                          <span>인증/OTP</span>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <PensionReceiptRequestView 
+                      isDark={isDark} 
+                      isToBe={true} 
+                      onBackClick={() => setScreen4SubScreen('menu')} 
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Task Title */}
+            <div style={{
+              fontSize: '1.35rem',
+              fontWeight: '600',
+              color: isDark ? '#94a3b8' : '#475569',
+              letterSpacing: '-0.5px',
+              textAlign: 'center',
+              opacity: 0.85,
+              marginTop: '8px',
+              wordBreak: 'keep-all'
+            }}>
+              연금수령 신청
+            </div>
+          </div>
         ) : (
           /* Original Screen 2 */
           <div style={{
@@ -5854,20 +7255,6 @@ function App() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Task Title immediately below the emulators */}
-            <div style={{
-              fontSize: '1.35rem',
-              fontWeight: '600',
-              color: isDark ? '#94a3b8' : '#475569',
-              letterSpacing: '-0.5px',
-              textAlign: 'center',
-              opacity: 0.85,
-              marginTop: '8px',
-              wordBreak: 'keep-all'
-            }}>
-              KRX 거래시간 연장(프리/애프터 마켓) 및 NXT ETF 거래 도입 (SOR 주문/거래시간)
             </div>
           </div>
         )}
