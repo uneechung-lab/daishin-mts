@@ -4806,6 +4806,26 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
   const [selectedDate, setSelectedDate] = useState(23);
   const [startDateStr, setStartDateStr] = useState(isToBe ? '2032.02.23' : '2032.02');
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('showDatePicker') === 'true') setShowDatePicker(true);
+    if (params.get('showMethodPicker') === 'true') setShowMethodPicker(true);
+    if (params.get('showPeriodPicker') === 'true') setShowPeriodPicker(true);
+    if (params.get('showBankPicker') === 'true') setShowBankPicker(true);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (showDatePicker) params.set('showDatePicker', 'true'); else params.delete('showDatePicker');
+    if (showMethodPicker) params.set('showMethodPicker', 'true'); else params.delete('showMethodPicker');
+    if (showPeriodPicker) params.set('showPeriodPicker', 'true'); else params.delete('showPeriodPicker');
+    if (showBankPicker) params.set('showBankPicker', 'true'); else params.delete('showBankPicker');
+    
+    const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+    if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
