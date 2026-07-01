@@ -5159,13 +5159,18 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               </div>
               {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
               {selectedMethod === '기간 선택형' && (
-                <input 
-                  type="text" 
-                  value={customPeriod} 
-                  onChange={(e) => setCustomPeriod(e.target.value)} 
-                  placeholder="10 년" 
-                  style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
-                />
+                <>
+                  <input 
+                    type="text" 
+                    value={customPeriod} 
+                    onChange={(e) => setCustomPeriod(e.target.value)} 
+                    placeholder="10 년" 
+                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                  />
+                  <span style={{ fontSize: '0.72rem', color: '#6b7280', display: 'block', marginTop: '6px', paddingLeft: '4px' }}>
+                    ※ 최소1년 ~ 최대50년 까지 가능합니다.
+                  </span>
+                </>
               )}
               {selectedMethod === '한도 수령형' && (
                 <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
@@ -5232,13 +5237,18 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               
               {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
               {selectedMethod === '기간 선택형' && (
-                <input 
-                  type="text" 
-                  value={customPeriod} 
-                  onChange={(e) => setCustomPeriod(e.target.value)} 
-                  placeholder="10 년" 
-                  style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
-                />
+                <>
+                  <input 
+                    type="text" 
+                    value={customPeriod} 
+                    onChange={(e) => setCustomPeriod(e.target.value)} 
+                    placeholder="10 년" 
+                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                  />
+                  <span style={{ fontSize: '0.72rem', color: '#6b7280', display: 'block', marginTop: '6px', paddingLeft: '4px' }}>
+                    ※ 최소1년 ~ 최대50년 까지 가능합니다.
+                  </span>
+                </>
               )}
               {selectedMethod === '한도 수령형' && (
                 <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
