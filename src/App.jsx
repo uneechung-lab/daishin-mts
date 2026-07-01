@@ -4835,6 +4835,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   const [phoneNumber, setPhoneNumber] = useState('01087486503');
   const [directAccountNumber, setDirectAccountNumber] = useState('39440204151955');
   const [immediateAmount, setImmediateAmount] = useState('');
+  const [showNoticePopup, setShowNoticePopup] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -4845,6 +4846,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (params.get(`${prefix}ShowBankPicker`) === 'true') setShowBankPicker(true);
     if (params.get(`${prefix}ShowProductBottomSheet`) === 'true') setShowProductBottomSheet(true);
     if (params.get(`${prefix}ShowAccountBottomSheet`) === 'true') setShowAccountBottomSheet(true);
+    if (params.get(`${prefix}ShowNoticePopup`) === 'true') setShowNoticePopup(true);
     if (params.get(`${prefix}ShowNumericKeypad`) === 'true') {
       setShowNumericKeypad(true);
       const act = params.get(`${prefix}ActiveField`);
@@ -4861,6 +4863,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (showBankPicker) params.set(`${prefix}ShowBankPicker`, 'true'); else params.delete(`${prefix}ShowBankPicker`);
     if (showProductBottomSheet) params.set(`${prefix}ShowProductBottomSheet`, 'true'); else params.delete(`${prefix}ShowProductBottomSheet`);
     if (showAccountBottomSheet) params.set(`${prefix}ShowAccountBottomSheet`, 'true'); else params.delete(`${prefix}ShowAccountBottomSheet`);
+    if (showNoticePopup) params.set(`${prefix}ShowNoticePopup`, 'true'); else params.delete(`${prefix}ShowNoticePopup`);
     if (showNumericKeypad) {
       params.set(`${prefix}ShowNumericKeypad`, 'true');
       if (activeField) params.set(`${prefix}ActiveField`, activeField);
@@ -4879,7 +4882,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -5530,15 +5533,25 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
       <div style={footerStyle}>
         {/* Checkbox agreement */}
         <div style={{ position: 'relative' }}>
-          <label style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}>
+          <label style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', userSelect: 'none' }}>
             <input 
               type="checkbox" 
               checked={agreed} 
               onChange={(e) => setAgreed(e.target.checked)} 
-              style={{ marginTop: '3px' }} 
+              style={{ marginTop: '3px', cursor: 'pointer' }} 
             />
-            <span style={{ fontSize: '0.72rem', color: '#2563eb', fontWeight: '600', lineHeight: '1.4' }}>
-              연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
+            <span style={{ fontSize: '0.72rem', color: isDark ? '#94a3b8' : '#64748b', fontWeight: '600', lineHeight: '1.4' }}>
+              <span 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowNoticePopup(true);
+                }}
+                style={{ color: '#2563eb', textDecoration: 'underline', cursor: 'pointer', fontWeight: '800' }}
+              >
+                연금수령 관련 유의사항
+              </span>
+              을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
             </span>
           </label>
           {isToBe && isDrawerOpen && (
@@ -6363,6 +6376,138 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           </div>
         );
       })()}
+
+      {/* Notice Fullscreen Popup Overlay */}
+      {showNoticePopup && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+          zIndex: 2500,
+          display: 'flex',
+          flexDirection: 'column',
+          boxSizing: 'border-box'
+        }}>
+          {/* Header */}
+          <div style={{
+            height: '44px',
+            padding: '0 16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+            backgroundColor: isDark ? '#1e293b' : '#f8fafc'
+          }}>
+            <span style={{ fontSize: '0.92rem', fontWeight: '800', color: isDark ? '#f8fafc' : '#0f172a' }}>연금저축 관련 안내</span>
+            <button 
+              onClick={() => setShowNoticePopup(false)}
+              style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', fontSize: '1.25rem', fontWeight: 'bold' }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Scrollable Content */}
+          <div style={{
+            flex: 1,
+            overflowY: 'auto',
+            padding: '16px',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            fontSize: '0.74rem',
+            lineHeight: '1.5',
+            color: isDark ? '#cbd5e1' : '#334155'
+          }}>
+            <div style={{ fontSize: '1.05rem', fontWeight: '800', textAlign: 'center', color: '#10b981', margin: '8px 0' }}>
+              연금저축계좌 개시/해지 및<br/>중도인출 관련 안내
+            </div>
+
+            <div style={{ padding: '10px', backgroundColor: isDark ? '#1e293b' : '#f8fafc', borderRadius: '6px', fontSize: '0.72rem', wordBreak: 'keep-all' }}>
+              대신증권 연금저축계좌를 거래해 주셔서 감사합니다.<br/>
+              연금저축계좌 개시/해지 및 중도인출과 관련하여 고객님께서 반드시 확인하셔야 할 사항을 다음과 같이 안내해드리오니 참고하시기 바랍니다.
+            </div>
+
+            {/* Section 1 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ fontWeight: '800', fontSize: '0.78rem', color: '#2563eb' }}>1. 연금저축 연금수령 유형</div>
+              <div style={{ border: isDark ? '1px solid #334155' : '1px solid #cbd5e1', borderRadius: '6px', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                  <div style={{ width: '80px', padding: '8px', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', fontWeight: '700', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>기간선택형</div>
+                  <div style={{ flex: 1, padding: '8px' }}>
+                    연금 수령할 기간을 지정하고 그 기간동안 균등하게 나누어받는 방법
+                    <ul style={{ margin: '4px 0 0 16px', padding: 0, fontSize: '0.68rem', color: '#94a3b8' }}>
+                      <li>지급신청일 기준, 계좌 평가금액을 지급 횟수로 나누어 지급 금액을 산정</li>
+                      <li>매해 첫 영업일에 잔여지급횟수로 계좌 평가금액을 나누어 지급 금액을 재산정</li>
+                      <li>세법상 혜택을 받으려면 10년이상 수령기간을 선택하여야 함(13.3.1 이전 가입자는 5년이상)</li>
+                    </ul>
+                  </div>
+                </div>
+                <div style={{ display: 'flex' }}>
+                  <div style={{ width: '80px', padding: '8px', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', fontWeight: '700', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>금액선택형</div>
+                  <div style={{ flex: 1, padding: '8px' }}>
+                    연금 수령할 금액을 지정하여 일정 주기마다 연금을 수령하는 방법
+                    <ul style={{ margin: '4px 0 0 16px', padding: 0, fontSize: '0.68rem', color: '#94a3b8' }}>
+                      <li>운용성과에 따라 연금수령 기간이 변경될 수 있음</li>
+                      <li>연금 수령한도를 초과하는 경우 퇴직/기타소득세가 부과될 수 있습니다</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 2 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ fontWeight: '800', fontSize: '0.78rem', color: '#2563eb' }}>2. 연금저축 연금수령 시 과세제도</div>
+              <table style={{ width: '100%', borderCollapse: 'collapse', border: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontSize: '0.68rem' }}>
+                <thead>
+                  <tr style={{ backgroundColor: isDark ? '#1e293b' : '#f1f5f9', borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                    <th style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px' }}>소득원천</th>
+                    <th style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px' }}>연금수령시</th>
+                    <th style={{ padding: '6px' }}>연금외수령시</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px', fontWeight: '700' }}>과세제외금액</td>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px' }}>비과세</td>
+                    <td style={{ padding: '6px' }}>비과세</td>
+                  </tr>
+                  <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px', fontWeight: '700' }}>세액공제금액</td>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px' }}>연금소득세 3.3%~5.5%</td>
+                    <td style={{ padding: '6px' }}>기타소득세 16.5%</td>
+                  </tr>
+                  <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px', fontWeight: '700' }}>이연퇴직소득</td>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px' }}>퇴직소득세의 70% (10년초과시 60%)</td>
+                    <td style={{ padding: '6px' }}>퇴직소득세 100%</td>
+                  </tr>
+                  <tr>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px', fontWeight: '700' }}>운용수익</td>
+                    <td style={{ borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', padding: '6px' }}>연금소득세 3.3%~5.5%</td>
+                    <td style={{ padding: '6px' }}>기타소득세 16.5%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Section 3 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ fontWeight: '800', fontSize: '0.78rem', color: '#2563eb' }}>3. 원천징수 세금</div>
+              <ul style={{ margin: 0, paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.68rem', color: isDark ? '#cbd5e1' : '#4b5563' }}>
+                <li>중도해지 또는 연금외수령 시 <strong>기타소득세(16.5% 분리과세)</strong>가 원천징수되오니 유의하시기 바랍니다.</li>
+                <li>연금수령 한도액을 초과하여 인출할 경우 한도초과액에 대해서는 퇴직소득세 또는 기타소득세가 부과됩니다.</li>
+                <li><strong>Check Point!</strong> 부득이한 사유로 해지/인출하는 경우 연금소득세(3.3%~5.5%) 저율 과세 혜택이 적용됩니다. (가입자 사망, 천재지변, 파산, 해외이주, 3개월 이상 요양 등)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
