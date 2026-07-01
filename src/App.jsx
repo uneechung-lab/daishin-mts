@@ -4803,7 +4803,11 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     const prefix = isToBe ? 'tobe' : 'asis';
     return params.get(`${prefix}SelectedMethod`) || '기간 선택형';
   });
-  const [customAmount, setCustomAmount] = useState('');
+  const [customAmount, setCustomAmount] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}CustomAmount`) || '2,500,000 원';
+  });
   const [customPeriod, setCustomPeriod] = useState('');
   const [showPeriodPicker, setShowPeriodPicker] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState(() => {
@@ -4825,6 +4829,13 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   const [showAccountBottomSheet, setShowAccountBottomSheet] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('200-233354(41) 김대신');
 
+  // Keypad & Inputs Editable States
+  const [showNumericKeypad, setShowNumericKeypad] = useState(false);
+  const [activeField, setActiveField] = useState(null); // 'amount', 'account', 'phone', 'immediateAmount'
+  const [phoneNumber, setPhoneNumber] = useState('01087486503');
+  const [directAccountNumber, setDirectAccountNumber] = useState('39440204151955');
+  const [immediateAmount, setImmediateAmount] = useState('');
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const prefix = isToBe ? 'tobe' : 'asis';
@@ -4834,6 +4845,11 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (params.get(`${prefix}ShowBankPicker`) === 'true') setShowBankPicker(true);
     if (params.get(`${prefix}ShowProductBottomSheet`) === 'true') setShowProductBottomSheet(true);
     if (params.get(`${prefix}ShowAccountBottomSheet`) === 'true') setShowAccountBottomSheet(true);
+    if (params.get(`${prefix}ShowNumericKeypad`) === 'true') {
+      setShowNumericKeypad(true);
+      const act = params.get(`${prefix}ActiveField`);
+      if (act) setActiveField(act);
+    }
   }, [isToBe]);
 
   useEffect(() => {
@@ -4845,17 +4861,25 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (showBankPicker) params.set(`${prefix}ShowBankPicker`, 'true'); else params.delete(`${prefix}ShowBankPicker`);
     if (showProductBottomSheet) params.set(`${prefix}ShowProductBottomSheet`, 'true'); else params.delete(`${prefix}ShowProductBottomSheet`);
     if (showAccountBottomSheet) params.set(`${prefix}ShowAccountBottomSheet`, 'true'); else params.delete(`${prefix}ShowAccountBottomSheet`);
+    if (showNumericKeypad) {
+      params.set(`${prefix}ShowNumericKeypad`, 'true');
+      if (activeField) params.set(`${prefix}ActiveField`, activeField);
+    } else {
+      params.delete(`${prefix}ShowNumericKeypad`);
+      params.delete(`${prefix}ActiveField`);
+    }
     
     params.set(`${prefix}SelectedDay`, selectedDay);
     params.set(`${prefix}SelectedMethod`, selectedMethod);
     params.set(`${prefix}SelectedPeriod`, selectedPeriod);
     params.set(`${prefix}SelectedBank`, selectedBank);
+    params.set(`${prefix}CustomAmount`, customAmount);
 
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, selectedDay, selectedMethod, selectedPeriod, selectedBank, isToBe]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -4956,6 +4980,75 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     fontSize: '1rem',
     fontWeight: '600',
     color: isDark ? '#f8fafc' : '#0f172a'
+  };
+
+  const formatWon = (val) => {
+    if (!val) return '';
+    const cleanNum = val.replace(/\D/g, '');
+    if (!cleanNum) return '';
+    return cleanNum.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' 원';
+  };
+
+  const handleKeypadPress = (key) => {
+    if (activeField === 'amount') {
+      if (key === 'backspace') {
+        setCustomAmount(prev => {
+          const raw = prev.replace(/\D/g, '');
+          const nextVal = raw.slice(0, -1);
+          return formatWon(nextVal);
+        });
+      } else if (key === 'done' || key === 'dismiss') {
+        setShowNumericKeypad(false);
+        setActiveField(null);
+      } else if (/^\d$/.test(key)) {
+        setCustomAmount(prev => {
+          const raw = prev.replace(/\D/g, '');
+          if (raw.length >= 12) return prev;
+          return formatWon(raw + key);
+        });
+      }
+    } else if (activeField === 'account') {
+      if (key === 'backspace') {
+        setDirectAccountNumber(prev => prev.slice(0, -1));
+      } else if (key === 'done' || key === 'dismiss') {
+        setShowNumericKeypad(false);
+        setActiveField(null);
+      } else if (/^\d$/.test(key)) {
+        setDirectAccountNumber(prev => {
+          if (prev.length >= 16) return prev;
+          return prev + key;
+        });
+      }
+    } else if (activeField === 'phone') {
+      if (key === 'backspace') {
+        setPhoneNumber(prev => prev.slice(0, -1));
+      } else if (key === 'done' || key === 'dismiss') {
+        setShowNumericKeypad(false);
+        setActiveField(null);
+      } else if (/^\d$/.test(key)) {
+        setPhoneNumber(prev => {
+          if (prev.length >= 13) return prev;
+          return prev + key;
+        });
+      }
+    } else if (activeField === 'immediateAmount') {
+      if (key === 'backspace') {
+        setImmediateAmount(prev => {
+          const raw = prev.replace(/\D/g, '');
+          const nextVal = raw.slice(0, -1);
+          return formatWon(nextVal);
+        });
+      } else if (key === 'done' || key === 'dismiss') {
+        setShowNumericKeypad(false);
+        setActiveField(null);
+      } else if (/^\d$/.test(key)) {
+        setImmediateAmount(prev => {
+          const raw = prev.replace(/\D/g, '');
+          if (raw.length >= 12) return prev;
+          return formatWon(raw + key);
+        });
+      }
+    }
   };
 
   const handleConfirmDate = () => {
@@ -5182,10 +5275,26 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                     value={customAmount} 
                     onChange={(e) => setCustomAmount(e.target.value)}
                     placeholder="2,500,000 원" 
+                    inputMode="none"
+                    onFocus={() => {
+                      setActiveField('amount');
+                      setShowNumericKeypad(true);
+                    }}
                     style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
                   />
                   <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                    <input type="text" placeholder="계좌번호 직접입력" style={{ ...inputStyle, flex: 1, marginTop: 0 }} />
+                    <input 
+                      type="text" 
+                      value={directAccountNumber}
+                      onChange={(e) => setDirectAccountNumber(e.target.value)}
+                      placeholder="계좌번호 직접입력" 
+                      inputMode="none"
+                      onFocus={() => {
+                        setActiveField('account');
+                        setShowNumericKeypad(true);
+                      }}
+                      style={{ ...inputStyle, flex: 1, marginTop: 0 }} 
+                    />
                     <button style={{
                       padding: '0 12px',
                       borderRadius: '4px',
@@ -5260,10 +5369,26 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                     value={customAmount} 
                     onChange={(e) => setCustomAmount(e.target.value)}
                     placeholder="2,500,000 원" 
+                    inputMode="none"
+                    onFocus={() => {
+                      setActiveField('amount');
+                      setShowNumericKeypad(true);
+                    }}
                     style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
                   />
                   <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                    <input type="text" placeholder="계좌번호 직접입력" style={{ ...inputStyle, flex: 1, marginTop: 0 }} />
+                    <input 
+                      type="text" 
+                      value={directAccountNumber}
+                      onChange={(e) => setDirectAccountNumber(e.target.value)}
+                      placeholder="계좌번호 직접입력" 
+                      inputMode="none"
+                      onFocus={() => {
+                        setActiveField('account');
+                        setShowNumericKeypad(true);
+                      }}
+                      style={{ ...inputStyle, flex: 1, marginTop: 0 }} 
+                    />
                     <button style={{
                       padding: '0 12px',
                       borderRadius: '4px',
@@ -5351,7 +5476,17 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
         {/* 연락처 */}
         <div style={{ position: 'relative' }}>
           <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
-          <input type="text" value="01087486503" style={inputStyle} />
+          <input 
+            type="text" 
+            value={phoneNumber} 
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            inputMode="none"
+            onFocus={() => {
+              setActiveField('phone');
+              setShowNumericKeypad(true);
+            }}
+            style={inputStyle} 
+          />
           {isToBe && isDrawerOpen && (
             <span style={{
               position: 'absolute',
@@ -5376,7 +5511,18 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
         {/* 즉시 인출 금액 */}
         <div>
           <label style={labelStyle}>즉시 인출 금액(선택)</label>
-          <input type="text" placeholder="금액 입력" style={{ ...inputStyle, backgroundColor: 'transparent' }} />
+          <input 
+            type="text" 
+            value={immediateAmount}
+            onChange={(e) => setImmediateAmount(e.target.value)}
+            placeholder="금액 입력" 
+            inputMode="none"
+            onFocus={() => {
+              setActiveField('immediateAmount');
+              setShowNumericKeypad(true);
+            }}
+            style={{ ...inputStyle, backgroundColor: 'transparent' }} 
+          />
         </div>
       </div>
 
@@ -6117,6 +6263,106 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           </div>
         </div>
       )}
+
+      {/* Custom Numeric Keypad Render Helpers */}
+      {(() => {
+        const renderKeypadKey = (num) => (
+          <div 
+            onClick={() => handleKeypadPress(num)}
+            style={{
+              backgroundColor: isDark ? '#334155' : '#ffffff',
+              color: isDark ? '#ffffff' : '#000000',
+              borderRadius: '6px',
+              height: '46px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.15)'
+            }}
+          >
+            {num}
+          </div>
+        );
+
+        const renderKeypadActionKey = (action, content, customStyle = {}) => (
+          <div 
+            onClick={() => handleKeypadPress(action)}
+            style={{
+              backgroundColor: isDark ? '#1e293b' : '#b0b3b8',
+              color: isDark ? '#cbd5e1' : '#000000',
+              borderRadius: '6px',
+              height: '46px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+              ...customStyle
+            }}
+          >
+            {content}
+          </div>
+        );
+
+        if (!showNumericKeypad) return null;
+
+        return (
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: isDark ? '#1e293b' : '#d2d5db',
+            padding: '6px',
+            borderTop: isDark ? '1px solid #334155' : '1px solid #b0b3b8',
+            zIndex: 2000,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '6px',
+            userSelect: 'none',
+            boxSizing: 'border-box'
+          }}>
+            {/* Row 1 */}
+            {renderKeypadKey('1')}
+            {renderKeypadKey('2')}
+            {renderKeypadKey('3')}
+            {renderKeypadActionKey('backspace', (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+                <line x1="18" y1="9" x2="12" y2="15"/>
+                <line x1="12" y1="9" x2="18" y2="15"/>
+              </svg>
+            ))}
+
+            {/* Row 2 */}
+            {renderKeypadKey('4')}
+            {renderKeypadKey('5')}
+            {renderKeypadKey('6')}
+            {renderKeypadActionKey('done', '완료', { color: '#2563eb', fontWeight: '800' })}
+
+            {/* Row 3 */}
+            {renderKeypadKey('7')}
+            {renderKeypadKey('8')}
+            {renderKeypadKey('9')}
+            {renderKeypadActionKey('dot', '.')}
+
+            {/* Row 4 */}
+            {renderKeypadActionKey('mic', '🎙️')}
+            {renderKeypadKey('0')}
+            {renderKeypadActionKey('dismiss', (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            ))}
+            {renderKeypadActionKey('comma', ',')}
+          </div>
+        );
+      })()}
     </div>
   );
 }
