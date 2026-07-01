@@ -5009,7 +5009,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }
               <option>200-233354(41) 김대신</option>
             </select>
           )}
-          {isDrawerOpen && (
+          {isToBe && isDrawerOpen && (
             <span style={{
               position: 'absolute',
               top: '2px',
@@ -5256,7 +5256,28 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }
             {selectedBank || '수령계좌 선택'}
           </div>
           <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-            <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, flex: 1, marginTop: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+            <div style={{ position: 'relative', flex: 1 }}>
+              <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', boxSizing: 'border-box' }} />
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '12px',
+                  right: '10px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>4</span>
+              )}
+            </div>
             <button style={{
               padding: '0 12px',
               borderRadius: '4px',
@@ -5313,7 +5334,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }
               justifyContent: 'center',
               zIndex: 10,
               boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-            }}>3</span>
+            }}>4</span>
           )}
         </div>
 
@@ -5356,7 +5377,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }
               justifyContent: 'center',
               zIndex: 10,
               boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-            }}>4</span>
+            }}>5</span>
           )}
         </div>
 
@@ -8175,7 +8196,7 @@ function App() {
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                       <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                       <div>
-                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>원스톱 연금 네비게이션:</strong> 전체 메뉴 내 [연금] 카테고리를 신규 배치하여 연금수령 신청, 신청 조회/취소, 연금수령 현황, 연금개시 시뮬레이션까지 모든 연금저축 및 퇴직연금 서비스를 뎁스(Depth) 최소화로 손쉽게 오갈 수 있습니다.
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>원스톱 연금 네비게이션:</strong> 연금수령 메뉴를 신규 배치하여 연금수령 신청, 신청 조회/취소, 연금수령 현황, 연금개시 시뮬레이션까지 모든 연금저축 및 퇴직연금 서비스를 뎁스(Depth) 최소화로 손쉽게 오갈 수 있습니다.
                       </div>
                     </li>
                   </ul>
@@ -8257,19 +8278,25 @@ function App() {
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                     <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                     <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>날짜 입력 (10p):</strong> 연금개시 입력 필드 터치 시 모바일 네이티브 달력(Calendar) UI를 팝업함. 신청일 기준 미래 60일 이내의 일자만 활성화하며, 60일 초과 일자 선택 시 "60일 이내의 일자만 선택 가능합니다"라는 안내 팝업을 노출함.
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>날짜 입력:</strong> 수령 개시 일자 입력 필드 선택 시 모바일 네이티브 달력(Calendar) UI를 팝업함. 신청일 기준 미래 60일 이내의 일자만 활성화하며, 60일 초과 일자 선택 시 "60일 이내의 일자만 선택 가능합니다"라는 안내 팝업을 노출함.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                     <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                     <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연락처 및 계좌 입력 (11p, 12p):</strong> 연락처 입력 및 수령계좌 직접 입력 필드 진입 시, 문자가 아닌 '휴대폰 숫자 패드'가 자동으로 활성화되도록 인터랙션을 정의함. 금융기관 선택 프로세스는 원뎁스(1-Depth) 바텀시트 또는 팝업으로 제공하여 이탈을 방지함.
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>수령계좌 선택:</strong> 금융기관 선택 프로세스는 원뎁스(1-Depth) 바텀시트 또는 팝업으로 제공하여 이탈을 방지함.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                     <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
                     <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>유의사항 확인 (12p):</strong> 투자권유 및 연금수령 관련 유의사항 체크박스는 스크롤을 끝까지 내리거나 약관 상세 팝업을 확인해야 체크 가능하도록 가이드라인을 설정함.
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연락처 및 계좌 입력:</strong> 연락처 입력 및 수령계좌 직접 입력 필드 선택 시, 문자가 아닌 '휴대폰 숫자 패드'가 자동으로 활성화되도록 인터랙션을 정의함.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>5</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>유의사항 확인:</strong> 체크박스 선택 시 연금저축계좌 개시/해지 및 중도인출 관련 안내 팝업을 확인해야 체크 가능함.
                     </div>
                   </li>
                 </ul>
