@@ -7247,7 +7247,7 @@ function App() {
                       </div>
 
                       {/* Split Content Area (Left LNB / Right List) */}
-                      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+                      <div style={{ flex: isFigmaExportMode ? 'none' : 1, display: 'flex', overflow: isFigmaExportMode ? 'visible' : 'hidden', position: 'relative' }}>
                         {/* Left Submenu Navigation */}
                         <div style={{
                           width: '115px',
@@ -7527,7 +7527,7 @@ function App() {
                       </div>
 
                       {/* Split Content Area (Left Side Menu / Right Main List) */}
-                      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+                      <div style={{ flex: isFigmaExportMode ? 'none' : 1, display: 'flex', overflow: isFigmaExportMode ? 'visible' : 'hidden', position: 'relative' }}>
                         {/* Left Submenu Navigation */}
                         <div style={{
                           width: '115px',
