@@ -5533,25 +5533,18 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
       <div style={footerStyle}>
         {/* Checkbox agreement */}
         <div style={{ position: 'relative' }}>
-          <label style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', userSelect: 'none' }}>
+          <label 
+            onClick={() => setShowNoticePopup(true)}
+            style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
+          >
             <input 
               type="checkbox" 
               checked={agreed} 
               onChange={(e) => setAgreed(e.target.checked)} 
               style={{ marginTop: '3px', cursor: 'pointer' }} 
             />
-            <span style={{ fontSize: '0.72rem', color: isDark ? '#94a3b8' : '#64748b', fontWeight: '600', lineHeight: '1.4' }}>
-              <span 
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setShowNoticePopup(true);
-                }}
-                style={{ color: '#2563eb', textDecoration: 'underline', cursor: 'pointer', fontWeight: '800' }}
-              >
-                연금수령 관련 유의사항
-              </span>
-              을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
+            <span style={{ fontSize: '0.72rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
+              연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
             </span>
           </label>
           {isToBe && isDrawerOpen && (
