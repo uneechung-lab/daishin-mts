@@ -4789,7 +4789,7 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
 }
 
 
-function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }) {
+function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, isFigmaExportMode }) {
   const [selectedDay, setSelectedDay] = useState('25일');
   const [agreed, setAgreed] = useState(true);
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -4834,7 +4834,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: isFigmaExportMode ? 'auto' : '100%',
     width: '100%',
     backgroundColor: isDark ? '#0b0f19' : '#ffffff',
     color: isDark ? '#cbd5e1' : '#333333',
@@ -4855,8 +4855,8 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }
   };
 
   const contentStyle = {
-    flex: 1,
-    overflowY: 'auto',
+    flex: isFigmaExportMode ? 'none' : 1,
+    overflowY: isFigmaExportMode ? 'visible' : 'auto',
     padding: '16px',
     display: 'flex',
     flexDirection: 'column',
@@ -6089,6 +6089,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }
 function App() {
 
   const [isDark, setIsDark] = useState(false);
+  const [isFigmaExportMode, setIsFigmaExportMode] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [selectedStock, setSelectedStock] = useState('신대증 30');
   const [activeTab, setActiveTab] = useState('호가');
@@ -6292,35 +6293,38 @@ function App() {
         left: '24px',
         zIndex: 9999,
         display: 'flex',
-        gap: '8px'
+        alignItems: 'center',
+        gap: '16px'
       }}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
-          const isActive = num === activeScreen;
-          return (
-            <span
-              key={num}
-              onClick={() => setActiveScreen(num)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '28px',
-                height: '28px',
-                borderRadius: '50%',
-                backgroundColor: isActive ? '#00c3a5' : (isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)'),
-                color: isActive ? '#fff' : (isDark ? '#94a3b8' : '#475569'),
-                border: isActive ? 'none' : '1px solid var(--border-color)',
-                fontSize: '0.9rem',
-                fontWeight: '900',
-                lineHeight: '1',
-                cursor: 'pointer',
-                transition: 'all 0.2s'
-              }}
-            >
-              {num}
-            </span>
-          );
-        })}
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
+            const isActive = num === activeScreen;
+            return (
+              <span
+                key={num}
+                onClick={() => setActiveScreen(num)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  backgroundColor: isActive ? '#00c3a5' : (isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)'),
+                  color: isActive ? '#fff' : (isDark ? '#94a3b8' : '#475569'),
+                  border: isActive ? 'none' : '1px solid var(--border-color)',
+                  fontSize: '0.9rem',
+                  fontWeight: '900',
+                  lineHeight: '1',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                {num}
+              </span>
+            );
+          })}
+        </div>
       </div>
 
       {/* Floating Description Drawer Trigger (+ Button) */}
@@ -6348,6 +6352,36 @@ function App() {
       >
         ＋
       </button>
+
+      {/* Floating Figma Export Mode Toggle Button */}
+      {activeScreen === 4 && (
+        <button
+          onClick={() => setIsFigmaExportMode(!isFigmaExportMode)}
+          style={{
+            position: 'fixed',
+            right: isDrawerOpen ? '540px' : '20px',
+            top: '90px',
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            backgroundColor: isFigmaExportMode ? '#de201e' : '#1c1c1e',
+            color: '#ffffff',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            zIndex: 10000
+          }}
+          title={isFigmaExportMode ? "피그마 익스포트 모드 해제" : "피그마 익스포트 모드 설정"}
+        >
+          ↕
+        </button>
+      )}
 
       <main style={{
         ...styles.mainContent,
@@ -7056,7 +7090,7 @@ function App() {
               gap: '60px',
               flexWrap: 'wrap',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: isFigmaExportMode ? 'flex-start' : 'center'
             }}>
               {/* AS IS Emulator */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
@@ -7075,7 +7109,8 @@ function App() {
                   ...styles.phoneMockup,
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
-                  height: '800px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative'
@@ -7246,9 +7281,9 @@ function App() {
 
                         {/* Right Main Menu Items */}
                         <div style={{
-                          flex: 1,
+                          flex: isFigmaExportMode ? 'none' : 1,
                           padding: '18px 16px',
-                          overflowY: 'auto',
+                          overflowY: isFigmaExportMode ? 'visible' : 'auto',
                           backgroundColor: isDark ? '#121826' : '#ffffff',
                           display: 'flex',
                           flexDirection: 'column',
@@ -7329,6 +7364,7 @@ function App() {
                     <PensionReceiptRequestView 
                       isDark={isDark} 
                       isDrawerOpen={isDrawerOpen}
+                      isFigmaExportMode={isFigmaExportMode}
                       onBackClick={() => setAsIsScreen4SubScreen('menu')} 
                     />
                   )}
@@ -7352,7 +7388,8 @@ function App() {
                   ...styles.phoneMockup,
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
-                  height: '800px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative'
@@ -7543,9 +7580,9 @@ function App() {
 
                         {/* Right Main Menu Items */}
                         <div style={{
-                          flex: 1,
+                          flex: isFigmaExportMode ? 'none' : 1,
                           padding: '18px 16px',
-                          overflowY: 'auto',
+                          overflowY: isFigmaExportMode ? 'visible' : 'auto',
                           backgroundColor: isDark ? '#121826' : '#ffffff',
                           display: 'flex',
                           flexDirection: 'column',
@@ -7680,6 +7717,7 @@ function App() {
                       isDark={isDark} 
                       isToBe={true} 
                       isDrawerOpen={isDrawerOpen}
+                      isFigmaExportMode={isFigmaExportMode}
                       onBackClick={() => setScreen4SubScreen('menu')} 
                     />
                   )}
