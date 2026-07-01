@@ -6089,7 +6089,10 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
 function App() {
 
   const [isDark, setIsDark] = useState(false);
-  const [isFigmaExportMode, setIsFigmaExportMode] = useState(false);
+  const [isFigmaExportMode, setIsFigmaExportMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('figmaExport') === 'true';
+  });
   const [notifications, setNotifications] = useState([]);
   const [selectedStock, setSelectedStock] = useState('신대증 30');
   const [activeTab, setActiveTab] = useState('호가');
@@ -6172,6 +6175,9 @@ function App() {
     } else if (screenParam === '1' || (!screenParam && activeScreen === 1)) {
       setEtfMallNavMode('search');
     }
+
+    const figmaExportParam = params.get('figmaExport');
+    if (figmaExportParam) setIsFigmaExportMode(figmaExportParam === 'true');
   }, []);
 
   useEffect(() => {
@@ -6188,12 +6194,13 @@ function App() {
     params.set('asisQuery', asisSearchQuery);
     params.set('tobeQuery', tobeSearchQuery);
     params.set('etfMallNavMode', etfMallNavMode);
+    params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -6225,6 +6232,8 @@ function App() {
       if (tobeQueryParam) setTobeSearchQuery(tobeQueryParam);
       const etfMallNavModeParam = params.get('etfMallNavMode');
       if (etfMallNavModeParam) setEtfMallNavMode(etfMallNavModeParam);
+      const figmaExportParam = params.get('figmaExport');
+      if (figmaExportParam) setIsFigmaExportMode(figmaExportParam === 'true');
     };
 
     window.addEventListener('popstate', handlePopState);
