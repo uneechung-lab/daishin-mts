@@ -6148,6 +6148,9 @@ function App() {
     const screen4SubParam = params.get('screen4SubScreen');
     if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
 
+    const asisScreen4SubParam = params.get('asisScreen4SubScreen');
+    if (asisScreen4SubParam) setAsIsScreen4SubScreen(asisScreen4SubParam);
+
     const mallTabParam = params.get('mallTab');
     if (mallTabParam) setActiveMallTab(mallTabParam);
 
@@ -6186,6 +6189,7 @@ function App() {
     params.set('asis', asIsSubScreen);
     params.set('tobe', toBeSubScreen);
     params.set('screen4SubScreen', screen4SubScreen);
+    params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
     params.set('ownedDisplay', ownedDisplayOption);
     params.set('ownedSort', ownedSortOption);
@@ -6200,7 +6204,7 @@ function App() {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -6216,6 +6220,8 @@ function App() {
       if (tobeParam) setToBeSubScreen(tobeParam);
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
+      const asisScreen4SubParam = params.get('asisScreen4SubScreen');
+      if (asisScreen4SubParam) setAsIsScreen4SubScreen(asisScreen4SubParam);
       const mallTabParam = params.get('mallTab');
       if (mallTabParam) setActiveMallTab(mallTabParam);
       const ownedDisplayParam = params.get('ownedDisplay');
