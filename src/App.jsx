@@ -6411,7 +6411,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               </svg>
             </button>
             <span style={{ fontSize: '0.92rem', fontWeight: '800', color: isDark ? '#f8fafc' : '#0f172a' }}>
-              대신증권 퇴직연금(IRP) 연금수령시 유의사항
+              연금저축계좌 개시/해지 및 중도인출 관련 안내
             </span>
           </div>
 
@@ -6432,41 +6432,41 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
             {/* Title Section */}
             <div>
               <div style={{ fontSize: '1.02rem', fontWeight: '900', color: isDark ? '#ffffff' : '#000000', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingBottom: '6px' }}>
-                <span>대신증권 퇴직연금(IRP) 연금수령시 유의사항</span>
-                <span style={{ fontSize: '0.62rem', fontWeight: 'normal', color: '#888888', paddingBottom: '2px' }}>(고객교부용)</span>
+                <span>연금저축계좌 개시/해지 및 중도인출 관련 안내</span>
               </div>
               <div style={{ height: '3px', backgroundColor: '#0a5c43' }} />
             </div>
 
-            {/* Section 1: IRP 연금수령 유형 */}
+            <div style={{ padding: '10px', backgroundColor: isDark ? '#1e293b' : '#f8fafc', borderRadius: '6px', fontSize: '0.68rem', wordBreak: 'keep-all' }}>
+              대신증권 연금저축계좌를 거래해 주셔서 감사합니다.<br/>
+              연금저축계좌 개시/해지 및 중도인출과 관련하여 고객님께서 반드시 확인하셔야 할 사항을 다음과 같이 안내해드리오니 참고하시기 바랍니다.
+            </div>
+
+            {/* Section 1: 연금계좌 연금수령 유형 */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', border: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
                 <tbody>
                   <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
-                    <td rowSpan={3} style={{ width: '70px', padding: '12px 6px', backgroundColor: isDark ? '#1e293b' : '#f8fafc', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '800', color: isDark ? '#38bdf8' : '#0a5c43', verticalAlign: 'middle', textAlign: 'center' }}>
-                      1<br/>IRP<br/>연금수령<br/>유형
+                    <td rowSpan={2} style={{ width: '70px', padding: '12px 6px', backgroundColor: isDark ? '#1e293b' : '#f8fafc', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '800', color: isDark ? '#38bdf8' : '#0a5c43', verticalAlign: 'middle', textAlign: 'center' }}>
+                      1<br/>연금계좌<br/>연금수령<br/>유형
                     </td>
                     <td style={{ width: '65px', padding: '8px 4px', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center', verticalAlign: 'middle' }}>기간선택형</td>
                     <td style={{ padding: '8px', fontSize: '0.66rem' }}>
-                      • 연금을 수령할 기간을 지정하고 그 기간동안 산정된 금액을 수령하는 방법
+                      • 연금수령 기간을 지정하고 그 기간동안 균등하게 나누어받는 방법
                       <div style={{ fontSize: '0.62rem', color: '#666666', marginTop: '3px', paddingLeft: '6px' }}>
-                        * 매 지급 시점의 평가액이 반영되므로 지급시마다 금액이 변동함<br/>
-                        * 세법상 연금세제 혜택을 받으려면 10년 이상 수령기간으로 선택하여야 합니다.
+                        * 지급신청일 기준, 계좌 평가금액을 지급 횟수로 나누어 지급 금액을 산정<br/>
+                        * 매해 첫 영업일에 잔여지급횟수로 계좌 평가금액을 나누어 지급 금액을 재산정<br/>
+                        * 세법상 혜택을 받으려면 10년이상 수령기간을 선택하여야 함(2013년 3월 1일 이전 가입자는 5년이상)
                       </div>
-                    </td>
-                  </tr>
-                  <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
-                    <td style={{ padding: '8px 4px', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center', verticalAlign: 'middle' }}>한도수령형</td>
-                    <td style={{ padding: '8px', fontSize: '0.66rem' }}>
-                      • 세법상 정해진 연금수령한도 내에서 수령기간에 따라 연금을 수령하는 방법
                     </td>
                   </tr>
                   <tr>
                     <td style={{ padding: '8px 4px', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center', verticalAlign: 'middle' }}>금액선택형</td>
                     <td style={{ padding: '8px', fontSize: '0.66rem' }}>
-                      • 수령할 금액을 지정하여 연금을 수령하는 방법
+                      • 연금수령 금액을 지정하여 일정 주기마다 연금을 수령하는 방법
                       <div style={{ fontSize: '0.62rem', color: '#666666', marginTop: '3px', paddingLeft: '6px' }}>
-                        * 적립금액에 따라 수령 기간이 달라질 수 있으며 연금수령한도를 초과하는 수령금액에 따라 퇴직/기타 소득세가 부과될 수 있습니다.
+                        * 운용성과에 따라 연금수령 기간이 변경될 수 있음<br/>
+                        * 연금수령한도를 초과하는 경우 퇴직/기타 소득세가 부과될 수 있습니다.
                       </div>
                     </td>
                   </tr>
@@ -6474,13 +6474,13 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               </table>
             </div>
 
-            {/* Section 2: IRP 연금수령시 과세제도 */}
+            {/* Section 2: 연금저축 연금수령시 과세제도 */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', border: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontSize: '0.66rem' }}>
                 <tbody>
                   <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
                     <td rowSpan={5} style={{ width: '70px', padding: '12px 6px', backgroundColor: isDark ? '#1e293b' : '#f8fafc', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '800', color: isDark ? '#38bdf8' : '#0a5c43', verticalAlign: 'middle', textAlign: 'center' }}>
-                      2<br/>IRP<br/>연금수령시<br/>과세제도
+                      2<br/>연금저축<br/>연금수령시<br/>과세제도
                     </td>
                     <td style={{ padding: '6px', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center' }}>소득원천</td>
                     <td style={{ padding: '6px', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center' }}>연금 수령 시</td>
@@ -6488,19 +6488,20 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   </tr>
                   <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
                     <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center' }}>과세제외금액</td>
-                    <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', textAlign: 'center' }}>과세제외</td>
-                    <td style={{ padding: '6px', textAlign: 'center' }}>과세제외</td>
+                    <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', textAlign: 'center' }}>비과세</td>
+                    <td style={{ padding: '6px', textAlign: 'center' }}>비과세</td>
                   </tr>
                   <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
                     <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center' }}>세액공제금액</td>
-                    <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', textAlign: 'center' }}>3.3% ~ 5.5%</td>
+                    <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', textAlign: 'center' }}>연금소득세 3.3% ~ 5.5%</td>
                     <td style={{ padding: '6px', textAlign: 'center' }}>기타소득세 16.5%</td>
                   </tr>
                   <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
-                    <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center' }}>퇴직소득</td>
+                    <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', fontWeight: '700', textAlign: 'center' }}>이연퇴직소득</td>
                     <td style={{ padding: '6px', borderRight: isDark ? '1px solid #334155' : '1px solid #cbd5e1', textAlign: 'center', fontSize: '0.58rem' }}>
                       실수령연차 10년이하: 퇴직소득세의 70%<br/>
-                      실수령연차 10년초과: 퇴직소득세의 60%
+                      실수령연차 10년초과 ~ 20년이하: 퇴직소득세의 60%<br/>
+                      실수령연차 20년초과: 퇴직소득세의 50%
                     </td>
                     <td style={{ padding: '6px', textAlign: 'center' }}>퇴직소득세</td>
                   </tr>
@@ -6511,48 +6512,58 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   </tr>
                 </tbody>
               </table>
-              <div style={{ fontSize: '0.6rem', color: '#666666', paddingLeft: '4px', display: 'flex', flexDirection: 'column', gap: '3px', marginTop: '4px' }}>
-                <span>* 실수령 연차는 1년중 최소 1회이상 연금을 수령받은 연차를 계산합니다. 연금공동 등으로 지급받지 않은 년도는 계산에서 제외함.</span>
-                <span>※ 연도별 세액, 소득공제한도범위내 불입액 중 세액/소득공제를 받지 않은 원금이 있는 경우 「연금보험료 등 세액·공제확인서」 제출시 원천징수 된 기타소득세의 일부를 돌려받을 수 있습니다.</span>
-                <span>※ 연간소득금액 (국민연금 등 제외)이 1,500만원을 초과하는 경우 다음 연도에 분리과세와 종합과세 중 선택하여 신고해야 합니다.</span>
-                <span>※ 위 세제와 관련된 사항은 관련 세법 개정 등에 따라 변경될 수 있습니다.</span>
+            </div>
+
+            {/* Section 3: 원천징수 세금 */}
+            <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
+              <div style={{ width: '70px', fontWeight: '800', color: isDark ? '#38bdf8' : '#0a5c43', fontSize: '0.74rem' }}>
+                3<br/>원천징수<br/>세금
+              </div>
+              <div style={{ flex: 1, paddingLeft: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div>
+                  <strong>• 연금저축계좌를 중도해지하거나 연금외 소득으로 인출하실 경우, 과세대상금액에 대하여 기타소득세가 원천징수되오니 주의하시기 바랍니다.</strong>
+                  <div style={{ fontSize: '0.62rem', color: '#666666', marginTop: '3px', paddingLeft: '6px' }}>
+                    * 세율: 16.5% (지방소득세 포함) 기타소득으로 분리과세<br/>
+                    * 과세대상: 소득공제받은 납입금액뿐만 아니라 연금계좌의 운용수익에 대해서도 부과됩니다.
+                  </div>
+                </div>
+                <div>
+                  <strong>• 연금수령개시 신청 이후 계좌의 경우는 「금년도 연금수령한도금액」까지는 연령에 따른 연금소득세가 부과되며, 「금년도 연금수령한도금액」을 초과시에는 퇴직/기타소득세가 부과됩니다.</strong>
+                </div>
+                <div>
+                  <strong>• Check Point! 연금수령개시 신청 이전 계좌인 경우</strong>
+                  <div style={{ fontSize: '0.62rem', color: '#666666', marginTop: '3px', paddingLeft: '6px' }}>
+                    * 연도별 세액, 소득공제한도범위내 불입액 중 세액/소득공제를 받지 않은 원금이 있는 경우 원천징수된 기타소득세의 일부를 돌려받을 수 있습니다.<br/>
+                    * 출금전에 「연금보험료 등의 세액·소득공제확인서」를 제출하시면 당사 납입액 중 세액·소득공제 받지 않은 원금이 있는지를 판단 후 기타소득세를 부과하지 않고 출금이 가능합니다.<br/>
+                    * 제출서류: 「연금보험료 등의 세액·소득공제확인서」 발급방법: 세무서 민원실을 방문하거나 공인인증서가 있으실 경우 국세청 홈택스 인터넷 홈페이지(http://hometax.go.kr)를 통해 발급받으실 수 있습니다.
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Section 3: 상품매매 관련사항 */}
+            {/* Section 4: 부득이한 사유에 따른 인출 안내 */}
             <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
               <div style={{ width: '70px', fontWeight: '800', color: isDark ? '#38bdf8' : '#0a5c43', fontSize: '0.74rem' }}>
-                3<br/>상품매매<br/>관련사항
+                부득이한<br/>사유<br/>인출안내
               </div>
-              <div style={{ flex: 1, paddingLeft: '10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <span>• 연금지급금액은 매도상품별 지급매도비율로 매도처리되어 요청한 연금지급액보다 많이 매도될 수 있습니다. 보유상품 매도순서는 IRP계약서상의 자산 매각순서를 따릅니다. 단, 자산매각 순서는 고객이 정할 수 있습니다. [매각순서] 1.현금성자산 2.예적금 3.사전지정운용방법(초저위험) 4.채권어음 5.파생상품 6.수익증권(국내,해외) 7.사전지정운용방법(초저위험 제외, 낮은위험도순) 8.주식(국내,해외)</span>
-                <span>• 연금지급을 위한 보유상품 매도시 매매불가 상품 및 ETF/ETN/리츠 상품으로 매도금액이 부족할 경우 해당회차는 연금지급이 되지 않습니다. 연금지급을 위한 상품매도는 연금지급일 기준 보유상품 희망매도 결제일 기준 +2영업일 전에 매도처리되고 결제된 현금성자산을 연금지급일까지 예탁수량으로 보유후 지급처리됩니다.</span>
-              </div>
-            </div>
-
-            {/* Section 4: IRP 연금수령시 유의사항 */}
-            <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
-              <div style={{ width: '70px', fontWeight: '800', color: isDark ? '#38bdf8' : '#0a5c43', fontSize: '0.74rem' }}>
-                4<br/>IRP<br/>연금수령시<br/>유의사항
-              </div>
-              <div style={{ flex: 1, paddingLeft: '10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <span>• 연금수령을 위해서는 반드시 연금수령개시신청을 해야 합니다.</span>
-                <span>• 연금수령개시신청은 만 55세 이후인 날부터 가능합니다.</span>
-                <span>• 연금수령개시신청시 세법상 연금세제 혜택을 받으시려면 10년이상 수령기간으로 선택하여야 합니다. 단, 특례대상 2013.3.1 이전 퇴직연금 가입자는 최소 5년이상으로 지정하셔도 연금세제 혜택을 받을 수 있습니다.</span>
-                <span>• 선택하고자 하는 수령일이 연금수령일 기준 보유상품 희망 매도 결제일 기준 +3영업일 전이어야 신청 가능합니다. 신청한 연금수령일이 휴일인 경우, 수령일 직전 영업일에 연금이 지급됩니다.</span>
-                <span>• 연금수령개시 신청 후에는 추가로 납입하실 수 없습니다.</span>
-              </div>
-            </div>
-
-            {/* Section 5: 즉시인출 신청시 유의사항 */}
-            <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
-              <div style={{ width: '70px', fontWeight: '800', color: isDark ? '#38bdf8' : '#0a5c43', fontSize: '0.74rem' }}>
-                5<br/>즉시인출<br/>신청시<br/>유의사항
-              </div>
-              <div style={{ flex: 1, paddingLeft: '10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <span>• 연금수령개시시점 및 연금수령 중 인출금액이 필요한 가입자가 신청해야 합니다.</span>
-                <span>• 연금지급 설계와 별개로 즉시인출금액 신청시 보유자산에서 바로 즉시인출금액의 매도상품 매도지급비율로 매도주문접수합니다. (매도상품 매도지급비율은 현금성자산 100%, RP/ELB/101%, 예적금102%수익증권105%)</span>
-                <span>• 연금지급 중 즉시인출신청하고자 하는경우는 연금지급 중단 후 재설계가 필요합니다.</span>
+              <div style={{ flex: 1, paddingLeft: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div>
+                  <strong>• 부득이한 사유에 따라 인출하실 경우 연금소득으로 분리과세(지방소득세 포함 3.3% ~ 5.5%)됩니다.</strong>
+                </div>
+                <div>
+                  <strong>• 부득이한 사유 항목:</strong>
+                  <div style={{ fontSize: '0.62rem', color: '#666666', marginTop: '3px', paddingLeft: '6px' }}>
+                    1. 천재지변<br/>
+                    2. 가입자의 사망, 해외이주 (해외이주 발생일로부터 6개월 이내에 인출하셔야 합니다.)<br/>
+                    3. 가입자 또는 부양가족의 질병/부상에 따른 3개월 이상의 요양이 필요한 경우<br/>
+                    4. 「재난 및 안전관리 기본법」의 재난으로 15일 이상의 입원치료가 필요한 피해를 입은 경우<br/>
+                    5. 가입자의 파산선고 또는 개인회생절차개시 결정<br/>
+                    6. 금융기관의 영업정지, 영업인가·허가의 취소, 해산결의 또는 파산선고
+                  </div>
+                </div>
+                <div style={{ fontSize: '0.62rem', color: '#dd2222' }}>
+                  ※ 부득이한 사유 중 [질병·부상에 따른 3개월 이상 요양] 및 [재난으로 15일 이상 입원치료] 사유는 기획재정부령으로 정하는 금액에 한하여 연금소득으로 분리과세(3.3%~5.5%)되며, 초과금액에 대해서는 기타소득(16.5%)으로 과세됩니다.
+                </div>
               </div>
             </div>
 
