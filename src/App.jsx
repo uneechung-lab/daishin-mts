@@ -4789,7 +4789,7 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
 }
 
 
-function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
+function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen }) {
   const [selectedDay, setSelectedDay] = useState('25일');
   const [agreed, setAgreed] = useState(true);
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -4805,6 +4805,9 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
   const [selectedMonth, setSelectedMonth] = useState(2);
   const [selectedDate, setSelectedDate] = useState(23);
   const [startDateStr, setStartDateStr] = useState(isToBe ? '2032.02.23' : '2032.02');
+  const [showProductBottomSheet, setShowProductBottomSheet] = useState(false);
+  const [showAccountBottomSheet, setShowAccountBottomSheet] = useState(false);
+  const [currentAccount, setCurrentAccount] = useState('200-233354(41) 김대신');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -4963,7 +4966,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
 
       {/* Header */}
       <div style={headerStyle}>
-        {isToBe && onBackClick ? (
+        {onBackClick ? (
           <button 
             onClick={onBackClick}
             style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
@@ -4986,10 +4989,45 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
       {/* Content */}
       <div style={contentStyle}>
         {/* Account Dropdown */}
-        <div>
-          <select style={selectStyle}>
-            <option>200-233354(41) 김대신</option>
-          </select>
+        <div style={{ position: 'relative' }}>
+          {isToBe ? (
+            <div 
+              onClick={() => setShowProductBottomSheet(true)}
+              style={{ 
+                ...selectStyle, 
+                cursor: 'pointer', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between',
+                paddingRight: '35px'
+              }}
+            >
+              <span>{currentAccount}</span>
+            </div>
+          ) : (
+            <select style={selectStyle}>
+              <option>200-233354(41) 김대신</option>
+            </select>
+          )}
+          {isDrawerOpen && (
+            <span style={{
+              position: 'absolute',
+              top: '2px',
+              right: isToBe ? '35px' : '25px',
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#ffffff',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+            }}>1</span>
+          )}
         </div>
 
         {/* Section Title */}
@@ -5004,20 +5042,41 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
         </div>
 
         {/* 개시 일자 */}
-        <div>
+        <div style={{ position: 'relative' }}>
           <label style={labelStyle}>수령 개시 일자</label>
           {isToBe ? (
-            <div 
-              onClick={() => {
-                setSelectedYear(2032);
-                setSelectedMonth(2);
-                setSelectedDate(23);
-                setShowDatePicker(true);
-              }}
-              style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-            >
-              {startDateStr}
-            </div>
+            <>
+              <div 
+                onClick={() => {
+                  setSelectedYear(2032);
+                  setSelectedMonth(2);
+                  setSelectedDate(23);
+                  setShowDatePicker(true);
+                }}
+                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              >
+                {startDateStr}
+              </div>
+              {isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '18px',
+                  right: '25px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>2</span>
+              )}
+            </>
           ) : (
             <div 
               onClick={() => {
@@ -5188,7 +5247,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
         )}
 
         {/* 수령계좌 정보 */}
-        <div>
+        <div style={{ position: 'relative' }}>
           <label style={labelStyle}>수령계좌 정보</label>
           <div 
             onClick={() => setShowBankPicker(true)}
@@ -5212,12 +5271,50 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
           <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
             계좌가 확인되었습니다.
           </span>
+          {isToBe && isDrawerOpen && (
+            <span style={{
+              position: 'absolute',
+              top: '18px',
+              right: '25px',
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#ffffff',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+            }}>3</span>
+          )}
         </div>
 
         {/* 연락처 */}
-        <div>
+        <div style={{ position: 'relative' }}>
           <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
           <input type="text" value="01087486503" style={inputStyle} />
+          {isToBe && isDrawerOpen && (
+            <span style={{
+              position: 'absolute',
+              top: '18px',
+              right: '10px',
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#ffffff',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+            }}>3</span>
+          )}
         </div>
 
         {/* 즉시 인출 금액 */}
@@ -5230,17 +5327,38 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
       {/* Footer */}
       <div style={footerStyle}>
         {/* Checkbox agreement */}
-        <label style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}>
-          <input 
-            type="checkbox" 
-            checked={agreed} 
-            onChange={(e) => setAgreed(e.target.checked)} 
-            style={{ marginTop: '3px' }} 
-          />
-          <span style={{ fontSize: '0.72rem', color: '#2563eb', fontWeight: '600', lineHeight: '1.4' }}>
-            연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
-          </span>
-        </label>
+        <div style={{ position: 'relative' }}>
+          <label style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}>
+            <input 
+              type="checkbox" 
+              checked={agreed} 
+              onChange={(e) => setAgreed(e.target.checked)} 
+              style={{ marginTop: '3px' }} 
+            />
+            <span style={{ fontSize: '0.72rem', color: '#2563eb', fontWeight: '600', lineHeight: '1.4' }}>
+              연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
+            </span>
+          </label>
+          {isToBe && isDrawerOpen && (
+            <span style={{
+              position: 'absolute',
+              top: '-6px',
+              right: '-4px',
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#ffffff',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+            }}>4</span>
+          )}
+        </div>
 
         {/* Submit button */}
         <button style={{
@@ -5775,6 +5893,174 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick }) {
           </div>
         </div>
       )}
+      {/* Bottom Sheet 1: 상품 선택 */}
+      {isToBe && showProductBottomSheet && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 1001,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          boxSizing: 'border-box'
+        }}>
+          {/* Backdrop Click */}
+          <div style={{ flex: 1 }} onClick={() => setShowProductBottomSheet(false)} />
+          {/* Sheet Panel */}
+          <div style={{
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            padding: '24px 20px 30px 20px',
+            color: isDark ? '#f8fafc' : '#111827',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            boxSizing: 'border-box'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: '800' }}>상품 선택</span>
+              <button 
+                onClick={() => {
+                  setShowProductBottomSheet(false);
+                  setShowAccountBottomSheet(true);
+                }}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #2563eb',
+                  color: '#2563eb',
+                  borderRadius: '4px',
+                  padding: '5px 12px',
+                  fontSize: '0.78rem',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+              >
+                다른 계좌 선택
+              </button>
+            </div>
+
+            <div 
+              onClick={() => {
+                setShowProductBottomSheet(false);
+              }}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '16px 0',
+                borderBottom: isDark ? '1px solid #334155' : '1px solid #f1f3f5',
+                cursor: 'pointer'
+              }}
+            >
+              <span style={{ fontSize: '1.02rem', fontWeight: '600' }}>(41) 개인형퇴직연금(IRP)</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bottom Sheet 2: 사용하실 계좌 선택 */}
+      {isToBe && showAccountBottomSheet && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 1002,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          boxSizing: 'border-box'
+        }}>
+          {/* Backdrop Click */}
+          <div style={{ flex: 1 }} onClick={() => setShowAccountBottomSheet(false)} />
+          {/* Sheet Panel */}
+          <div style={{
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            padding: '24px 20px 30px 20px',
+            color: isDark ? '#f8fafc' : '#111827',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            boxSizing: 'border-box'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: '800' }}>사용하실 계좌 선택</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer', opacity: 0.7 }}>
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {/* Account 1 */}
+              <div 
+                onClick={() => {
+                  setCurrentAccount('200-233354(41) 김대신');
+                  setShowAccountBottomSheet(false);
+                }}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '12px 0',
+                  borderBottom: isDark ? '1px solid #334155' : '1px solid #f1f3f5',
+                  cursor: 'pointer'
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '1.02rem', fontWeight: '700' }}>200-233354</div>
+                  <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '4px' }}>최근사용일자 : 2026.07.01</div>
+                </div>
+                {currentAccount.includes('200-233354') && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </div>
+
+              {/* Account 2 */}
+              <div 
+                onClick={() => {
+                  setCurrentAccount('161-119731(41) 김대신');
+                  setShowAccountBottomSheet(false);
+                }}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '12px 0',
+                  borderBottom: isDark ? '1px solid #334155' : '1px solid #f1f3f5',
+                  cursor: 'pointer'
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '1.02rem', fontWeight: '700' }}>161-119731</div>
+                  <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '4px' }}>최근사용일자 : 2026.06.22</div>
+                </div>
+                {currentAccount.includes('161-119731') && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -5796,6 +6082,7 @@ function App() {
   const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
   const [screen4SubScreen, setScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
+  const [asIsScreen4SubScreen, setAsIsScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asIsSelectedMenuCategory, setAsIsSelectedMenuCategory] = useState('IRP/퇴직연금');
   const [toBeSelectedMenuCategory, setToBeSelectedMenuCategory] = useState('연금수령');
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
@@ -6580,25 +6867,7 @@ function App() {
                         ))}
                       </div>
 
-                      {/* RIA Flag Banner */}
-                      <div style={{ padding: '8px' }}>
-                        <div style={{
-                          background: 'linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%)',
-                          borderRadius: '8px',
-                          padding: '6px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          color: '#ffffff',
-                          boxShadow: '0 4px 6px rgba(6, 182, 212, 0.25)',
-                          cursor: 'pointer'
-                        }}>
-                          <span style={{ fontSize: '1.25rem' }}>🇰🇷</span>
-                          <span style={{ fontSize: '0.68rem', fontWeight: '900', color: '#1e3a8a', lineHeight: '1.1' }}>
-                            RIA<br/>가입
-                          </span>
-                        </div>
-                      </div>
+                      {/* RIA Flag Banner Deleted */}
                     </div>
 
                     {/* Right Main Menu Items */}
@@ -6790,7 +7059,258 @@ function App() {
                   flexDirection: 'column',
                   position: 'relative'
                 }}>
-                  <PensionReceiptRequestView isDark={isDark} />
+                  {asIsScreen4SubScreen === 'menu' ? (
+                    <>
+                      {/* Status Bar */}
+                      <div style={{
+                        ...styles.phoneHeaderBar,
+                        backgroundColor: '#4750b3',
+                        color: '#ffffff',
+                        borderBottom: 'none'
+                      }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
+                        <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+                      </div>
+
+                      {/* Top user bar */}
+                      <div style={{
+                        backgroundColor: '#4750b3',
+                        padding: '16px 15px 12px 15px',
+                        color: '#ffffff',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '12px'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
+                            <span style={{ 
+                              display: 'inline-flex', 
+                              alignItems: 'center', 
+                              fontSize: '0.82rem', 
+                              opacity: 0.9, 
+                              cursor: 'pointer', 
+                              gap: '2px', 
+                              color: '#ffffff',
+                              border: 'none',
+                              padding: 0,
+                              background: 'none'
+                            }}>
+                              내 정보
+                              <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                            {/* Home Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                              <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                            {/* Bell Icon */}
+                            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                              </svg>
+                              <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#de201e', width: '5px', height: '5px', borderRadius: '50%' }}></span>
+                            </div>
+                            {/* Settings Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                              <circle cx="12" cy="12" r="3" />
+                              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                            </svg>
+                            {/* Close Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                              <line x1="18" y1="6" x2="6" y2="18" />
+                              <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Search Bar */}
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          backgroundColor: '#f1f3f5',
+                          borderRadius: '4px',
+                          padding: '8px 12px',
+                          gap: '8px'
+                        }}>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                          <input
+                            type="text"
+                            placeholder="메뉴를 검색하세요."
+                            disabled
+                            style={{
+                              border: 'none',
+                              background: 'none',
+                              outline: 'none',
+                              width: '100%',
+                              fontSize: '0.82rem',
+                              fontWeight: '600'
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Main Category Tabs */}
+                      <div style={{
+                        display: 'flex',
+                        borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                        backgroundColor: isDark ? '#121826' : '#ffffff'
+                      }}>
+                        {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
+                          const isSelected = tab === '연금';
+                          return (
+                            <div
+                              key={tab}
+                              style={{
+                                flex: 1,
+                                textAlign: 'center',
+                                padding: '13px 0',
+                                fontSize: '0.96rem',
+                                fontWeight: isSelected ? '800' : '500',
+                                color: isSelected ? '#3b5bdb' : (isDark ? '#cbd5e1' : '#888888'),
+                                borderBottom: isSelected ? '3px solid #3b5bdb' : '3px solid transparent',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {tab}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Split Content Area (Left LNB / Right List) */}
+                      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+                        {/* Left Submenu Navigation */}
+                        <div style={{
+                          width: '115px',
+                          backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
+                          borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          paddingBottom: '12px',
+                          boxSizing: 'border-box',
+                          position: 'relative'
+                        }}>
+                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            {[
+                              { name: 'IRP/퇴직연금' },
+                              { name: '연금저축' },
+                              { name: '공지사항' }
+                            ].map((sub, idx) => {
+                              const isSelected = sub.name === 'IRP/퇴직연금';
+                              return (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    padding: '18px 12px',
+                                    fontSize: '0.96rem',
+                                    fontWeight: isSelected ? '800' : '500',
+                                    color: isSelected ? (isDark ? '#ffffff' : '#3b5bdb') : (isDark ? '#94a3b8' : '#777777'),
+                                    backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
+                                    cursor: 'default'
+                                  }}
+                                >
+                                  {sub.name}
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          {/* RIA Flag Banner Deleted */}
+                        </div>
+
+                        {/* Right Main Menu Items */}
+                        <div style={{
+                          flex: 1,
+                          padding: '18px 16px',
+                          overflowY: 'auto',
+                          backgroundColor: isDark ? '#121826' : '#ffffff',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '20px',
+                          boxSizing: 'border-box'
+                        }}>
+                          {/* 1. 상품 매매 */}
+                          <div>
+                            <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '12px' }}>상품 매매</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>ELB 청약예약</div>
+                            </div>
+                          </div>
+
+                          <div style={{ height: '1px', backgroundColor: isDark ? '#1e293b' : '#eeeeee', margin: '8px 0' }} />
+
+                          {/* 2. 연금세금 */}
+                          <div>
+                            <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '12px' }}>연금세금</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>예상세금 계산기</div>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>예상퇴직소득세 계산기</div>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금개시 시뮬레이션</div>
+                            </div>
+                          </div>
+
+                          <div style={{ height: '1px', backgroundColor: isDark ? '#1e293b' : '#eeeeee', margin: '8px 0' }} />
+
+                          {/* 3. IRP 관리 */}
+                          <div>
+                            <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '12px' }}>IRP 관리</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                              <div 
+                                onClick={() => setAsIsScreen4SubScreen('requestForm')}
+                                style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
+                              >
+                                연금수령 신청
+                              </div>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금수령 신청 조회/취소</div>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금수령 현황</div>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>IRP 해지신청</div>
+                              <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>IRP 해지신청 조회/취소</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Drawer Bottom Action Footer */}
+                      <div style={{
+                        height: '48px',
+                        backgroundColor: '#000000',
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        color: '#ffffff',
+                        fontSize: '0.78rem',
+                        fontWeight: '700',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+                      }}>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                            <line x1="12" y1="2" x2="12" y2="12" />
+                          </svg>
+                          <span>고객지원</span>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <span>이벤트</span>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <span>업무/거래신청</span>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
+                          <span>인증/OTP</span>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <PensionReceiptRequestView 
+                      isDark={isDark} 
+                      isDrawerOpen={isDrawerOpen}
+                      onBackClick={() => setAsIsScreen4SubScreen('menu')} 
+                    />
+                  )}
                 </div>
               </div>
 
@@ -6969,34 +7489,35 @@ function App() {
                                     fontWeight: isSelected ? '800' : '500',
                                     color: isSelected ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
                                     backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
-                                    cursor: 'default'
+                                    cursor: 'default',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    gap: '4px'
                                   }}
                                 >
-                                  {sub.name}
+                                  <span>{sub.name}</span>
+                                  {sub.name === '연금수령' && isDrawerOpen && (
+                                    <span style={{
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      width: '18px',
+                                      height: '18px',
+                                      borderRadius: '50%',
+                                      backgroundColor: '#00c3a5',
+                                      color: '#ffffff',
+                                      fontSize: '11px',
+                                      fontWeight: 'bold',
+                                      lineHeight: 1
+                                    }}>1</span>
+                                  )}
                                 </div>
                               );
                             })}
                           </div>
 
-                          {/* RIA Flag Banner */}
-                          <div style={{ padding: '8px' }}>
-                            <div style={{
-                              background: 'linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%)',
-                              borderRadius: '8px',
-                              padding: '6px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              color: '#ffffff',
-                              boxShadow: '0 4px 6px rgba(6, 182, 212, 0.25)',
-                              cursor: 'pointer'
-                            }}>
-                              <span style={{ fontSize: '1.25rem' }}>🇰🇷</span>
-                              <span style={{ fontSize: '0.68rem', fontWeight: '900', color: '#1e3a8a', lineHeight: '1.1' }}>
-                                RIA<br/>가입
-                              </span>
-                            </div>
-                          </div>
+                          {/* RIA Flag Banner Deleted */}
                         </div>
 
                         {/* Right Main Menu Items */}
@@ -7137,6 +7658,7 @@ function App() {
                     <PensionReceiptRequestView 
                       isDark={isDark} 
                       isToBe={true} 
+                      isDrawerOpen={isDrawerOpen}
                       onBackClick={() => setScreen4SubScreen('menu')} 
                     />
                   )}
@@ -7581,6 +8103,179 @@ function App() {
                 </div>
               )}
             </>
+          ) : activeScreen === 4 ? (
+            /* Descriptions for Screen 4: 연금수령 신청 */
+            screen4SubScreen === 'menu' ? (
+              /* Menu Description */
+              <>
+                {isAsIsToBeExpanded && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
+                        <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금수령 신청 제약</span>
+                      </div>
+                      <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                        기존 연금수령 신청 프로세스는 연금개시일 설정 등의 제약 조건이 모호하여 오입력의 가능성이 있었고, 계좌 상태에 따른 필터링이 부족하여 UI 편의성이 낮았습니다.
+                      </p>
+                    </div>
+            
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
+                        <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금계좌 통합 및 메뉴 고도화</span>
+                      </div>
+                      <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                        기존 IRP에 한정되었던 연금 서비스를 연금저축 계좌까지 확대 적용합니다. 신청 프로세스 최적화와 함께, 연금수령 메뉴를 신설하여 연금 관련 서비스(신청, 조회/취소, 현황, 시뮬레이션)의 접근성을 개선합니다.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div 
+                  onClick={() => setIsAsIsToBeExpanded(!isAsIsToBeExpanded)}
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    padding: '8px 0',
+                    userSelect: 'none',
+                    marginTop: '10px',
+                    marginBottom: '10px',
+                    transition: 'opacity 0.2s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                  onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                >
+                  {isAsIsToBeExpanded ? (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                      <polyline points="18 15 12 9 6 15" />
+                    </svg>
+                  ) : (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  )}
+                </div>
+          
+                <div style={{
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '14px',
+                  border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)'
+                }}>
+                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
+                    주요 핵심 구현 사항
+                  </h3>
+                  <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                    <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
+                      <div>
+                        <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>원스톱 연금 네비게이션:</strong> 전체 메뉴 내 [연금] 카테고리를 신규 배치하여 연금수령 신청, 신청 조회/취소, 연금수령 현황, 연금개시 시뮬레이션까지 모든 연금저축 및 퇴직연금 서비스를 뎁스(Depth) 최소화로 손쉽게 오갈 수 있습니다.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              /* Request Form Description */
+              <>
+                {isAsIsToBeExpanded && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금수령 신청 제약</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      기존 연금수령 신청 프로세스는 연금개시일 설정 등의 제약 조건이 모호하여 오입력의 가능성이 있었고, 계좌 상태에 따른 필터링이 부족하여 UI 편의성이 낮았습니다.
+                    </p>
+                  </div>
+          
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금계좌 통합 및 메뉴 고도화</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      기존 IRP에 한정되었던 연금 서비스를 연금저축 계좌까지 확대 적용합니다. 신청 프로세스 최적화와 함께, 연금수령 메뉴를 신설하여 연금 관련 서비스(신청, 조회/취소, 현황, 시뮬레이션)의 접근성을 개선합니다.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div 
+                onClick={() => setIsAsIsToBeExpanded(!isAsIsToBeExpanded)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '8px 0',
+                  userSelect: 'none',
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  transition: 'opacity 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                {isAsIsToBeExpanded ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="18 15 12 9 6 15" />
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                )}
+              </div>
+        
+              <div style={{
+                backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                borderRadius: '12px',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '14px',
+                border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)'
+              }}>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
+                  주요 핵심 구현 사항
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>계좌 선택:</strong> 계약점포 상태가 '정상'인 연금상품계좌만 필터링하여 선택 리스트에 노출함.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>날짜 입력 (10p):</strong> 연금개시 입력 필드 터치 시 모바일 네이티브 달력(Calendar) UI를 팝업함. 신청일 기준 미래 60일 이내의 일자만 활성화하며, 60일 초과 일자 선택 시 "60일 이내의 일자만 선택 가능합니다"라는 안내 팝업을 노출함.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연락처 및 계좌 입력 (11p, 12p):</strong> 연락처 입력 및 수령계좌 직접 입력 필드 진입 시, 문자가 아닌 '휴대폰 숫자 패드'가 자동으로 활성화되도록 인터랙션을 정의함. 금융기관 선택 프로세스는 원뎁스(1-Depth) 바텀시트 또는 팝업으로 제공하여 이탈을 방지함.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>유의사항 확인 (12p):</strong> 투자권유 및 연금수령 관련 유의사항 체크박스는 스크롤을 끝까지 내리거나 약관 상세 팝업을 확인해야 체크 가능하도록 가이드라인을 설정함.
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </>
+          )
           ) : (
             /* Descriptions for Screen 2 (Original) */
             <>
