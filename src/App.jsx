@@ -4816,6 +4816,8 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (params.get(`${prefix}ShowMethodPicker`) === 'true') setShowMethodPicker(true);
     if (params.get(`${prefix}ShowPeriodPicker`) === 'true') setShowPeriodPicker(true);
     if (params.get(`${prefix}ShowBankPicker`) === 'true') setShowBankPicker(true);
+    if (params.get(`${prefix}ShowProductBottomSheet`) === 'true') setShowProductBottomSheet(true);
+    if (params.get(`${prefix}ShowAccountBottomSheet`) === 'true') setShowAccountBottomSheet(true);
   }, [isToBe]);
 
   useEffect(() => {
@@ -4825,12 +4827,14 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (showMethodPicker) params.set(`${prefix}ShowMethodPicker`, 'true'); else params.delete(`${prefix}ShowMethodPicker`);
     if (showPeriodPicker) params.set(`${prefix}ShowPeriodPicker`, 'true'); else params.delete(`${prefix}ShowPeriodPicker`);
     if (showBankPicker) params.set(`${prefix}ShowBankPicker`, 'true'); else params.delete(`${prefix}ShowBankPicker`);
+    if (showProductBottomSheet) params.set(`${prefix}ShowProductBottomSheet`, 'true'); else params.delete(`${prefix}ShowProductBottomSheet`);
+    if (showAccountBottomSheet) params.set(`${prefix}ShowAccountBottomSheet`, 'true'); else params.delete(`${prefix}ShowAccountBottomSheet`);
     
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, isToBe]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, isToBe]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
