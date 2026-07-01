@@ -7372,6 +7372,7 @@ function App() {
                   ) : (
                     <PensionReceiptRequestView 
                       isDark={isDark} 
+                      isToBe={false}
                       isDrawerOpen={isDrawerOpen}
                       isFigmaExportMode={isFigmaExportMode}
                       onBackClick={() => setAsIsScreen4SubScreen('menu')} 
