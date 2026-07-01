@@ -4790,17 +4790,33 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
 
 
 function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, isFigmaExportMode }) {
-  const [selectedDay, setSelectedDay] = useState('25일');
+  const [selectedDay, setSelectedDay] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}SelectedDay`) || '25일';
+  });
   const [agreed, setAgreed] = useState(true);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showMethodPicker, setShowMethodPicker] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState('기간 선택형');
+  const [selectedMethod, setSelectedMethod] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}SelectedMethod`) || '기간 선택형';
+  });
   const [customAmount, setCustomAmount] = useState('');
   const [customPeriod, setCustomPeriod] = useState('');
   const [showPeriodPicker, setShowPeriodPicker] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState('월');
+  const [selectedPeriod, setSelectedPeriod] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}SelectedPeriod`) || '월';
+  });
   const [showBankPicker, setShowBankPicker] = useState(false);
-  const [selectedBank, setSelectedBank] = useState('');
+  const [selectedBank, setSelectedBank] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}SelectedBank`) || '';
+  });
   const [selectedYear, setSelectedYear] = useState(2032);
   const [selectedMonth, setSelectedMonth] = useState(2);
   const [selectedDate, setSelectedDate] = useState(23);
@@ -4830,11 +4846,16 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (showProductBottomSheet) params.set(`${prefix}ShowProductBottomSheet`, 'true'); else params.delete(`${prefix}ShowProductBottomSheet`);
     if (showAccountBottomSheet) params.set(`${prefix}ShowAccountBottomSheet`, 'true'); else params.delete(`${prefix}ShowAccountBottomSheet`);
     
+    params.set(`${prefix}SelectedDay`, selectedDay);
+    params.set(`${prefix}SelectedMethod`, selectedMethod);
+    params.set(`${prefix}SelectedPeriod`, selectedPeriod);
+    params.set(`${prefix}SelectedBank`, selectedBank);
+
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, isToBe]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, selectedDay, selectedMethod, selectedPeriod, selectedBank, isToBe]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
