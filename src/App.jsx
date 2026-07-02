@@ -7862,7 +7862,15 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={{ ...contentStyle, padding: '40px 24px', gap: '30px' }}>
           <div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>김대신님의 타사 {isToBe ? '연금' : 'IRP'}</div>
+            <div style={{
+              fontSize: '1.25rem',
+              color: isDark ? '#cbd5e1' : '#4a5568',
+              fontWeight: '500',
+              marginBottom: '18px',
+              fontFamily: 'sans-serif'
+            }}>
+              김대신님의 타사 {isToBe ? '연금' : 'IRP'}
+            </div>
             <h1 style={{ fontSize: '1.8rem', fontWeight: '600', margin: '0 0 10px 0', color: '#2563eb' }}>Start.</h1>
             <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>퇴직금을 수령하셨나요?</h2>
           </div>
@@ -7907,7 +7915,15 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={{ ...contentStyle, gap: '20px' }}>
           <div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대신님의 예상 퇴직소득세</div>
+            <div style={{
+              fontSize: '1.25rem',
+              color: isDark ? '#cbd5e1' : '#4a5568',
+              fontWeight: '500',
+              marginBottom: '18px',
+              fontFamily: 'sans-serif'
+            }}>
+              김대신님의 예상 퇴직소득세
+            </div>
             <h2 style={{
               fontSize: '1.3rem',
               fontWeight: '600',
