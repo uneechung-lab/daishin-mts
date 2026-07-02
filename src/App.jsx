@@ -4837,6 +4837,13 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   const [immediateAmount, setImmediateAmount] = useState('');
   const [showNoticePopup, setShowNoticePopup] = useState(false);
 
+  // New interactive states for application/cancellation modal flows
+  const [receiptStatus, setReceiptStatus] = useState('form'); // 'form', 'inquiry'
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showCancelConfirmModal, setShowCancelConfirmModal] = useState(false);
+  const [isCancelled, setIsCancelled] = useState(false);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const prefix = isToBe ? 'tobe' : 'asis';
@@ -5087,9 +5094,15 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
 
       {/* Header */}
       <div style={headerStyle}>
-        {onBackClick ? (
+        {(onBackClick || receiptStatus === 'inquiry') ? (
           <button 
-            onClick={onBackClick}
+            onClick={() => {
+              if (receiptStatus === 'inquiry') {
+                setReceiptStatus('form');
+              } else if (onBackClick) {
+                onBackClick();
+              }
+            }}
             style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -5101,84 +5114,444 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
         )}
-        <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>연금수령 신청</span>
+        <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>
+          {receiptStatus === 'inquiry' ? '연금수령 신청 조회/취소' : '연금수령 신청'}
+        </span>
         <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000' }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
-      </div>
-
-      {/* Content */}
-      <div style={contentStyle}>
-        {/* Account Dropdown */}
-        <div style={{ position: 'relative' }}>
-          {isToBe ? (
-            <div 
-              onClick={() => setShowProductBottomSheet(true)}
-              style={{ 
-                ...selectStyle, 
-                cursor: 'pointer', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between',
-                paddingRight: '35px'
-              }}
-            >
-              <span>{currentAccount}</span>
-            </div>
-          ) : (
-            <select style={selectStyle}>
-              <option>200-233354(41) 김대신</option>
-            </select>
-          )}
-          {isToBe && isDrawerOpen && (
-            <span style={{
-              position: 'absolute',
-              top: '2px',
-              right: isToBe ? '35px' : '25px',
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              backgroundColor: '#00c3a5',
-              color: '#ffffff',
-              fontSize: '11px',
-              fontWeight: 'bold',
+      </div>      {/* Content */}
+      {/* Content & Footer Area */}
+      {receiptStatus === 'inquiry' ? (
+        <div style={{
+          ...contentStyle,
+          backgroundColor: isDark ? '#0b0f19' : '#f3f4f6',
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px'
+        }}>
+          {/* Dropdown 703-134065(41) 오정한_IRP */}
+          <div style={{ position: 'relative', marginTop: '4px' }}>
+            <div style={{
+              ...selectStyle,
+              backgroundColor: isDark ? '#1e293b' : '#ffffff',
+              border: isDark ? '1px solid #334155' : '1px solid #d2d6dc',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-            }}>1</span>
-          )}
-        </div>
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              padding: '12px 14px',
+              marginTop: 0
+            }}>
+              <span>703-134065(41) 오정한_IRP</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ opacity: 0.7 }}><path stroke={isDark ? '#cbd5e1' : '#6b7280'} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m6 8 4 4 4-4"/></svg>
+            </div>
+          </div>
 
-        {/* Section Title */}
-        <div style={{ ...titleStyle, borderBottom: 'none', paddingBottom: 0 }}>
-          연금수령 신청내역
-        </div>
+          {/* Details White Box */}
+          <div style={{
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderRadius: '12px',
+            padding: '24px 20px',
+            border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>신청일자</span>
+              <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>2026.06.22</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>수령방법</span>
+              <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>기간선택형</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>입금 계좌번호</span>
+              <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>대신증권 145-109999-82</span>
+            </div>
 
-        {/* 기산일자 */}
-        <div>
-          <label style={labelStyle}>연금수령 기산일자</label>
-          <input type="text" value="2032.02.23" readOnly style={{ ...inputStyle, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
-        </div>
+            {/* Divider line */}
+            <div style={{ height: '1px', backgroundColor: isDark ? '#334155' : '#f1f5f9', margin: '8px 0' }} />
 
-        {/* 개시 일자 */}
-        <div style={{ position: 'relative' }}>
-          <label style={labelStyle}>수령 개시 일자</label>
-          {isToBe ? (
-            <>
-              <div 
-                onClick={() => {
-                  setSelectedYear(2032);
-                  setSelectedMonth(2);
-                  setSelectedDate(23);
-                  setShowDatePicker(true);
-                }}
-                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-              >
-                {startDateStr}
+            {/* Button / Action text */}
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '6px 0' }}>
+              {isCancelled ? (
+                <span style={{ color: '#de201e', fontWeight: '800', fontSize: '0.95rem' }}>
+                  취소 (고객확인)
+                </span>
+              ) : (
+                <button 
+                  onClick={() => setShowCancelConfirmModal(true)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#2563eb',
+                    fontWeight: '800',
+                    fontSize: '0.95rem',
+                    cursor: 'pointer',
+                    padding: '4px 16px',
+                    textDecoration: 'none'
+                  }}
+                >
+                  신청취소
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div style={contentStyle}>
+            {/* Account Dropdown */}
+            <div style={{ position: 'relative' }}>
+              {isToBe ? (
+                <div 
+                  onClick={() => setShowProductBottomSheet(true)}
+                  style={{ 
+                    ...selectStyle, 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between',
+                    paddingRight: '35px'
+                  }}
+                >
+                  <span>{currentAccount}</span>
+                </div>
+              ) : (
+                <select style={selectStyle}>
+                  <option>200-233354(41) 김대신</option>
+                </select>
+              )}
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '2px',
+                  right: isToBe ? '35px' : '25px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>1</span>
+              )}
+            </div>
+
+            {/* Section Title */}
+            <div style={{ ...titleStyle, borderBottom: 'none', paddingBottom: 0 }}>
+              연금수령 신청내역
+            </div>
+
+            {/* 기산일자 */}
+            <div>
+              <label style={labelStyle}>연금수령 기산일자</label>
+              <input type="text" value="2032.02.23" readOnly style={{ ...inputStyle, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+            </div>
+
+            {/* 개시 일자 */}
+            <div style={{ position: 'relative' }}>
+              <label style={labelStyle}>수령 개시 일자</label>
+              {isToBe ? (
+                <>
+                  <div 
+                    onClick={() => {
+                      setSelectedYear(2032);
+                      setSelectedMonth(2);
+                      setSelectedDate(23);
+                      setShowDatePicker(true);
+                    }}
+                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                  >
+                    {startDateStr}
+                  </div>
+                  {isDrawerOpen && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '18px',
+                      right: '25px',
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#ffffff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                    }}>2</span>
+                  )}
+                </>
+              ) : (
+                <div 
+                  onClick={() => {
+                    setSelectedYear(2032);
+                    setSelectedMonth(2);
+                    setSelectedDate(23);
+                    setShowDatePicker(true);
+                  }}
+                  style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                >
+                  {startDateStr}
+                </div>
+              )}
+            </div>
+
+            {/* 수령 희망일 */}
+            {!isToBe && (
+              <div>
+                <div style={buttonRowStyle}>
+                  {['5일', '10일', '15일', '20일', '25일'].map(day => (
+                    <div 
+                      key={day} 
+                      onClick={() => setSelectedDay(day)} 
+                      style={dateButtonStyle(day)}
+                    >
+                      {day}
+                    </div>
+                  ))}
+                </div>
+                <span style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>
+                  ※ [ 연금수령 기산일자 ] 이후의 5,10,15,20,25일 중 선택 가능
+                </span>
               </div>
-              {isDrawerOpen && (
+            )}
+
+            {isToBe && (
+              <div style={{ marginTop: '-8px' }}>
+                <span style={{ fontSize: '0.74rem', color: '#6b7280', display: 'block', lineHeight: '1.4' }}>
+                  ※ 개시일자는 신청일로부터 최장 60일 이내로 설정 가능
+                </span>
+              </div>
+            )}
+
+            {/* 수령 주기 / 수령 방법 (유형) 순서 분기 처리 */}
+            {isToBe ? (
+              <>
+                {/* TO BE: 수령 방법 (위로 이동) */}
+                <div>
+                  <label style={labelStyle}>수령 방법</label>
+                  <div 
+                    onClick={() => setShowMethodPicker(true)}
+                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                  >
+                    {selectedMethod}
+                  </div>
+                  {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
+                  {selectedMethod === '기간 선택형' && (
+                    <>
+                      <input 
+                        type="text" 
+                        value={customPeriod} 
+                        onChange={(e) => setCustomPeriod(e.target.value)} 
+                        placeholder="10 년" 
+                        style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                      />
+                      <span style={{ fontSize: '0.72rem', color: '#6b7280', display: 'block', marginTop: '6px', paddingLeft: '4px' }}>
+                        ※ 최소1년 ~ 최대50년 까지 가능합니다.
+                      </span>
+                    </>
+                  )}
+                  {selectedMethod === '한도 수령형' && (
+                    <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+                  )}
+                  {selectedMethod === '금액 선택형' && (
+                    <>
+                      <input 
+                        type="text" 
+                        value={customAmount} 
+                        onChange={(e) => setCustomAmount(e.target.value)}
+                        placeholder="2,500,000 원" 
+                        inputMode="none"
+                        onFocus={() => {
+                          setActiveField('amount');
+                          setShowNumericKeypad(true);
+                        }}
+                        style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                      />
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                        <input 
+                          type="text" 
+                          value={directAccountNumber}
+                          onChange={(e) => setDirectAccountNumber(e.target.value)}
+                          placeholder="계좌번호 직접입력" 
+                          inputMode="none"
+                          onFocus={() => {
+                            setActiveField('account');
+                            setShowNumericKeypad(true);
+                          }}
+                          style={{ ...inputStyle, flex: 1, marginTop: 0 }} 
+                        />
+                        <button style={{
+                          padding: '0 12px',
+                          borderRadius: '4px',
+                          border: '1px solid #e2e8f0',
+                          backgroundColor: '#ffffff',
+                          color: '#4b5563',
+                          fontSize: '0.75rem',
+                          fontWeight: '700',
+                          cursor: 'pointer'
+                        }}>계좌확인</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* TO BE: 수령 주기 */}
+                <div>
+                  <label style={labelStyle}>수령 주기</label>
+                  <div 
+                    onClick={() => setShowPeriodPicker(true)}
+                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                  >
+                    {selectedPeriod}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* AS IS: 수령 주기 */}
+                <div>
+                  <label style={labelStyle}>수령 주기</label>
+                  <div 
+                    onClick={() => setShowPeriodPicker(true)}
+                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                  >
+                    {selectedPeriod}
+                  </div>
+                </div>
+
+                {/* AS IS: 수령 방법 */}
+                <div>
+                  <label style={labelStyle}>수령 방법</label>
+                  <div 
+                    onClick={() => setShowMethodPicker(true)}
+                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                  >
+                    {selectedMethod}
+                  </div>
+                  
+                  {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
+                  {selectedMethod === '기간 선택형' && (
+                    <>
+                      <input 
+                        type="text" 
+                        value={customPeriod} 
+                        onChange={(e) => setCustomPeriod(e.target.value)} 
+                        placeholder="10 년" 
+                        style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                      />
+                      <span style={{ fontSize: '0.72rem', color: '#6b7280', display: 'block', marginTop: '6px', paddingLeft: '4px' }}>
+                        ※ 최소1년 ~ 최대50년 까지 가능합니다.
+                      </span>
+                    </>
+                  )}
+                  {selectedMethod === '한도 수령형' && (
+                    <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
+                  )}
+                  {selectedMethod === '금액 선택형' && (
+                    <>
+                      <input 
+                        type="text" 
+                        value={customAmount} 
+                        onChange={(e) => setCustomAmount(e.target.value)}
+                        placeholder="2,500,000 원" 
+                        inputMode="none"
+                        onFocus={() => {
+                          setActiveField('amount');
+                          setShowNumericKeypad(true);
+                        }}
+                        style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
+                      />
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                        <input 
+                          type="text" 
+                          value={directAccountNumber}
+                          onChange={(e) => setDirectAccountNumber(e.target.value)}
+                          placeholder="계좌번호 직접입력" 
+                          inputMode="none"
+                          onFocus={() => {
+                            setActiveField('account');
+                            setShowNumericKeypad(true);
+                          }}
+                          style={{ ...inputStyle, flex: 1, marginTop: 0 }} 
+                        />
+                        <button style={{
+                          padding: '0 12px',
+                          borderRadius: '4px',
+                          border: '1px solid #e2e8f0',
+                          backgroundColor: '#ffffff',
+                          color: '#4b5563',
+                          fontSize: '0.75rem',
+                          fontWeight: '700',
+                          cursor: 'pointer'
+                        }}>계좌확인</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+
+            {/* 수령계좌 정보 */}
+            <div style={{ position: 'relative' }}>
+              <label style={labelStyle}>수령계좌 정보</label>
+              <div 
+                onClick={() => setShowBankPicker(true)}
+                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center', color: selectedBank ? (isDark ? '#cbd5e1' : '#333333') : '#a0aec0' }}
+              >
+                {selectedBank || '수령계좌 선택'}
+              </div>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                <div style={{ position: 'relative', flex: 1 }}>
+                  <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', boxSizing: 'border-box' }} />
+                  {isToBe && isDrawerOpen && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '12px',
+                      right: '10px',
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#ffffff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                    }}>4</span>
+                  )}
+                </div>
+                <button style={{
+                  padding: '0 12px',
+                  borderRadius: '4px',
+                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#ffffff',
+                  color: '#94a3b8',
+                  fontSize: '0.75rem',
+                  fontWeight: '700',
+                  cursor: 'not-allowed'
+                }}>확인완료</button>
+              </div>
+              <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
+                계좌가 확인되었습니다.
+              </span>
+              {isToBe && isDrawerOpen && (
                 <span style={{
                   position: 'absolute',
                   top: '18px',
@@ -5195,236 +5568,28 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   justifyContent: 'center',
                   zIndex: 10,
                   boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                }}>2</span>
-              )}
-            </>
-          ) : (
-            <div 
-              onClick={() => {
-                setSelectedYear(2032);
-                setSelectedMonth(2);
-                setSelectedDate(23);
-                setShowDatePicker(true);
-              }}
-              style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-            >
-              {startDateStr}
-            </div>
-          )}
-        </div>
-
-        {/* 수령 희망일 */}
-        {!isToBe && (
-          <div>
-            <div style={buttonRowStyle}>
-              {['5일', '10일', '15일', '20일', '25일'].map(day => (
-                <div 
-                  key={day} 
-                  onClick={() => setSelectedDay(day)} 
-                  style={dateButtonStyle(day)}
-                >
-                  {day}
-                </div>
-              ))}
-            </div>
-            <span style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>
-              ※ [ 연금수령 기산일자 ] 이후의 5,10,15,20,25일 중 선택 가능
-            </span>
-          </div>
-        )}
-
-        {isToBe && (
-          <div style={{ marginTop: '-8px' }}>
-            <span style={{ fontSize: '0.74rem', color: '#6b7280', display: 'block', lineHeight: '1.4' }}>
-              ※ 개시일자는 신청일로부터 최장 60일 이내로 설정 가능
-            </span>
-          </div>
-        )}
-
-        {/* 수령 주기 / 수령 방법 (유형) 순서 분기 처리 */}
-        {isToBe ? (
-          <>
-            {/* TO BE: 수령 방법 (위로 이동) */}
-            <div>
-              <label style={labelStyle}>수령 방법</label>
-              <div 
-                onClick={() => setShowMethodPicker(true)}
-                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-              >
-                {selectedMethod}
-              </div>
-              {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
-              {selectedMethod === '기간 선택형' && (
-                <>
-                  <input 
-                    type="text" 
-                    value={customPeriod} 
-                    onChange={(e) => setCustomPeriod(e.target.value)} 
-                    placeholder="10 년" 
-                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
-                  />
-                  <span style={{ fontSize: '0.72rem', color: '#6b7280', display: 'block', marginTop: '6px', paddingLeft: '4px' }}>
-                    ※ 최소1년 ~ 최대50년 까지 가능합니다.
-                  </span>
-                </>
-              )}
-              {selectedMethod === '한도 수령형' && (
-                <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
-              )}
-              {selectedMethod === '금액 선택형' && (
-                <>
-                  <input 
-                    type="text" 
-                    value={customAmount} 
-                    onChange={(e) => setCustomAmount(e.target.value)}
-                    placeholder="2,500,000 원" 
-                    inputMode="none"
-                    onFocus={() => {
-                      setActiveField('amount');
-                      setShowNumericKeypad(true);
-                    }}
-                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
-                  />
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                    <input 
-                      type="text" 
-                      value={directAccountNumber}
-                      onChange={(e) => setDirectAccountNumber(e.target.value)}
-                      placeholder="계좌번호 직접입력" 
-                      inputMode="none"
-                      onFocus={() => {
-                        setActiveField('account');
-                        setShowNumericKeypad(true);
-                      }}
-                      style={{ ...inputStyle, flex: 1, marginTop: 0 }} 
-                    />
-                    <button style={{
-                      padding: '0 12px',
-                      borderRadius: '4px',
-                      border: '1px solid #e2e8f0',
-                      backgroundColor: '#ffffff',
-                      color: '#4b5563',
-                      fontSize: '0.75rem',
-                      fontWeight: '700',
-                      cursor: 'pointer'
-                    }}>계좌확인</button>
-                  </div>
-                </>
+                }}>3</span>
               )}
             </div>
 
-            {/* TO BE: 수령 주기 */}
-            <div>
-              <label style={labelStyle}>수령 주기</label>
-              <div 
-                onClick={() => setShowPeriodPicker(true)}
-                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-              >
-                {selectedPeriod}
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* AS IS: 수령 주기 */}
-            <div>
-              <label style={labelStyle}>수령 주기</label>
-              <div 
-                onClick={() => setShowPeriodPicker(true)}
-                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-              >
-                {selectedPeriod}
-              </div>
-            </div>
-
-            {/* AS IS: 수령 방법 */}
-            <div>
-              <label style={labelStyle}>수령 방법</label>
-              <div 
-                onClick={() => setShowMethodPicker(true)}
-                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-              >
-                {selectedMethod}
-              </div>
-              
-              {/* 각 항목 선택 시 노출될 하단 정보 카드 분기 */}
-              {selectedMethod === '기간 선택형' && (
-                <>
-                  <input 
-                    type="text" 
-                    value={customPeriod} 
-                    onChange={(e) => setCustomPeriod(e.target.value)} 
-                    placeholder="10 년" 
-                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
-                  />
-                  <span style={{ fontSize: '0.72rem', color: '#6b7280', display: 'block', marginTop: '6px', paddingLeft: '4px' }}>
-                    ※ 최소1년 ~ 최대50년 까지 가능합니다.
-                  </span>
-                </>
-              )}
-              {selectedMethod === '한도 수령형' && (
-                <input type="text" value="11,876 원" readOnly style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: isDark ? '#1e293b' : '#f1f5f9' }} />
-              )}
-              {selectedMethod === '금액 선택형' && (
-                <>
-                  <input 
-                    type="text" 
-                    value={customAmount} 
-                    onChange={(e) => setCustomAmount(e.target.value)}
-                    placeholder="2,500,000 원" 
-                    inputMode="none"
-                    onFocus={() => {
-                      setActiveField('amount');
-                      setShowNumericKeypad(true);
-                    }}
-                    style={{ ...inputStyle, borderTop: 'none', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} 
-                  />
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                    <input 
-                      type="text" 
-                      value={directAccountNumber}
-                      onChange={(e) => setDirectAccountNumber(e.target.value)}
-                      placeholder="계좌번호 직접입력" 
-                      inputMode="none"
-                      onFocus={() => {
-                        setActiveField('account');
-                        setShowNumericKeypad(true);
-                      }}
-                      style={{ ...inputStyle, flex: 1, marginTop: 0 }} 
-                    />
-                    <button style={{
-                      padding: '0 12px',
-                      borderRadius: '4px',
-                      border: '1px solid #e2e8f0',
-                      backgroundColor: '#ffffff',
-                      color: '#4b5563',
-                      fontSize: '0.75rem',
-                      fontWeight: '700',
-                      cursor: 'pointer'
-                    }}>계좌확인</button>
-                  </div>
-                </>
-              )}
-            </div>
-          </>
-        )}
-
-        {/* 수령계좌 정보 */}
-        <div style={{ position: 'relative' }}>
-          <label style={labelStyle}>수령계좌 정보</label>
-          <div 
-            onClick={() => setShowBankPicker(true)}
-            style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center', color: selectedBank ? (isDark ? '#cbd5e1' : '#333333') : '#a0aec0' }}
-          >
-            {selectedBank || '수령계좌 선택'}
-          </div>
-          <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-            <div style={{ position: 'relative', flex: 1 }}>
-              <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', boxSizing: 'border-box' }} />
+            {/* 연락처 */}
+            <div style={{ position: 'relative' }}>
+              <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
+              <input 
+                type="text" 
+                value={phoneNumber} 
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                inputMode="none"
+                onFocus={() => {
+                  setActiveField('phone');
+                  setShowNumericKeypad(true);
+                }}
+                style={inputStyle} 
+              />
               {isToBe && isDrawerOpen && (
                 <span style={{
                   position: 'absolute',
-                  top: '12px',
+                  top: '18px',
                   right: '10px',
                   width: '18px',
                   height: '18px',
@@ -5441,148 +5606,88 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                 }}>4</span>
               )}
             </div>
-            <button style={{
-              padding: '0 12px',
-              borderRadius: '4px',
-              border: '1px solid #e2e8f0',
-              backgroundColor: '#ffffff',
-              color: '#94a3b8',
-              fontSize: '0.75rem',
-              fontWeight: '700',
-              cursor: 'not-allowed'
-            }}>확인완료</button>
+
+            {/* 즉시 인출 금액 */}
+            <div>
+              <label style={labelStyle}>즉시 인출 금액(선택)</label>
+              <input 
+                type="text" 
+                value={immediateAmount}
+                onChange={(e) => setImmediateAmount(e.target.value)}
+                placeholder="금액 입력" 
+                inputMode="none"
+                onFocus={() => {
+                  setActiveField('immediateAmount');
+                  setShowNumericKeypad(true);
+                }}
+                style={{ ...inputStyle, backgroundColor: 'transparent' }} 
+              />
+            </div>
           </div>
-          <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
-            계좌가 확인되었습니다.
-          </span>
-          {isToBe && isDrawerOpen && (
-            <span style={{
-              position: 'absolute',
-              top: '18px',
-              right: '25px',
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              backgroundColor: '#00c3a5',
-              color: '#ffffff',
-              fontSize: '11px',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-            }}>3</span>
-          )}
-        </div>
 
-        {/* 연락처 */}
-        <div style={{ position: 'relative' }}>
-          <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
-          <input 
-            type="text" 
-            value={phoneNumber} 
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            inputMode="none"
-            onFocus={() => {
-              setActiveField('phone');
-              setShowNumericKeypad(true);
-            }}
-            style={inputStyle} 
-          />
-          {isToBe && isDrawerOpen && (
-            <span style={{
-              position: 'absolute',
-              top: '18px',
-              right: '10px',
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              backgroundColor: '#00c3a5',
-              color: '#ffffff',
-              fontSize: '11px',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-            }}>4</span>
-          )}
-        </div>
+          {/* Footer */}
+          <div style={footerStyle}>
+            {/* Checkbox agreement */}
+            <div style={{ position: 'relative' }}>
+              <label 
+                onClick={() => setShowNoticePopup(true)}
+                style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
+              >
+                <input 
+                  type="checkbox" 
+                  checked={agreed} 
+                  onChange={(e) => setAgreed(e.target.checked)} 
+                  style={{ marginTop: '3px', cursor: 'pointer' }} 
+                />
+                <span style={{ fontSize: '0.72rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
+                  연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
+                </span>
+              </label>
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-6px',
+                  right: '-4px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>5</span>
+              )}
+            </div>
 
-        {/* 즉시 인출 금액 */}
-        <div>
-          <label style={labelStyle}>즉시 인출 금액(선택)</label>
-          <input 
-            type="text" 
-            value={immediateAmount}
-            onChange={(e) => setImmediateAmount(e.target.value)}
-            placeholder="금액 입력" 
-            inputMode="none"
-            onFocus={() => {
-              setActiveField('immediateAmount');
-              setShowNumericKeypad(true);
-            }}
-            style={{ ...inputStyle, backgroundColor: 'transparent' }} 
-          />
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div style={footerStyle}>
-        {/* Checkbox agreement */}
-        <div style={{ position: 'relative' }}>
-          <label 
-            onClick={() => setShowNoticePopup(true)}
-            style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
-          >
-            <input 
-              type="checkbox" 
-              checked={agreed} 
-              onChange={(e) => setAgreed(e.target.checked)} 
-              style={{ marginTop: '3px', cursor: 'pointer' }} 
-            />
-            <span style={{ fontSize: '0.72rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
-              연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
-            </span>
-          </label>
-          {isToBe && isDrawerOpen && (
-            <span style={{
-              position: 'absolute',
-              top: '-6px',
-              right: '-4px',
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              backgroundColor: '#00c3a5',
-              color: '#ffffff',
-              fontSize: '11px',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-            }}>5</span>
-          )}
-        </div>
-
-        {/* Submit button */}
-        <button style={{
-          width: '100%',
-          padding: '14px 0',
-          backgroundColor: '#1e293b',
-          color: '#ffffff',
-          border: 'none',
-          borderRadius: '4px',
-          fontSize: '0.95rem',
-          fontWeight: '700',
-          cursor: 'pointer'
-        }}>
-          신청
-        </button>
-      </div>
+            {/* Submit button */}
+            <button 
+              onClick={() => {
+                if (isToBe) {
+                  setShowConfirmModal(true);
+                }
+              }}
+              style={{
+                width: '100%',
+                padding: '14px 0',
+                backgroundColor: '#1e293b',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '0.95rem',
+                fontWeight: '700',
+                cursor: 'pointer'
+              }}
+            >
+              신청
+            </button>
+          </div>
+        </>
+      )}
 
       {/* S&P500 Footer bar */}
       <div style={{
@@ -6438,6 +6543,250 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
             }}
           >
             동의
+          </div>
+        </div>
+      )}
+
+      {/* 1. 신청 확인 모달 (Attachment 1) */}
+      {showConfirmModal && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 3000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{
+            width: '280px',
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            border: '1px solid #e2e8f0',
+          }}>
+            <div style={{
+              padding: '30px 20px',
+              textAlign: 'center',
+              fontSize: '0.95rem',
+              fontWeight: '500',
+              color: '#222222',
+              lineHeight: '1.4',
+              backgroundColor: '#ffffff'
+            }}>
+              연금 수령 신청 하시겠습니까?
+            </div>
+            <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0' }}>
+              <button 
+                onClick={() => setShowConfirmModal(false)}
+                style={{
+                  flex: 1,
+                  height: '48px',
+                  border: 'none',
+                  backgroundColor: '#f1f5f9',
+                  color: '#475569',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  borderRight: '1px solid #e2e8f0'
+                }}
+              >
+                아니오
+              </button>
+              <button 
+                onClick={() => {
+                  setShowConfirmModal(false);
+                  setShowSuccessModal(true);
+                }}
+                style={{
+                  flex: 1,
+                  height: '48px',
+                  border: 'none',
+                  backgroundColor: '#1e293b',
+                  color: '#ffffff',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                네
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 2. 신청 완료 모달 (Attachment 2) */}
+      {showSuccessModal && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 3000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{
+            width: '280px',
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            border: '1px solid #e2e8f0'
+          }}>
+            <div style={{
+              padding: '24px 20px 20px 20px',
+              textAlign: 'center',
+              backgroundColor: '#ffffff'
+            }}>
+              <div style={{
+                fontSize: '1.05rem',
+                fontWeight: '700',
+                color: '#111827',
+                marginBottom: '14px'
+              }}>
+                연금수령 신청완료
+              </div>
+              <div style={{
+                fontSize: '0.8rem',
+                color: '#4b5563',
+                lineHeight: '1.5',
+                textAlign: 'center',
+                wordBreak: 'keep-all'
+              }}>
+                영업점 및 고객센터에서 확인 후 유선으로 안내 드리고 진행될 예정입니다.
+                <br /><br />
+                신청한 날로부터 +1 영업일까지 유선 연결이 불가능한 경우 신청이 취소 될 수 있습니다.
+              </div>
+            </div>
+            <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0' }}>
+              <button 
+                onClick={() => setShowSuccessModal(false)}
+                style={{
+                  flex: 1,
+                  height: '48px',
+                  border: 'none',
+                  backgroundColor: '#f1f5f9',
+                  color: '#475569',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  borderRight: '1px solid #e2e8f0'
+                }}
+              >
+                확인
+              </button>
+              <button 
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  setReceiptStatus('inquiry');
+                }}
+                style={{
+                  flex: 1,
+                  height: '48px',
+                  border: 'none',
+                  backgroundColor: '#1e293b',
+                  color: '#ffffff',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                신청내역 조회
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 3. 취소 확인 모달 (Attachment 4) */}
+      {showCancelConfirmModal && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 3000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{
+            width: '280px',
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            border: '1px solid #e2e8f0'
+          }}>
+            <div style={{
+              padding: '30px 20px',
+              textAlign: 'center',
+              fontSize: '0.95rem',
+              fontWeight: '500',
+              color: '#222222',
+              lineHeight: '1.4',
+              backgroundColor: '#ffffff'
+            }}>
+              연금 수령 신청을
+              <br />
+              취소 하시겠습니까?
+            </div>
+            <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0' }}>
+              <button 
+                onClick={() => setShowCancelConfirmModal(false)}
+                style={{
+                  flex: 1,
+                  height: '48px',
+                  border: 'none',
+                  backgroundColor: '#f1f5f9',
+                  color: '#475569',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  borderRight: '1px solid #e2e8f0'
+                }}
+              >
+                아니오
+              </button>
+              <button 
+                onClick={() => {
+                  setShowCancelConfirmModal(false);
+                  setIsCancelled(true);
+                }}
+                style={{
+                  flex: 1,
+                  height: '48px',
+                  border: 'none',
+                  backgroundColor: '#1e293b',
+                  color: '#ffffff',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                네
+              </button>
+            </div>
           </div>
         </div>
       )}
