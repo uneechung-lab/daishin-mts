@@ -4859,6 +4859,14 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
       const act = params.get(`${prefix}ActiveField`);
       if (act) setActiveField(act);
     }
+
+    // Load new modal flow states from URL parameters
+    const statusParam = params.get(`${prefix}ReceiptStatus`);
+    if (statusParam) setReceiptStatus(statusParam);
+    if (params.get(`${prefix}ShowConfirmModal`) === 'true') setShowConfirmModal(true);
+    if (params.get(`${prefix}ShowSuccessModal`) === 'true') setShowSuccessModal(true);
+    if (params.get(`${prefix}ShowCancelConfirmModal`) === 'true') setShowCancelConfirmModal(true);
+    if (params.get(`${prefix}IsCancelled`) === 'true') setIsCancelled(true);
   }, [isToBe]);
 
   useEffect(() => {
@@ -4879,6 +4887,13 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
       params.delete(`${prefix}ActiveField`);
     }
     
+    // Sync new modal flow states to URL parameters
+    if (receiptStatus !== 'form') params.set(`${prefix}ReceiptStatus`, receiptStatus); else params.delete(`${prefix}ReceiptStatus`);
+    if (showConfirmModal) params.set(`${prefix}ShowConfirmModal`, 'true'); else params.delete(`${prefix}ShowConfirmModal`);
+    if (showSuccessModal) params.set(`${prefix}ShowSuccessModal`, 'true'); else params.delete(`${prefix}ShowSuccessModal`);
+    if (showCancelConfirmModal) params.set(`${prefix}ShowCancelConfirmModal`, 'true'); else params.delete(`${prefix}ShowCancelConfirmModal`);
+    if (isCancelled) params.set(`${prefix}IsCancelled`, 'true'); else params.delete(`${prefix}IsCancelled`);
+    
     params.set(`${prefix}SelectedDay`, selectedDay);
     params.set(`${prefix}SelectedMethod`, selectedMethod);
     params.set(`${prefix}SelectedPeriod`, selectedPeriod);
@@ -4889,7 +4904,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe, receiptStatus, showConfirmModal, showSuccessModal, showCancelConfirmModal, isCancelled]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
