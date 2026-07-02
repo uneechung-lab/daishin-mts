@@ -7529,15 +7529,17 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
           flex: 1,
           justifyContent: 'space-between',
           alignItems: 'center',
-          fontSize: '0.64rem',
+          fontSize: '0.66rem',
           fontWeight: '600',
           color: isDark ? '#cbd5e1' : '#4a5568',
-          gap: '4px'
+          gap: '4px',
+          textAlign: 'center',
+          lineHeight: '1.25'
         }}>
-          <span style={{ cursor: 'pointer', whiteSpace: 'nowrap' }}>보유상품현황</span>
-          <span style={{ cursor: 'pointer', whiteSpace: 'nowrap' }}>ETF/리츠잔고</span>
-          <span style={{ cursor: 'pointer', whiteSpace: 'nowrap' }}>ETF/리츠체결/미체결</span>
-          <span style={{ cursor: 'pointer', whiteSpace: 'nowrap' }}>ETF/리츠주문</span>
+          <span style={{ cursor: 'pointer' }}>보유상품<br />현황</span>
+          <span style={{ cursor: 'pointer' }}>ETF/리츠<br />잔고</span>
+          <span style={{ cursor: 'pointer' }}>ETF/리츠<br />체결/미체결</span>
+          <span style={{ cursor: 'pointer' }}>ETF/리츠<br />주문</span>
         </div>
       </div>
     </div>
