@@ -7777,7 +7777,15 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={{ ...contentStyle, gap: '20px' }}>
           <div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대진님의 {isToBe ? '연금' : '퇴직연금'}</div>
+            <div style={{
+              fontSize: '1.25rem',
+              color: isDark ? '#cbd5e1' : '#4a5568',
+              fontWeight: '500',
+              marginBottom: '18px',
+              fontFamily: 'sans-serif'
+            }}>
+              김대진님의 {isToBe ? '연금' : '퇴직연금'}
+            </div>
             <h2 style={{
               fontSize: '1.3rem',
               fontWeight: '600',
@@ -7785,7 +7793,15 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
               margin: 0,
               color: isDark ? '#f8fafc' : '#111827'
             }}>
-              기간 선택형 <span style={{ borderBottom: '1px solid ' + (isDark ? '#cbd5e1' : '#111827'), paddingBottom: '2px' }}>10 년</span> 의 경우
+              기간 선택형 <span style={{
+                borderBottom: '1.5px solid ' + (isDark ? '#cbd5e1' : '#111827'),
+                paddingBottom: '2px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                cursor: 'pointer',
+                margin: '0 4px'
+              }}>10 년 <span style={{ fontSize: '0.65rem', color: '#718096' }}>▼</span></span> 의 경우
               <br />
               최초 연금수령액은
               <br />
@@ -7860,19 +7876,22 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
         </div>
 
         {/* Footer Action */}
-        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ backgroundColor: '#1c1c1e' }}>
           <button 
             onClick={() => setStep('daishin_form')}
             style={{
               width: '100%',
-              padding: '14px 0',
+              height: '56px',
               backgroundColor: '#1c1c1e',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '4px',
-              fontSize: '0.95rem',
+              borderRadius: '0',
+              fontSize: '1rem',
               fontWeight: '600',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
             다시 계산하기
