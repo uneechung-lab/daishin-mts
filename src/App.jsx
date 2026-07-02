@@ -7438,8 +7438,6 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
   );
 }
 
-}
-
 // Component for AS IS Pension Initiation Simulation (연금개시 시뮬레이션)
 function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
   const containerStyle = {
@@ -7453,6 +7451,98 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
     boxSizing: 'border-box',
     position: 'relative'
   };
+
+  const customTopBar = (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '4px 12px',
+      backgroundColor: isDark ? '#111827' : '#ffffff',
+      color: isDark ? '#555555' : '#777777',
+      fontSize: '0.72rem',
+      fontWeight: '600',
+      height: '24px',
+      boxSizing: 'border-box',
+      borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+    }}>
+      <span style={{ fontWeight: '500' }}>SKT 2:28</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <span style={{ fontWeight: '500' }}>100</span>
+        {/* battery icon mock */}
+        <div style={{
+          width: '18px',
+          height: '10px',
+          border: isDark ? '1px solid #cbd5e1' : '1px solid #475569',
+          borderRadius: '2px',
+          padding: '1px',
+          display: 'flex',
+          alignItems: 'center',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{ width: '100%', height: '100%', backgroundColor: isDark ? '#cbd5e1' : '#1e293b' }}></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const customBottomBar = (
+    <div style={{
+      height: '48px',
+      borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+      backgroundColor: isDark ? '#111827' : '#ffffff',
+      display: 'flex',
+      alignItems: 'stretch',
+      boxSizing: 'border-box',
+      fontSize: '0.68rem'
+    }}>
+      {/* Home button */}
+      <button style={{ width: '44px', border: 'none', background: 'none', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#cbd5e1' : '#333333' }}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+      </button>
+
+      {/* Middle tabs */}
+      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+        {[
+          { label: '보유상품\n현황' },
+          { label: 'ETF/리츠\n잔고' },
+          { label: 'ETF/리츠\n체결/미체결' },
+          { label: 'ETF/리츠\n주문' }
+        ].map((tab, idx) => (
+          <button
+            key={idx}
+            style={{
+              flex: 1,
+              border: 'none',
+              background: 'none',
+              borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+              cursor: 'pointer',
+              fontSize: '0.62rem',
+              fontWeight: '500',
+              color: isDark ? '#94a3b8' : '#475569',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              whiteSpace: 'pre-line',
+              lineHeight: '1.25',
+              padding: '2px'
+            }}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Back button */}
+      <button 
+        onClick={onBackClick}
+        style={{ width: '44px', border: 'none', background: 'none', borderLeft: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#cbd5e1' : '#333333' }}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+      </button>
+    </div>
+  );
 
   const headerStyle = {
     display: 'flex',
@@ -7496,7 +7586,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
     backgroundColor: 'transparent',
     color: isDark ? '#f8fafc' : '#111827',
     fontSize: '1.25rem',
-    fontWeight: '700',
+    fontWeight: '500',
     boxSizing: 'border-box',
     outline: 'none'
   };
@@ -7510,7 +7600,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
     border: 'none',
     borderRadius: '8px',
     fontSize: '0.98rem',
-    fontWeight: '700',
+    fontWeight: '500',
     textAlign: 'center',
     cursor: 'pointer',
     textDecoration: 'none'
@@ -7520,6 +7610,8 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
   if (step === 'main') {
     return (
       <div style={containerStyle}>
+        {customTopBar}
+
         {/* Header */}
         <div style={headerStyle}>
           <button 
@@ -7530,7 +7622,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
-          <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>연금개시 시뮬레이션</span>
+          <span style={{ fontSize: '0.95rem', fontWeight: '600' }}>연금개시 시뮬레이션</span>
           <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
           </button>
@@ -7541,7 +7633,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
           <div>
             <h1 style={{
               fontSize: '1.5rem',
-              fontWeight: '800',
+              fontWeight: '600',
               lineHeight: '1.45',
               color: isDark ? '#f8fafc' : '#111827',
               margin: 0,
@@ -7571,20 +7663,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
           </div>
         </div>
 
-        {/* KOSPI Footer mock */}
-        <div style={{
-          height: '24px',
-          borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
-          backgroundColor: isDark ? '#111827' : '#f8fafc',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 12px',
-          fontSize: '0.7rem'
-        }}>
-          <span style={{ fontWeight: '600' }}>KOSPI</span>
-          <span style={{ color: '#de201e', fontWeight: '700' }}>6,856.15 ▲ 257.28 (3.90%)</span>
-        </div>
+        {customBottomBar}
       </div>
     );
   }
@@ -7593,6 +7672,8 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
   if (step === 'daishin_form') {
     return (
       <div style={containerStyle}>
+        {customTopBar}
+
         {/* Header */}
         <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
           <button 
@@ -7608,8 +7689,8 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={contentStyle}>
           <div style={{ marginBottom: '24px' }}>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: '0 0 4px 0', color: isDark ? '#f8fafc' : '#111827' }}>IRP 시뮬레이션</h2>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>같이 한번 해볼까요?</h2>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: '0 0 4px 0', color: isDark ? '#f8fafc' : '#111827' }}>IRP 시뮬레이션</h2>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>같이 한번 해볼까요?</h2>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -7650,7 +7731,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
         </div>
 
         {/* Footer Action */}
-        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button 
             onClick={() => setStep('daishin_result')}
             style={{
@@ -7661,13 +7742,15 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
               border: 'none',
               borderRadius: '4px',
               fontSize: '0.95rem',
-              fontWeight: '700',
+              fontWeight: '600',
               cursor: 'pointer'
             }}
           >
             시뮬레이션
           </button>
         </div>
+
+        {customBottomBar}
       </div>
     );
   }
@@ -7676,6 +7759,8 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
   if (step === 'daishin_result') {
     return (
       <div style={containerStyle}>
+        {customTopBar}
+
         {/* Header */}
         <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
           <button 
@@ -7694,7 +7779,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
             <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대진님의 퇴직연금</div>
             <h2 style={{
               fontSize: '1.3rem',
-              fontWeight: '700',
+              fontWeight: '600',
               lineHeight: '1.45',
               margin: 0,
               color: isDark ? '#f8fafc' : '#111827'
@@ -7715,7 +7800,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
           {/* Table */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>회차별 연금 수령액</span>
+              <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>회차별 연금 수령액</span>
               <span style={{ fontSize: '0.78rem', color: '#2563eb', cursor: 'pointer', textDecoration: 'underline' }}>상세보기</span>
             </div>
 
@@ -7732,7 +7817,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
                 backgroundColor: '#f1f5f9',
                 padding: '8px 4px',
                 fontSize: '0.76rem',
-                fontWeight: '700',
+                fontWeight: '600',
                 textAlign: 'center',
                 borderBottom: '1px solid #e2e8f0',
                 color: '#111827'
@@ -7760,13 +7845,13 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
                     fontSize: '0.76rem',
                     textAlign: 'right',
                     color: '#111827',
-                    borderBottom: idx === 5 - 1 ? 'none' : '1px solid #edf2f7'
+                    borderBottom: idx === 4 ? 'none' : '1px solid #edf2f7'
                   }}
                 >
                   <span style={{ textAlign: 'center', color: '#718096' }}>{roundRow.round}</span>
                   <span style={{ paddingRight: '4px' }}>{roundRow.pre}</span>
                   <span style={{ paddingRight: '4px' }}>{roundRow.tax}</span>
-                  <span style={{ paddingRight: '4px', fontWeight: '600' }}>{roundRow.post}</span>
+                  <span style={{ paddingRight: '4px', fontWeight: '500' }}>{roundRow.post}</span>
                 </div>
               ))}
             </div>
@@ -7774,7 +7859,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
         </div>
 
         {/* Footer Action */}
-        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button 
             onClick={() => setStep('daishin_form')}
             style={{
@@ -7785,13 +7870,15 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
               border: 'none',
               borderRadius: '4px',
               fontSize: '0.95rem',
-              fontWeight: '700',
+              fontWeight: '600',
               cursor: 'pointer'
             }}
           >
             다시 계산하기
           </button>
         </div>
+
+        {customBottomBar}
       </div>
     );
   }
@@ -7800,6 +7887,8 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
   if (step === 'other_q1') {
     return (
       <div style={containerStyle}>
+        {customTopBar}
+
         {/* Header */}
         <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
           <button 
@@ -7815,9 +7904,9 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={{ ...contentStyle, padding: '40px 24px', gap: '30px' }}>
           <div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>김대진님의 타사 IRP</div>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: '800', margin: '0 0 10px 0', color: '#2563eb' }}>Start.</h1>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: '800', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>퇴직금을 수령하셨나요?</h2>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>김대신님의 타사 IRP</div>
+            <h1 style={{ fontSize: '1.8rem', fontWeight: '600', margin: '0 0 10px 0', color: '#2563eb' }}>Start.</h1>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>퇴직금을 수령하셨나요?</h2>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '20px' }}>
@@ -7835,6 +7924,8 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
             </button>
           </div>
         </div>
+
+        {customBottomBar}
       </div>
     );
   }
@@ -7843,6 +7934,8 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
   if (step === 'other_result') {
     return (
       <div style={containerStyle}>
+        {customTopBar}
+
         {/* Header */}
         <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
           <button 
@@ -7861,7 +7954,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
             <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대신님의 예상 퇴직소득세</div>
             <h2 style={{
               fontSize: '1.3rem',
-              fontWeight: '700',
+              fontWeight: '600',
               lineHeight: '1.45',
               margin: 0,
               color: isDark ? '#f8fafc' : '#111827'
@@ -7881,7 +7974,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
 
           {/* Process details */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>계산과정</span>
+            <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>계산과정</span>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
@@ -7904,7 +7997,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
               ].map((row, idx) => (
                 <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
                   <span style={{ color: '#718096' }}>{row.label}</span>
-                  <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>{row.value}</span>
+                  <span style={{ fontWeight: '500', color: isDark ? '#cbd5e1' : '#1a202c' }}>{row.value}</span>
                 </div>
               ))}
             </div>
@@ -7912,7 +8005,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
         </div>
 
         {/* Footer Action */}
-        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button 
             onClick={() => setStep('other_q1')}
             style={{
@@ -7923,13 +8016,15 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
               border: 'none',
               borderRadius: '4px',
               fontSize: '0.95rem',
-              fontWeight: '700',
+              fontWeight: '600',
               cursor: 'pointer'
             }}
           >
             다시 계산하기
           </button>
         </div>
+
+        {customBottomBar}
       </div>
     );
   }
