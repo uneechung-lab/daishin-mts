@@ -6943,7 +6943,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
         </div>
 
         {/* Confirm Button Footer */}
-        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+        <div style={{ backgroundColor: '#1c1c1e' }}>
           <button 
             onClick={() => {
               setViewMode('list');
@@ -6951,14 +6951,17 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
             }}
             style={{
               width: '100%',
-              padding: '14px 0',
+              height: '56px',
               backgroundColor: '#1c1c1e',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '4px',
-              fontSize: '0.95rem',
-              fontWeight: '700',
-              cursor: 'pointer'
+              borderRadius: '0',
+              fontSize: '1rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
             확인
