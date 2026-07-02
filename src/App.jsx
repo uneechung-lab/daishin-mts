@@ -6843,6 +6843,29 @@ function PensionReceiptStatusView({ isDark, isToBe, onBackClick }) {
     }
   }, [activeTab, viewMode, selectedItem]);
 
+  const inputStyle = {
+    width: '100%',
+    padding: '10px 12px',
+    borderRadius: '4px',
+    border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+    backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+    color: isDark ? '#f8fafc' : '#0f172a',
+    fontSize: '0.92rem',
+    fontWeight: '500',
+    fontFamily: 'SF Pro Display, -apple-system, Roboto, sans-serif',
+    boxSizing: 'border-box',
+    marginTop: '6px'
+  };
+
+  const selectStyle = {
+    ...inputStyle,
+    appearance: 'none',
+    backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")`,
+    backgroundPosition: 'right 10px center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '1.25rem'
+  };
+
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
