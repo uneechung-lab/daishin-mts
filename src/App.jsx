@@ -5426,7 +5426,13 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
 
                 {/* TO BE: 수령 주기 */}
                 <div>
-                  <label style={{ ...labelStyle, display: 'block', marginBottom: '8px' }}>수령 주기</label>
+                  <label style={labelStyle}>수령 주기</label>
+                  <div 
+                    onClick={() => setShowPeriodPicker(true)}
+                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                  >
+                    {selectedPeriod}
+                  </div>
                 </div>
               </>
             ) : (
@@ -5514,72 +5520,124 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               </>
             )}
 
-            {/* 수령계좌 정보 & 연락처 & 즉시인출금액 (AS IS Only) */}
-            {!isToBe && (
-              <>
-                {/* 수령계좌 정보 */}
-                <div style={{ position: 'relative' }}>
-                  <label style={labelStyle}>수령계좌 정보</label>
-                  <div 
-                    onClick={() => setShowBankPicker(true)}
-                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center', color: selectedBank ? (isDark ? '#cbd5e1' : '#333333') : '#a0aec0' }}
-                  >
-                    {selectedBank || '수령계좌 선택'}
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                    <div style={{ position: 'relative', flex: 1 }}>
-                      <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', boxSizing: 'border-box' }} />
-                    </div>
-                    <button style={{
-                      padding: '0 12px',
-                      borderRadius: '4px',
-                      border: '1px solid #e2e8f0',
-                      backgroundColor: '#ffffff',
-                      color: '#94a3b8',
-                      fontSize: '0.75rem',
-                      fontWeight: '700',
-                      cursor: 'not-allowed'
-                    }}>확인완료</button>
-                  </div>
-                  <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
-                    계좌가 확인되었습니다.
-                  </span>
+            {/* 수령계좌 정보 */}
+            <div style={{ position: 'relative' }}>
+              <label style={labelStyle}>수령계좌 정보</label>
+              <div 
+                onClick={() => setShowBankPicker(true)}
+                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center', color: selectedBank ? (isDark ? '#cbd5e1' : '#333333') : '#a0aec0' }}
+              >
+                {selectedBank || '수령계좌 선택'}
+              </div>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                <div style={{ position: 'relative', flex: 1 }}>
+                  <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', boxSizing: 'border-box' }} />
+                  {isToBe && isDrawerOpen && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '12px',
+                      right: '10px',
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#ffffff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                    }}>4</span>
+                  )}
                 </div>
+                <button style={{
+                  padding: '0 12px',
+                  borderRadius: '4px',
+                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#ffffff',
+                  color: '#94a3b8',
+                  fontSize: '0.75rem',
+                  fontWeight: '700',
+                  cursor: 'not-allowed'
+                }}>확인완료</button>
+              </div>
+              <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
+                계좌가 확인되었습니다.
+              </span>
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '18px',
+                  right: '25px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>3</span>
+              )}
+            </div>
 
-                {/* 연락처 */}
-                <div style={{ position: 'relative' }}>
-                  <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
-                  <input 
-                    type="text" 
-                    value={phoneNumber} 
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    inputMode="none"
-                    onFocus={() => {
-                      setActiveField('phone');
-                      setShowNumericKeypad(true);
-                    }}
-                    style={inputStyle} 
-                  />
-                </div>
+            {/* 연락처 */}
+            <div style={{ position: 'relative' }}>
+              <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
+              <input 
+                type="text" 
+                value={phoneNumber} 
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                inputMode="none"
+                onFocus={() => {
+                  setActiveField('phone');
+                  setShowNumericKeypad(true);
+                }}
+                style={inputStyle} 
+              />
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '18px',
+                  right: '10px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>4</span>
+              )}
+            </div>
 
-                {/* 즉시 인출 금액 */}
-                <div>
-                  <label style={labelStyle}>즉시 인출 금액(선택)</label>
-                  <input 
-                    type="text" 
-                    value={immediateAmount}
-                    onChange={(e) => setImmediateAmount(e.target.value)}
-                    placeholder="금액 입력" 
-                    inputMode="none"
-                    onFocus={() => {
-                      setActiveField('immediateAmount');
-                      setShowNumericKeypad(true);
-                    }}
-                    style={{ ...inputStyle, backgroundColor: 'transparent' }} 
-                  />
-                </div>
-              </>
-            )}
+            {/* 즉시 인출 금액 */}
+            <div>
+              <label style={labelStyle}>즉시 인출 금액(선택)</label>
+              <input 
+                type="text" 
+                value={immediateAmount}
+                onChange={(e) => setImmediateAmount(e.target.value)}
+                placeholder="금액 입력" 
+                inputMode="none"
+                onFocus={() => {
+                  setActiveField('immediateAmount');
+                  setShowNumericKeypad(true);
+                }}
+                style={{ ...inputStyle, backgroundColor: 'transparent' }} 
+              />
+            </div>
           </div>
 
           {/* Footer */}
@@ -7429,60 +7487,58 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
   );
 
   const customBottomBar = (
-    <div style={{
-      height: '48px',
-      borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
-      backgroundColor: isDark ? '#111827' : '#ffffff',
-      display: 'flex',
-      alignItems: 'stretch',
-      boxSizing: 'border-box',
-      fontSize: '0.68rem'
-    }}>
-      {/* Home button */}
-      <button style={{ width: '44px', border: 'none', background: 'none', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#cbd5e1' : '#333333' }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
-      </button>
-
-      {/* Middle tabs */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
-        {[
-          { label: '보유상품\n현황' },
-          { label: 'ETF/리츠\n잔고' },
-          { label: 'ETF/리츠\n체결/미체결' },
-          { label: 'ETF/리츠\n주문' }
-        ].map((tab, idx) => (
-          <button
-            key={idx}
-            style={{
-              flex: 1,
-              border: 'none',
-              background: 'none',
-              borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-              cursor: 'pointer',
-              fontSize: '0.62rem',
-              fontWeight: '500',
-              color: isDark ? '#94a3b8' : '#475569',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              whiteSpace: 'pre-line',
-              lineHeight: '1.25',
-              padding: '2px'
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
+    <div style={{ display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
+      {/* Ticker Row */}
+      <div style={{
+        height: '32px',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+        backgroundColor: isDark ? '#111827' : '#f8fafc',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 16px',
+        fontSize: '0.78rem',
+        boxSizing: 'border-box'
+      }}>
+        <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#333333' }}>S&P500</span>
+        <span style={{ color: '#de201e', fontWeight: '700' }}>7,440.43 ▲ 86.41 (1.18%)</span>
       </div>
 
-      {/* Back button */}
-      <button 
-        onClick={onBackClick}
-        style={{ width: '44px', border: 'none', background: 'none', borderLeft: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#cbd5e1' : '#333333' }}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
-      </button>
+      {/* Tab Bar Row */}
+      <div style={{
+        height: '52px',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #edf2f7',
+        backgroundColor: isDark ? '#111827' : '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 16px',
+        gap: '20px',
+        boxSizing: 'border-box'
+      }}>
+        {/* House Icon */}
+        <span style={{ color: '#4a5568', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+        </span>
+
+        {/* Custom Tabs */}
+        <div style={{
+          display: 'flex',
+          flex: 1,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          fontSize: '0.78rem',
+          fontWeight: '600',
+          color: isDark ? '#cbd5e1' : '#4a5568'
+        }}>
+          <span style={{ cursor: 'pointer' }}>보유상품현황</span>
+          <span style={{ cursor: 'pointer' }}>ETF/리츠잔고</span>
+          <span style={{ cursor: 'pointer' }}>ETF/리츠체결/미체결</span>
+          <span style={{ cursor: 'pointer' }}>ETF/리츠주문</span>
+        </div>
+      </div>
     </div>
   );
 
