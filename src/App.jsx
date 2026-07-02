@@ -6809,39 +6809,8 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   );
 }
 
-// New component for Pension Receipt Status and History views (연금수령 현황)
-function PensionReceiptStatusView({ isDark, isToBe, onBackClick }) {
-  const [activeTab, setActiveTab] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('statusActiveTab') || 'status'; // 'status', 'details'
-  });
-  const [viewMode, setViewMode] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('statusViewMode') || 'list'; // 'list', 'detail'
-  });
-  const [selectedItem, setSelectedItem] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    const itemVal = params.get('statusSelectedItem');
-    if (itemVal === '1326676') {
-      return { date: '2026.05.15', total: '1,361,736', actual: '1,326,676', pensionTax: '31,880', localTax: '3,180' };
-    }
-    return null;
-  });
+function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, viewMode, setViewMode, selectedItem, setSelectedItem, onBackClick }) {
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    params.set('statusActiveTab', activeTab);
-    params.set('statusViewMode', viewMode);
-    if (selectedItem) {
-      params.set('statusSelectedItem', selectedItem.actual.replace(/,/g, ''));
-    } else {
-      params.delete('statusSelectedItem');
-    }
-    const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
-    if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
-      window.history.replaceState({}, '', newUrl);
-    }
-  }, [activeTab, viewMode, selectedItem]);
 
   const inputStyle = {
     width: '100%',
@@ -7491,6 +7460,11 @@ function App() {
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
   const [screen4SubScreen, setScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asIsScreen4SubScreen, setAsIsScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
+
+  // Lifted states for Pension Receipt Status (연금수령 현황) URL sync
+  const [statusActiveTab, setStatusActiveTab] = useState('status');
+  const [statusViewMode, setStatusViewMode] = useState('list');
+  const [statusSelectedItem, setStatusSelectedItem] = useState(null);
   const [asIsSelectedMenuCategory, setAsIsSelectedMenuCategory] = useState('IRP/퇴직연금');
   const [toBeSelectedMenuCategory, setToBeSelectedMenuCategory] = useState('연금수령');
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
@@ -7564,6 +7538,30 @@ function App() {
 
     const figmaExportParam = params.get('figmaExport');
     if (figmaExportParam) setIsFigmaExportMode(figmaExportParam === 'true');
+
+    // Restore Pension Receipt Status states from URL params on mount
+    const statusActiveTabParam = params.get('statusActiveTab');
+    if (statusActiveTabParam) setStatusActiveTab(statusActiveTabParam);
+    const statusViewModeParam = params.get('statusViewMode');
+    if (statusViewModeParam) setStatusViewMode(statusViewModeParam);
+    const statusSelectedItemParam = params.get('statusSelectedItem');
+    if (statusSelectedItemParam) {
+      if (statusSelectedItemParam === '1326676') {
+        setStatusSelectedItem({ date: '2026.05.15', total: '1,361,736', actual: '1,326,676', pensionTax: '31,880', localTax: '3,180' });
+      } else if (statusSelectedItemParam === '10000000') {
+        setStatusSelectedItem({ date: '2026.06.19', total: '10,000,000', actual: '10,000,000', pensionTax: '0', localTax: '0' });
+      } else if (statusSelectedItemParam === '170078') {
+        setStatusSelectedItem({ date: '2026.06.17', total: '170,078', actual: '170,078', pensionTax: '0', localTax: '0' });
+      } else if (statusSelectedItemParam === '1158027') {
+        setStatusSelectedItem({ date: '2026.04.15', total: '1,188,627', actual: '1,158,027', pensionTax: '27,810', localTax: '2,790' });
+      } else if (statusSelectedItemParam === '1243597') {
+        setStatusSelectedItem({ date: '2026.03.13', total: '1,270,857', actual: '1,243,597', pensionTax: '24,780', localTax: '2,480' });
+      } else if (statusSelectedItemParam === '1198912') {
+        setStatusSelectedItem({ date: '2026.02.13', total: '1,225,202', actual: '1,198,912', pensionTax: '23,900', localTax: '2,390' });
+      } else if (statusSelectedItemParam === '1077008') {
+        setStatusSelectedItem({ date: '2026.01.15', total: '1,110,358', actual: '1,077,008', pensionTax: '30,310', localTax: '3,040' });
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -7583,11 +7581,20 @@ function App() {
     params.set('etfMallNavMode', etfMallNavMode);
     params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
+    // Sync Pension Receipt Status states to URL params
+    params.set('statusActiveTab', statusActiveTab);
+    params.set('statusViewMode', statusViewMode);
+    if (statusSelectedItem) {
+      params.set('statusSelectedItem', statusSelectedItem.actual.replace(/,/g, ''));
+    } else {
+      params.delete('statusSelectedItem');
+    }
+    
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -7623,6 +7630,32 @@ function App() {
       if (etfMallNavModeParam) setEtfMallNavMode(etfMallNavModeParam);
       const figmaExportParam = params.get('figmaExport');
       if (figmaExportParam) setIsFigmaExportMode(figmaExportParam === 'true');
+
+      // Restoring statusActiveTab, statusViewMode, statusSelectedItem
+      const statusActiveTabParam = params.get('statusActiveTab');
+      if (statusActiveTabParam) setStatusActiveTab(statusActiveTabParam);
+      const statusViewModeParam = params.get('statusViewMode');
+      if (statusViewModeParam) setStatusViewMode(statusViewModeParam);
+      const statusSelectedItemParam = params.get('statusSelectedItem');
+      if (statusSelectedItemParam) {
+        if (statusSelectedItemParam === '1326676') {
+          setStatusSelectedItem({ date: '2026.05.15', total: '1,361,736', actual: '1,326,676', pensionTax: '31,880', localTax: '3,180' });
+        } else if (statusSelectedItemParam === '10000000') {
+          setStatusSelectedItem({ date: '2026.06.19', total: '10,000,000', actual: '10,000,000', pensionTax: '0', localTax: '0' });
+        } else if (statusSelectedItemParam === '170078') {
+          setStatusSelectedItem({ date: '2026.06.17', total: '170,078', actual: '170,078', pensionTax: '0', localTax: '0' });
+        } else if (statusSelectedItemParam === '1158027') {
+          setStatusSelectedItem({ date: '2026.04.15', total: '1,188,627', actual: '1,158,027', pensionTax: '27,810', localTax: '2,790' });
+        } else if (statusSelectedItemParam === '1243597') {
+          setStatusSelectedItem({ date: '2026.03.13', total: '1,270,857', actual: '1,243,597', pensionTax: '24,780', localTax: '2,480' });
+        } else if (statusSelectedItemParam === '1198912') {
+          setStatusSelectedItem({ date: '2026.02.13', total: '1,225,202', actual: '1,198,912', pensionTax: '23,900', localTax: '2,390' });
+        } else if (statusSelectedItemParam === '1077008') {
+          setStatusSelectedItem({ date: '2026.01.15', total: '1,110,358', actual: '1,077,008', pensionTax: '30,310', localTax: '3,040' });
+        }
+      } else {
+        setStatusSelectedItem(null);
+      }
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -9117,6 +9150,12 @@ function App() {
                     <PensionReceiptStatusView 
                       isDark={isDark} 
                       isToBe={true} 
+                      activeTab={statusActiveTab}
+                      setActiveTab={setStatusActiveTab}
+                      viewMode={statusViewMode}
+                      setViewMode={setStatusViewMode}
+                      selectedItem={statusSelectedItem}
+                      setSelectedItem={setStatusSelectedItem}
                       onBackClick={() => setScreen4SubScreen('menu')} 
                     />
                   ) : (
