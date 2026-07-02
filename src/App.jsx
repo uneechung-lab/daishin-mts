@@ -7438,6 +7438,505 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
   );
 }
 
+}
+
+// Component for AS IS Pension Initiation Simulation (연금개시 시뮬레이션)
+function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+    color: isDark ? '#cbd5e1' : '#333333',
+    fontFamily: 'sans-serif',
+    boxSizing: 'border-box',
+    position: 'relative'
+  };
+
+  const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    borderBottom: isDark ? '1px solid #1e293b' : 'none',
+    backgroundColor: isDark ? '#111827' : '#ffffff',
+    height: '44px',
+    boxSizing: 'border-box'
+  };
+
+  const contentStyle = {
+    flex: 1,
+    overflowY: 'auto',
+    padding: '24px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    boxSizing: 'border-box',
+    backgroundColor: isDark ? '#0b0f19' : '#ffffff'
+  };
+
+  const inputGroupStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+    marginBottom: '20px'
+  };
+
+  const labelStyle = {
+    fontSize: '0.78rem',
+    fontWeight: '500',
+    color: isDark ? '#94a3b8' : '#718096'
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '10px 0px',
+    border: 'none',
+    borderBottom: isDark ? '1.5px solid #334155' : '1.5px solid #e2e8f0',
+    backgroundColor: 'transparent',
+    color: isDark ? '#f8fafc' : '#111827',
+    fontSize: '1.25rem',
+    fontWeight: '700',
+    boxSizing: 'border-box',
+    outline: 'none'
+  };
+
+  const linkButtonStyle = {
+    display: 'block',
+    width: '100%',
+    padding: '16px 0',
+    backgroundColor: '#e9f2ff',
+    color: '#005bc4',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '0.98rem',
+    fontWeight: '700',
+    textAlign: 'center',
+    cursor: 'pointer',
+    textDecoration: 'none'
+  };
+
+  // Step 1: Main (Attachment 1)
+  if (step === 'main') {
+    return (
+      <div style={containerStyle}>
+        {/* Header */}
+        <div style={headerStyle}>
+          <button 
+            onClick={onBackClick}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>연금개시 시뮬레이션</span>
+          <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div style={{ ...contentStyle, padding: '40px 24px', gap: '30px' }}>
+          <div>
+            <h1 style={{
+              fontSize: '1.5rem',
+              fontWeight: '800',
+              lineHeight: '1.45',
+              color: isDark ? '#f8fafc' : '#111827',
+              margin: 0,
+              wordBreak: 'keep-all'
+            }}>
+              연금 수령방법에 따라
+              <br />
+              시뮬레이션하여
+              <br />
+              연금을 미리 계산해보세요.
+            </h1>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '20px' }}>
+            <button 
+              onClick={() => setStep('daishin_form')}
+              style={linkButtonStyle}
+            >
+              대신증권 IRP 계좌만 있습니다
+            </button>
+            <button 
+              onClick={() => setStep('other_q1')}
+              style={linkButtonStyle}
+            >
+              타사 IRP 계좌도 있습니다
+            </button>
+          </div>
+        </div>
+
+        {/* KOSPI Footer mock */}
+        <div style={{
+          height: '24px',
+          borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+          backgroundColor: isDark ? '#111827' : '#f8fafc',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 12px',
+          fontSize: '0.7rem'
+        }}>
+          <span style={{ fontWeight: '600' }}>KOSPI</span>
+          <span style={{ color: '#de201e', fontWeight: '700' }}>6,856.15 ▲ 257.28 (3.90%)</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 2: Daishin Form (Attachment 2)
+  if (step === 'daishin_form') {
+    return (
+      <div style={containerStyle}>
+        {/* Header */}
+        <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
+          <button 
+            onClick={() => setStep('main')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div style={contentStyle}>
+          <div style={{ marginBottom: '24px' }}>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: '0 0 4px 0', color: isDark ? '#f8fafc' : '#111827' }}>IRP 시뮬레이션</h2>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>같이 한번 해볼까요?</h2>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={inputGroupStyle}>
+              <label style={labelStyle}>Q1. 수령 개시 희망 연령이 언제 인가요?</label>
+              <input type="text" readOnly value="60 세" style={inputStyle} />
+            </div>
+            <div style={inputGroupStyle}>
+              <label style={labelStyle}>Q2. 기대수익률을 알려주세요.</label>
+              <input type="text" readOnly value="5 %" style={inputStyle} />
+            </div>
+            <div style={inputGroupStyle}>
+              <label style={labelStyle}>Q3. 추가 예상 퇴직금을 알려주세요.</label>
+              <input type="text" readOnly value="50,000,000 원" style={inputStyle} />
+            </div>
+            <div style={inputGroupStyle}>
+              <label style={labelStyle}>Q4. 예상 근속년수를 알려주세요.</label>
+              <input type="text" readOnly value="10 년" style={inputStyle} />
+            </div>
+            <div style={inputGroupStyle}>
+              <label style={labelStyle}>Q5. 추가 입금할 금액을 알려주세요.</label>
+              <input type="text" readOnly value="50,000,000 원" style={inputStyle} />
+            </div>
+            <div style={inputGroupStyle}>
+              <label style={labelStyle}>Q6. 연금 수령을 어떻게 하고 싶으신가요?</label>
+              <div style={{
+                ...inputStyle,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                cursor: 'pointer'
+              }}>
+                <span>기간 선택형</span>
+                <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>▼</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Action */}
+        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+          <button 
+            onClick={() => setStep('daishin_result')}
+            style={{
+              width: '100%',
+              padding: '14px 0',
+              backgroundColor: '#1c1c1e',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '4px',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}
+          >
+            시뮬레이션
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 3: Daishin Result (Attachment 3)
+  if (step === 'daishin_result') {
+    return (
+      <div style={containerStyle}>
+        {/* Header */}
+        <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
+          <button 
+            onClick={() => setStep('daishin_form')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div style={{ ...contentStyle, gap: '20px' }}>
+          <div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대진님의 퇴직연금</div>
+            <h2 style={{
+              fontSize: '1.3rem',
+              fontWeight: '700',
+              lineHeight: '1.45',
+              margin: 0,
+              color: isDark ? '#f8fafc' : '#111827'
+            }}>
+              기간 선택형 <span style={{ borderBottom: '1px solid ' + (isDark ? '#cbd5e1' : '#111827'), paddingBottom: '2px' }}>10 년</span> 의 경우
+              <br />
+              최초 연금수령액은
+              <br />
+              <span style={{ color: '#2563eb' }}>24,586,668원</span> 이고
+              <br />
+              세액은 <span style={{ color: '#2563eb' }}>246,998원</span> 입니다
+            </h2>
+            <span style={{ display: 'block', fontSize: '0.78rem', color: '#718096', marginTop: '14px', lineHeight: '1.4', wordBreak: 'keep-all' }}>
+              세법상 한도금액은 <strong>110,548,967</strong>이고, 이 경우 부담하실 세금(지방소득세 포함)은 <strong>246,998</strong>입니다.
+            </span>
+          </div>
+
+          {/* Table */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>회차별 연금 수령액</span>
+              <span style={{ fontSize: '0.78rem', color: '#2563eb', cursor: 'pointer', textDecoration: 'underline' }}>상세보기</span>
+            </div>
+
+            <div style={{
+              border: '1px solid #e2e8f0',
+              borderRadius: '4px',
+              overflow: 'hidden',
+              backgroundColor: '#ffffff'
+            }}>
+              {/* Header */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '0.6fr 1.2fr 1fr 1.2fr',
+                backgroundColor: '#f1f5f9',
+                padding: '8px 4px',
+                fontSize: '0.76rem',
+                fontWeight: '700',
+                textAlign: 'center',
+                borderBottom: '1px solid #e2e8f0',
+                color: '#111827'
+              }}>
+                <span>회차</span>
+                <span>세전 수령액</span>
+                <span>세금</span>
+                <span>세후 수령액</span>
+              </div>
+
+              {/* Rows */}
+              {[
+                { round: 1, pre: '24,586,668', tax: '246,998', post: '24,339,670' },
+                { round: 2, pre: '24,586,668', tax: '257,470', post: '24,329,198' },
+                { round: 3, pre: '24,586,668', tax: '1,270,927', post: '23,315,741' },
+                { round: 4, pre: '24,586,668', tax: '1,352,266', post: '23,234,402' },
+                { round: 5, pre: '24,586,668', tax: '1,352,266', post: '23,234,402' }
+              ].map((roundRow, idx) => (
+                <div 
+                  key={idx}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '0.6fr 1.2fr 1fr 1.2fr',
+                    padding: '10px 4px',
+                    fontSize: '0.76rem',
+                    textAlign: 'right',
+                    color: '#111827',
+                    borderBottom: idx === 5 - 1 ? 'none' : '1px solid #edf2f7'
+                  }}
+                >
+                  <span style={{ textAlign: 'center', color: '#718096' }}>{roundRow.round}</span>
+                  <span style={{ paddingRight: '4px' }}>{roundRow.pre}</span>
+                  <span style={{ paddingRight: '4px' }}>{roundRow.tax}</span>
+                  <span style={{ paddingRight: '4px', fontWeight: '600' }}>{roundRow.post}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Action */}
+        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+          <button 
+            onClick={() => setStep('daishin_form')}
+            style={{
+              width: '100%',
+              padding: '14px 0',
+              backgroundColor: '#1c1c1e',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '4px',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}
+          >
+            다시 계산하기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 4: Other IRP Question 1 (Attachment 4)
+  if (step === 'other_q1') {
+    return (
+      <div style={containerStyle}>
+        {/* Header */}
+        <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
+          <button 
+            onClick={() => setStep('main')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div style={{ ...contentStyle, padding: '40px 24px', gap: '30px' }}>
+          <div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>김대진님의 타사 IRP</div>
+            <h1 style={{ fontSize: '1.8rem', fontWeight: '800', margin: '0 0 10px 0', color: '#2563eb' }}>Start.</h1>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '800', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>퇴직금을 수령하셨나요?</h2>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '20px' }}>
+            <button 
+              onClick={() => setStep('other_result')}
+              style={linkButtonStyle}
+            >
+              네, 수령했습니다.
+            </button>
+            <button 
+              onClick={() => setStep('main')}
+              style={linkButtonStyle}
+            >
+              아니오, 수령하지 않았습니다.
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 5: Other Result (Attachment 5)
+  if (step === 'other_result') {
+    return (
+      <div style={containerStyle}>
+        {/* Header */}
+        <div style={{ ...headerStyle, justifyContent: 'flex-start' }}>
+          <button 
+            onClick={() => setStep('other_q1')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div style={{ ...contentStyle, gap: '20px' }}>
+          <div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대신님의 예상 퇴직소득세</div>
+            <h2 style={{
+              fontSize: '1.3rem',
+              fontWeight: '700',
+              lineHeight: '1.45',
+              margin: 0,
+              color: isDark ? '#f8fafc' : '#111827'
+            }}>
+              100,000,000원에 대한
+              <br />
+              퇴직 소득세(지방소득세 포함)
+              <br />
+              는 약 <span style={{ color: '#2563eb' }}>167,180원</span> 이고
+              <br />
+              실효세율은 <span style={{ color: '#2563eb' }}>0.1%</span> 입니다
+            </h2>
+            <span style={{ display: 'block', fontSize: '0.78rem', color: '#718096', marginTop: '14px', lineHeight: '1.4' }}>
+              세법 개정에 따라 실제 퇴직 소득세(지방소득세 포함)가 다를 수 있습니다.
+            </span>
+          </div>
+
+          {/* Process details */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>계산과정</span>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              padding: '16px',
+              backgroundColor: isDark ? '#1e293b' : '#ffffff',
+              borderRadius: '8px',
+              border: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+            }}>
+              {[
+                { label: '퇴직소득', value: '100,000,000 원' },
+                { label: '근속연수 공제', value: '73,000,000 원' },
+                { label: '환산급여', value: '10,451,612 원' },
+                { label: '환산 급여별 공제', value: '9,470,967 원' },
+                { label: '퇴직소득 과세 표준', value: '980,645 원' },
+                { label: '환산산출 세액', value: '58,838 원' },
+                { label: '퇴직소득 산출 세액', value: '151,998 원' },
+                { label: '기 납부 세액 합계', value: '0 원' },
+                { label: '퇴직 소득세', value: '151,990 원' }
+              ].map((row, idx) => (
+                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                  <span style={{ color: '#718096' }}>{row.label}</span>
+                  <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>{row.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Action */}
+        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+          <button 
+            onClick={() => setStep('other_q1')}
+            style={{
+              width: '100%',
+              padding: '14px 0',
+              backgroundColor: '#1c1c1e',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '4px',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}
+          >
+            다시 계산하기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
 function App() {
 
   const [isDark, setIsDark] = useState(false);
@@ -7460,6 +7959,7 @@ function App() {
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
   const [screen4SubScreen, setScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asIsScreen4SubScreen, setAsIsScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
+  const [asisSimulationStep, setAsisSimulationStep] = useState('main'); // 'main', 'daishin_form', 'daishin_result', 'other_q1', 'other_result'
 
   // Lifted states for Pension Receipt Status (연금수령 현황) URL sync
   const [statusActiveTab, setStatusActiveTab] = useState('status');
@@ -7538,6 +8038,8 @@ function App() {
 
     const figmaExportParam = params.get('figmaExport');
     if (figmaExportParam) setIsFigmaExportMode(figmaExportParam === 'true');
+    const asisSimParam = params.get('asisSimulationStep');
+    if (asisSimParam) setAsisSimulationStep(asisSimParam);
 
     // Restore Pension Receipt Status states from URL params on mount
     const statusActiveTabParam = params.get('statusActiveTab');
@@ -7590,11 +8092,14 @@ function App() {
       params.delete('statusSelectedItem');
     }
     
+    // Sync asisSimulationStep
+    params.set('asisSimulationStep', asisSimulationStep);
+    
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -7630,6 +8135,8 @@ function App() {
       if (etfMallNavModeParam) setEtfMallNavMode(etfMallNavModeParam);
       const figmaExportParam = params.get('figmaExport');
       if (figmaExportParam) setIsFigmaExportMode(figmaExportParam === 'true');
+      const asisSimParam = params.get('asisSimulationStep');
+      if (asisSimParam) setAsisSimulationStep(asisSimParam);
 
       // Restoring statusActiveTab, statusViewMode, statusSelectedItem
       const statusActiveTabParam = params.get('statusActiveTab');
@@ -8754,6 +9261,15 @@ function App() {
                                 연금수령 신청
                               </div>
                               <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금수령 신청 조회/취소</div>
+                              <div 
+                                onClick={() => {
+                                  setAsIsScreen4SubScreen('simulation');
+                                  setAsisSimulationStep('main');
+                                }}
+                                style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
+                              >
+                                연금개시 시뮬레이션
+                              </div>
                               <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금수령 현황</div>
                               <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>IRP 해지신청</div>
                               <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>IRP 해지신청 조회/취소</div>
@@ -8791,6 +9307,14 @@ function App() {
                         </div>
                       </div>
                     </>
+                  ) : asIsScreen4SubScreen === 'simulation' ? (
+                    <PensionSimulationView 
+                      isDark={isDark} 
+                      isToBe={false} 
+                      step={asisSimulationStep}
+                      setStep={setAsisSimulationStep}
+                      onBackClick={() => setAsIsScreen4SubScreen('menu')} 
+                    />
                   ) : (
                     <PensionReceiptRequestView 
                       isDark={isDark} 
