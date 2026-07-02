@@ -6809,6 +6809,643 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   );
 }
 
+// New component for Pension Receipt Status and History views (연금수령 현황)
+function PensionReceiptStatusView({ isDark, isToBe, onBackClick }) {
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('statusActiveTab') || 'status'; // 'status', 'details'
+  });
+  const [viewMode, setViewMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('statusViewMode') || 'list'; // 'list', 'detail'
+  });
+  const [selectedItem, setSelectedItem] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const itemVal = params.get('statusSelectedItem');
+    if (itemVal === '1326676') {
+      return { date: '2026.05.15', total: '1,361,736', actual: '1,326,676', pensionTax: '31,880', localTax: '3,180' };
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('statusActiveTab', activeTab);
+    params.set('statusViewMode', viewMode);
+    if (selectedItem) {
+      params.set('statusSelectedItem', selectedItem.actual.replace(/,/g, ''));
+    } else {
+      params.delete('statusSelectedItem');
+    }
+    const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+    if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [activeTab, viewMode, selectedItem]);
+
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+    color: isDark ? '#cbd5e1' : '#333333',
+    fontFamily: 'sans-serif',
+    boxSizing: 'border-box',
+    position: 'relative'
+  };
+
+  const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+    backgroundColor: isDark ? '#111827' : '#ffffff',
+    height: '44px',
+    boxSizing: 'border-box'
+  };
+
+  const contentStyle = {
+    flex: 1,
+    overflowY: 'auto',
+    backgroundColor: isDark ? '#0b0f19' : '#f8fafc',
+    display: 'flex',
+    flexDirection: 'column',
+    boxSizing: 'border-box'
+  };
+
+  // Receipt History Data Array
+  const historyData = [
+    { date: '2026.06.19', total: '10,000,000', actual: '10,000,000', pensionTax: '0', localTax: '0' },
+    { date: '2026.06.17', total: '170,078', actual: '170,078', pensionTax: '0', localTax: '0' },
+    { date: '2026.05.15', total: '1,361,736', actual: '1,326,676', pensionTax: '31,880', localTax: '3,180' },
+    { date: '2026.04.15', total: '1,188,627', actual: '1,158,027', pensionTax: '27,810', localTax: '2,790' },
+    { date: '2026.03.13', total: '1,270,857', actual: '1,243,597', pensionTax: '24,780', localTax: '2,480' },
+    { date: '2026.02.13', total: '1,225,202', actual: '1,198,912', pensionTax: '23,900', localTax: '2,390' },
+    { date: '2026.01.15', total: '1,110,358', actual: '1,077,008', pensionTax: '30,310', localTax: '3,040' }
+  ];
+
+  if (viewMode === 'detail' && selectedItem) {
+    // Attachment 3 Detail Screen Layout
+    return (
+      <div style={containerStyle}>
+        {/* Back navigation header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '12px 16px',
+          height: '44px',
+          borderBottom: isDark ? '1px solid #1e293b' : 'none',
+          backgroundColor: isDark ? '#111827' : '#ffffff'
+        }}>
+          <button 
+            onClick={() => {
+              setViewMode('list');
+              setSelectedItem(null);
+            }}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Detailed Screen Body */}
+        <div style={{ flex: 1, padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: '30px', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
+          <div>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: '0 0 8px 0', color: isDark ? '#f8fafc' : '#111827' }}>상세 지급내역입니다.</h2>
+            <p style={{ fontSize: '1.02rem', color: isDark ? '#94a3b8' : '#4b5563', margin: 0 }}>
+              실지급액은 <span style={{ color: '#2563eb', fontWeight: '700' }}>{selectedItem.actual}</span> 원 입니다
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '10px' }}>
+            {[
+              { label: '총 지급금액', value: `${selectedItem.total} 원` },
+              { label: '퇴직소득세', value: '0 원' },
+              { label: '퇴직지방소득세', value: '0 원' },
+              { label: '기타소득세', value: '0 원' },
+              { label: '기타지방소득세', value: '0 원' },
+              { label: '연금소득세', value: `${selectedItem.pensionTax} 원` },
+              { label: '연금지방소득세', value: `${selectedItem.localTax} 원` },
+              { label: '세금 합계', value: `${(parseInt(selectedItem.pensionTax.replace(/,/g, '')) + parseInt(selectedItem.localTax.replace(/,/g, ''))).toLocaleString()} 원` }
+            ].map((row, idx) => (
+              <div 
+                key={idx} 
+                style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  fontSize: '0.92rem', 
+                  fontWeight: row.label.includes('합계') || row.label.includes('총') ? '700' : '500',
+                  color: row.label.includes('합계') ? (isDark ? '#f8fafc' : '#111827') : (isDark ? '#cbd5e1' : '#4b5563')
+                }}
+              >
+                <span>{row.label}</span>
+                <span>{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Confirm Button Footer */}
+        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff' }}>
+          <button 
+            onClick={() => {
+              setViewMode('list');
+              setSelectedItem(null);
+            }}
+            style={{
+              width: '100%',
+              padding: '14px 0',
+              backgroundColor: '#1c1c1e',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '4px',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}
+          >
+            확인
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={containerStyle}>
+      {/* Top Phone Header Mock */}
+      <div style={{
+        height: '24px',
+        padding: '0 16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+        fontSize: '0.7rem',
+        fontWeight: '700',
+        color: isDark ? '#94a3b8' : '#64748b'
+      }}>
+        <span>SKT 6:29</span>
+        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+          <span>88%</span>
+        </div>
+      </div>
+
+      {/* Header */}
+      <div style={headerStyle}>
+        <button 
+          onClick={onBackClick}
+          style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>연금수령 현황</span>
+        <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div style={contentStyle}>
+        {/* Dropdown 601-140641(41) 류억형 */}
+        <div style={{ padding: '12px 16px 8px 16px', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
+          <div style={{
+            ...inputStyle,
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            padding: '10px 12px',
+            marginTop: 0
+          }}>
+            <span>601-140641(41) 류억형</span>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style={{ opacity: 0.7 }}><path stroke={isDark ? '#cbd5e1' : '#6b7280'} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m6 8 4 4 4-4"/></svg>
+          </div>
+        </div>
+
+        {/* Tab Row */}
+        <div style={{
+          display: 'flex',
+          borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+          backgroundColor: isDark ? '#0b0f19' : '#ffffff'
+        }}>
+          <div 
+            onClick={() => setActiveTab('status')}
+            style={{
+              flex: 1,
+              padding: '14px 0',
+              textAlign: 'center',
+              fontSize: '0.95rem',
+              fontWeight: activeTab === 'status' ? '700' : '500',
+              color: activeTab === 'status' ? '#111827' : '#718096',
+              borderBottom: activeTab === 'status' ? '2.5px solid #111827' : 'none',
+              cursor: 'pointer'
+            }}
+          >
+            수령현황
+          </div>
+          <div 
+            onClick={() => setActiveTab('details')}
+            style={{
+              flex: 1,
+              padding: '14px 0',
+              textAlign: 'center',
+              fontSize: '0.95rem',
+              fontWeight: activeTab === 'details' ? '700' : '500',
+              color: activeTab === 'details' ? '#111827' : '#718096',
+              borderBottom: activeTab === 'details' ? '2.5px solid #111827' : 'none',
+              cursor: 'pointer'
+            }}
+          >
+            수령내역
+          </div>
+        </div>
+
+        {activeTab === 'status' ? (
+          /* Tab 1: 수령현황 (Attachment 1) */
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '16px' }}>
+            {/* Top Quick Status */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              padding: '14px 16px',
+              backgroundColor: isDark ? '#1e293b' : '#ffffff',
+              borderRadius: '8px',
+              border: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                <span style={{ color: '#718096' }}>연금 수령방식</span>
+                <span style={{ fontWeight: '700', color: isDark ? '#f8fafc' : '#111827' }}>기간선택형</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                <span style={{ color: '#718096' }}>연금 수령주기</span>
+                <span style={{ fontWeight: '700', color: isDark ? '#f8fafc' : '#111827' }}>월단위</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                <span style={{ color: '#718096' }}>연금 수령일</span>
+                <span style={{ fontWeight: '700', color: '#2563eb' }}>15일</span>
+              </div>
+            </div>
+
+            {/* 기본정보 Card */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: '700', margin: '4px 0', color: isDark ? '#f8fafc' : '#111827' }}>기본정보</h3>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                padding: '16px',
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                borderRadius: '8px',
+                border: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+              }}>
+                {[
+                  { label: '연금 수령 개시 신청일', value: '2016.04.01' },
+                  { label: '연금 수령 개시 재 신청일', value: '2026.06.19' },
+                  { label: '연금 수령 종료일', value: '2041.07.15' },
+                  { label: '세법상 연금 수령 연차', value: '12' },
+                  { label: '실제수령 연차', value: '11' },
+                  { label: '잔여지급 횟수', value: '57' }
+                ].map((row, idx) => (
+                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                    <span style={{ color: '#718096' }}>{row.label}</span>
+                    <span style={{ fontWeight: '600', color: isDark ? '#f8fafc' : '#111827' }}>{row.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 평가액 정보 Card */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: '700', margin: '4px 0', color: isDark ? '#f8fafc' : '#111827' }}>평가액 정보</h3>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                padding: '16px',
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                borderRadius: '8px',
+                border: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+              }}>
+                {[
+                  { label: '현재 평가액', value: '85,000,067' },
+                  { label: '당해연도 세법상 연금 수령 한도(120%)', value: '0' },
+                  { label: '연금 기수령액', value: '120,458,881' },
+                  { label: '당해연도 총 수령액', value: '16,326,858' },
+                  { label: '당해연도 연금 수령 가능 금액', value: '85,000,067' }
+                ].map((row, idx) => (
+                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                    <span style={{ color: '#718096' }}>{row.label}</span>
+                    <span style={{ fontWeight: '600', color: isDark ? '#f8fafc' : '#111827' }}>{row.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 소득 구분 및 세후수령액 예상 Card */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <h3 style={{ fontSize: '0.95rem', fontWeight: '700', margin: '4px 0', color: isDark ? '#f8fafc' : '#111827', lineHeight: '1.4' }}>
+                소득 구분 및 세후수령액 예상(지방소득세 포함)
+              </h3>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                padding: '16px',
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                borderRadius: '8px',
+                border: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                  <span style={{ color: '#718096' }}>수수료</span>
+                  <span style={{ fontWeight: '600', color: isDark ? '#f8fafc' : '#111827' }}>0</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                  <span style={{ color: '#718096' }}>수령액</span>
+                  <span style={{ fontWeight: '700', color: isDark ? '#f8fafc' : '#111827' }}>80,595,147</span>
+                </div>
+
+                {/* Grid Table */}
+                <div style={{
+                  marginTop: '12px',
+                  border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+                  borderRadius: '4px',
+                  overflow: 'hidden'
+                }}>
+                  {/* Table Header */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.2fr 1fr 1fr',
+                    backgroundColor: isDark ? '#334155' : '#f1f5f9',
+                    padding: '8px 4px',
+                    fontSize: '0.78rem',
+                    fontWeight: '700',
+                    textAlign: 'center',
+                    borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+                  }}>
+                    <span>소득</span>
+                    <span>지급액</span>
+                    <span>세금계</span>
+                  </div>
+
+                  {/* Row 1: 과세 제외 금액 */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.2fr 1fr 1fr',
+                    padding: '8px 4px',
+                    fontSize: '0.78rem',
+                    textAlign: 'right',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
+                  }}>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: '#718096' }}>과세 제외 금액</span>
+                    <span style={{ paddingRight: '8px' }}>0</span>
+                    <span style={{ paddingRight: '8px' }}>0</span>
+                  </div>
+
+                  {/* Row 2: 연금 소득 (종합과세) */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.2fr 1fr 1fr',
+                    padding: '8px 4px',
+                    fontSize: '0.78rem',
+                    textAlign: 'right',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
+                  }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', paddingLeft: '8px' }}>
+                      <span style={{ fontWeight: '600' }}>연금소득</span>
+                      <span style={{ fontSize: '0.7rem', color: '#718096', marginLeft: '4px' }}>- 종합과세</span>
+                    </div>
+                    <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>75,766,083</span>
+                    <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>4,167,130</span>
+                  </div>
+
+                  {/* Row 3: 연금 소득 (무조건분리과세) */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.2fr 1fr 1fr',
+                    padding: '8px 4px',
+                    fontSize: '0.78rem',
+                    textAlign: 'right',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
+                  }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', paddingLeft: '8px' }}>
+                      <span style={{ fontWeight: '600' }}>연금소득</span>
+                      <span style={{ fontSize: '0.7rem', color: '#718096', marginLeft: '4px' }}>- 무조건분리과세</span>
+                    </div>
+                    <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>9,233,984</span>
+                    <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>237,790</span>
+                  </div>
+
+                  {/* Row 4: 퇴직소득 */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.2fr 1fr 1fr',
+                    padding: '8px 4px',
+                    fontSize: '0.78rem',
+                    textAlign: 'right',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
+                  }}>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: '#718096' }}>퇴직소득</span>
+                    <span style={{ paddingRight: '8px' }}>0</span>
+                    <span style={{ paddingRight: '8px' }}>0</span>
+                  </div>
+
+                  {/* Row 5: 기타소득 */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.2fr 1fr 1fr',
+                    padding: '8px 4px',
+                    fontSize: '0.78rem',
+                    textAlign: 'right',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
+                  }}>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: '#718096' }}>기타소득</span>
+                    <span style={{ paddingRight: '8px' }}>0</span>
+                    <span style={{ paddingRight: '8px' }}>0</span>
+                  </div>
+
+                  {/* Row 6: 합계 */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1.2fr 1fr 1fr',
+                    padding: '8px 4px',
+                    fontSize: '0.78rem',
+                    textAlign: 'right',
+                    fontWeight: '700',
+                    backgroundColor: isDark ? '#1e293b' : '#f8fafc'
+                  }}>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px' }}>합계</span>
+                    <span style={{ paddingRight: '8px', color: '#2563eb' }}>85,000,067</span>
+                    <span style={{ paddingRight: '8px', color: '#2563eb' }}>4,404,920</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Tab 2: 수령내역 (Attachment 2) */
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '16px' }}>
+            {/* Filter buttons */}
+            <div style={{ display: 'flex', gap: '6px', justifyContent: 'space-between' }}>
+              {['당일', '1개월', '3개월', '6개월', '기간설정'].map(btn => (
+                <div 
+                  key={btn}
+                  style={{
+                    flex: 1,
+                    padding: '8px 0',
+                    borderRadius: '4px',
+                    textAlign: 'center',
+                    fontSize: '0.8rem',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    border: btn === '기간설정' ? '1.5px solid #111827' : '1px solid #e2e8f0',
+                    backgroundColor: btn === '기간설정' ? '#ffffff' : 'transparent',
+                    color: btn === '기간설정' ? '#111827' : '#94a3b8'
+                  }}
+                >
+                  {btn}
+                </div>
+              ))}
+            </div>
+
+            {/* Date Picker row */}
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div style={{
+                flex: 1,
+                padding: '8px 12px',
+                border: '1px solid #e2e8f0',
+                borderRadius: '4px',
+                backgroundColor: '#ffffff',
+                fontSize: '0.85rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                cursor: 'pointer'
+              }}>
+                <span>2025.12.23</span>
+                <span style={{ fontSize: '0.65rem', color: '#94a3b8' }}>▼</span>
+              </div>
+              <span style={{ color: '#94a3b8' }}>-</span>
+              <div style={{
+                flex: 1,
+                padding: '8px 12px',
+                border: '1px solid #e2e8f0',
+                borderRadius: '4px',
+                backgroundColor: '#ffffff',
+                fontSize: '0.85rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                cursor: 'pointer'
+              }}>
+                <span>2026.06.22</span>
+                <span style={{ fontSize: '0.65rem', color: '#94a3b8' }}>▼</span>
+              </div>
+            </div>
+
+            {/* Summary statistics row */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontSize: '0.85rem',
+              padding: '4px 0',
+              borderBottom: '1px solid #edf2f7'
+            }}>
+              <div>
+                <span style={{ color: '#718096' }}>지급건수</span>
+                <span style={{ fontWeight: '700', marginLeft: '6px', color: '#111827' }}>7</span>
+              </div>
+              <div>
+                <span style={{ color: '#718096' }}>총 지급금액</span>
+                <span style={{ fontWeight: '700', marginLeft: '6px', color: '#111827' }}>16,326,858</span>
+              </div>
+            </div>
+
+            {/* History Table */}
+            <div style={{
+              border: '1px solid #e2e8f0',
+              borderRadius: '4px',
+              overflow: 'hidden',
+              backgroundColor: '#ffffff'
+            }}>
+              {/* Header */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                backgroundColor: '#f1f5f9',
+                padding: '10px 4px',
+                fontSize: '0.82rem',
+                fontWeight: '700',
+                textAlign: 'center',
+                borderBottom: '1px solid #e2e8f0'
+              }}>
+                <span>지급일자</span>
+                <span>총 지급금액</span>
+                <span>실지급액</span>
+              </div>
+
+              {/* Rows */}
+              {historyData.map((row, idx) => (
+                <div 
+                  key={idx}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr 1fr',
+                    padding: '10px 4px',
+                    fontSize: '0.82rem',
+                    textAlign: 'right',
+                    borderBottom: idx === historyData.length - 1 ? 'none' : '1px solid #edf2f7'
+                  }}
+                >
+                  <span style={{ textAlign: 'center', color: '#4b5563' }}>{row.date}</span>
+                  <span style={{ paddingRight: '8px' }}>{row.total}</span>
+                  <span 
+                    onClick={() => {
+                      setSelectedItem(row);
+                      setViewMode('detail');
+                    }}
+                    style={{ 
+                      paddingRight: '8px', 
+                      color: '#2563eb', 
+                      textDecoration: 'underline', 
+                      cursor: 'pointer',
+                      fontWeight: '600'
+                    }}
+                  >
+                    {row.actual}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* KOSDAQ Footer bar */}
+      <div style={{
+        height: '24px',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+        backgroundColor: isDark ? '#111827' : '#f8fafc',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 12px',
+        fontSize: '0.7rem'
+      }}>
+        <span style={{ fontWeight: '600' }}>KOSDAQ</span>
+        <span style={{ color: '#de201e', fontWeight: '700' }}>1,009.92 ▲ 10.59 (1.06%)</span>
+      </div>
+    </div>
+  );
+}
+
 function App() {
 
   const [isDark, setIsDark] = useState(false);
@@ -8393,6 +9030,8 @@ function App() {
                                   onClick={() => {
                                     if (item.name === '연금수령 신청') {
                                       setScreen4SubScreen('requestForm');
+                                    } else if (item.name === '연금수령 현황') {
+                                      setScreen4SubScreen('status');
                                     }
                                   }}
                                   style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
@@ -8451,6 +9090,12 @@ function App() {
                         </div>
                       </div>
                     </>
+                  ) : screen4SubScreen === 'status' ? (
+                    <PensionReceiptStatusView 
+                      isDark={isDark} 
+                      isToBe={true} 
+                      onBackClick={() => setScreen4SubScreen('menu')} 
+                    />
                   ) : (
                     <PensionReceiptRequestView 
                       isDark={isDark} 
