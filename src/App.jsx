@@ -7777,7 +7777,7 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={{ ...contentStyle, gap: '20px' }}>
           <div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대진님의 퇴직연금</div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px' }}>김대진님의 {isToBe ? '연금' : '퇴직연금'}</div>
             <h2 style={{
               fontSize: '1.3rem',
               fontWeight: '600',
