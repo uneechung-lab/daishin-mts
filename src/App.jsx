@@ -7732,19 +7732,22 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
         </div>
 
         {/* Footer Action */}
-        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ backgroundColor: '#1c1c1e' }}>
           <button 
             onClick={() => setStep('daishin_result')}
             style={{
               width: '100%',
-              padding: '14px 0',
+              height: '56px',
               backgroundColor: '#1c1c1e',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '4px',
-              fontSize: '0.95rem',
+              borderRadius: '0',
+              fontSize: '1rem',
               fontWeight: '600',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
             시뮬레이션
@@ -8025,19 +8028,22 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
         </div>
 
         {/* Footer Action */}
-        <div style={{ padding: '16px', backgroundColor: isDark ? '#111827' : '#ffffff', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ backgroundColor: '#1c1c1e' }}>
           <button 
             onClick={() => setStep('other_q1')}
             style={{
               width: '100%',
-              padding: '14px 0',
+              height: '56px',
               backgroundColor: '#1c1c1e',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '4px',
-              fontSize: '0.95rem',
+              borderRadius: '0',
+              fontSize: '1rem',
               fontWeight: '600',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
             다시 계산하기
