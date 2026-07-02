@@ -5426,13 +5426,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
 
                 {/* TO BE: 수령 주기 */}
                 <div>
-                  <label style={labelStyle}>수령 주기</label>
-                  <div 
-                    onClick={() => setShowPeriodPicker(true)}
-                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                  >
-                    {selectedPeriod}
-                  </div>
+                  <label style={{ ...labelStyle, display: 'block', marginBottom: '8px' }}>수령 주기</label>
                 </div>
               </>
             ) : (
@@ -5520,124 +5514,72 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               </>
             )}
 
-            {/* 수령계좌 정보 */}
-            <div style={{ position: 'relative' }}>
-              <label style={labelStyle}>수령계좌 정보</label>
-              <div 
-                onClick={() => setShowBankPicker(true)}
-                style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center', color: selectedBank ? (isDark ? '#cbd5e1' : '#333333') : '#a0aec0' }}
-              >
-                {selectedBank || '수령계좌 선택'}
-              </div>
-              <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                <div style={{ position: 'relative', flex: 1 }}>
-                  <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', boxSizing: 'border-box' }} />
-                  {isToBe && isDrawerOpen && (
-                    <span style={{
-                      position: 'absolute',
-                      top: '12px',
-                      right: '10px',
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#ffffff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      zIndex: 10,
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                    }}>4</span>
-                  )}
+            {/* 수령계좌 정보 & 연락처 & 즉시인출금액 (AS IS Only) */}
+            {!isToBe && (
+              <>
+                {/* 수령계좌 정보 */}
+                <div style={{ position: 'relative' }}>
+                  <label style={labelStyle}>수령계좌 정보</label>
+                  <div 
+                    onClick={() => setShowBankPicker(true)}
+                    style={{ ...selectStyle, cursor: 'pointer', display: 'flex', alignItems: 'center', color: selectedBank ? (isDark ? '#cbd5e1' : '#333333') : '#a0aec0' }}
+                  >
+                    {selectedBank || '수령계좌 선택'}
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                    <div style={{ position: 'relative', flex: 1 }}>
+                      <input type="text" value="39440204151955" readOnly style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', boxSizing: 'border-box' }} />
+                    </div>
+                    <button style={{
+                      padding: '0 12px',
+                      borderRadius: '4px',
+                      border: '1px solid #e2e8f0',
+                      backgroundColor: '#ffffff',
+                      color: '#94a3b8',
+                      fontSize: '0.75rem',
+                      fontWeight: '700',
+                      cursor: 'not-allowed'
+                    }}>확인완료</button>
+                  </div>
+                  <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
+                    계좌가 확인되었습니다.
+                  </span>
                 </div>
-                <button style={{
-                  padding: '0 12px',
-                  borderRadius: '4px',
-                  border: '1px solid #e2e8f0',
-                  backgroundColor: '#ffffff',
-                  color: '#94a3b8',
-                  fontSize: '0.75rem',
-                  fontWeight: '700',
-                  cursor: 'not-allowed'
-                }}>확인완료</button>
-              </div>
-              <span style={{ fontSize: '0.68rem', color: '#2563eb', marginTop: '4px', display: 'block' }}>
-                계좌가 확인되었습니다.
-              </span>
-              {isToBe && isDrawerOpen && (
-                <span style={{
-                  position: 'absolute',
-                  top: '18px',
-                  right: '25px',
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10,
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                }}>3</span>
-              )}
-            </div>
 
-            {/* 연락처 */}
-            <div style={{ position: 'relative' }}>
-              <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
-              <input 
-                type="text" 
-                value={phoneNumber} 
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                inputMode="none"
-                onFocus={() => {
-                  setActiveField('phone');
-                  setShowNumericKeypad(true);
-                }}
-                style={inputStyle} 
-              />
-              {isToBe && isDrawerOpen && (
-                <span style={{
-                  position: 'absolute',
-                  top: '18px',
-                  right: '10px',
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10,
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                }}>4</span>
-              )}
-            </div>
+                {/* 연락처 */}
+                <div style={{ position: 'relative' }}>
+                  <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
+                  <input 
+                    type="text" 
+                    value={phoneNumber} 
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    inputMode="none"
+                    onFocus={() => {
+                      setActiveField('phone');
+                      setShowNumericKeypad(true);
+                    }}
+                    style={inputStyle} 
+                  />
+                </div>
 
-            {/* 즉시 인출 금액 */}
-            <div>
-              <label style={labelStyle}>즉시 인출 금액(선택)</label>
-              <input 
-                type="text" 
-                value={immediateAmount}
-                onChange={(e) => setImmediateAmount(e.target.value)}
-                placeholder="금액 입력" 
-                inputMode="none"
-                onFocus={() => {
-                  setActiveField('immediateAmount');
-                  setShowNumericKeypad(true);
-                }}
-                style={{ ...inputStyle, backgroundColor: 'transparent' }} 
-              />
-            </div>
+                {/* 즉시 인출 금액 */}
+                <div>
+                  <label style={labelStyle}>즉시 인출 금액(선택)</label>
+                  <input 
+                    type="text" 
+                    value={immediateAmount}
+                    onChange={(e) => setImmediateAmount(e.target.value)}
+                    placeholder="금액 입력" 
+                    inputMode="none"
+                    onFocus={() => {
+                      setActiveField('immediateAmount');
+                      setShowNumericKeypad(true);
+                    }}
+                    style={{ ...inputStyle, backgroundColor: 'transparent' }} 
+                  />
+                </div>
+              </>
+            )}
           </div>
 
           {/* Footer */}
