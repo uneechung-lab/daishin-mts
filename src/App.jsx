@@ -7439,7 +7439,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
 }
 
 // Component for AS IS Pension Initiation Simulation (연금개시 시뮬레이션)
-function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
+function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -7653,13 +7653,13 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
               onClick={() => setStep('daishin_form')}
               style={linkButtonStyle}
             >
-              대신증권 IRP 계좌만 있습니다
+              대신증권 {isToBe ? '연금' : 'IRP'} 계좌만 있습니다
             </button>
             <button 
               onClick={() => setStep('other_q1')}
               style={linkButtonStyle}
             >
-              타사 IRP 계좌도 있습니다
+              타사 {isToBe ? '연금' : 'IRP'} 계좌도 있습니다
             </button>
           </div>
         </div>
@@ -7690,7 +7690,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={contentStyle}>
           <div style={{ marginBottom: '24px' }}>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: '0 0 4px 0', color: isDark ? '#f8fafc' : '#111827' }}>IRP 시뮬레이션</h2>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: '0 0 4px 0', color: isDark ? '#f8fafc' : '#111827' }}>{isToBe ? '연금' : 'IRP'} 시뮬레이션</h2>
             <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>같이 한번 해볼까요?</h2>
           </div>
 
@@ -7905,7 +7905,7 @@ function PensionSimulationView({ isDark, step, setStep, onBackClick }) {
         {/* Content */}
         <div style={{ ...contentStyle, padding: '40px 24px', gap: '30px' }}>
           <div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>김대신님의 타사 IRP</div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>김대신님의 타사 {isToBe ? '연금' : 'IRP'}</div>
             <h1 style={{ fontSize: '1.8rem', fontWeight: '600', margin: '0 0 10px 0', color: '#2563eb' }}>Start.</h1>
             <h2 style={{ fontSize: '1.45rem', fontWeight: '600', margin: 0, color: isDark ? '#f8fafc' : '#111827' }}>퇴직금을 수령하셨나요?</h2>
           </div>
@@ -9708,6 +9708,9 @@ function App() {
                                       setScreen4SubScreen('requestForm');
                                     } else if (item.name === '연금수령 현황') {
                                       setScreen4SubScreen('status');
+                                    } else if (item.name === '연금개시 시뮬레이션') {
+                                      setScreen4SubScreen('simulation');
+                                      setAsisSimulationStep('main');
                                     }
                                   }}
                                   style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
@@ -9776,6 +9779,14 @@ function App() {
                       setViewMode={setStatusViewMode}
                       selectedItem={statusSelectedItem}
                       setSelectedItem={setStatusSelectedItem}
+                      onBackClick={() => setScreen4SubScreen('menu')} 
+                    />
+                  ) : screen4SubScreen === 'simulation' ? (
+                    <PensionSimulationView 
+                      isDark={isDark} 
+                      isToBe={true}
+                      step={asisSimulationStep}
+                      setStep={setAsisSimulationStep}
                       onBackClick={() => setScreen4SubScreen('menu')} 
                     />
                   ) : (
