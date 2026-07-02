@@ -7486,65 +7486,6 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
     </div>
   );
 
-  const customBottomBar = (
-    <div style={{ display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
-      {/* Ticker Row */}
-      <div style={{
-        height: '32px',
-        borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
-        backgroundColor: isDark ? '#111827' : '#f8fafc',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 16px',
-        fontSize: '0.78rem',
-        boxSizing: 'border-box'
-      }}>
-        <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#333333' }}>S&P500</span>
-        <span style={{ color: '#de201e', fontWeight: '700' }}>7,440.43 ▲ 86.41 (1.18%)</span>
-      </div>
-
-      {/* Tab Bar Row */}
-      <div style={{
-        height: '52px',
-        borderTop: isDark ? '1px solid #1e293b' : '1px solid #edf2f7',
-        backgroundColor: isDark ? '#111827' : '#ffffff',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 16px',
-        gap: '20px',
-        boxSizing: 'border-box'
-      }}>
-        {/* House Icon */}
-        <span style={{ color: '#4a5568', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
-        </span>
-
-        {/* Custom Tabs */}
-        <div style={{
-          display: 'flex',
-          flex: 1,
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          fontSize: '0.66rem',
-          fontWeight: '600',
-          color: isDark ? '#cbd5e1' : '#4a5568',
-          gap: '4px',
-          textAlign: 'center',
-          lineHeight: '1.25'
-        }}>
-          <span style={{ cursor: 'pointer' }}>보유상품<br />현황</span>
-          <span style={{ cursor: 'pointer' }}>ETF/리츠<br />잔고</span>
-          <span style={{ cursor: 'pointer' }}>ETF/리츠<br />체결/미체결</span>
-          <span style={{ cursor: 'pointer' }}>ETF/리츠<br />주문</span>
-        </div>
-      </div>
-    </div>
-  );
-
   const headerStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -7663,8 +7604,6 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
             </button>
           </div>
         </div>
-
-        {customBottomBar}
       </div>
     );
   }
@@ -7753,8 +7692,6 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
             시뮬레이션
           </button>
         </div>
-
-        {customBottomBar}
       </div>
     );
   }
@@ -7900,8 +7837,6 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
             다시 계산하기
           </button>
         </div>
-
-        {customBottomBar}
       </div>
     );
   }
@@ -7947,8 +7882,6 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
             </button>
           </div>
         </div>
-
-        {customBottomBar}
       </div>
     );
   }
@@ -8049,8 +7982,6 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
             다시 계산하기
           </button>
         </div>
-
-        {customBottomBar}
       </div>
     );
   }
