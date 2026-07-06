@@ -2689,7 +2689,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           <button 
             onClick={() => {
               setEtfMallNavMode('default');
-              setToBeSubScreen('tigerDetail');
             }}
             style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
           >
@@ -2713,12 +2712,30 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         <span style={{ fontWeight: '700', fontSize: '1.15rem', flex: 1, textAlign: 'center', pointerEvents: 'none' }}>
           {etfMallNavMode === 'search' ? '종목검색' : 'ETF/리츠 몰'}
         </span>
-        <div style={{ width: '22px' }} />
+        {etfMallNavMode === 'search' ? (
+          <div style={{ width: '22px' }} />
+        ) : (
+          <button 
+            onClick={() => {
+              setEtfMallNavMode('search');
+              setActiveMallTab('전체');
+            }}
+            style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Horizontal Tabs Menu */}
       <div style={menuTabsStyle}>
-        {['추천', '보유', 'GO배당GO금리', 'TDF', '전체'].map((tab) => (
+        {(etfMallNavMode === 'search' 
+          ? ['전체', '추천', '보유', 'GO배당GO금리', 'TDF']
+          : ['추천', '보유', 'GO배당GO금리', 'TDF', '전체']
+        ).map((tab) => (
           <span 
             key={tab} 
             onClick={() => setActiveMallTab(tab)}
@@ -2749,91 +2766,93 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       </div>
 
       {/* Search Input Filter Row with Chips (from Stock Search screen) */}
-      <div style={{ 
-        padding: '10px 14px 4px 14px', 
-        borderBottom: 'none', 
-        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px'
-      }}>
-        <div 
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            border: isDark ? '1px solid #334155' : '1px solid #d1d5db',
-            borderRadius: '8px',
-            padding: '0 12px',
-            height: '38px',
-            gap: '8px',
-            backgroundColor: isDark ? '#121826' : '#ffffff'
-          }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="2.5" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-          <input 
-            type="text"
-            placeholder="종목명, 종목코드, 초성입력"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      {etfMallNavMode === 'search' && (
+        <div style={{ 
+          padding: '10px 14px 4px 14px', 
+          borderBottom: 'none', 
+          backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px'
+        }}>
+          <div 
             style={{
-              border: 'none',
-              background: 'none',
-              width: '100%',
-              outline: 'none',
-              fontSize: '0.82rem',
-              color: isDark ? '#ffffff' : '#222222'
+              display: 'flex',
+              alignItems: 'center',
+              border: isDark ? '1px solid #334155' : '1px solid #d1d5db',
+              borderRadius: '8px',
+              padding: '0 12px',
+              height: '38px',
+              gap: '8px',
+              backgroundColor: isDark ? '#121826' : '#ffffff'
             }}
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="2.5" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            <input 
+              type="text"
+              placeholder="종목명, 종목코드, 초성입력"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 border: 'none',
                 background: 'none',
-                color: isDark ? '#94a3b8' : '#888888',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-                padding: '4px 0px 4px 8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                width: '100%',
+                outline: 'none',
+                fontSize: '0.82rem',
+                color: isDark ? '#ffffff' : '#222222'
               }}
-            >
-              ✕
-            </button>
-          )}
-        </div>
-
-        {/* Filter Chips Row */}
-        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-          {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
-            const isSelected = selectedChip === chip;
-            return (
-              <span
-                key={chip}
-                onClick={() => setSelectedChip(chip)}
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
                 style={{
-                  padding: '9px 18px',
-                  borderRadius: '24px',
-                  fontSize: '0.78rem',
-                  fontWeight: '600',
+                  border: 'none',
+                  background: 'none',
+                  color: isDark ? '#94a3b8' : '#888888',
                   cursor: 'pointer',
-                  backgroundColor: isSelected 
-                    ? (isDark ? '#334155' : '#e0e0e0') 
-                    : (isDark ? '#1e293b' : '#f1f1f1'),
-                  color: isSelected 
-                    ? (isDark ? '#ffffff' : '#111111') 
-                    : (isDark ? '#94a3b8' : '#666666'),
-                  whiteSpace: 'nowrap',
-                  transition: 'all 0.15s ease'
+                  fontSize: '0.9rem',
+                  padding: '4px 0px 4px 8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
-                {chip}
-              </span>
-            );
-          })}
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Filter Chips Row */}
+          <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+            {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
+              const isSelected = selectedChip === chip;
+              return (
+                <span
+                  key={chip}
+                  onClick={() => setSelectedChip(chip)}
+                  style={{
+                    padding: '9px 18px',
+                    borderRadius: '24px',
+                    fontSize: '0.78rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    backgroundColor: isSelected 
+                      ? (isDark ? '#334155' : '#e0e0e0') 
+                      : (isDark ? '#1e293b' : '#f1f1f1'),
+                    color: isSelected 
+                      ? (isDark ? '#ffffff' : '#111111') 
+                      : (isDark ? '#94a3b8' : '#666666'),
+                    whiteSpace: 'nowrap',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  {chip}
+                </span>
+              );
+            })}
+          </div>
         </div>
-      </div>      {/* Ranking and List Area */}
+      )}      {/* Ranking and List Area */}
       <div style={{ ...rankingSectionStyle, padding: '0' }}>
         {activeMallTab === '추천' && (
           <>
@@ -9789,6 +9808,589 @@ function App() {
               wordBreak: 'keep-all'
             }}>
               연금수령 신청
+            </div>
+          </div>
+        ) : activeScreen === 6 ? (
+          /* Screen 6: 메뉴 (상품 > 채권) */
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '32px',
+            flexShrink: 0
+          }}>
+            {/* Emulators Row */}
+            <div style={{
+              display: 'flex',
+              gap: '60px',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              {/* AS IS Emulator */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>AS IS</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative'
+                }}>
+                  {/* Status Bar */}
+                  <div style={{
+                    ...styles.phoneHeaderBar,
+                    backgroundColor: '#4750b3',
+                    color: '#ffffff',
+                    borderBottom: 'none'
+                  }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
+                    <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+                  </div>
+
+                  {/* Top user bar (French Blue Theme) */}
+                  <div style={{
+                    backgroundColor: '#4750b3',
+                    padding: '16px 15px 12px 15px',
+                    color: '#ffffff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
+                        <span style={{ 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          fontSize: '0.82rem', 
+                          opacity: 0.9, 
+                          cursor: 'pointer', 
+                          gap: '2px', 
+                          color: '#ffffff',
+                          border: 'none',
+                          padding: 0,
+                          background: 'none'
+                        }}>
+                          내 정보
+                          <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                        {/* Home White Icon */}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                          <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                        {/* Bell Icon with Red Dot */}
+                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                          </svg>
+                          <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#de201e', width: '5px', height: '5px', borderRadius: '50%' }}></span>
+                        </div>
+                        {/* Settings Icon */}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                          <circle cx="12" cy="12" r="3" />
+                          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg>
+                        {/* Close Icon */}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Menu Search Bar */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      backgroundColor: '#ffffff',
+                      borderRadius: '4px',
+                      padding: '8px 12px',
+                      gap: '8px'
+                    }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                      <input
+                        type="text"
+                        placeholder="메뉴를 검색하세요."
+                        disabled
+                        style={{
+                          border: 'none',
+                          background: 'none',
+                          outline: 'none',
+                          width: '100%',
+                          fontSize: '0.82rem',
+                          fontWeight: '600'
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Main Category Tabs */}
+                  <div style={{
+                    display: 'flex',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                    backgroundColor: isDark ? '#121826' : '#ffffff'
+                  }}>
+                    {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
+                      const isSelected = tab === '상품';
+                      return (
+                        <div
+                          key={tab}
+                          style={{
+                            flex: 1,
+                            textAlign: 'center',
+                            padding: '13px 0',
+                            fontSize: '0.96rem',
+                            fontWeight: isSelected ? '800' : '500',
+                            color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
+                            borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {tab}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Split Content Area */}
+                  <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+                    {/* Left Submenu Navigation */}
+                    <div style={{
+                      width: '115px',
+                      backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
+                      borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      paddingBottom: '12px',
+                      boxSizing: 'border-box'
+                    }}>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        {[
+                          { name: '펀드', active: false },
+                          { name: '채권', active: true },
+                          { name: 'CMA/RP/자동투자', active: false },
+                          { name: 'ISA', active: false },
+                          { name: 'ELS/DLS', active: false },
+                          { name: '랩/신탁/조각투자', active: false },
+                          { name: 'ISA', active: false },
+                          { name: 'ELS/DLS', active: false },
+                          { name: '랩/신탁/조각투자', active: false },
+                          { name: '리츠', active: false },
+                          { name: '로보', active: false },
+                          { name: '금현물', active: false }
+                        ].map((sub, idx) => (
+                          <div
+                            key={idx}
+                            style={{
+                              padding: '14px 10px',
+                              fontSize: '0.85rem',
+                              fontWeight: sub.active ? '800' : '500',
+                              color: sub.active ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
+                              backgroundColor: sub.active ? (isDark ? '#121826' : '#ffffff') : 'transparent',
+                              cursor: 'pointer',
+                              whiteSpace: sub.name.includes('랩/신탁') ? 'nowrap' : 'normal',
+                              wordBreak: 'keep-all'
+                            }}
+                          >
+                            {sub.name === 'CMA/RP/자동투자' ? (
+                              <>CMA/RP/<br />자동투자</>
+                            ) : sub.name}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* RIA 가입 Banner */}
+                      <div style={{
+                        margin: '0 8px',
+                        borderRadius: '6px',
+                        background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)',
+                        padding: '10px 8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                        cursor: 'pointer'
+                      }}>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>RIA</span>
+                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>가입</span>
+                        </div>
+                        <span style={{ fontSize: '1.5rem' }}>🇰🇷</span>
+                      </div>
+                    </div>
+
+                    {/* Right Main Menu Items */}
+                    <div style={{
+                      flex: 1,
+                      padding: '18px 16px',
+                      overflowY: 'auto',
+                      backgroundColor: isDark ? '#121826' : '#ffffff',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '24px',
+                      boxSizing: 'border-box'
+                    }}>
+                      {/* 장외채권 */}
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장외채권</div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 12px 0' }} />
+                      </div>
+
+                      {/* 단기사채 */}
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>단기사채</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          {[
+                            { name: '단기사채 매매' },
+                            { name: '단기사채 잔고' }
+                          ].map((item, idx) => (
+                            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                              <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
+                      </div>
+
+                      {/* 해외채권 */}
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>해외채권</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          {[
+                            { name: '해외채권 매매' },
+                            { name: '해외채권 잔고' }
+                          ].map((item, idx) => (
+                            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                              <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
+                      </div>
+
+                      {/* 장내채권 */}
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장내채권</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          {[
+                            { name: '장내채권 현재가' },
+                            { name: '장내채권 주문' },
+                            { name: '장내채권 미체결/체결' },
+                            { name: '장내채권 잔고' }
+                          ].map((item, idx) => (
+                            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                              <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
+                      </div>
+
+                      {/* 공지 */}
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>공지</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                            <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>채권 가이드</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer Bar */}
+                  <div style={{
+                    height: '48px',
+                    backgroundColor: '#000000',
+                    color: '#ffffff',
+                    display: 'flex',
+                    fontSize: '0.78rem',
+                    fontWeight: '800',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+                  }}>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                        <line x1="12" y1="2" x2="12" y2="12" />
+                      </svg>
+                      <span>고객지원</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <span>이벤트</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <span>업무/거래신청</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
+                      <span>인증/OTP</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* TO BE Emulator */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>TO BE</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative'
+                }}>
+                  {/* Status Bar */}
+                  <div style={{
+                    ...styles.phoneHeaderBar,
+                    backgroundColor: '#4750b3',
+                    color: '#ffffff',
+                    borderBottom: 'none'
+                  }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
+                    <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+                  </div>
+
+                  {/* Top user bar (French Blue Theme) */}
+                  <div style={{
+                    backgroundColor: '#4750b3',
+                    padding: '16px 15px 12px 15px',
+                    color: '#ffffff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
+                        <span style={{ 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          fontSize: '0.82rem', 
+                          opacity: 0.9, 
+                          color: '#ffffff',
+                          cursor: 'pointer'
+                        }}>
+                          내 정보
+                          <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+                          <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#00c3a5', width: '5px', height: '5px', borderRadius: '50%' }}></span>
+                        </div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      backgroundColor: '#ffffff',
+                      borderRadius: '4px',
+                      padding: '8px 12px',
+                      gap: '8px'
+                    }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                      <input type="text" placeholder="메뉴를 검색하세요." disabled style={{ border: 'none', background: 'none', outline: 'none', width: '100%', fontSize: '0.82rem', fontWeight: '600' }} />
+                    </div>
+                  </div>
+
+                  {/* Main Category Tabs */}
+                  <div style={{
+                    display: 'flex',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                    backgroundColor: isDark ? '#121826' : '#ffffff'
+                  }}>
+                    {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
+                      const isSelected = tab === '상품';
+                      return (
+                        <div
+                          key={tab}
+                          style={{
+                            flex: 1,
+                            textAlign: 'center',
+                            padding: '13px 0',
+                            fontSize: '0.96rem',
+                            fontWeight: isSelected ? '800' : '500',
+                            color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
+                            borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
+                          }}
+                        >
+                          {tab}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Split Content Area */}
+                  <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+                    {/* Left Submenu Navigation */}
+                    <div style={{
+                      width: '115px',
+                      backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
+                      borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      paddingBottom: '12px',
+                      boxSizing: 'border-box'
+                    }}>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        {[
+                          { name: '펀드', active: false },
+                          { name: '채권', active: true },
+                          { name: 'CMA/RP/자동투자', active: false },
+                          { name: 'ISA', active: false },
+                          { name: 'ELS/DLS', active: false },
+                          { name: '랩/신탁/조각투자', active: false },
+                          { name: '리츠', active: false },
+                          { name: '로보', active: false },
+                          { name: '금현물', active: false }
+                        ].map((sub, idx) => (
+                          <div
+                            key={idx}
+                            style={{
+                              padding: '14px 10px',
+                              fontSize: '0.85rem',
+                              fontWeight: sub.active ? '800' : '500',
+                              color: sub.active ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
+                              backgroundColor: sub.active ? (isDark ? '#121826' : '#ffffff') : 'transparent',
+                              whiteSpace: sub.name.includes('랩/신탁') ? 'nowrap' : 'normal',
+                              wordBreak: 'keep-all'
+                            }}
+                          >
+                            {sub.name === 'CMA/RP/자동투자' ? (
+                              <>CMA/RP/<br />자동투자</>
+                            ) : sub.name}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right menu content */}
+                    <div style={{
+                      flex: 1,
+                      padding: '18px 16px',
+                      overflowY: 'auto',
+                      backgroundColor: isDark ? '#121826' : '#ffffff',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '24px',
+                      boxSizing: 'border-box'
+                    }}>
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장외채권</div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 12px 0' }} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>단기사채</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>단기사채 매매</span>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>단기사채 잔고</span>
+                        </div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>해외채권</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>해외채권 매매</span>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>해외채권 잔고</span>
+                        </div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장내채권</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 현재가</span>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 주문</span>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 미체결/체결</span>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 잔고</span>
+                        </div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>공지</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>채권 가이드</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer Bar */}
+                  <div style={{
+                    height: '48px',
+                    backgroundColor: '#000000',
+                    color: '#ffffff',
+                    display: 'flex',
+                    fontSize: '0.78rem',
+                    fontWeight: '800',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+                  }}>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                        <line x1="12" y1="2" x2="12" y2="12" />
+                      </svg>
+                      <span>고객지원</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <span>이벤트</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <span>업무/거래신청</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
+                      <span>인증/OTP</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Task Title */}
+            <div style={{
+              fontSize: '1.35rem',
+              fontWeight: '600',
+              color: isDark ? '#94a3b8' : '#475569',
+              letterSpacing: '-0.5px',
+              textAlign: 'center',
+              opacity: 0.85,
+              marginTop: '8px',
+              wordBreak: 'keep-all'
+            }}>
+              메뉴 (상품 &gt; 채권)
             </div>
           </div>
         ) : (
