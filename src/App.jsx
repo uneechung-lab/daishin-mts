@@ -2311,12 +2311,12 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   ];
 
   const goDividendList = [
-    { name: 'TIGER 코리아배당다우존스', code: 'A0052D0', limit: '투자한도70%', price: 15355, pct: -3.25, positive: false },
-    { name: 'PLUS 고배당주', code: 'A161510', limit: '투자한도70%', price: 24885, pct: -2.89, positive: false },
-    { name: 'RISE 금융채액티브', code: 'A336160', limit: '투자한도100%', price: 100340, pct: -0.14, positive: false },
-    { name: 'TIME Korea플러스배당액티브', code: 'A441800', limit: '투자한도70%', price: 37420, pct: 0.35, positive: true },
-    { name: 'KODEX 한국부동산리츠인프라', code: 'A476800', limit: '투자한도100%', price: 4260, pct: -1.50, positive: false },
-    { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27545, pct: 1.21, positive: true }
+    { name: 'TIGER 코리아배당다우존스', code: 'A0052D0', limit: '투자한도70%', price: 15355, pct: -3.25, positive: false, hasK: true, hasN: true },
+    { name: 'PLUS 고배당주', code: 'A161510', limit: '투자한도70%', price: 24885, pct: -2.89, positive: false, hasK: true, hasN: false },
+    { name: 'RISE 금융채액티브', code: 'A336160', limit: '투자한도100%', price: 100340, pct: -0.14, positive: false, hasK: false, hasN: true },
+    { name: 'TIME Korea플러스배당액티브', code: 'A441800', limit: '투자한도70%', price: 37420, pct: 0.35, positive: true, hasK: false, hasN: false },
+    { name: 'KODEX 한국부동산리츠인프라', code: 'A476800', limit: '투자한도100%', price: 4260, pct: -1.50, positive: false, hasK: true, hasN: true },
+    { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27545, pct: 1.21, positive: true, hasK: true, hasN: false }
   ];
 
   // Merge lists to form a general list
@@ -2529,35 +2529,41 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                   </div>
                   
                   {/* K / N Stack */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
-                    <div style={{
-                      width: '12px',
-                      height: '12px',
-                      border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
-                      backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
-                      color: isDark ? '#52c4a5' : '#007a5a',
-                      fontSize: '8px',
-                      fontWeight: '800',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: '1px',
-                      lineHeight: 1
-                    }}>K</div>
-                    <div style={{
-                      width: '12px',
-                      height: '12px',
-                      backgroundColor: '#d99a06',
-                      color: '#ffffff',
-                      fontSize: '8px',
-                      fontWeight: '800',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: '1px',
-                      lineHeight: 1
-                    }}>N</div>
-                  </div>
+                  {(item.hasK !== false || item.hasN !== false) && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                      {item.hasK !== false && (
+                        <div style={{
+                          width: '12px',
+                          height: '12px',
+                          border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                          backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                          color: isDark ? '#52c4a5' : '#007a5a',
+                          fontSize: '8px',
+                          fontWeight: '800',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '1px',
+                          lineHeight: 1
+                        }}>K</div>
+                      )}
+                      {item.hasN !== false && (
+                        <div style={{
+                          width: '12px',
+                          height: '12px',
+                          backgroundColor: '#d99a06',
+                          color: '#ffffff',
+                          fontSize: '8px',
+                          fontWeight: '800',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '1px',
+                          lineHeight: 1
+                        }}>N</div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Arrow next to badges */}
                   <span style={{
@@ -2910,17 +2916,17 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             {/* ETF Ranked List */}
             <div>
               {filterByChip([
-                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true  },
-                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true  },
-                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false },
-                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
-                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  }
+                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true, hasK: true, hasN: true  },
+                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true, hasK: true, hasN: false },
+                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false, hasK: false, hasN: true },
+                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false, hasK: false, hasN: false },
+                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true, hasK: true, hasN: true }
               ]).length === 0 ? renderEmptyState() : filterByChip([
-                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true  },
-                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true  },
-                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false },
-                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
-                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  }
+                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true, hasK: true, hasN: true  },
+                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true, hasK: true, hasN: false },
+                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false, hasK: false, hasN: true },
+                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false, hasK: false, hasN: false },
+                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true, hasK: true, hasN: true }
               ]).map((item, idx, arr) => {
                 const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
                 return (
@@ -3027,35 +3033,41 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                           </div>
                           
                           {/* K / N Stack */}
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
-                            <div style={{
-                              width: '12px',
-                              height: '12px',
-                              border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
-                              backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
-                              color: isDark ? '#52c4a5' : '#007a5a',
-                              fontSize: '8px',
-                              fontWeight: '800',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              borderRadius: '1px',
-                              lineHeight: 1
-                            }}>K</div>
-                            <div style={{
-                              width: '12px',
-                              height: '12px',
-                              backgroundColor: '#d99a06',
-                              color: '#ffffff',
-                              fontSize: '8px',
-                              fontWeight: '800',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              borderRadius: '1px',
-                              lineHeight: 1
-                            }}>N</div>
-                          </div>
+                          {(item.hasK !== false || item.hasN !== false) && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                              {item.hasK !== false && (
+                                <div style={{
+                                  width: '12px',
+                                  height: '12px',
+                                  border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                                  backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                                  color: isDark ? '#52c4a5' : '#007a5a',
+                                  fontSize: '8px',
+                                  fontWeight: '800',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  borderRadius: '1px',
+                                  lineHeight: 1
+                                }}>K</div>
+                              )}
+                              {item.hasN !== false && (
+                                <div style={{
+                                  width: '12px',
+                                  height: '12px',
+                                  backgroundColor: '#d99a06',
+                                  color: '#ffffff',
+                                  fontSize: '8px',
+                                  fontWeight: '800',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  borderRadius: '1px',
+                                  lineHeight: 1
+                                }}>N</div>
+                              )}
+                            </div>
+                          )}
 
                           {/* Arrow next to badges */}
                           <span style={{
@@ -3124,115 +3136,162 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                 <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>GO배당GO금리</span>
               </div>
               <div>
-                {filterByChip(goDividendList).length === 0 ? renderEmptyState() : filterByChip(goDividendList).map((item, idx, arr) => (
-                  <div key={idx} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px 14px',
-                    borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                    cursor: 'pointer',
-                    gap: '10px'
-                  }}>
-                    {/* Left: ETF Name + subtitle */}
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{
-                          fontSize: '0.85rem',
-                          fontWeight: '600',
-                          color: isDark ? '#e2e8f0' : '#111111',
-                          letterSpacing: '-0.2px',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap'
-                        }}>{item.name}</span>
-                      </div>
-                      {/* 투자한도 + code */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <span style={{
-                          fontSize: '0.72rem',
-                          fontWeight: '500',
-                          color: '#3b82f6',
-                          letterSpacing: '-0.1px'
-                        }}>{item.limit}</span>
-                        <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
-                        <span style={{
-                          fontSize: '0.72rem',
-                          color: isDark ? '#64748b' : '#888888',
-                          letterSpacing: '-0.1px'
-                        }}>{item.code}</span>
-                      </div>
-                    </div>
-
-                    {/* Right: Price + arrow pct with K/N market icon stack */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
-                        <span style={{
-                          fontSize: '0.92rem',
-                          fontWeight: '600',
-                          color: isDark ? '#e2e8f0' : '#111111',
-                          letterSpacing: '-0.3px'
-                        }}>{item.price.toLocaleString()}</span>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                          <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
-                            {item.positive ? '▲' : '▼'}
-                          </span>
+                {filterByChip(goDividendList).length === 0 ? renderEmptyState() : filterByChip(goDividendList).map((item, idx, arr) => {
+                  const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
+                  return (
+                    <div key={idx} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '12px 10px 12px 14px',
+                      borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                      cursor: 'pointer',
+                      gap: '10px'
+                    }}>
+                      {/* Left: ETF Name + subtitle */}
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flexWrap: 'wrap' }}>
                           <span style={{
-                            fontSize: '0.8rem',
+                            fontSize: '0.85rem',
                             fontWeight: '600',
-                            color: item.positive ? '#de201e' : '#2366ca'
-                          }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                            color: isDark ? '#e2e8f0' : '#111111',
+                            letterSpacing: '-0.2px',
+                            wordBreak: 'break-all',
+                            whiteSpace: 'normal',
+                            lineHeight: '1.2',
+                            flex: 1,
+                            minWidth: 0
+                          }}>{item.name}</span>
+                        </div>
+                        {/* 투자한도 + code */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                          <span style={{
+                            fontSize: '0.72rem',
+                            fontWeight: '500',
+                            color: '#3b82f6',
+                            letterSpacing: '-0.1px',
+                            flexShrink: 0
+                          }}>{item.limit.replace('투자한도', '')}</span>
+                          <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
+                          <span style={{
+                            fontSize: '0.72rem',
+                            color: isDark ? '#64748b' : '#888888',
+                            letterSpacing: '-0.1px',
+                            whiteSpace: 'nowrap',
+                            flexShrink: 0
+                          }}>{item.code}</span>
                         </div>
                       </div>
-                      
-                      {/* K / N Stack */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0, marginLeft: '2px' }}>
-                        <div style={{
-                          width: '12px',
-                          height: '12px',
-                          border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
-                          backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
-                          color: isDark ? '#52c4a5' : '#007a5a',
-                          fontSize: '8px',
-                          fontWeight: '800',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          borderRadius: '1px',
-                          lineHeight: 1
-                        }}>K</div>
-                        <div style={{
-                          width: '12px',
-                          height: '12px',
-                          backgroundColor: '#d99a06',
-                          color: '#ffffff',
-                          fontSize: '8px',
-                          fontWeight: '800',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          borderRadius: '1px',
-                          lineHeight: 1
-                        }}>N</div>
-                      </div>
-                    </div>
 
-                    {/* Col 4: Favorite star icon */}
-                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
-                      <div 
-                        style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPendingFavoriteCode(item.code);
-                          setIsFavoriteBsheetOpen(true);
-                        }}
-                      >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                      </div>
+                      {/* Right side aligned to renderStockList layout */}
+                      {etfMallNavMode !== 'search' && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+                          {/* Col 2 */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
+                              <span style={{
+                                fontSize: '0.92rem',
+                                fontWeight: '700',
+                                color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
+                                letterSpacing: '-0.3px'
+                              }}>{item.price.toLocaleString()}</span>
+                              <span style={{
+                                fontSize: '0.72rem',
+                                color: isDark ? '#64748b' : '#888888',
+                                letterSpacing: '-0.1px'
+                              }}>
+                                {(item.volume || 109760).toLocaleString()}
+                              </span>
+                            </div>
+                            
+                            {/* K / N Stack */}
+                            {(item.hasK !== false || item.hasN !== false) && (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                                {item.hasK !== false && (
+                                  <div style={{
+                                    width: '12px',
+                                    height: '12px',
+                                    border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                                    backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                                    color: isDark ? '#52c4a5' : '#007a5a',
+                                    fontSize: '8px',
+                                    fontWeight: '800',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '1px',
+                                    lineHeight: 1
+                                  }}>K</div>
+                                )}
+                                {item.hasN !== false && (
+                                  <div style={{
+                                    width: '12px',
+                                    height: '12px',
+                                    backgroundColor: '#d99a06',
+                                    color: '#ffffff',
+                                    fontSize: '8px',
+                                    fontWeight: '800',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '1px',
+                                    lineHeight: 1
+                                  }}>N</div>
+                                )}
+                              </div>
+                            )}
+
+                            {/* Arrow next to badges */}
+                            <span style={{
+                              fontSize: '0.62rem',
+                              color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
+                              marginLeft: '2px',
+                              flexShrink: 0
+                            }}>
+                              {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
+                            </span>
+                          </div>
+
+                          {/* Col 3 */}
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                            <span style={{
+                              fontSize: '0.88rem',
+                              fontWeight: '600',
+                              color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '2px'
+                            }}>
+                              {absChange.toLocaleString()}
+                            </span>
+                            <span style={{
+                              fontSize: '0.75rem',
+                              fontWeight: '600',
+                              color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
+                            }}>{item.positive ? '+' : ''}{item.pct}%</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Col 4: Favorite star icon */}
+                      {etfMallNavMode !== 'search' && (
+                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
+                          <div 
+                            style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setPendingFavoriteCode(item.code);
+                              setIsFavoriteBsheetOpen(true);
+                            }}
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            </svg>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </>
