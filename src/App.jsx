@@ -2430,7 +2430,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               fontWeight: '600',
               color: isDark ? '#e2e8f0' : '#111111',
               letterSpacing: '-0.2px',
-              wordBreak: 'keep-all',
+              wordBreak: 'break-all',
               whiteSpace: 'normal',
               lineHeight: '1.2'
             }}>{item.name}</span>
@@ -2445,7 +2445,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>{item.limit.replace('투자한도', '')}</span>
               <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
               <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                {item.code} · {item.name.includes('리츠') || item.name.includes('부동산') ? '리츠' : (item.name.includes('ETN') ? 'ETN' : 'ETF')} · {item.name.match(/미국|글로벌|S&P500|나스닥|인도|차이나|베트남/) ? '해외' : '국내'}
+                {item.code}
               </span>
             </div>
           </div>
@@ -2917,163 +2917,190 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                 { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false },
                 { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false },
                 { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true  }
-              ]).map((item, idx, arr) => (
-                <div key={idx} 
-                  onClick={() => {
-                    setToBePrevSubScreen('etfMall');
-                    setToBeSubScreen('tigerDetail');
-                  }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px 14px',
-                    borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                    cursor: 'pointer',
-                    gap: '10px'
-                  }}>
-                  {/* Rank number */}
-                  <span style={{
-                    fontSize: '1.05rem',
-                    fontWeight: '800',
-                    fontStyle: 'italic',
-                    color: isDark ? '#ffffff' : '#111111',
-                    width: '18px',
-                    flexShrink: 0
-                  }}>{item.rank}</span>
+              ]).map((item, idx, arr) => {
+                const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
+                return (
+                  <div key={idx} 
+                    onClick={() => {
+                      setToBePrevSubScreen('etfMall');
+                      setToBeSubScreen('tigerDetail');
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '12px 10px 12px 14px',
+                      borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                      cursor: 'pointer',
+                      gap: '10px'
+                    }}>
+                    {/* Rank number */}
+                    <span style={{
+                      fontSize: '1.05rem',
+                      fontWeight: '800',
+                      fontStyle: 'italic',
+                      color: isDark ? '#ffffff' : '#111111',
+                      width: '18px',
+                      flexShrink: 0
+                    }}>{item.rank}</span>
 
-                  {/* Left: ETF Name + subtitle */}
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
-                    {/* ETF Name only */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{
-                        fontSize: item.name.length > 12 ? '0.74rem' : '0.85rem',
-                        fontWeight: '600',
-                        color: isDark ? '#e2e8f0' : '#111111',
-                        letterSpacing: '-0.2px',
-                        wordBreak: 'keep-all',
-                        whiteSpace: 'normal',
-                        lineHeight: '1.2'
-                      }}>{item.name}</span>
-                      {item.rank === 1 && isDrawerOpen && (
-                        <div style={{
-                          width: '18px',
-                          height: '18px',
-                          borderRadius: '50%',
-                          backgroundColor: '#00c3a5',
-                          color: '#ffffff',
-                          fontSize: '11px',
-                          fontWeight: 'bold',
+                    {/* Left: ETF Name + subtitle */}
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
+                      {/* ETF Name only */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flexWrap: 'wrap' }}>
+                        <span style={{
+                          fontSize: item.name.length > 12 ? '0.74rem' : '0.85rem',
+                          fontWeight: '600',
+                          color: isDark ? '#e2e8f0' : '#111111',
+                          letterSpacing: '-0.2px',
+                          wordBreak: 'break-all',
+                          whiteSpace: 'normal',
+                          lineHeight: '1.2',
+                          flex: 1,
+                          minWidth: 0
+                        }}>{item.name}</span>
+                        {item.rank === 1 && isDrawerOpen && (
+                          <div style={{
+                            width: '18px',
+                            height: '18px',
+                            borderRadius: '50%',
+                            backgroundColor: '#00c3a5',
+                            color: '#ffffff',
+                            fontSize: '11px',
+                            fontWeight: 'bold',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                            flexShrink: 0
+                          }}>2</div>
+                        )}
+                        {item.rank === 3 && isDrawerOpen && (
+                          <div style={{
+                            width: '18px',
+                            height: '18px',
+                            borderRadius: '50%',
+                            backgroundColor: '#00c3a5',
+                            color: '#ffffff',
+                            fontSize: '11px',
+                            fontWeight: 'bold',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                            flexShrink: 0
+                          }}>3</div>
+                        )}
+                      </div>
+                      {/* 투자한도 + code + 구분 (matches style of renderStockList) */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                        <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>{item.limit.replace('투자한도', '')}</span>
+                        <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
+                        <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                          {item.code}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right side aligned to renderStockList layout */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+                      {/* Col 2 */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
+                          <span style={{
+                            fontSize: '0.92rem',
+                            fontWeight: '700',
+                            color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
+                            letterSpacing: '-0.3px'
+                          }}>{item.price.toLocaleString()}</span>
+                          <span style={{
+                            fontSize: '0.72rem',
+                            color: isDark ? '#64748b' : '#888888',
+                            letterSpacing: '-0.1px'
+                          }}>
+                            {(item.volume || 109760).toLocaleString()}
+                          </span>
+                        </div>
+                        
+                        {/* K / N Stack */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                          <div style={{
+                            width: '12px',
+                            height: '12px',
+                            border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                            backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                            color: isDark ? '#52c4a5' : '#007a5a',
+                            fontSize: '8px',
+                            fontWeight: '800',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '1px',
+                            lineHeight: 1
+                          }}>K</div>
+                          <div style={{
+                            width: '12px',
+                            height: '12px',
+                            backgroundColor: '#d99a06',
+                            color: '#ffffff',
+                            fontSize: '8px',
+                            fontWeight: '800',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '1px',
+                            lineHeight: 1
+                          }}>N</div>
+                        </div>
+
+                        {/* Arrow next to badges */}
+                        <span style={{
+                          fontSize: '0.62rem',
+                          color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
+                          marginLeft: '2px',
+                          flexShrink: 0
+                        }}>
+                          {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
+                        </span>
+                      </div>
+
+                      {/* Col 3 */}
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                        <span style={{
+                          fontSize: '0.88rem',
+                          fontWeight: '600',
+                          color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
                           display: 'flex',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                          flexShrink: 0
-                        }}>2</div>
-                      )}
-                      {item.rank === 3 && isDrawerOpen && (
-                        <div style={{
-                          width: '18px',
-                          height: '18px',
-                          borderRadius: '50%',
-                          backgroundColor: '#00c3a5',
-                          color: '#ffffff',
-                          fontSize: '11px',
-                          fontWeight: 'bold',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                          flexShrink: 0
-                        }}>3</div>
-                      )}
-                    </div>
-                    {/* 투자한도 + code (no box) */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: '500',
-                        color: '#3b82f6',
-                        letterSpacing: '-0.1px'
-                      }}>{item.limit}</span>
-                      <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
-                      <span style={{
-                        fontSize: '0.72rem',
-                        color: isDark ? '#64748b' : '#888888',
-                        letterSpacing: '-0.1px'
-                      }}>{item.code}</span>
-                    </div>
-                  </div>
-
-                  {/* Right: Price (top) + Arrow+Pct (bottom) with K/N market icon stack */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
-                      <span style={{
-                        fontSize: '0.92rem',
-                        fontWeight: '600',
-                        color: isDark ? '#e2e8f0' : '#111111',
-                        letterSpacing: '-0.3px'
-                      }}>{item.price.toLocaleString()}</span>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                        <span style={{ fontSize: '0.58rem', color: item.positive ? '#de201e' : '#2366ca' }}>
-                          {item.positive ? '▲' : '▼'}
+                          gap: '2px'
+                        }}>
+                          {absChange.toLocaleString()}
                         </span>
                         <span style={{
-                          fontSize: '0.8rem',
+                          fontSize: '0.75rem',
                           fontWeight: '600',
-                          color: item.positive ? '#de201e' : '#2366ca'
+                          color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
                         }}>{item.positive ? '+' : ''}{item.pct}%</span>
                       </div>
                     </div>
-                    
-                    {/* K / N Stack */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0, marginLeft: '2px' }}>
-                      <div style={{
-                        width: '12px',
-                        height: '12px',
-                        border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
-                        backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
-                        color: isDark ? '#52c4a5' : '#007a5a',
-                        fontSize: '8px',
-                        fontWeight: '800',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: '1px',
-                        lineHeight: 1
-                      }}>K</div>
-                      <div style={{
-                        width: '12px',
-                        height: '12px',
-                        backgroundColor: '#d99a06',
-                        color: '#ffffff',
-                        fontSize: '8px',
-                        fontWeight: '800',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: '1px',
-                        lineHeight: 1
-                      }}>N</div>
-                    </div>
-                  </div>
 
-                  {/* Col 4: Favorite star icon */}
-                  <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
-                    <div 
-                      style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setPendingFavoriteCode(item.code);
-                        setIsFavoriteBsheetOpen(true);
-                      }}
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                      </svg>
+                    {/* Col 4: Favorite star icon */}
+                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
+                      <div 
+                        style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPendingFavoriteCode(item.code);
+                          setIsFavoriteBsheetOpen(true);
+                        }}
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Grey Bar Separator */}
