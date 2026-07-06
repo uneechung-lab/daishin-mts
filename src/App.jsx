@@ -2451,179 +2451,183 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           </div>
 
           {/* Col 2 & 3 Group */}
-          {item.quantity !== undefined && item.avgPrice !== undefined && ownedDisplayOption === '평가금' ? (
-            /* 평가금 선택 시 단일 그룹으로 이미지처럼 정보 표기 */
-            (() => {
-              const valuationAmount = item.quantity * item.price;
-              const profitLoss = (item.price - item.avgPrice) * item.quantity;
-              const returnRate = ((item.price - item.avgPrice) / item.avgPrice) * 100;
-              const isProfit = profitLoss > 0;
-              const isLoss = profitLoss < 0;
-              const color = isProfit ? '#de201e' : (isLoss ? '#2366ca' : (isDark ? '#e2e8f0' : '#111111'));
-              const sign = isProfit ? '+' : '';
+          {etfMallNavMode !== 'search' && (
+            item.quantity !== undefined && item.avgPrice !== undefined && ownedDisplayOption === '평가금' ? (
+              /* 평가금 선택 시 단일 그룹으로 이미지처럼 정보 표기 */
+              (() => {
+                const valuationAmount = item.quantity * item.price;
+                const profitLoss = (item.price - item.avgPrice) * item.quantity;
+                const returnRate = ((item.price - item.avgPrice) / item.avgPrice) * 100;
+                const isProfit = profitLoss > 0;
+                const isLoss = profitLoss < 0;
+                const color = isProfit ? '#de201e' : (isLoss ? '#2366ca' : (isDark ? '#e2e8f0' : '#111111'));
+                const sign = isProfit ? '+' : '';
 
-              return (
-                <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                  {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
-                    <div style={{
-                      position: 'absolute',
-                      left: '-24px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '17px',
-                      height: '17px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#fff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      zIndex: 11
-                    }}>3</div>
-                  )}
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
-                    {/* 평가금액 */}
+                return (
+                  <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                    {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
+                      <div style={{
+                        position: 'absolute',
+                        left: '-24px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '17px',
+                        height: '17px',
+                        borderRadius: '50%',
+                        backgroundColor: '#00c3a5',
+                        color: '#fff',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        zIndex: 11
+                      }}>3</div>
+                    )}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                      {/* 평가금액 */}
+                      <span style={{
+                        fontSize: '0.92rem',
+                        fontWeight: '700',
+                        color: isDark ? '#e2e8f0' : '#111111',
+                        letterSpacing: '-0.3px'
+                      }}>
+                        {valuationAmount.toLocaleString()}원
+                      </span>
+                      {/* 수익률 및 평가손익 */}
+                      <span style={{
+                        fontSize: '0.74rem',
+                        fontWeight: '600',
+                        color: color,
+                        letterSpacing: '-0.1px'
+                      }}>
+                        {sign}{returnRate.toFixed(2)}% ({sign}{profitLoss.toLocaleString()}원)
+                      </span>
+                    </div>
+                  </div>
+                );
+              })()
+            ) : (
+              /* 기존 Col 2 & 3 Group */
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+                {/* Col 2 */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
                     <span style={{
                       fontSize: '0.92rem',
                       fontWeight: '700',
-                      color: isDark ? '#e2e8f0' : '#111111',
+                      color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
                       letterSpacing: '-0.3px'
-                    }}>
-                      {valuationAmount.toLocaleString()}원
-                    </span>
-                    {/* 수익률 및 평가손익 */}
+                    }}>{item.price.toLocaleString()}</span>
                     <span style={{
-                      fontSize: '0.74rem',
-                      fontWeight: '600',
-                      color: color,
+                      fontSize: '0.72rem',
+                      color: isDark ? '#64748b' : '#888888',
                       letterSpacing: '-0.1px'
                     }}>
-                      {sign}{returnRate.toFixed(2)}% ({sign}{profitLoss.toLocaleString()}원)
+                      {(item.volume || 109760).toLocaleString()}
                     </span>
                   </div>
-                </div>
-              );
-            })()
-          ) : (
-            /* 기존 Col 2 & 3 Group */
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
-              {/* Col 2 */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
+                  
+                  {/* K / N Stack */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                    <div style={{
+                      width: '12px',
+                      height: '12px',
+                      border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                      backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                      color: isDark ? '#52c4a5' : '#007a5a',
+                      fontSize: '8px',
+                      fontWeight: '800',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '1px',
+                      lineHeight: 1
+                    }}>K</div>
+                    <div style={{
+                      width: '12px',
+                      height: '12px',
+                      backgroundColor: '#d99a06',
+                      color: '#ffffff',
+                      fontSize: '8px',
+                      fontWeight: '800',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '1px',
+                      lineHeight: 1
+                    }}>N</div>
+                  </div>
+
+                  {/* Arrow next to badges */}
                   <span style={{
-                    fontSize: '0.92rem',
-                    fontWeight: '700',
-                    color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
-                    letterSpacing: '-0.3px'
-                  }}>{item.price.toLocaleString()}</span>
-                  <span style={{
-                    fontSize: '0.72rem',
-                    color: isDark ? '#64748b' : '#888888',
-                    letterSpacing: '-0.1px'
+                    fontSize: '0.62rem',
+                    color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
+                    marginLeft: '2px',
+                    flexShrink: 0
                   }}>
-                    {(item.volume || 109760).toLocaleString()}
+                    {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
                   </span>
                 </div>
-                
-                {/* K / N Stack */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
-                    backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
-                    color: isDark ? '#52c4a5' : '#007a5a',
-                    fontSize: '8px',
-                    fontWeight: '800',
+
+                {/* Col 3 */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                  <span style={{
+                    fontSize: '0.88rem',
+                    fontWeight: '600',
+                    color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '1px',
-                    lineHeight: 1
-                  }}>K</div>
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    backgroundColor: '#d99a06',
-                    color: '#ffffff',
-                    fontSize: '8px',
-                    fontWeight: '800',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '1px',
-                    lineHeight: 1
-                  }}>N</div>
+                    gap: '2px'
+                  }}>
+                    {absChange.toLocaleString()}
+                  </span>
+                  <span style={{
+                    fontSize: '0.75rem',
+                    fontWeight: '600',
+                    color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
+                  }}>{item.positive ? '+' : ''}{item.pct}%</span>
                 </div>
-
-                {/* Arrow next to badges */}
-                <span style={{
-                  fontSize: '0.62rem',
-                  color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
-                  marginLeft: '2px',
-                  flexShrink: 0
-                }}>
-                  {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
-                </span>
               </div>
-
-              {/* Col 3 */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
-                <span style={{
-                  fontSize: '0.88rem',
-                  fontWeight: '600',
-                  color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '2px'
-                }}>
-                  {absChange.toLocaleString()}
-                </span>
-                <span style={{
-                  fontSize: '0.75rem',
-                  fontWeight: '600',
-                  color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
-                }}>{item.positive ? '+' : ''}{item.pct}%</span>
-              </div>
-            </div>
+            )
           )}
 
           {/* Col 4 */}
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            <div 
-              style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setPendingFavoriteCode(item.code);
-                setIsFavoriteBsheetOpen(true);
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-              </svg>
+          {etfMallNavMode !== 'search' && (
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <div 
+                style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPendingFavoriteCode(item.code);
+                  setIsFavoriteBsheetOpen(true);
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+              </div>
+              {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
+                <div style={{
+                  position: 'absolute',
+                  left: '-18px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '17px',
+                  height: '17px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#fff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  zIndex: 11
+                }}>5</div>
+              )}
             </div>
-            {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
-              <div style={{
-                position: 'absolute',
-                left: '-18px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '17px',
-                height: '17px',
-                borderRadius: '50%',
-                backgroundColor: '#00c3a5',
-                color: '#fff',
-                fontSize: '11px',
-                fontWeight: 'bold',
-                zIndex: 11
-              }}>5</div>
-            )}
-          </div>
+          )}
         </div>
       );
     });
@@ -3002,102 +3006,106 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                     </div>
 
                     {/* Right side aligned to renderStockList layout */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
-                      {/* Col 2 */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
+                    {etfMallNavMode !== 'search' && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+                        {/* Col 2 */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
+                            <span style={{
+                              fontSize: '0.92rem',
+                              fontWeight: '700',
+                              color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
+                              letterSpacing: '-0.3px'
+                            }}>{item.price.toLocaleString()}</span>
+                            <span style={{
+                              fontSize: '0.72rem',
+                              color: isDark ? '#64748b' : '#888888',
+                              letterSpacing: '-0.1px'
+                            }}>
+                              {(item.volume || 109760).toLocaleString()}
+                            </span>
+                          </div>
+                          
+                          {/* K / N Stack */}
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                            <div style={{
+                              width: '12px',
+                              height: '12px',
+                              border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
+                              backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
+                              color: isDark ? '#52c4a5' : '#007a5a',
+                              fontSize: '8px',
+                              fontWeight: '800',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: '1px',
+                              lineHeight: 1
+                            }}>K</div>
+                            <div style={{
+                              width: '12px',
+                              height: '12px',
+                              backgroundColor: '#d99a06',
+                              color: '#ffffff',
+                              fontSize: '8px',
+                              fontWeight: '800',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: '1px',
+                              lineHeight: 1
+                            }}>N</div>
+                          </div>
+
+                          {/* Arrow next to badges */}
                           <span style={{
-                            fontSize: '0.92rem',
-                            fontWeight: '700',
-                            color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
-                            letterSpacing: '-0.3px'
-                          }}>{item.price.toLocaleString()}</span>
-                          <span style={{
-                            fontSize: '0.72rem',
-                            color: isDark ? '#64748b' : '#888888',
-                            letterSpacing: '-0.1px'
+                            fontSize: '0.62rem',
+                            color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
+                            marginLeft: '2px',
+                            flexShrink: 0
                           }}>
-                            {(item.volume || 109760).toLocaleString()}
+                            {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
                           </span>
                         </div>
-                        
-                        {/* K / N Stack */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
-                          <div style={{
-                            width: '12px',
-                            height: '12px',
-                            border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
-                            backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
-                            color: isDark ? '#52c4a5' : '#007a5a',
-                            fontSize: '8px',
-                            fontWeight: '800',
+
+                        {/* Col 3 */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                          <span style={{
+                            fontSize: '0.88rem',
+                            fontWeight: '600',
+                            color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: '1px',
-                            lineHeight: 1
-                          }}>K</div>
-                          <div style={{
-                            width: '12px',
-                            height: '12px',
-                            backgroundColor: '#d99a06',
-                            color: '#ffffff',
-                            fontSize: '8px',
-                            fontWeight: '800',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: '1px',
-                            lineHeight: 1
-                          }}>N</div>
+                            gap: '2px'
+                          }}>
+                            {absChange.toLocaleString()}
+                          </span>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            fontWeight: '600',
+                            color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
+                          }}>{item.positive ? '+' : ''}{item.pct}%</span>
                         </div>
-
-                        {/* Arrow next to badges */}
-                        <span style={{
-                          fontSize: '0.62rem',
-                          color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
-                          marginLeft: '2px',
-                          flexShrink: 0
-                        }}>
-                          {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
-                        </span>
                       </div>
-
-                      {/* Col 3 */}
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
-                        <span style={{
-                          fontSize: '0.88rem',
-                          fontWeight: '600',
-                          color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '2px'
-                        }}>
-                          {absChange.toLocaleString()}
-                        </span>
-                        <span style={{
-                          fontSize: '0.75rem',
-                          fontWeight: '600',
-                          color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
-                        }}>{item.positive ? '+' : ''}{item.pct}%</span>
-                      </div>
-                    </div>
+                    )}
 
                     {/* Col 4: Favorite star icon */}
-                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
-                      <div 
-                        style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPendingFavoriteCode(item.code);
-                          setIsFavoriteBsheetOpen(true);
-                        }}
-                      >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
+                    {etfMallNavMode !== 'search' && (
+                      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginLeft: '6px' }}>
+                        <div 
+                          style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPendingFavoriteCode(item.code);
+                            setIsFavoriteBsheetOpen(true);
+                          }}
+                        >
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill={favorites.includes(item.code) ? '#f59e0b' : 'none'} stroke={favorites.includes(item.code) ? '#f59e0b' : '#888888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 );
               })}
