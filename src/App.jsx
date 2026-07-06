@@ -2867,51 +2867,53 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {activeMallTab === '추천' && (
           <>
             {/* Section Title + Tabs */}
-            <div style={{ padding: '14px 14px 0 14px' }}>
-              {/* Title */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>퇴직연금 ETF 순위</span>
-                <div 
-                  onClick={() => setIsBottomSheetOpen(true)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    fontSize: '0.76rem',
-                    fontWeight: '600',
-                    color: isDark ? '#94a3b8' : '#555555',
-                    cursor: 'pointer',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    backgroundColor: isDark ? '#1e293b' : '#f8fafc',
-                    border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
-                    userSelect: 'none'
-                  }}
-                >
-                  <span>{sortOption}</span>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '1px' }}><polyline points="6 9 12 15 18 9" /></svg>
+            {etfMallNavMode !== 'search' && (
+              <div style={{ padding: '14px 14px 0 14px' }}>
+                {/* Title */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                  <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>퇴직연금 ETF 순위</span>
+                  <div 
+                    onClick={() => setIsBottomSheetOpen(true)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      fontSize: '0.76rem',
+                      fontWeight: '600',
+                      color: isDark ? '#94a3b8' : '#555555',
+                      cursor: 'pointer',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+                      border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+                      userSelect: 'none'
+                    }}
+                  >
+                    <span>{sortOption}</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '1px' }}><polyline points="6 9 12 15 18 9" /></svg>
+                  </div>
+                </div>
+
+                {/* 거래 고객순 / 거래 금액순 Tabs */}
+                <div style={{ display: 'flex', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
+                  {['수익률', '거래량', '거래대금'].map((tab) => {
+                    const isActive = tab === '수익률';
+                    return (
+                      <span key={tab} style={{
+                        padding: '8px 0',
+                        marginRight: '20px',
+                        fontSize: '0.88rem',
+                        fontWeight: isActive ? '700' : '400',
+                        color: isActive ? (isDark ? '#ffffff' : '#111111') : (isDark ? '#64748b' : '#999999'),
+                        borderBottom: isActive ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #111111') : '2.5px solid transparent',
+                        cursor: 'pointer',
+                        whiteSpace: 'nowrap'
+                      }}>{tab}</span>
+                    );
+                  })}
                 </div>
               </div>
-
-              {/* 거래 고객순 / 거래 금액순 Tabs */}
-              <div style={{ display: 'flex', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
-                {['수익률', '거래량', '거래대금'].map((tab) => {
-                  const isActive = tab === '수익률';
-                  return (
-                    <span key={tab} style={{
-                      padding: '8px 0',
-                      marginRight: '20px',
-                      fontSize: '0.88rem',
-                      fontWeight: isActive ? '700' : '400',
-                      color: isActive ? (isDark ? '#ffffff' : '#111111') : (isDark ? '#64748b' : '#999999'),
-                      borderBottom: isActive ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #111111') : '2.5px solid transparent',
-                      cursor: 'pointer',
-                      whiteSpace: 'nowrap'
-                    }}>{tab}</span>
-                  );
-                })}
-              </div>
-            </div>
+            )}
 
             {/* ETF Ranked List */}
             <div>
@@ -3126,17 +3128,21 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             </div>
 
             {/* Grey Bar Separator */}
-            <div style={{
-              height: '8px',
-              backgroundColor: isDark ? '#121826' : '#f1f5f9',
-              flexShrink: 0
-            }} />
+            {etfMallNavMode !== 'search' && (
+              <div style={{
+                height: '8px',
+                backgroundColor: isDark ? '#121826' : '#f1f5f9',
+                flexShrink: 0
+              }} />
+            )}
 
             {/* GO배당GO금리 퇴직연금 ETF Section */}
-            <div style={{ padding: '16px 0 0 0', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
-              <div style={{ padding: '0 14px', marginBottom: '12px' }}>
-                <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>GO배당GO금리</span>
-              </div>
+            <div style={{ padding: etfMallNavMode === 'search' ? '0' : '16px 0 0 0', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
+              {etfMallNavMode !== 'search' && (
+                <div style={{ padding: '0 14px', marginBottom: '12px' }}>
+                  <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>GO배당GO금리</span>
+                </div>
+              )}
               <div>
                 {filterByChip(goDividendList).length === 0 ? renderEmptyState() : filterByChip(goDividendList).map((item, idx, arr) => {
                   const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
