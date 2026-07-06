@@ -3309,171 +3309,177 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {activeMallTab === '보유' && (
           <div style={{ padding: '0px 0' }}>
             {/* 정렬 & 옵션 선택 Row */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '10px 12px 8px 12px',
-              backgroundColor: isDark ? '#0b0f19' : '#ffffff',
-              borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
-              position: 'sticky',
-              top: 0,
-              zIndex: 10
-            }}>
-              {/* 수익률 정렬 Dropdown */}
-              <div 
-                onClick={() => setIsOwnedSortBsheetOpen(true)}
-                style={{
-                  flex: 1, 
-                  position: 'relative',
-                  display: 'flex',
-                  alignItems: 'center',
-                  backgroundColor: isDark ? '#1e293b' : '#ffffff',
-                  border: isDark ? '1px solid #334155' : '1px solid #cccccc',
-                  borderRadius: '4px',
-                  fontSize: '0.8rem',
-                  fontWeight: '500',
-                  color: isDark ? '#e2e8f0' : '#111111',
-                  padding: '0 24px 0 10px',
-                  cursor: 'pointer',
-                  height: '30px',
-                  boxSizing: 'border-box'
-                }}
-              >
-                <span>{ownedSortOption}</span>
-                <span style={{
-                  position: 'absolute',
-                  right: '10px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  fontSize: '0.55rem',
-                  pointerEvents: 'none',
-                  color: isDark ? '#94a3b8' : '#777777'
-                }}>▼</span>
-                {isDrawerOpen && activeMallTab === '보유' && (
-                  <div style={{
-                    position: 'absolute',
-                    right: '25px',
-                    top: '-10px',
+            {etfMallNavMode !== 'search' && (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '10px 12px 8px 12px',
+                backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+                borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                position: 'sticky',
+                top: 0,
+                zIndex: 10
+              }}>
+                {/* 수익률 정렬 Dropdown */}
+                <div 
+                  onClick={() => setIsOwnedSortBsheetOpen(true)}
+                  style={{
+                    flex: 1, 
+                    position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '17px',
-                    height: '17px',
-                    borderRadius: '50%',
-                    backgroundColor: '#00c3a5',
-                    color: '#fff',
-                    fontSize: '11px',
-                    fontWeight: 'bold',
-                    zIndex: 11
-                  }}>2</div>
-                )}
-              </div>
-
-              {/* 평가금 / 현재가 Toggle Button Group */}
-              <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                <div style={{
-                  display: 'flex',
-                  borderRadius: '4px',
-                  overflow: 'hidden',
-                  border: isDark ? '1px solid #334155' : '1px solid #cccccc',
-                  height: '30px'
-                }}>
-                  <button
-                    onClick={() => setOwnedDisplayOption('평가금')}
-                    style={{
-                      border: 'none',
-                      padding: '0 12px',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      backgroundColor: ownedDisplayOption === '평가금' 
-                        ? (isDark ? '#475569' : '#555e69') 
-                        : (isDark ? '#1e293b' : '#ffffff'),
-                      color: ownedDisplayOption === '평가금' 
-                        ? '#ffffff' 
-                        : (isDark ? '#94a3b8' : '#777777'),
-                      transition: 'all 0.2s',
-                      outline: 'none'
-                    }}
-                  >
-                    평가금
-                  </button>
-                  <button
-                    onClick={() => setOwnedDisplayOption('현재가')}
-                    style={{
-                      border: 'none',
-                      borderLeft: isDark ? '1px solid #334155' : '1px solid #cccccc',
-                      padding: '0 12px',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      backgroundColor: ownedDisplayOption === '현재가' 
-                        ? (isDark ? '#475569' : '#555e69') 
-                        : (isDark ? '#1e293b' : '#ffffff'),
-                      color: ownedDisplayOption === '현재가' 
-                        ? '#ffffff' 
-                        : (isDark ? '#94a3b8' : '#777777'),
-                      transition: 'all 0.2s',
-                      outline: 'none'
-                    }}
-                  >
-                    현재가
-                  </button>
+                    backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                    border: isDark ? '1px solid #334155' : '1px solid #cccccc',
+                    borderRadius: '4px',
+                    fontSize: '0.8rem',
+                    fontWeight: '500',
+                    color: isDark ? '#e2e8f0' : '#111111',
+                    padding: '0 24px 0 10px',
+                    cursor: 'pointer',
+                    height: '30px',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  <span>{ownedSortOption}</span>
+                  <span style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    fontSize: '0.55rem',
+                    pointerEvents: 'none',
+                    color: isDark ? '#94a3b8' : '#777777'
+                  }}>▼</span>
+                  {isDrawerOpen && activeMallTab === '보유' && (
+                    <div style={{
+                      position: 'absolute',
+                      right: '25px',
+                      top: '-10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '17px',
+                      height: '17px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#fff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      zIndex: 11
+                    }}>2</div>
+                  )}
                 </div>
-                {isDrawerOpen && activeMallTab === '보유' && (
-                  <>
-                    {/* 평가금 버튼용 배지 3 */}
-                    <div style={{
-                      position: 'absolute',
-                      left: '16px',
-                      top: '-10px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '17px',
-                      height: '17px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#fff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      zIndex: 11
-                    }}>3</div>
-                    {/* 현재가 버튼용 배지 4 */}
-                    <div style={{
-                      position: 'absolute',
-                      right: '16px',
-                      top: '-10px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '17px',
-                      height: '17px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#fff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      zIndex: 11
-                    }}>4</div>
-                  </>
-                )}
+
+                {/* 평가금 / 현재가 Toggle Button Group */}
+                <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                  <div style={{
+                    display: 'flex',
+                    borderRadius: '4px',
+                    overflow: 'hidden',
+                    border: isDark ? '1px solid #334155' : '1px solid #cccccc',
+                    height: '30px'
+                  }}>
+                    <button
+                      onClick={() => setOwnedDisplayOption('평가금')}
+                      style={{
+                        border: 'none',
+                        padding: '0 12px',
+                        fontSize: '0.78rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        backgroundColor: ownedDisplayOption === '평가금' 
+                          ? (isDark ? '#475569' : '#555e69') 
+                          : (isDark ? '#1e293b' : '#ffffff'),
+                        color: ownedDisplayOption === '평가금' 
+                          ? '#ffffff' 
+                          : (isDark ? '#94a3b8' : '#777777'),
+                        transition: 'all 0.2s',
+                        outline: 'none'
+                      }}
+                    >
+                      평가금
+                    </button>
+                    <button
+                      onClick={() => setOwnedDisplayOption('현재가')}
+                      style={{
+                        border: 'none',
+                        borderLeft: isDark ? '1px solid #334155' : '1px solid #cccccc',
+                        padding: '0 12px',
+                        fontSize: '0.78rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        backgroundColor: ownedDisplayOption === '현재가' 
+                          ? (isDark ? '#475569' : '#555e69') 
+                          : (isDark ? '#1e293b' : '#ffffff'),
+                        color: ownedDisplayOption === '현재가' 
+                          ? '#ffffff' 
+                          : (isDark ? '#94a3b8' : '#777777'),
+                        transition: 'all 0.2s',
+                        outline: 'none'
+                      }}
+                    >
+                      현재가
+                    </button>
+                  </div>
+                  {isDrawerOpen && activeMallTab === '보유' && (
+                    <>
+                      {/* 평가금 버튼용 배지 3 */}
+                      <div style={{
+                        position: 'absolute',
+                        left: '16px',
+                        top: '-10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '17px',
+                        height: '17px',
+                        borderRadius: '50%',
+                        backgroundColor: '#00c3a5',
+                        color: '#fff',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        zIndex: 11
+                      }}>3</div>
+                      {/* 현재가 버튼용 배지 4 */}
+                      <div style={{
+                        position: 'absolute',
+                        right: '16px',
+                        top: '-10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '17px',
+                        height: '17px',
+                        borderRadius: '50%',
+                        backgroundColor: '#00c3a5',
+                        color: '#fff',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        zIndex: 11
+                      }}>4</div>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* 최근 본 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              최근 본 종목
-            </div>
+            {etfMallNavMode !== 'search' && (
+              <div style={sectionHeaderStyle}>
+                최근 본 종목
+              </div>
+            )}
             <div>
               {renderStockList(recentViewedOwnedList.slice(0, 3))}
             </div>
 
             {/* 인기 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              인기 종목
-            </div>
+            {etfMallNavMode !== 'search' && (
+              <div style={sectionHeaderStyle}>
+                인기 종목
+              </div>
+            )}
             <div>
               {renderStockList(getSortedOwnedList())}
             </div>
@@ -3484,9 +3490,11 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {activeMallTab === 'GO배당GO금리' && (
           <div style={{ padding: '0px 0' }}>
             {/* 인기 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              인기 종목
-            </div>
+            {etfMallNavMode !== 'search' && (
+              <div style={sectionHeaderStyle}>
+                인기 종목
+              </div>
+            )}
             <div>
               {renderStockList(goDividendList)}
             </div>
@@ -3497,17 +3505,21 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {activeMallTab === 'TDF' && (
           <div style={{ padding: '0px 0' }}>
             {/* 최근 본 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              최근 본 종목
-            </div>
+            {etfMallNavMode !== 'search' && (
+              <div style={sectionHeaderStyle}>
+                최근 본 종목
+              </div>
+            )}
             <div>
               {renderStockList(recentViewedTdfList.slice(0, 3))}
             </div>
 
             {/* 인기 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              인기 종목
-            </div>
+            {etfMallNavMode !== 'search' && (
+              <div style={sectionHeaderStyle}>
+                인기 종목
+              </div>
+            )}
             <div>
               {renderStockList(tdfList)}
             </div>
@@ -3518,17 +3530,21 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {activeMallTab === '전체' && (
           <div style={{ padding: '0px 0' }}>
             {/* 최근 본 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              최근 본 종목
-            </div>
+            {etfMallNavMode !== 'search' && (
+              <div style={sectionHeaderStyle}>
+                최근 본 종목
+              </div>
+            )}
             <div>
               {renderStockList(recentViewedList.slice(0, 3))}
             </div>
 
             {/* 인기 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              인기 종목
-            </div>
+            {etfMallNavMode !== 'search' && (
+              <div style={sectionHeaderStyle}>
+                인기 종목
+              </div>
+            )}
             <div>
               {renderStockList(allList)}
             </div>
