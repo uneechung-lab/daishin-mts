@@ -2944,14 +2944,16 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                       gap: '10px'
                     }}>
                     {/* Rank number */}
-                    <span style={{
-                      fontSize: '1.05rem',
-                      fontWeight: '800',
-                      fontStyle: 'italic',
-                      color: isDark ? '#ffffff' : '#111111',
-                      width: '18px',
-                      flexShrink: 0
-                    }}>{item.rank}</span>
+                    {etfMallNavMode !== 'search' && (
+                      <span style={{
+                        fontSize: '1.05rem',
+                        fontWeight: '800',
+                        fontStyle: 'italic',
+                        color: isDark ? '#ffffff' : '#111111',
+                        width: '18px',
+                        flexShrink: 0
+                      }}>{item.rank}</span>
+                    )}
 
                     {/* Left: ETF Name + subtitle */}
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
@@ -2968,7 +2970,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                           flex: 1,
                           minWidth: 0
                         }}>{item.name}</span>
-                        {item.rank === 1 && isDrawerOpen && (
+                        {item.rank === 1 && isDrawerOpen && etfMallNavMode !== 'search' && (
                           <div style={{
                             width: '18px',
                             height: '18px',
@@ -2984,7 +2986,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                             flexShrink: 0
                           }}>2</div>
                         )}
-                        {item.rank === 3 && isDrawerOpen && (
+                        {item.rank === 3 && isDrawerOpen && etfMallNavMode !== 'search' && (
                           <div style={{
                             width: '18px',
                             height: '18px',
