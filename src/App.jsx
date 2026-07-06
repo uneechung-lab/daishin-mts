@@ -3464,22 +3464,10 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               </div>
             )}
 
-            {/* 최근 본 종목 Section */}
-            {etfMallNavMode !== 'search' && (
-              <div style={sectionHeaderStyle}>
-                최근 본 종목
-              </div>
-            )}
             <div>
               {renderStockList(recentViewedOwnedList.slice(0, 3))}
             </div>
 
-            {/* 인기 종목 Section */}
-            {etfMallNavMode !== 'search' && (
-              <div style={sectionHeaderStyle}>
-                인기 종목
-              </div>
-            )}
             <div>
               {renderStockList(getSortedOwnedList())}
             </div>
@@ -3489,12 +3477,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {/* GO배당GO금리 Tab View */}
         {activeMallTab === 'GO배당GO금리' && (
           <div style={{ padding: '0px 0' }}>
-            {/* 인기 종목 Section */}
-            {etfMallNavMode !== 'search' && (
-              <div style={sectionHeaderStyle}>
-                인기 종목
-              </div>
-            )}
             <div>
               {renderStockList(goDividendList)}
             </div>
@@ -3504,22 +3486,10 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {/* TDF Tab View */}
         {activeMallTab === 'TDF' && (
           <div style={{ padding: '0px 0' }}>
-            {/* 최근 본 종목 Section */}
-            {etfMallNavMode !== 'search' && (
-              <div style={sectionHeaderStyle}>
-                최근 본 종목
-              </div>
-            )}
             <div>
               {renderStockList(recentViewedTdfList.slice(0, 3))}
             </div>
 
-            {/* 인기 종목 Section */}
-            {etfMallNavMode !== 'search' && (
-              <div style={sectionHeaderStyle}>
-                인기 종목
-              </div>
-            )}
             <div>
               {renderStockList(tdfList)}
             </div>
