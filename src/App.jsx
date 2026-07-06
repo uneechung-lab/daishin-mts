@@ -3530,21 +3530,17 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {activeMallTab === '전체' && (
           <div style={{ padding: '0px 0' }}>
             {/* 최근 본 종목 Section */}
-            {etfMallNavMode !== 'search' && (
-              <div style={sectionHeaderStyle}>
-                최근 본 종목
-              </div>
-            )}
+            <div style={sectionHeaderStyle}>
+              최근 본 종목
+            </div>
             <div>
               {renderStockList(recentViewedList.slice(0, 3))}
             </div>
 
             {/* 인기 종목 Section */}
-            {etfMallNavMode !== 'search' && (
-              <div style={sectionHeaderStyle}>
-                인기 종목
-              </div>
-            )}
+            <div style={sectionHeaderStyle}>
+              인기 종목
+            </div>
             <div>
               {renderStockList(allList)}
             </div>
