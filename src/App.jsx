@@ -10329,7 +10329,7 @@ function App() {
                                 <span>200-233354(01)</span>
                                 <span style={{ fontSize: '8px', color: '#666', marginLeft: '4px' }}>▼</span>
                               </div>
-                              <div style={{ color: '#333', fontSize: '11px', marginTop: '1px' }}>정윤희</div>
+                              <div style={{ color: '#333', fontSize: '11px', marginTop: '1px' }}>김대신</div>
                             </div>
                           </div>
 
@@ -11020,7 +11020,12 @@ function App() {
                           </div>
                           <div style={{ display: 'flex', gap: '4px' }}>
                             <button style={{ border: 'none', backgroundColor: '#2366ca', color: '#ffffff', fontSize: '11px', fontWeight: '700', padding: '8px 14px', borderRadius: '4px', cursor: 'pointer' }}>매도</button>
-                            <button style={{ border: 'none', backgroundColor: '#de201e', color: '#ffffff', fontSize: '11px', fontWeight: '700', padding: '8px 14px', borderRadius: '4px', cursor: 'pointer' }}>매수</button>
+                            <button 
+                              onClick={() => setScreen6ToBeSubScreen('bondOrder')}
+                              style={{ border: 'none', backgroundColor: '#de201e', color: '#ffffff', fontSize: '11px', fontWeight: '700', padding: '8px 14px', borderRadius: '4px', cursor: 'pointer' }}
+                            >
+                              매수
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -11296,6 +11301,400 @@ function App() {
                         </button>
                       </div>
                     </>
+                  ) : screen6ToBeSubScreen === 'bondOrder' ? (
+                    <>
+                      {/* Galaxy S20 Central Punch-hole Camera */}
+                      <div style={styles.phoneCamera} />
+
+                      {/* Phone Status Bar */}
+                      <div style={{
+                        height: '24px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0 12px',
+                        fontSize: '11px',
+                        fontWeight: '600',
+                        color: '#333333',
+                        backgroundColor: '#ffffff'
+                      }}>
+                        <span>12:30</span>
+                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L16.35 6.22C15.15 4.19 13.73 3 12 3zm0 18c4.97 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61L7.65 17.78C8.85 19.81 10.27 21 12 21z"/></svg>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        </div>
+                      </div>
+
+                      {/* Header Area */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        height: '46px',
+                        padding: '0 12px',
+                        borderBottom: '1px solid #e2e8f0',
+                        backgroundColor: '#ffffff'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span 
+                            onClick={() => setScreen6ToBeSubScreen('menu')}
+                            style={{ fontSize: '1.2rem', cursor: 'pointer' }}
+                          >
+                            ☰
+                          </span>
+                          <span style={{ fontSize: '1.2rem', cursor: 'pointer' }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                          </span>
+                          <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px', marginLeft: '4px' }}>삼척블루파워9</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <span style={{ color: '#ccc', fontSize: '1.3rem', cursor: 'pointer', lineHeight: 1 }}>★</span>
+                          <span style={{ color: '#333', fontSize: '1.1rem', cursor: 'pointer', fontWeight: 'bold', letterSpacing: '1px' }}>···</span>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2.2" style={{ cursor: 'pointer' }}><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+                        </div>
+                      </div>
+
+                      {/* Stock Info Bar */}
+                      <div style={{ padding: '8px 12px', backgroundColor: '#ffffff', borderBottom: '1px solid #f3f4f6' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px' }}>
+                          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                            <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#de201e', lineHeight: 1 }}>29,750</span>
+                            <span style={{ fontSize: '12px', color: '#de201e', fontWeight: '700' }}>▲ 1,750</span>
+                            <span style={{ fontSize: '12px', color: '#de201e', fontWeight: '700' }}>0.50%</span>
+                            <span style={{ fontSize: '12px', color: '#888888', marginLeft: '4px' }}>:</span>
+                          </div>
+                          <button 
+                            onClick={() => setScreen6ToBeSubScreen('bondCurrentPrice')}
+                            style={{
+                              border: '1px solid #cbd5e1',
+                              backgroundColor: '#ffffff',
+                              color: '#333333',
+                              fontSize: '11px',
+                              fontWeight: '600',
+                              padding: '4px 10px',
+                              borderRadius: '4px',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            현재가
+                          </button>
+                        </div>
+
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#888888', marginTop: '4px' }}>
+                          <span>288,505 <span style={{ color: '#de201e' }}>(96.30%)</span></span>
+                        </div>
+
+                        {/* Account selection dropdown */}
+                        <div style={{
+                          border: '1px solid #e2e8f0',
+                          borderRadius: '6px',
+                          padding: '8px 12px',
+                          marginTop: '8px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          backgroundColor: '#f8fafc',
+                          cursor: 'pointer'
+                        }}>
+                          <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-000000(41) 김대신</span>
+                          <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
+                        </div>
+                      </div>
+
+                      {/* Order Tabs */}
+                      <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
+                        {['매수', '매도', '정정/취소', '미체결/체결'].map((tab) => (
+                          <div key={tab} style={{
+                            flex: 1,
+                            textAlign: 'center',
+                            padding: '12px 0',
+                            fontSize: '12px',
+                            fontWeight: '700',
+                            color: tab === '매수' ? '#de201e' : '#666666',
+                            borderBottom: tab === '매수' ? '2.5px solid #de201e' : 'none',
+                            cursor: 'pointer'
+                          }}>{tab}</div>
+                        ))}
+                      </div>
+
+                      {/* Main split content */}
+                      <div style={{ flex: 1, display: 'flex', backgroundColor: '#ffffff', overflow: 'hidden' }}>
+                        {/* Left column: Orderbook (40%) */}
+                        <div style={{ width: '40%', borderRight: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', fontSize: '11px', height: '100%', overflowY: 'auto' }}>
+                          {/* Upper arrow */}
+                          <div style={{ padding: '6px 8px', borderBottom: '1px solid #f1f5f9', color: '#de201e', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>▲</span>
+                            <span>38,250</span>
+                          </div>
+
+                          {/* Ask list */}
+                          {[
+                            { price: '29,900', pct: '+2.75%', qty: '6,801', type: 'ask' },
+                            { price: '29,850', pct: '+2.75%', qty: '5,592', type: 'ask' },
+                            { price: '29,800', pct: '+2.58%', qty: '3,676', type: 'ask' },
+                            { price: '29,750', pct: '+2.41%', qty: '1,054', type: 'ask' },
+                            { price: '29,725', pct: '+2.31%', qty: '10', type: 'bid', badge: 'K' },
+                            { price: '29,725', pct: '+2.31%', qty: '', type: 'bid', badge: 'N' },
+                            { price: '29,700', pct: '+2.21%', qty: '1,054', type: 'bid' },
+                            { price: '29,650', pct: '+2.07%', qty: '2,554', type: 'bid' },
+                            { price: '29,600', pct: '+1.89%', qty: '3,140', type: 'bid' },
+                            { price: '29,550', pct: '+1.70%', qty: '5,107', type: 'bid' }
+                          ].map((row, idx) => {
+                            const isAsk = row.type === 'ask';
+                            const bg = isAsk ? '#f0f6ff' : '#fff5f5';
+                            return (
+                              <div key={idx} style={{
+                                display: 'flex',
+                                height: '34px',
+                                borderBottom: '1px solid #f1f5f9',
+                                backgroundColor: bg,
+                                alignItems: 'center',
+                                position: 'relative'
+                              }}>
+                                {/* Badge K/N if present */}
+                                {row.badge && (
+                                  <div style={{
+                                    position: 'absolute',
+                                    left: '2px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    fontSize: '8px',
+                                    fontWeight: 'bold',
+                                    padding: '1px 3px',
+                                    borderRadius: '2px',
+                                    border: '1px solid #cbd5e1',
+                                    color: '#0284c7',
+                                    backgroundColor: '#ffffff',
+                                    zIndex: 10
+                                  }}>
+                                    {row.badge}
+                                  </div>
+                                )}
+                                <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column', paddingLeft: row.badge ? '18px' : '8px' }}>
+                                  <span style={{ fontWeight: 'bold', color: '#de201e', fontSize: '11px' }}>{row.price}</span>
+                                  <span style={{ color: '#de201e', fontSize: '9px' }}>{row.pct}</span>
+                                </div>
+                                <div style={{ flex: 1, paddingRight: '8px', textAlign: 'right', color: '#4b5563', fontWeight: '500' }}>
+                                  {row.qty}
+                                </div>
+                              </div>
+                            );
+                          })}
+
+                          {/* Lower arrow */}
+                          <div style={{ padding: '6px 8px', borderTop: '1px solid #f1f5f9', color: '#2366ca', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>▼</span>
+                            <span>20,350</span>
+                          </div>
+
+                          {/* Dots */}
+                          <div style={{ display: 'flex', justifyContent: 'center', gap: '4px', padding: '6px 0' }}>
+                            <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#333333' }}></span>
+                            <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#cbd5e1' }}></span>
+                          </div>
+                        </div>
+
+                        {/* Right column: Form (60%) */}
+                        <div style={{ width: '60%', padding: '12px', display: 'flex', flexDirection: 'column', gap: '10px', height: '100%', boxSizing: 'border-box' }}>
+                          {/* Segmented Control */}
+                          <div style={{
+                            display: 'flex',
+                            backgroundColor: '#f1f5f9',
+                            borderRadius: '6px',
+                            padding: '2px'
+                          }}>
+                            <div style={{
+                              flex: 1,
+                              textAlign: 'center',
+                              padding: '6px 0',
+                              fontSize: '11px',
+                              fontWeight: '700',
+                              color: '#333333',
+                              backgroundColor: '#ffffff',
+                              borderRadius: '4px',
+                              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                              cursor: 'pointer'
+                            }}>
+                              고객납입금
+                            </div>
+                            <div style={{
+                              flex: 1,
+                              textAlign: 'center',
+                              padding: '6px 0',
+                              fontSize: '11px',
+                              fontWeight: '600',
+                              color: '#666666',
+                              cursor: 'pointer'
+                            }}>
+                              퇴직납입금
+                            </div>
+                          </div>
+
+                          {/* Dropdown */}
+                          <div style={{
+                            border: '1px solid #cbd5e1',
+                            borderRadius: '4px',
+                            padding: '8px 10px',
+                            fontSize: '12px',
+                            fontWeight: '600',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            color: '#333333'
+                          }}>
+                            <span>SOR - 지정가</span>
+                            <span style={{ fontSize: '8px', color: '#666666' }}>▼</span>
+                          </div>
+
+                          {/* Price input */}
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            border: '1px solid #fca5a5',
+                            backgroundColor: '#fff5f5',
+                            borderRadius: '4px',
+                            overflow: 'hidden'
+                          }}>
+                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>-</button>
+                            <div style={{ flex: 1, textAlign: 'center', fontSize: '13px', fontWeight: 'bold', color: '#333333' }}>29,750원</div>
+                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>+</button>
+                          </div>
+
+                          {/* Quantity input */}
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            border: '1px solid #cbd5e1',
+                            borderRadius: '4px',
+                            overflow: 'hidden'
+                          }}>
+                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>-</button>
+                            <div style={{ flex: 1, textAlign: 'center', fontSize: '12px', color: '#94a3b8' }}>수량 입력</div>
+                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>+</button>
+                          </div>
+
+                          {/* Max button */}
+                          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <button style={{
+                              border: '1px solid #cbd5e1',
+                              backgroundColor: '#ffffff',
+                              padding: '4px 16px',
+                              borderRadius: '4px',
+                              fontSize: '11px',
+                              color: '#333333',
+                              fontWeight: '600',
+                              cursor: 'pointer'
+                            }}>최대</button>
+                          </div>
+
+                          {/* Info rows */}
+                          <div style={{ display: 'flex', flexDirection: 'column', marginTop: 'auto' }}>
+                            {/* Row 1: 매수가능 금액 ⓘ (right aligned) */}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '8px' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#666666' }}>
+                                <span>매수가능 금액</span>
+                                <span style={{
+                                  border: '1px solid #3b82f6',
+                                  borderRadius: '50%',
+                                  width: '12px',
+                                  height: '12px',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  fontSize: '8px',
+                                  color: '#3b82f6',
+                                  fontWeight: 'bold'
+                                }}>i</span>
+                              </div>
+                              <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111', marginTop: '2px' }}>3,400,000원</span>
+                            </div>
+
+                            {/* Divider line */}
+                            <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '4px 0' }} />
+
+                            {/* Row 3: 초기화 / 주문금액 0원 */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '12px' }}>
+                              <span style={{
+                                fontSize: '12px',
+                                color: '#666666',
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                                paddingBottom: '4px'
+                              }}>초기화</span>
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                                <span style={{ fontSize: '11px', color: '#666666' }}>주문금액</span>
+                                <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#111111', marginTop: '2px' }}>0원</span>
+                              </div>
+                            </div>
+
+                            {/* Button: 매수 */}
+                            <button style={{
+                              width: '100%',
+                              border: 'none',
+                              backgroundColor: '#de201e',
+                              color: '#ffffff',
+                              padding: '12px 0',
+                              borderRadius: '4px',
+                              fontSize: '14px',
+                              fontWeight: 'bold',
+                              cursor: 'pointer'
+                            }}>
+                              매수
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Footer Index */}
+                      <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
+                        <span style={{ fontWeight: '800' }}>KOSPI</span>
+                        <span style={{ color: '#de201e', fontWeight: '800' }}>33,384.03 ▲ 23.14(1.19%)</span>
+                      </div>
+
+                      {/* Bottom tab menu bar */}
+                      <div style={{
+                        height: '44px',
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        borderTop: '1px solid #e2e8f0',
+                        backgroundColor: '#ffffff'
+                      }}>
+                        {/* Plus button */}
+                        <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#333' }}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        </button>
+
+                        {/* Menus */}
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+                          {['Menu 01', 'Menu 02', 'Menu 03', 'Menu 04', 'Menu 05'].map((menu, idx) => (
+                            <button
+                              key={menu}
+                              style={{
+                                flex: 1,
+                                border: 'none',
+                                background: 'none',
+                                borderRight: idx < 4 ? '1px solid #f1f5f9' : 'none',
+                                cursor: 'pointer',
+                                fontSize: '0.72rem',
+                                color: '#666666',
+                                fontWeight: '500'
+                              }}
+                            >
+                              {menu}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Back */}
+                        <button 
+                          onClick={() => setScreen6ToBeSubScreen('bondCurrentPrice')}
+                          style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: '#333' }}><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+                        </button>
+                      </div>
+                    </>
                   ) : (
                     <>
                       {/* Status Bar */}
@@ -11363,7 +11762,7 @@ function App() {
                     backgroundColor: isDark ? '#121826' : '#ffffff'
                   }}>
                     {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
-                      const isSelected = tab === '상품';
+                      const isSelected = tab === '연금';
                       return (
                         <div
                           key={tab}
@@ -11398,15 +11797,11 @@ function App() {
                     }}>
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         {[
-                          { name: '펀드', active: false },
-                          { name: '채권', active: true },
-                          { name: 'CMA/RP/자동투자', active: false },
-                          { name: 'ISA', active: false },
-                          { name: 'ELS/DLS', active: false },
-                          { name: '랩/신탁/조각투자', active: false },
-                          { name: '리츠', active: false },
-                          { name: '로보', active: false },
-                          { name: '금현물', active: false }
+                          { name: 'MY 연금', active: true },
+                          { name: 'IRP/퇴직연금', active: false },
+                          { name: '연금저축', active: false },
+                          { name: '연금수령', active: false },
+                          { name: '공지사항', active: false }
                         ].map((sub, idx) => (
                           <div
                             key={idx}
@@ -11416,13 +11811,27 @@ function App() {
                               fontWeight: sub.active ? '800' : '500',
                               color: sub.active ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
                               backgroundColor: sub.active ? (isDark ? '#121826' : '#ffffff') : 'transparent',
-                              whiteSpace: sub.name.includes('랩/신탁') ? 'nowrap' : 'normal',
-                              wordBreak: 'keep-all'
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between'
                             }}
                           >
-                            {sub.name === 'CMA/RP/자동투자' ? (
-                              <>CMA/RP/<br />자동투자</>
-                            ) : sub.name}
+                            <span>{sub.name}</span>
+                            {sub.badge && (
+                              <span style={{
+                                backgroundColor: '#00c3a5',
+                                color: '#ffffff',
+                                borderRadius: '50%',
+                                width: '14px',
+                                height: '14px',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '9px',
+                                fontWeight: 'bold',
+                                lineHeight: 1
+                              }}>{sub.badge}</span>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -11440,28 +11849,9 @@ function App() {
                       boxSizing: 'border-box'
                     }}>
                       <div>
-                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장외채권</div>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>채권매매</div>
                         <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 12px 0' }} />
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>단기사채</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>단기사채 매매</span>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>단기사채 잔고</span>
-                        </div>
-                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>해외채권</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>해외채권 매매</span>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>해외채권 잔고</span>
-                        </div>
-                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장내채권</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px', marginTop: '12px' }}>
                           <span 
                             onClick={() => setScreen6ToBeSubScreen('bondCurrentPrice')}
                             style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
@@ -11471,13 +11861,6 @@ function App() {
                           <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 주문</span>
                           <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 미체결/체결</span>
                           <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 잔고</span>
-                        </div>
-                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0' }} />
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>공지</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>채권 가이드</span>
                         </div>
                       </div>
                     </div>
