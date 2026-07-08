@@ -8132,6 +8132,7 @@ function App() {
   const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
+  const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice'
   const [screen4SubScreen, setScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asIsScreen4SubScreen, setAsIsScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asisSimulationStep, setAsisSimulationStep] = useState('main'); // 'main', 'daishin_form', 'daishin_result', 'other_q1', 'other_result'
@@ -10544,7 +10545,7 @@ function App() {
                                   lineHeight: 1,
                                   letterSpacing: '-0.5px'
                                 }}>
-                                  29,550
+                                  10,084.4
                                 </span>
                               </div>
 
@@ -10561,7 +10562,7 @@ function App() {
                                   color: '#de201e',
                                   lineHeight: 1
                                 }}>
-                                  1,750 (+6.29%)
+                                  19.4 (+0.19%)
                                 </span>
                               </div>
                             </div>
@@ -10616,7 +10617,7 @@ function App() {
                             backgroundColor: '#ffffff',
                             fontSize: '0.85rem'
                           }}>
-                            {['호가', '차트', '시간', '일자', '거래원'].map((t) => (
+                            {['호가', '상세', '시간', '일자', '호가현황'].map((t) => (
                               <div key={t} style={{
                                 flex: 1,
                                 textAlign: 'center',
@@ -10631,94 +10632,184 @@ function App() {
 
                           {/* Bid/Ask Table Area */}
                           <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', fontSize: '0.78rem' }}>
-                            <div style={{ display: 'flex', flex: 1 }}>
-                              {/* Columns */}
-                              <div style={{ width: '90px', borderRight: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column' }}>
-                                {/* Ask volumes (Top half) */}
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: '8px', borderBottom: '1px solid #f8fafc', color: '#64748b' }}>205</div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: '8px', borderBottom: '1px solid #f8fafc', color: '#64748b' }}>2,500</div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: '8px', borderBottom: '1px solid #f8fafc', color: '#64748b' }}>2,500</div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: '8px', borderBottom: '1px solid #f8fafc', color: '#64748b' }}>4,979</div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', borderBottom: '1px solid #f8fafc' }}></div>
-                                {/* Bid volumes (Bottom half - empty) */}
-                                <div style={{ flex: 1, backgroundColor: '#ffffff' }}></div>
+                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '370px', fontSize: '0.78rem', backgroundColor: '#ffffff' }}>
+                              {/* Table Header */}
+                              <div style={{
+                                display: 'flex',
+                                backgroundColor: '#f1f5f9',
+                                borderBottom: '1px solid #e2e8f0',
+                                height: '28px',
+                                alignItems: 'center',
+                                fontWeight: 'bold',
+                                color: '#333333',
+                                textAlign: 'center'
+                              }}>
+                                <div style={{ flex: 1 }}>수익률</div>
+                                <div style={{ flex: 1.2 }}>매도잔량</div>
+                                <div style={{ flex: 1.5 }}>호가</div>
+                                <div style={{ flex: 1.5 }}>매수잔량</div>
+                                <div style={{ flex: 1 }}>수익률</div>
                               </div>
 
-                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', borderRight: '1px solid #f1f5f9' }}>
-                                {/* Prices Column */}
-                                {/* Ask Prices */}
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #f8fafc' }}>
-                                  <span style={{ color: '#de201e', fontWeight: '700' }}>148,800</span>
-                                  <span style={{ color: '#de201e', fontSize: '0.68rem' }}>+5.92%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #f8fafc' }}>
-                                  <span style={{ color: '#de201e', fontWeight: '700' }}>142,380</span>
-                                  <span style={{ color: '#de201e', fontSize: '0.68rem' }}>+1.35%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #f8fafc' }}>
-                                  <span style={{ color: '#de201e', fontWeight: '700' }}>142,370</span>
-                                  <span style={{ color: '#de201e', fontSize: '0.68rem' }}>+1.34%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #f8fafc' }}>
-                                  <span style={{ color: '#de201e', fontWeight: '700' }}>141,920</span>
-                                  <span style={{ color: '#de201e', fontSize: '0.68rem' }}>+1.02%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#f0f6ff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #f8fafc' }}>
-                                  <span style={{ color: '#2366ca', fontWeight: '700' }}>141,787</span>
-                                  <span style={{ color: '#2366ca', fontSize: '0.68rem' }}>-0.93%</span>
-                                </div>
-                                {/* Bid Prices */}
-                                <div style={{ height: '32px', backgroundColor: '#fff5f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #fdf2f2' }}>
-                                  <span style={{ color: '#de201e', fontWeight: '700' }}>141,655</span>
-                                  <span style={{ color: '#de201e', fontSize: '0.68rem' }}>+0.83%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#fff5f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #fdf2f2' }}>
-                                  <span style={{ color: '#de201e', fontWeight: '700' }}>141,060</span>
-                                  <span style={{ color: '#de201e', fontSize: '0.68rem' }}>+0.41%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#fff5f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #fdf2f2' }}>
-                                  <span style={{ color: '#de201e', fontWeight: '700' }}>141,050</span>
-                                  <span style={{ color: '#de201e', fontSize: '0.68rem' }}>+0.40%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#fff5f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #fdf2f2' }}>
-                                  <span style={{ color: '#2366ca', fontWeight: '700' }}>140,140</span>
-                                  <span style={{ color: '#2366ca', fontSize: '0.68rem' }}>-0.25%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#fff5f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #fdf2f2' }}>
-                                  <span style={{ color: '#2366ca', fontWeight: '700' }}>134,000</span>
-                                  <span style={{ color: '#2366ca', fontSize: '0.68rem' }}>-4.62%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#fff5f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px', borderBottom: '1px solid #fdf2f2' }}>
-                                  <span style={{ color: '#2366ca', fontWeight: '700' }}>126,875</span>
-                                  <span style={{ color: '#2366ca', fontSize: '0.68rem' }}>-9.69%</span>
-                                </div>
-                                <div style={{ height: '32px', backgroundColor: '#fff5f5', borderBottom: '1px solid #fdf2f2' }}></div>
-                              </div>
+                              {/* Table Body */}
+                              <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                                {/* Top Half (5 rows) */}
+                                <div style={{ display: 'flex', height: '170px' }}>
+                                  {/* Left side columns 1 & 2: Ask Info (5 rows) */}
+                                  <div style={{ flex: 2.2, display: 'flex', flexDirection: 'column' }}>
+                                    {[
+                                      { yield: '5.805%', qty: '20,000' },
+                                      { yield: '5.806%', qty: '10,000' },
+                                      { yield: '5.807%', qty: '19,780' },
+                                      { yield: '5.918%', qty: '63,350' },
+                                      { yield: '5.919%', qty: '14,000' }
+                                    ].map((item, idx) => (
+                                      <div key={idx} style={{
+                                        display: 'flex',
+                                        height: '34px',
+                                        alignItems: 'center',
+                                        backgroundColor: '#f0f6ff',
+                                        borderBottom: '1px solid #e8f0fe',
+                                        borderRight: '1px solid #e8f0fe'
+                                      }}>
+                                        <div style={{ flex: 1, paddingLeft: '8px', color: '#de201e', fontWeight: '500' }}>{item.yield}</div>
+                                        <div style={{ flex: 1.2, paddingRight: '8px', textAlign: 'right', color: '#334155', fontWeight: '500' }}>{item.qty}</div>
+                                      </div>
+                                    ))}
+                                  </div>
 
-                              <div style={{ width: '110px', display: 'flex', flexDirection: 'column' }}>
-                                {/* Info Panel & Bid Volumes */}
-                                {/* Info Panel */}
-                                <div style={{ padding: '6px', fontSize: '0.68rem', lineHeight: '1.25', color: '#555555', borderBottom: '1px solid #f1f5f9', backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>거래량</span><span style={{ fontWeight: '700', color: '#111' }}>187</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>체결강도</span><span style={{ fontWeight: '700', color: '#00977d' }}>25.50%</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>전종</span><span style={{ fontWeight: '700' }}>140,485</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>전거</span><span style={{ fontWeight: '700' }}>164</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>시가</span><span style={{ color: '#2366ca' }}>139,210</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>고가</span><span style={{ color: '#de201e' }}>140,975</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>저가</span><span style={{ color: '#2366ca' }}>139,210</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px' }}><span style={{ color: '#de201e' }}>▲ 상한</span><span style={{ color: '#de201e', fontWeight: '700' }}>182,630</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{ color: '#2366ca' }}>▼ 하한</span><span style={{ color: '#2366ca', fontWeight: '700' }}>98,340</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{ color: '#de201e' }}>상승VI</span><span style={{ color: '#de201e' }}>155,065</span></div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{ color: '#2366ca' }}>하락VI</span><span style={{ color: '#2366ca' }}>126,865</span></div>
+                                  {/* Middle column 3: Ask Prices (5 rows) */}
+                                  <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column' }}>
+                                    {[
+                                      { price: '10,095.0', active: false },
+                                      { price: '10,094.9', active: false },
+                                      { price: '10,094.8', active: false },
+                                      { price: '10,084.4', active: true },
+                                      { price: '10,084.3', active: false }
+                                    ].map((item, idx) => (
+                                      <div key={idx} style={{
+                                        display: 'flex',
+                                        height: '34px',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        backgroundColor: '#f0f6ff',
+                                        borderBottom: '1px solid #e8f0fe',
+                                        borderRight: '1px solid #e8f0fe'
+                                      }}>
+                                        {item.active ? (
+                                          <div style={{
+                                            border: '2px solid #222222',
+                                            padding: '1px 6px',
+                                            fontWeight: 'bold',
+                                            color: '#de201e',
+                                            fontSize: '0.85rem'
+                                          }}>{item.price}</div>
+                                        ) : (
+                                          <span style={{ color: '#de201e', fontWeight: 'bold', fontSize: '0.85rem' }}>{item.price}</span>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {/* Right side columns 4 & 5: Spanned Info Panel (170px height) */}
+                                  <div style={{
+                                    flex: 2.5,
+                                    backgroundColor: '#ffffff',
+                                    borderBottom: '1px solid #e2e8f0',
+                                    padding: '6px 8px 6px 12px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    fontSize: '0.7rem',
+                                    color: '#475569',
+                                    fontWeight: '500'
+                                  }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>거래량</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>71,570</span></div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>전종</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>10,065.0</span></div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>시가</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>10,065.0</span></div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>고가</span><span style={{ fontWeight: 'bold', color: '#de201e' }}>10,084.4</span></div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>저가</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>10,065.0</span></div>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}><span>주가</span></div>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}><span>전환가</span></div>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}><span>패리티</span></div>
+                                  </div>
                                 </div>
-                                {/* Bid volumes */}
-                                <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#fff5f5' }}>
-                                  <div style={{ height: '32px', display: 'flex', alignItems: 'center', paddingLeft: '8px', borderBottom: '1px solid #fdf2f2', color: '#64748b' }}>4,919</div>
-                                  <div style={{ height: '32px', display: 'flex', alignItems: 'center', paddingLeft: '8px', borderBottom: '1px solid #fdf2f2', color: '#64748b' }}>2,500</div>
-                                  <div style={{ height: '32px', display: 'flex', alignItems: 'center', paddingLeft: '8px', borderBottom: '1px solid #fdf2f2', color: '#64748b' }}>2,500</div>
-                                  <div style={{ height: '32px', display: 'flex', alignItems: 'center', paddingLeft: '8px', borderBottom: '1px solid #fdf2f2', color: '#64748b' }}>1</div>
-                                  <div style={{ height: '32px', display: 'flex', alignItems: 'center', paddingLeft: '8px', borderBottom: '1px solid #fdf2f2', color: '#64748b' }}>10</div>
-                                  <div style={{ height: '32px', display: 'flex', alignItems: 'center', paddingLeft: '8px', borderBottom: '1px solid #fdf2f2', color: '#64748b' }}>300</div>
+
+                                {/* Bottom Half (5 rows) */}
+                                <div style={{ display: 'flex', height: '170px' }}>
+                                  {/* Left side columns 1 & 2: Spanned Execution History Panel (170px height) */}
+                                  <div style={{
+                                    flex: 2.2,
+                                    backgroundColor: '#ffffff',
+                                    borderRight: '1px solid #e2e8f0',
+                                    padding: '4px 6px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    fontSize: '0.68rem',
+                                    fontWeight: '500'
+                                  }}>
+                                    {[
+                                      { price: '10,084.4', qty: '10', color: '#de201e' },
+                                      { price: '10,084.4', qty: '10', color: '#de201e' },
+                                      { price: '10,084.4', qty: '1,340', color: '#de201e' },
+                                      { price: '10,084.4', qty: '35,090', color: '#de201e' },
+                                      { price: '10,084.4', qty: '200', color: '#de201e' },
+                                      { price: '10,084.3', qty: '30,710', color: '#de201e' },
+                                      { price: '10,065.0', qty: '3,000', color: '#334155' },
+                                      { price: '10,065.0', qty: '1,210', color: '#334155' }
+                                    ].map((item, idx) => (
+                                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '0 2px' }}>
+                                        <span style={{ color: item.color }}>{item.price}</span>
+                                        <span style={{ color: '#64748b' }}>{item.qty}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {/* Middle column 3: Bid Prices (5 rows) */}
+                                  <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column' }}>
+                                    {[
+                                      { price: '10,066.0', color: '#de201e' },
+                                      { price: '10,065.8', color: '#de201e' },
+                                      { price: '10,065.7', color: '#de201e' },
+                                      { price: '10,065.1', color: '#de201e' },
+                                      { price: '10,065.0', color: '#0f172a' }
+                                    ].map((item, idx) => (
+                                      <div key={idx} style={{
+                                        display: 'flex',
+                                        height: '34px',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        backgroundColor: '#fff5f5',
+                                        borderBottom: '1px solid #fdf2f2',
+                                        borderRight: '1px solid #fdf2f2'
+                                      }}>
+                                        <span style={{ color: item.color, fontWeight: 'bold', fontSize: '0.85rem' }}>{item.price}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {/* Right side columns 4 & 5: Bid Info (5 rows) */}
+                                  <div style={{ flex: 2.5, display: 'flex', flexDirection: 'column' }}>
+                                    {[
+                                      { qty: '2,320', yield: '6.113%' },
+                                      { qty: '30,000', yield: '6.115%' },
+                                      { qty: '100,000', yield: '6.117%' },
+                                      { qty: '5,000', yield: '6.123%' },
+                                      { qty: '37,800', yield: '6.124%' }
+                                    ].map((item, idx) => (
+                                      <div key={idx} style={{
+                                        display: 'flex',
+                                        height: '34px',
+                                        alignItems: 'center',
+                                        backgroundColor: '#fff5f5',
+                                        borderBottom: '1px solid #fdf2f2'
+                                      }}>
+                                        <div style={{ flex: 1.5, paddingLeft: '8px', color: '#334155', fontWeight: '500' }}>{item.qty}</div>
+                                        <div style={{ flex: 1, paddingRight: '8px', textAlign: 'right', color: '#de201e', fontWeight: '500' }}>{item.yield}</div>
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -10830,16 +10921,389 @@ function App() {
                   flexDirection: 'column',
                   position: 'relative'
                 }}>
-                  {/* Status Bar */}
-                  <div style={{
-                    ...styles.phoneHeaderBar,
-                    backgroundColor: '#4750b3',
-                    color: '#ffffff',
-                    borderBottom: 'none'
-                  }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
-                    <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
-                  </div>
+                  {screen6ToBeSubScreen === 'bondCurrentPrice' ? (
+                    <>
+                      {/* Galaxy S20 Central Punch-hole Camera */}
+                      <div style={styles.phoneCamera} />
+
+                      {/* Phone Status Bar */}
+                      <div style={styles.phoneHeaderBar}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: '700', color: isDark ? '#94a3b8' : '#475569' }}>SKT 10:39</span>
+                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                          <span style={{ fontSize: '0.65rem', fontWeight: '800', color: isDark ? '#94a3b8' : '#333' }}>5G</span>
+                          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                            <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                            <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                            <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                            <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                          </div>
+                          <div style={{
+                            border: isDark ? '1px solid #94a3b8' : '1px solid #333',
+                            borderRadius: '3px',
+                            padding: '0px 3px',
+                            fontSize: '0.62rem',
+                            fontWeight: '900',
+                            height: '14px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: isDark ? '#94a3b8' : '#333',
+                            color: isDark ? '#0b0f19' : '#fff',
+                            lineHeight: 1
+                          }}>
+                            86
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* TO BE Header Area */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        height: '46px',
+                        padding: '0 12px',
+                        borderBottom: '1px solid #e2e8f0',
+                        backgroundColor: '#ffffff'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span 
+                            onClick={() => setScreen6ToBeSubScreen('menu')}
+                            style={{ fontSize: '1.2rem', cursor: 'pointer' }}
+                          >
+                            ☰
+                          </span>
+                          <span style={{ fontSize: '1.2rem', cursor: 'pointer' }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                          </span>
+                          <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px', marginLeft: '4px' }}>삼척블루파워9</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <span style={{ border: '1px solid #ddd', padding: '4px 5px', fontSize: '11px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px', cursor: 'pointer', fontWeight: '600' }}>
+                            통합
+                            <svg width="11" height="10" viewBox="0 0 14 12" fill="none">
+                              <rect y="0" width="14" height="2" rx="1" fill="#333"/>
+                              <rect y="5" width="14" height="2" rx="1" fill="#bbb"/>
+                              <rect y="10" width="14" height="2" rx="1" fill="#bbb"/>
+                            </svg>
+                          </span>
+                          <span style={{ color: '#aaa', fontSize: '1.3rem', cursor: 'pointer', lineHeight: 1 }}>★</span>
+                          <span style={{ color: '#333', fontSize: '1.1rem', cursor: 'pointer', fontWeight: 'bold', letterSpacing: '1px' }}>···</span>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2.2" style={{ cursor: 'pointer' }}><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+                        </div>
+                      </div>
+
+                      {/* Stock Info Bar */}
+                      <div style={{ padding: '8px 12px', backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', gap: '2px', borderBottom: '1px solid #f3f4f6' }}>
+
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              {/* Candle Icon */}
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '10px', height: '26px', position: 'relative' }}>
+                                <div style={{ width: '2px', height: '26px', backgroundColor: '#de201e', position: 'absolute', top: 0, zIndex: 1 }} />
+                                <div style={{ width: '8px', height: '16px', backgroundColor: '#de201e', position: 'relative', zIndex: 2 }} />
+                              </div>
+                              <span style={{ fontSize: '24px', fontWeight: '500', color: '#de201e', lineHeight: 1 }}>10,084.4</span>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '11px', color: '#de201e', fontWeight: '700', marginLeft: '6px' }}>
+                                <span>▲ 19.4</span>
+                                <span>(0.19%)</span>
+                              </div>
+                            </div>
+                            <div style={{ display: 'flex', fontSize: '10px', color: '#888888', marginTop: '4px', paddingLeft: '4px' }}>
+                              <span>288,505 <span style={{ color: '#de201e', marginLeft: '4px' }}>(96.30%)</span></span>
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: '4px' }}>
+                            <button style={{ border: 'none', backgroundColor: '#2366ca', color: '#ffffff', fontSize: '11px', fontWeight: '700', padding: '8px 14px', borderRadius: '4px', cursor: 'pointer' }}>매도</button>
+                            <button style={{ border: 'none', backgroundColor: '#de201e', color: '#ffffff', fontSize: '11px', fontWeight: '700', padding: '8px 14px', borderRadius: '4px', cursor: 'pointer' }}>매수</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Sub Tabs */}
+                      <div style={{ display: 'flex', borderBottom: '1px solid #e5e7eb', backgroundColor: '#ffffff' }}>
+                        {['호가', '상세', '시간', '일자', '호가현황'].map((tab, idx) => (
+                          <div key={tab} style={{
+                            flex: 1,
+                            textAlign: 'center',
+                            padding: '10px 0',
+                            fontSize: '12px',
+                            fontWeight: tab === '호가' ? '800' : '500',
+                            color: tab === '호가' ? '#111111' : '#666666',
+                            borderBottom: tab === '호가' ? '2.5px solid #111111' : '2.5px solid transparent',
+                            cursor: 'pointer'
+                          }}>{tab}</div>
+                        ))}
+                      </div>
+
+                      {/* Content Body */}
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto', fontSize: '11px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '370px', fontSize: '0.78rem', backgroundColor: '#ffffff' }}>
+                          {/* Table Header */}
+                          <div style={{
+                            display: 'flex',
+                            backgroundColor: '#f1f5f9',
+                            borderBottom: '1px solid #e2e8f0',
+                            height: '28px',
+                            alignItems: 'center',
+                            fontWeight: 'bold',
+                            color: '#333333',
+                            textAlign: 'center'
+                          }}>
+                            <div style={{ flex: 1 }}>수익률</div>
+                            <div style={{ flex: 1.2 }}>매도잔량</div>
+                            <div style={{ flex: 1.5 }}>호가</div>
+                            <div style={{ flex: 1.5 }}>매수잔량</div>
+                            <div style={{ flex: 1 }}>수익률</div>
+                          </div>
+
+                          {/* Table Body */}
+                          <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                            {/* Top Half (5 rows) */}
+                            <div style={{ display: 'flex', height: '170px' }}>
+                              {/* Left side columns 1 & 2: Ask Info (5 rows) */}
+                              <div style={{ flex: 2.2, display: 'flex', flexDirection: 'column' }}>
+                                {[
+                                  { yield: '5.805%', qty: '20,000' },
+                                  { yield: '5.806%', qty: '10,000' },
+                                  { yield: '5.807%', qty: '19,780' },
+                                  { yield: '5.918%', qty: '63,350' },
+                                  { yield: '5.919%', qty: '14,000' }
+                                ].map((item, idx) => (
+                                  <div key={idx} style={{
+                                    display: 'flex',
+                                    height: '34px',
+                                    alignItems: 'center',
+                                    backgroundColor: '#f0f6ff',
+                                    borderBottom: '1px solid #e8f0fe',
+                                    borderRight: '1px solid #e8f0fe'
+                                  }}>
+                                    <div style={{ flex: 1, paddingLeft: '8px', color: '#de201e', fontWeight: '500' }}>{item.yield}</div>
+                                    <div style={{ flex: 1.2, paddingRight: '8px', textAlign: 'right', color: '#334155', fontWeight: '500' }}>{item.qty}</div>
+                                  </div>
+                                ))}
+                              </div>
+
+                              {/* Middle column 3: Ask Prices (5 rows) */}
+                              <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column' }}>
+                                {[
+                                  { price: '10,095.0', active: false },
+                                  { price: '10,094.9', active: false },
+                                  { price: '10,094.8', active: false },
+                                  { price: '10,084.4', active: true },
+                                  { price: '10,084.3', active: false }
+                                ].map((item, idx) => (
+                                  <div key={idx} style={{
+                                    display: 'flex',
+                                    height: '34px',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: '#f0f6ff',
+                                    borderBottom: '1px solid #e8f0fe',
+                                    borderRight: '1px solid #e8f0fe'
+                                  }}>
+                                    {item.active ? (
+                                      <div style={{
+                                        border: '2px solid #222222',
+                                        padding: '1px 6px',
+                                        fontWeight: 'bold',
+                                        color: '#de201e',
+                                        fontSize: '0.85rem'
+                                      }}>{item.price}</div>
+                                    ) : (
+                                      <span style={{ color: '#de201e', fontWeight: 'bold', fontSize: '0.85rem' }}>{item.price}</span>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+
+                              {/* Right side columns 4 & 5: Spanned Info Panel (170px height) */}
+                              <div style={{
+                                flex: 2.5,
+                                backgroundColor: '#ffffff',
+                                borderBottom: '1px solid #e2e8f0',
+                                padding: '6px 8px 6px 12px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                fontSize: '0.7rem',
+                                color: '#475569',
+                                fontWeight: '500'
+                              }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>거래량</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>71,570</span></div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>전종</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>10,065.0</span></div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>시가</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>10,065.0</span></div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>고가</span><span style={{ fontWeight: 'bold', color: '#de201e' }}>10,084.4</span></div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>저가</span><span style={{ fontWeight: 'bold', color: '#0f172a' }}>10,065.0</span></div>
+                                <div style={{ display: 'flex', justifyContent: 'flex-start' }}><span>주가</span></div>
+                                <div style={{ display: 'flex', justifyContent: 'flex-start' }}><span>전환가</span></div>
+                                <div style={{ display: 'flex', justifyContent: 'flex-start' }}><span>패리티</span></div>
+                              </div>
+                            </div>
+
+                            {/* Bottom Half (5 rows) */}
+                            <div style={{ display: 'flex', height: '170px' }}>
+                              {/* Left side columns 1 & 2: Spanned Execution History Panel (170px height) */}
+                              <div style={{
+                                flex: 2.2,
+                                backgroundColor: '#ffffff',
+                                borderRight: '1px solid #e2e8f0',
+                                padding: '4px 6px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                fontSize: '0.68rem',
+                                fontWeight: '500'
+                              }}>
+                                {[
+                                  { price: '10,084.4', qty: '10', color: '#de201e' },
+                                  { price: '10,084.4', qty: '10', color: '#de201e' },
+                                  { price: '10,084.4', qty: '1,340', color: '#de201e' },
+                                  { price: '10,084.4', qty: '35,090', color: '#de201e' },
+                                  { price: '10,084.4', qty: '200', color: '#de201e' },
+                                  { price: '10,084.3', qty: '30,710', color: '#de201e' },
+                                  { price: '10,065.0', qty: '3,000', color: '#334155' },
+                                  { price: '10,065.0', qty: '1,210', color: '#334155' }
+                                ].map((item, idx) => (
+                                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '0 2px' }}>
+                                    <span style={{ color: item.color }}>{item.price}</span>
+                                    <span style={{ color: '#64748b' }}>{item.qty}</span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              {/* Middle column 3: Bid Prices (5 rows) */}
+                              <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column' }}>
+                                {[
+                                  { price: '10,066.0', color: '#de201e' },
+                                  { price: '10,065.8', color: '#de201e' },
+                                  { price: '10,065.7', color: '#de201e' },
+                                  { price: '10,065.1', color: '#de201e' },
+                                  { price: '10,065.0', color: '#0f172a' }
+                                ].map((item, idx) => (
+                                  <div key={idx} style={{
+                                    display: 'flex',
+                                    height: '34px',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: '#fff5f5',
+                                    borderBottom: '1px solid #fdf2f2',
+                                    borderRight: '1px solid #fdf2f2'
+                                  }}>
+                                    <span style={{ color: item.color, fontWeight: 'bold', fontSize: '0.85rem' }}>{item.price}</span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              {/* Right side columns 4 & 5: Bid Info (5 rows) */}
+                              <div style={{ flex: 2.5, display: 'flex', flexDirection: 'column' }}>
+                                {[
+                                  { qty: '2,320', yield: '6.113%' },
+                                  { qty: '30,000', yield: '6.115%' },
+                                  { qty: '100,000', yield: '6.117%' },
+                                  { qty: '5,000', yield: '6.123%' },
+                                  { qty: '37,800', yield: '6.124%' }
+                                ].map((item, idx) => (
+                                  <div key={idx} style={{
+                                    display: 'flex',
+                                    height: '34px',
+                                    alignItems: 'center',
+                                    backgroundColor: '#fff5f5',
+                                    borderBottom: '1px solid #fdf2f2'
+                                  }}>
+                                    <div style={{ flex: 1.5, paddingLeft: '8px', color: '#334155', fontWeight: '500' }}>{item.qty}</div>
+                                    <div style={{ flex: 1, paddingRight: '8px', textAlign: 'right', color: '#de201e', fontWeight: '500' }}>{item.yield}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Ticker values */}
+                      <div style={{ display: 'flex', height: '24px', borderTop: '1px solid #e2e8f0', backgroundColor: '#ffffff', alignItems: 'center', fontSize: '10px', fontWeight: '700' }}>
+                        <div style={{ flex: 1, textAlign: 'right', paddingRight: '12px', color: '#2366ca', borderRight: '1px solid #e2e8f0' }}>257,312</div>
+                        <div style={{ flex: 1, textAlign: 'center', color: '#111111', borderRight: '1px solid #e2e8f0' }}>13:24</div>
+                        <div style={{ flex: 1, textAlign: 'left', paddingLeft: '12px', color: '#de201e' }}>257,312</div>
+                      </div>
+
+                      {/* Footer Index */}
+                      <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
+                        <span style={{ fontWeight: '800' }}>KOSPI</span>
+                        <span style={{ color: '#de201e', fontWeight: '800' }}>33,384.03 ▲ 23.14(1.19%)</span>
+                      </div>
+
+                      {/* Bottom tab menu bar */}
+                      <div style={{
+                        height: '44px',
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        borderTop: '1px solid #e2e8f0',
+                        backgroundColor: '#ffffff'
+                      }}>
+                        {/* Home button */}
+                        <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: '#333' }}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                        </button>
+
+                        {/* Middle text tabs */}
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+                          {[
+                            { key: '장내채권 현재가', label: `장내채권\n현재가` },
+                            { key: '장내채권 잔고', label: `장내채권\n잔고` },
+                            { key: '장외채권 매매', label: `장외채권\n매매` },
+                            { key: '장외채권 잔고', label: `장외채권\n잔고` }
+                          ].map((tab, idx) => {
+                            return (
+                              <button
+                                key={tab.key}
+                                style={{
+                                  flex: 1,
+                                  border: 'none',
+                                  background: 'none',
+                                  borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
+                                  cursor: 'pointer',
+                                  fontSize: '0.73rem',
+                                  fontWeight: '500',
+                                  color: '#333',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  textAlign: 'center',
+                                  whiteSpace: 'pre-line',
+                                  lineHeight: '1.2',
+                                  padding: '2px 2px'
+                                }}
+                              >
+                                {tab.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Back */}
+                        <button 
+                          onClick={() => setScreen6ToBeSubScreen('menu')}
+                          style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: '#333' }}><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Status Bar */}
+                      <div style={{
+                        ...styles.phoneHeaderBar,
+                        backgroundColor: '#4750b3',
+                        color: '#ffffff',
+                        borderBottom: 'none'
+                      }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
+                        <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+                      </div>
 
                   {/* Top user bar (French Blue Theme) */}
                   <div style={{
@@ -10994,7 +11458,12 @@ function App() {
                       <div>
                         <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장내채권</div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 현재가</span>
+                          <span 
+                            onClick={() => setScreen6ToBeSubScreen('bondCurrentPrice')}
+                            style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
+                          >
+                            장내채권 현재가
+                          </span>
                           <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 주문</span>
                           <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 미체결/체결</span>
                           <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 잔고</span>
@@ -11037,7 +11506,9 @@ function App() {
                       <span>인증/OTP</span>
                     </div>
                   </div>
-                </div>
+                </>
+              )}
+            </div>
               </div>
             </div>
 
@@ -11146,38 +11617,6 @@ function App() {
                     setStockSelectorOpen={setStockSelectorOpen}
                     isDrawerOpen={isDrawerOpen}
                   />
-                  {/* Dim Overlay */}
-                  <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                    borderRadius: '24px',
-                    zIndex: 100,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backdropFilter: 'blur(3px)',
-                    pointerEvents: 'auto'
-                  }}>
-                    <div style={{
-                      backgroundColor: '#1e293b',
-                      color: '#f8fafc',
-                      padding: '12px 24px',
-                      borderRadius: '8px',
-                      fontSize: '1rem',
-                      fontWeight: '700',
-                      boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
-                      border: '1px solid #334155',
-                      letterSpacing: '-0.3px',
-                      textAlign: 'center'
-                    }}>
-                      브전실에서 작업중....
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
