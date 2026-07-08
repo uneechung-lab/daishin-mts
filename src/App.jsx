@@ -8178,6 +8178,12 @@ function App() {
     const tobeParam = params.get('tobe');
     if (tobeParam) setToBeSubScreen(tobeParam);
 
+    const screen6AsIsParam = params.get('screen6asis');
+    if (screen6AsIsParam) setScreen6AsIsSubScreen(screen6AsIsParam);
+
+    const screen6ToBeParam = params.get('screen6tobe');
+    if (screen6ToBeParam) setScreen6ToBeSubScreen(screen6ToBeParam);
+
     const screen4SubParam = params.get('screen4SubScreen');
     if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
 
@@ -8247,6 +8253,8 @@ function App() {
     params.set('screen', activeScreen);
     params.set('asis', asIsSubScreen);
     params.set('tobe', toBeSubScreen);
+    params.set('screen6asis', screen6AsIsSubScreen);
+    params.set('screen6tobe', screen6ToBeSubScreen);
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -8275,7 +8283,7 @@ function App() {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -8289,6 +8297,10 @@ function App() {
       if (asisParam) setAsIsSubScreen(asisParam);
       const tobeParam = params.get('tobe');
       if (tobeParam) setToBeSubScreen(tobeParam);
+      const screen6AsIsParam = params.get('screen6asis');
+      if (screen6AsIsParam) setScreen6AsIsSubScreen(screen6AsIsParam);
+      const screen6ToBeParam = params.get('screen6tobe');
+      if (screen6ToBeParam) setScreen6ToBeSubScreen(screen6ToBeParam);
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
