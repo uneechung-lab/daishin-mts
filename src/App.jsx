@@ -11465,12 +11465,15 @@ function App() {
                             display: 'flex',
                             backgroundColor: '#f1f5f9',
                             borderRadius: '6px',
-                            padding: '2px'
+                            padding: '2px',
+                            height: '36px',
+                            boxSizing: 'border-box'
                           }}>
                             <div style={{
                               flex: 1,
-                              textAlign: 'center',
-                              padding: '6px 0',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
                               fontSize: '11px',
                               fontWeight: '700',
                               color: '#333333',
@@ -11483,8 +11486,9 @@ function App() {
                             </div>
                             <div style={{
                               flex: 1,
-                              textAlign: 'center',
-                              padding: '6px 0',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
                               fontSize: '11px',
                               fontWeight: '600',
                               color: '#666666',
@@ -11501,7 +11505,9 @@ function App() {
                             justifyContent: 'space-between',
                             border: '1px solid #cbd5e1',
                             borderRadius: '4px',
-                            padding: '8px 10px',
+                            padding: '0 10px',
+                            height: '36px',
+                            boxSizing: 'border-box',
                             fontSize: '12px',
                             color: '#333333',
                             backgroundColor: '#f8fafc'
@@ -11513,28 +11519,32 @@ function App() {
                           {/* Price input */}
                           <div style={{
                             display: 'flex',
-                            alignItems: 'center',
+                            alignItems: 'stretch',
                             border: '1px solid #fca5a5',
                             backgroundColor: '#fff5f5',
                             borderRadius: '4px',
+                            height: '36px',
+                            boxSizing: 'border-box',
                             overflow: 'hidden'
                           }}>
-                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>-</button>
-                            <div style={{ flex: 1, textAlign: 'center', fontSize: '13px', fontWeight: 'bold', color: '#333333' }}>10,065원</div>
-                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>+</button>
+                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 'bold', color: '#333333' }}>10,065원</div>
+                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
                           </div>
 
                           {/* Quantity input */}
                           <div style={{
                             display: 'flex',
-                            alignItems: 'center',
+                            alignItems: 'stretch',
                             border: '1px solid #cbd5e1',
                             borderRadius: '4px',
+                            height: '36px',
+                            boxSizing: 'border-box',
                             overflow: 'hidden'
                           }}>
-                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>-</button>
-                            <div style={{ flex: 1, textAlign: 'center', fontSize: '12px', color: '#94a3b8' }}>수량 입력</div>
-                            <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>+</button>
+                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: '#94a3b8' }}>수량 입력</div>
+                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
                           </div>
 
                           {/* Max button */}
