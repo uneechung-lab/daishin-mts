@@ -12479,6 +12479,7 @@ function App() {
                   </li>
                 </ul>
               </div>
+            </>
           )
           ) : activeScreen === 6 ? (
             /* Descriptions for Screen 6: 장내 채권 매매 */
