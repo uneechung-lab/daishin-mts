@@ -10318,9 +10318,9 @@ function App() {
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                 <div style={{ width: '6px', height: '18px', backgroundColor: '#de201e' }}></div>
-                                <span style={{ fontSize: '20px', fontWeight: '800', color: '#de201e', lineHeight: 1 }}>10,084.4</span>
+                                <span style={{ fontSize: '20px', fontWeight: '500', color: '#de201e', lineHeight: 1 }}>10,084.4</span>
                               </div>
-                              <span style={{ fontSize: '11px', color: '#de201e', marginTop: '2px', fontWeight: '600' }}>
+                              <span style={{ fontSize: '11px', color: '#de201e', marginTop: '2px', fontWeight: '500' }}>
                                 ▲ 19.4 (0.19%)
                               </span>
                             </div>
@@ -11009,7 +11009,7 @@ function App() {
                                 <div style={{ width: '8px', height: '16px', backgroundColor: '#de201e', position: 'relative', zIndex: 2 }} />
                               </div>
                               <span style={{ fontSize: '24px', fontWeight: '500', color: '#de201e', lineHeight: 1 }}>10,084.4</span>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '11px', color: '#de201e', fontWeight: '700', marginLeft: '6px' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '11px', color: '#de201e', fontWeight: '500', marginLeft: '6px' }}>
                                 <span>▲ 19.4</span>
                                 <span>(0.19%)</span>
                               </div>
@@ -11357,10 +11357,17 @@ function App() {
                       {/* Stock Info Bar */}
                       <div style={{ padding: '8px 12px', backgroundColor: '#ffffff', borderBottom: '1px solid #f3f4f6' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px' }}>
-                          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                            <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#de201e', lineHeight: 1 }}>29,750</span>
-                            <span style={{ fontSize: '12px', color: '#de201e', fontWeight: '700' }}>▲ 1,750</span>
-                            <span style={{ fontSize: '12px', color: '#de201e', fontWeight: '700' }}>0.50%</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            {/* Candle Icon */}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '10px', height: '26px', position: 'relative' }}>
+                              <div style={{ width: '2px', height: '26px', backgroundColor: '#de201e', position: 'absolute', top: 0, zIndex: 1 }} />
+                              <div style={{ width: '8px', height: '16px', backgroundColor: '#de201e', position: 'relative', zIndex: 2 }} />
+                            </div>
+                            <span style={{ fontSize: '24px', fontWeight: '500', color: '#de201e', lineHeight: 1 }}>10,084.4</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '11px', color: '#de201e', fontWeight: '500', marginLeft: '6px' }}>
+                              <span>▲ 19.4</span>
+                              <span>(0.19%)</span>
+                            </div>
                             <span style={{ fontSize: '12px', color: '#888888', marginLeft: '4px' }}>:</span>
                           </div>
                           <button 
@@ -11421,77 +11428,34 @@ function App() {
                       <div style={{ flex: 1, display: 'flex', backgroundColor: '#ffffff', overflow: 'hidden' }}>
                         {/* Left column: Orderbook (40%) */}
                         <div style={{ width: '40%', borderRight: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', fontSize: '11px', height: '100%', overflowY: 'auto' }}>
-                          {/* Upper arrow */}
-                          <div style={{ padding: '6px 8px', borderBottom: '1px solid #f1f5f9', color: '#de201e', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <span>▲</span>
-                            <span>38,250</span>
-                          </div>
-
-                          {/* Ask list */}
                           {[
-                            { price: '29,900', pct: '+2.75%', qty: '6,801', type: 'ask' },
-                            { price: '29,850', pct: '+2.75%', qty: '5,592', type: 'ask' },
-                            { price: '29,800', pct: '+2.58%', qty: '3,676', type: 'ask' },
-                            { price: '29,750', pct: '+2.41%', qty: '1,054', type: 'ask' },
-                            { price: '29,725', pct: '+2.31%', qty: '10', type: 'bid', badge: 'K' },
-                            { price: '29,725', pct: '+2.31%', qty: '', type: 'bid', badge: 'N' },
-                            { price: '29,700', pct: '+2.21%', qty: '1,054', type: 'bid' },
-                            { price: '29,650', pct: '+2.07%', qty: '2,554', type: 'bid' },
-                            { price: '29,600', pct: '+1.89%', qty: '3,140', type: 'bid' },
-                            { price: '29,550', pct: '+1.70%', qty: '5,107', type: 'bid' }
+                            { price: '10,099.7', diff: '+0.34%', vol: '14,000', type: 'ask' },
+                            { price: '10,095.0', diff: '+0.30%', vol: '20,000', type: 'ask' },
+                            { price: '10,094.9', diff: '+0.30%', vol: '10,000', type: 'ask' },
+                            { price: '10,094.8', diff: '+0.30%', vol: '19,780', type: 'ask' },
+                            { price: '10,084.4', diff: '+0.19%', vol: '64,710', type: 'active' },
+                            { price: '10,066.0', diff: '+0.01%', vol: '1,200', type: 'bid' },
+                            { price: '10,065.8', diff: '+0.01%', vol: '30,000', type: 'bid' },
+                            { price: '10,065.7', diff: '+0.01%', vol: '100,000', type: 'bid' },
+                            { price: '10,065.1', diff: '+0.00%', vol: '25,000', type: 'bid' },
+                            { price: '10,065.0', diff: '0.00%', vol: '37,800', type: 'bid_zero' }
                           ].map((row, idx) => {
-                            const isAsk = row.type === 'ask';
-                            const bg = isAsk ? '#f0f6ff' : '#fff5f5';
+                            let bg = '#ffffff';
+                            let color = '#de201e';
+                            if (row.type === 'ask') bg = '#f0f6ff';
+                            else if (row.type === 'bid') bg = '#fff5f5';
+                            else if (row.type === 'active') bg = '#e0f2fe';
+                            else if (row.type === 'bid_zero') { bg = '#fff5f5'; color = '#111111'; }
                             return (
-                              <div key={idx} style={{
-                                display: 'flex',
-                                height: '34px',
-                                borderBottom: '1px solid #f1f5f9',
-                                backgroundColor: bg,
-                                alignItems: 'center',
-                                position: 'relative'
-                              }}>
-                                {/* Badge K/N if present */}
-                                {row.badge && (
-                                  <div style={{
-                                    position: 'absolute',
-                                    left: '2px',
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    fontSize: '8px',
-                                    fontWeight: 'bold',
-                                    padding: '1px 3px',
-                                    borderRadius: '2px',
-                                    border: '1px solid #cbd5e1',
-                                    color: '#0284c7',
-                                    backgroundColor: '#ffffff',
-                                    zIndex: 10
-                                  }}>
-                                    {row.badge}
-                                  </div>
-                                )}
-                                <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column', paddingLeft: row.badge ? '18px' : '8px' }}>
-                                  <span style={{ fontWeight: 'bold', color: '#de201e', fontSize: '11px' }}>{row.price}</span>
-                                  <span style={{ color: '#de201e', fontSize: '9px' }}>{row.pct}</span>
-                                </div>
-                                <div style={{ flex: 1, paddingRight: '8px', textAlign: 'right', color: '#4b5563', fontWeight: '500' }}>
-                                  {row.qty}
+                              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 8px', borderBottom: '1px solid #f1f5f9', backgroundColor: bg, alignItems: 'center' }}>
+                                <span style={{ fontWeight: '700', color: color }}>{row.price}</span>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', fontSize: '9px', color: color }}>
+                                  <span>{row.diff}</span>
+                                  <span style={{ color: '#4b5563' }}>{row.vol}</span>
                                 </div>
                               </div>
                             );
                           })}
-
-                          {/* Lower arrow */}
-                          <div style={{ padding: '6px 8px', borderTop: '1px solid #f1f5f9', color: '#2366ca', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <span>▼</span>
-                            <span>20,350</span>
-                          </div>
-
-                          {/* Dots */}
-                          <div style={{ display: 'flex', justifyContent: 'center', gap: '4px', padding: '6px 0' }}>
-                            <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#333333' }}></span>
-                            <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#cbd5e1' }}></span>
-                          </div>
                         </div>
 
                         {/* Right column: Form (60%) */}
@@ -11530,21 +11494,20 @@ function App() {
                             </div>
                           </div>
 
-                          {/* Dropdown */}
+                          {/* Order Unit instead of Dropdown */}
                           <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
                             border: '1px solid #cbd5e1',
                             borderRadius: '4px',
                             padding: '8px 10px',
                             fontSize: '12px',
-                            fontWeight: '600',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            color: '#333333'
+                            color: '#333333',
+                            backgroundColor: '#f8fafc'
                           }}>
-                            <span>SOR - 지정가</span>
-                            <span style={{ fontSize: '8px', color: '#666666' }}>▼</span>
+                            <span style={{ fontWeight: '500', color: '#666666' }}>주문단위</span>
+                            <span style={{ fontWeight: '700', color: '#333333' }}>10,000</span>
                           </div>
 
                           {/* Price input */}
@@ -11557,7 +11520,7 @@ function App() {
                             overflow: 'hidden'
                           }}>
                             <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>-</button>
-                            <div style={{ flex: 1, textAlign: 'center', fontSize: '13px', fontWeight: 'bold', color: '#333333' }}>29,750원</div>
+                            <div style={{ flex: 1, textAlign: 'center', fontSize: '13px', fontWeight: 'bold', color: '#333333' }}>10,065원</div>
                             <button style={{ border: 'none', background: 'none', width: '32px', height: '36px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer' }}>+</button>
                           </div>
 
@@ -11590,10 +11553,10 @@ function App() {
 
                           {/* Info rows */}
                           <div style={{ display: 'flex', flexDirection: 'column', marginTop: 'auto' }}>
-                            {/* Row 1: 매수가능 금액 ⓘ (right aligned) */}
+                            {/* Row 1: 주문가능 금액 ⓘ (right aligned) */}
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '8px' }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#666666' }}>
-                                <span>매수가능 금액</span>
+                                <span>주문가능 금액</span>
                                 <span style={{
                                   border: '1px solid #3b82f6',
                                   borderRadius: '50%',
