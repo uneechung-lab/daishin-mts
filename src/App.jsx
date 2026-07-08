@@ -12479,8 +12479,89 @@ function App() {
                   </li>
                 </ul>
               </div>
-            </>
           )
+          ) : activeScreen === 6 ? (
+            /* Descriptions for Screen 6: 장내 채권 매매 */
+            <>
+              {isAsIsToBeExpanded && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>퇴직연금 계좌를 통한 장내채권 매매 기능 부재</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      장내채권 메뉴는 일반 '상품' 탭 하위에만 존재하며 일반 주식/채권 계좌 중심으로 운영. 퇴직연금 종합계좌(41, 43)의 경우, 주문전용계좌(790/799) 백엔드 자동 매핑, 부담금 납입구분 처리, 자사 발행 회사채 매수 제한 필터링 등 연금 특화 프로세스를 처리할 수 있는 UI 컴포넌트와 거래 인프라가 없어 장내채권 매매가 불가능함.
+                    </p>
+                  </div>
+          
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금 전용 장내채권 매매 경로 및 인프라 신규 신설</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      '연금' 탭 하위에 퇴직연금 고객 전용 장내채권 매매 경로를 신규 신설. 고객이 41(43) 종합계좌를 선택하면 백엔드에서 790(799) 주문계좌를 자동 인식하여 체크하되 복잡한 계좌 체계는 철저히 마스킹 처리. 또한 연금 전용 투자한도 정보와 규칙을 바인딩한 컴포넌트를 제공하여 퇴직연금 자산 관점의 직관적인 장내채권 투자를 전면 지원.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div 
+                onClick={() => setIsAsIsToBeExpanded(!isAsIsToBeExpanded)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '8px 0',
+                  userSelect: 'none',
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  transition: 'opacity 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                {isAsIsToBeExpanded ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="18 15 12 9 6 15" />
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                )}
+              </div>
+        
+              <div style={{
+                backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                borderRadius: '12px',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '14px',
+                border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)'
+              }}>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
+                  주요 핵심 구현 사항
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연금 전용 계좌 매핑 & 부담금 구분:</strong> 퇴직연금용 실거래계좌 연동 지원 및 고객/퇴직 부담금 분류 적용
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>위험자산 매수 한도 제한:</strong> 퇴직연금 법령상 위험자산 매수 제한 룰 적용 및 한도 금액 실시간 표시 컴포넌트 탑재
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </>
           ) : (
             /* Descriptions for Screen 2 (Original) */
             <>
