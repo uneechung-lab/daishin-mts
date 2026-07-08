@@ -10991,14 +10991,6 @@ function App() {
                           <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px', marginLeft: '4px' }}>삼척블루파워9</span>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                          <span style={{ border: '1px solid #ddd', padding: '4px 5px', fontSize: '11px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px', cursor: 'pointer', fontWeight: '600' }}>
-                            통합
-                            <svg width="11" height="10" viewBox="0 0 14 12" fill="none">
-                              <rect y="0" width="14" height="2" rx="1" fill="#333"/>
-                              <rect y="5" width="14" height="2" rx="1" fill="#bbb"/>
-                              <rect y="10" width="14" height="2" rx="1" fill="#bbb"/>
-                            </svg>
-                          </span>
                           <span style={{ color: '#aaa', fontSize: '1.3rem', cursor: 'pointer', lineHeight: 1 }}>★</span>
                           <span style={{ color: '#333', fontSize: '1.1rem', cursor: 'pointer', fontWeight: 'bold', letterSpacing: '1px' }}>···</span>
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2.2" style={{ cursor: 'pointer' }}><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
