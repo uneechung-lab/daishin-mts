@@ -11010,7 +11010,7 @@ function App() {
                                 <span>(0.19%)</span>
                               </div>
                             </div>
-                            <div style={{ display: 'flex', fontSize: '10px', color: '#888888', marginTop: '4px', paddingLeft: '4px' }}>
+                            <div style={{ display: 'flex', fontSize: '10px', color: '#888888', marginTop: '4px', paddingLeft: '1px' }}>
                               <span>288,505 <span style={{ color: '#de201e', marginLeft: '4px' }}>(96.30%)</span></span>
                             </div>
                           </div>
