@@ -11633,35 +11633,55 @@ function App() {
                         borderTop: '1px solid #e2e8f0',
                         backgroundColor: '#ffffff'
                       }}>
-                        {/* Plus button */}
+                        {/* Home button */}
                         <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#333' }}><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: '#333' }}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
                         </button>
 
-                        {/* Menus */}
+                        {/* Middle text tabs */}
                         <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
-                          {['Menu 01', 'Menu 02', 'Menu 03', 'Menu 04', 'Menu 05'].map((menu, idx) => (
-                            <button
-                              key={menu}
-                              style={{
-                                flex: 1,
-                                border: 'none',
-                                background: 'none',
-                                borderRight: idx < 4 ? '1px solid #f1f5f9' : 'none',
-                                cursor: 'pointer',
-                                fontSize: '0.72rem',
-                                color: '#666666',
-                                fontWeight: '500'
-                              }}
-                            >
-                              {menu}
-                            </button>
-                          ))}
+                          {[
+                            { key: '장내채권 현재가', label: `장내채권\n현재가` },
+                            { key: '장내채권 잔고', label: `장내채권\n잔고` },
+                            { key: '장외채권 매매', label: `장외채권\n매매` },
+                            { key: '장외채권 잔고', label: `장외채권\n잔고` }
+                          ].map((tab, idx) => {
+                            const isSelected = tab.key === '장내채권 현재가';
+                            return (
+                              <button
+                                key={tab.key}
+                                onClick={() => {
+                                  if (tab.key === '장내채권 현재가') {
+                                    setScreen6ToBeSubScreen('bondCurrentPrice');
+                                  }
+                                }}
+                                style={{
+                                  flex: 1,
+                                  border: 'none',
+                                  background: 'none',
+                                  borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
+                                  cursor: 'pointer',
+                                  fontSize: '0.73rem',
+                                  fontWeight: isSelected ? '800' : '500',
+                                  color: isSelected ? '#4750b3' : '#333333',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  textAlign: 'center',
+                                  whiteSpace: 'pre-line',
+                                  lineHeight: '1.2',
+                                  padding: '2px'
+                                }}
+                              >
+                                {tab.label}
+                              </button>
+                            );
+                          })}
                         </div>
 
                         {/* Back */}
                         <button 
-                          onClick={() => setScreen6ToBeSubScreen('bondCurrentPrice')}
+                          onClick={() => setScreen6ToBeSubScreen('menu')}
                           style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         >
                           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: '#333' }}><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
