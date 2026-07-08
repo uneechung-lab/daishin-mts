@@ -11583,6 +11583,11 @@ function App() {
                               <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111', marginTop: '2px' }}>3,400,000원</span>
                             </div>
 
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '8px' }}>
+                              <div style={{ fontSize: '11px', color: '#666666' }}>위험자산 매수 가능 금액</div>
+                              <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111', marginTop: '2px' }}>400,000원</span>
+                            </div>
+
                             {/* Divider line */}
                             <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '4px 0' }} />
 
@@ -11646,7 +11651,7 @@ function App() {
                             { key: '장외채권 매매', label: `장외채권\n매매` },
                             { key: '장외채권 잔고', label: `장외채권\n잔고` }
                           ].map((tab, idx) => {
-                            const isSelected = tab.key === '장내채권 현재가';
+                            const isSelected = false;
                             return (
                               <button
                                 key={tab.key}
