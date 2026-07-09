@@ -8162,8 +8162,39 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         height: '100%',
         backgroundColor: '#ffffff',
         color: '#111111',
-        fontFamily: 'sans-serif'
+        fontFamily: 'sans-serif',
+        position: 'relative'
       }}>
+        {/* Phone Camera & Status Bar */}
+        <div style={styles.phoneCamera} />
+        <div style={styles.phoneHeaderBar}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: isDark ? '#94a3b8' : '#475569' }}>SKT 10:39</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800', color: isDark ? '#94a3b8' : '#333' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+            </div>
+            <div style={{
+              border: isDark ? '1px solid #94a3b8' : '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: isDark ? '#94a3b8' : '#333',
+              color: isDark ? '#0b0f19' : '#fff',
+              lineHeight: 1
+            }}>
+              86
+            </div>
+          </div>
+        </div>
         {/* Header */}
         <div style={{
           display: 'flex',
