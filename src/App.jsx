@@ -12805,7 +12805,7 @@ function App() {
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                     <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                     <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>듀얼 진입 프로세스 구축:</strong> '장내채권 현재가' 화면에서 매수 시 연금계좌를 선택하거나, 처음부터 'MY연금 > 채권매매' 경로에서 퇴직연금계좌를 선택하고 시작하는 듀얼 진입을 지원합니다.
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>듀얼 진입 프로세스 구축:</strong> '장내채권 현재가' 화면에서 매수 시 연금계좌를 선택하거나, 처음부터 'MY연금 &gt; 채권매매' 경로에서 퇴직연금계좌를 선택하고 시작하는 듀얼 진입을 지원합니다.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
@@ -12829,6 +12829,7 @@ function App() {
                 </ul>
               </div>
             </>
+          ) : (
             /* Descriptions for Screen 2 (Original) */
             <>
               {isAsIsToBeExpanded && (
