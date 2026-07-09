@@ -8131,6 +8131,10 @@ function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
   const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
+  const [screen6AsIsCautionQ1, setScreen6AsIsCautionQ1] = useState(null);
+  const [screen6AsIsCautionQ2, setScreen6AsIsCautionQ2] = useState(null);
+  const [screen6ToBeCautionQ1, setScreen6ToBeCautionQ1] = useState(null);
+  const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(true);
@@ -8359,6 +8363,228 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6AsIsPaymentType, setScreen6AsIsPaymentType] = useState('고객');
   const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account'
   const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account'
+
+  const renderScreen6Caution = (mode) => {
+    const q1 = mode === 'asis' ? screen6AsIsCautionQ1 : screen6ToBeCautionQ1;
+    const q2 = mode === 'asis' ? screen6AsIsCautionQ2 : screen6ToBeCautionQ2;
+    const setQ1 = mode === 'asis' ? setScreen6AsIsCautionQ1 : setScreen6ToBeCautionQ1;
+    const setQ2 = mode === 'asis' ? setScreen6AsIsCautionQ2 : setScreen6ToBeCautionQ2;
+    
+    const handleClose = () => {
+      if (mode === 'asis') {
+        setScreen6AsIsSubScreen('bondOrder');
+      } else {
+        setScreen6ToBeSubScreen('bondOrder');
+      }
+    };
+    
+    const handleConfirm = () => {
+      if (q1 === 'yes' || q2 === 'yes') {
+        alert('선택하신 채권의 매수가 불가능합니다.');
+        return;
+      }
+      if (q1 === null || q2 === null) {
+        alert('모든 유의사항 항목에 응답해 주시기 바랍니다.');
+        return;
+      }
+      alert('매수 주문이 성공적으로 접수되었습니다.');
+      if (mode === 'asis') {
+        setScreen6AsIsSubScreen('bondCurrentPrice');
+        setScreen6AsIsCautionQ1(null);
+        setScreen6AsIsCautionQ2(null);
+      } else {
+        setScreen6ToBeSubScreen('bondCurrentPrice');
+        setScreen6ToBeCautionQ1(null);
+        setScreen6ToBeCautionQ2(null);
+      }
+    };
+
+    const isConfirmDisabled = q1 === null || q2 === null;
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif',
+        position: 'relative'
+      }}>
+        {/* Phone Camera & Status Bar */}
+        <div style={styles.phoneCamera} />
+        <div style={styles.phoneHeaderBar}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#475569' }}>SKT 12:30</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800', color: '#333' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              86
+            </div>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '48px',
+          padding: '0 12px',
+          borderBottom: '1px solid #f1f5f9'
+        }}>
+          <button 
+            onClick={handleClose}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div style={{ flex: 1, padding: '24px 20px', overflowY: 'auto' }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 12px 0', lineHeight: 1.3 }}>
+            이해관계인 등 확인
+          </h2>
+          <p style={{ fontSize: '0.85rem', color: '#666666', margin: '0 0 24px 0', lineHeight: 1.5 }}>
+            대신에프앤아이 채권 매수를 진행하기 위해 아래 문항을 읽고 본인의 해당 여부를 정확하게 확인해 주시기 바랍니다.
+          </p>
+
+          {/* Question 1 */}
+          <div style={{ marginBottom: '24px' }}>
+            <p style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111111', margin: '0 0 10px 0', lineHeight: 1.4 }}>
+              1. 김대신 님께서는 발행자 대신에프앤아이, 또는 그 지배회사/종속회사에 이해관계인에 해당하시나요?
+            </p>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button 
+                onClick={() => setQ1('yes')}
+                style={{
+                  flex: 1,
+                  height: '42px',
+                  borderRadius: '6px',
+                  border: q1 === 'yes' ? '2.5px solid #de201e' : '1px solid #cbd5e1',
+                  backgroundColor: q1 === 'yes' ? '#fef2f2' : '#ffffff',
+                  color: q1 === 'yes' ? '#de201e' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                네
+              </button>
+              <button 
+                onClick={() => setQ1('no')}
+                style={{
+                  flex: 1,
+                  height: '42px',
+                  borderRadius: '6px',
+                  border: q1 === 'no' ? '2.5px solid #2366ca' : '1px solid #cbd5e1',
+                  backgroundColor: q1 === 'no' ? '#eff6ff' : '#ffffff',
+                  color: q1 === 'no' ? '#2366ca' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                아니오
+              </button>
+            </div>
+            {q1 === 'yes' && (
+              <div style={{ color: '#de201e', fontSize: '0.78rem', fontWeight: '800', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                ⚠️ 선택하신 채권의 매수가 불가능합니다.
+              </div>
+            )}
+          </div>
+
+          {/* Question 2 */}
+          <div style={{ marginBottom: '24px' }}>
+            <p style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111111', margin: '0 0 10px 0', lineHeight: 1.4 }}>
+              2. 김대신 님께서는 발행자 대신에프앤아이의 계열회사 등 지본법 적용관계에 있는 회사에 재직중이신가요?
+            </p>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button 
+                onClick={() => setQ2('yes')}
+                style={{
+                  flex: 1,
+                  height: '42px',
+                  borderRadius: '6px',
+                  border: q2 === 'yes' ? '2.5px solid #de201e' : '1px solid #cbd5e1',
+                  backgroundColor: q2 === 'yes' ? '#fef2f2' : '#ffffff',
+                  color: q2 === 'yes' ? '#de201e' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                네
+              </button>
+              <button 
+                onClick={() => setQ2('no')}
+                style={{
+                  flex: 1,
+                  height: '42px',
+                  borderRadius: '6px',
+                  border: q2 === 'no' ? '2.5px solid #2366ca' : '1px solid #cbd5e1',
+                  backgroundColor: q2 === 'no' ? '#eff6ff' : '#ffffff',
+                  color: q2 === 'no' ? '#2366ca' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                아니오
+              </button>
+            </div>
+            {q2 === 'yes' && (
+              <div style={{ color: '#de201e', fontSize: '0.78rem', fontWeight: '800', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                ⚠️ 선택하신 채권의 매수가 불가능합니다.
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom Confirm Button */}
+        <button 
+          onClick={handleConfirm}
+          disabled={isConfirmDisabled}
+          style={{
+            height: '52px',
+            backgroundColor: isConfirmDisabled ? '#94a3b8' : '#111111',
+            color: '#ffffff',
+            border: 'none',
+            fontSize: '1rem',
+            fontWeight: '700',
+            cursor: isConfirmDisabled ? 'not-allowed' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          확인
+        </button>
+      </div>
+    );
+  };
 
   const renderScreen6Bsheet = (mode) => {
     const bsheetState = mode === 'asis' ? screen6AsIsBsheetState : screen6ToBeBsheetState;
