@@ -9848,6 +9848,14 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (screen6AsIsSearchParam) setScreen6AsIsSearchOpen(screen6AsIsSearchParam === 'true');
     const screen6ToBeSearchParam = params.get('screen6tobesearch');
     if (screen6ToBeSearchParam) setScreen6ToBeSearchOpen(screen6ToBeSearchParam === 'true');
+    const screen6asisq1Param = params.get('screen6asisq1');
+    if (screen6asisq1Param) setScreen6AsIsCautionQ1(screen6asisq1Param);
+    const screen6asisq2Param = params.get('screen6asisq2');
+    if (screen6asisq2Param) setScreen6AsIsCautionQ2(screen6asisq2Param);
+    const screen6tobeq1Param = params.get('screen6tobeq1');
+    if (screen6tobeq1Param) setScreen6ToBeCautionQ1(screen6tobeq1Param);
+    const screen6tobeq2Param = params.get('screen6tobeq2');
+    if (screen6tobeq2Param) setScreen6ToBeCautionQ2(screen6tobeq2Param);
 
     const screen4SubParam = params.get('screen4SubScreen');
     if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
@@ -9925,6 +9933,10 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     params.set('screen6tobebsheet', screen6ToBeBsheetState);
     params.set('screen6asissearch', screen6AsIsSearchOpen ? 'true' : 'false');
     params.set('screen6tobesearch', screen6ToBeSearchOpen ? 'true' : 'false');
+    if (screen6AsIsCautionQ1) params.set('screen6asisq1', screen6AsIsCautionQ1); else params.delete('screen6asisq1');
+    if (screen6AsIsCautionQ2) params.set('screen6asisq2', screen6AsIsCautionQ2); else params.delete('screen6asisq2');
+    if (screen6ToBeCautionQ1) params.set('screen6tobeq1', screen6ToBeCautionQ1); else params.delete('screen6tobeq1');
+    if (screen6ToBeCautionQ2) params.set('screen6tobeq2', screen6ToBeCautionQ2); else params.delete('screen6tobeq2');
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -9953,7 +9965,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -9981,6 +9993,14 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
       if (screen6AsIsSearchParam) setScreen6AsIsSearchOpen(screen6AsIsSearchParam === 'true');
       const screen6ToBeSearchParam = params.get('screen6tobesearch');
       if (screen6ToBeSearchParam) setScreen6ToBeSearchOpen(screen6ToBeSearchParam === 'true');
+      const screen6asisq1Param = params.get('screen6asisq1');
+      if (screen6asisq1Param) setScreen6AsIsCautionQ1(screen6asisq1Param);
+      const screen6asisq2Param = params.get('screen6asisq2');
+      if (screen6asisq2Param) setScreen6AsIsCautionQ2(screen6asisq2Param);
+      const screen6tobeq1Param = params.get('screen6tobeq1');
+      if (screen6tobeq1Param) setScreen6ToBeCautionQ1(screen6tobeq1Param);
+      const screen6tobeq2Param = params.get('screen6tobeq2');
+      if (screen6tobeq2Param) setScreen6ToBeCautionQ2(screen6tobeq2Param);
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
