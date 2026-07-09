@@ -8436,39 +8436,83 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               </div>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div 
-                  onClick={() => setBsheetState('product')}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '14px 4px',
-                    cursor: 'pointer',
-                    borderBottom: '1px solid #f1f5f9'
-                  }}
-                >
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>{mode === 'tobe' ? '200-233354(01)' : '200-233354'}</span>
-                    <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
-                  </div>
-                  <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
-                </div>
-                
-                <div 
-                  onClick={() => setBsheetState('product')}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '14px 4px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>{mode === 'tobe' ? '161-119731(41)' : '161-119731'}</span>
-                    <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
-                  </div>
-                </div>
+                {mode === 'tobe' ? (
+                  <>
+                    {/* First Account (TO-BE: 161-119731(41)) */}
+                    <div 
+                      onClick={() => setBsheetState('product')}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '14px 4px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f1f5f9'
+                      }}
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>161-119731(41)</span>
+                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
+                      </div>
+                      <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+                    </div>
+                    
+                    {/* Second Account (TO-BE: 200-233354(01)) */}
+                    <div 
+                      onClick={() => setBsheetState('product')}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '14px 4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(01)</span>
+                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* First Account (AS-IS: 200-233354) */}
+                    <div 
+                      onClick={() => setBsheetState('product')}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '14px 4px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f1f5f9'
+                      }}
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354</span>
+                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
+                      </div>
+                      <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+                    </div>
+                    
+                    {/* Second Account (AS-IS: 161-119731) */}
+                    <div 
+                      onClick={() => setBsheetState('product')}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '14px 4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>161-119731</span>
+                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </>
           )}
