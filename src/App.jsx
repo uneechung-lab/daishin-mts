@@ -12743,20 +12743,20 @@ function App() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
-                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>퇴직연금 계좌를 통한 장내채권 매매 기능 부재</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>퇴직연금 계좌로 장내채권 매매 불가</span>
                     </div>
                     <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
-                      장내채권 메뉴는 일반 '상품' 탭 하위에만 존재하며 일반 주식/채권 계좌 중심으로 운영. 퇴직연금 종합계좌(41, 43)의 경우, 주문전용계좌(790/799) 백엔드 자동 매핑, 부담금 납입구분 처리, 자사 발행 회사채 매수 제한 필터링 등 연금 특화 프로세스를 처리할 수 있는 UI 컴포넌트와 거래 인프라가 없어 장내채권 매매가 불가능함.
+                      장내채권 메뉴가 일반 '상품' 탭 하위에만 존재하며 일반 계좌 중심으로 운영되었습니다. 퇴직연금 종합계좌(41, 43)는 주문전용계좌 매핑, 납입금 구분, 자사주 매수 제한 등 연금 전용 프로세스가 지원되지 않아 장내채권 매매 자체가 불가능했습니다.
                     </p>
                   </div>
           
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
-                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금 전용 장내채권 매매 경로 및 인프라 신규 신설</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금 전용 장내채권 매매 경로 신설</span>
                     </div>
                     <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
-                      '연금' 탭 하위에 퇴직연금 고객 전용 장내채권 매매 경로를 신규 신설. 고객이 41(43) 종합계좌를 선택하면 백엔드에서 790(799) 주문계좌를 자동 인식하여 체크하되 복잡한 계좌 체계는 철저히 마스킹 처리. 또한 연금 전용 투자한도 정보와 규칙을 바인딩한 컴포넌트를 제공하여 퇴직연금 자산 관점의 직관적인 장내채권 투자를 전면 지원.
+                      '연금' 탭 하위에 퇴직연금 전용 장내채권 매매 메뉴를 최초로 신설합니다. 사용자가 41(43) 종합계좌를 선택하면 백엔드에서 790(799) 주문계좌를 자동 매핑하여 복잡성을 완전히 제거하고, 연금 자산 관점의 직관적인 투자를 지원합니다.
                     </p>
                   </div>
                 </div>
@@ -12805,19 +12805,30 @@ function App() {
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                     <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                     <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연금 전용 계좌 매핑 & 부담금 구분:</strong> 퇴직연금용 실거래계좌 연동 지원 및 고객/퇴직 부담금 분류 적용
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>듀얼 진입 프로세스 구축:</strong> '장내채권 현재가' 화면에서 매수 시 연금계좌를 선택하거나, 처음부터 'MY연금 > 채권매매' 경로에서 퇴직연금계좌를 선택하고 시작하는 듀얼 진입을 지원합니다.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                     <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                     <div>
-                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>위험자산 매수 한도 제한:</strong> 퇴직연금 법령상 위험자산 매수 제한 룰 적용 및 한도 금액 실시간 표시 컴포넌트 탑재
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>부담금 납입구분 셀렉터 및 실시간 계산:</strong> 화면 내 [고객납입금 / 퇴직납입금] 선택 탭(라디오 버튼)을 필수 제공하며, 사용자가 선택한 납입구분에 따라 '매수가능금액'과 잔고를 실시간으로 변동하여 바인딩합니다.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연금 전용 필터링 및 유의문구 팝업:</strong> 연금상품관리(RK #23608)에 등록된 채권만 검색되도록 필터링하고, DC/IRP 계좌별로 근로자 소속회사의 자사 발행 회사채 매매 시도 시 주문 불가 안내 또는 유의문구 모달 팝업을 강제 노출합니다.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>장내·외 통합 잔고 화면 신설:</strong> 기존 장외채권 잔고와 신규 장내채권 잔고를 한눈에 볼 수 있는 독립된 통합 잔고 화면을 신설하고, 그리드에 주문가능수량, 매수단가, 만기일, 잔고구분(납입금구분)을 필수 표출합니다.
                     </div>
                   </li>
                 </ul>
               </div>
             </>
-          ) : (
             /* Descriptions for Screen 2 (Original) */
             <>
               {isAsIsToBeExpanded && (
