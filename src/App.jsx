@@ -9039,7 +9039,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                               초기화
                             </button>
                             <button 
-                              onClick={() => setScreen6AsIsSubScreen('bondCurrentPrice')}
+                              onClick={() => setScreen6AsIsSubScreen('cautionAgreement')}
                               style={{ width: '132px', height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                             >
                               매수
@@ -9124,6 +9124,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             </button>
                           </div>
                         </>
+                      ) : screen6AsIsSubScreen === 'cautionAgreement' ? (
+                        renderScreen6Caution('asis')
                       ) : (
                         <>
                           {/* Header */}
@@ -12128,7 +12130,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             </div>
 
                             {/* Button: 매수 */}
-                            <button style={{
+                            <button onClick={() => setScreen6ToBeSubScreen('cautionAgreement')} style={{
                               width: '100%',
                               border: 'none',
                               backgroundColor: '#de201e',
@@ -12214,6 +12216,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         </button>
                       </div>
                     </>
+                  ) : screen6ToBeSubScreen === 'cautionAgreement' ? (
+                    renderScreen6Caution('tobe')
                   ) : (
                     <>
                       {/* Status Bar */}
