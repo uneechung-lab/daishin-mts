@@ -9339,6 +9339,10 @@ function App() {
     if (screen6ToBeParam) setScreen6ToBeSubScreen(screen6ToBeParam);
     const screen6ToBeSwitchParam = params.get('screen6tobeswitch');
     if (screen6ToBeSwitchParam) setScreen6ToBeSwitchOn(screen6ToBeSwitchParam === 'true');
+    const screen6AsIsBsheetParam = params.get('screen6asisbsheet');
+    if (screen6AsIsBsheetParam) setScreen6AsIsBsheetState(screen6AsIsBsheetParam);
+    const screen6ToBeBsheetParam = params.get('screen6tobebsheet');
+    if (screen6ToBeBsheetParam) setScreen6ToBeBsheetState(screen6ToBeBsheetParam);
 
     const screen4SubParam = params.get('screen4SubScreen');
     if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
@@ -9412,6 +9416,8 @@ function App() {
     params.set('screen6asis', screen6AsIsSubScreen);
     params.set('screen6tobe', screen6ToBeSubScreen);
     params.set('screen6tobeswitch', screen6ToBeSwitchOn ? 'true' : 'false');
+    params.set('screen6asisbsheet', screen6AsIsBsheetState);
+    params.set('screen6tobebsheet', screen6ToBeBsheetState);
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -9440,7 +9446,7 @@ function App() {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -9460,6 +9466,10 @@ function App() {
     if (screen6ToBeParam) setScreen6ToBeSubScreen(screen6ToBeParam);
     const screen6ToBeSwitchParam = params.get('screen6tobeswitch');
     if (screen6ToBeSwitchParam) setScreen6ToBeSwitchOn(screen6ToBeSwitchParam === 'true');
+      const screen6AsIsBsheetParam = params.get('screen6asisbsheet');
+      if (screen6AsIsBsheetParam) setScreen6AsIsBsheetState(screen6AsIsBsheetParam);
+      const screen6ToBeBsheetParam = params.get('screen6tobebsheet');
+      if (screen6ToBeBsheetParam) setScreen6ToBeBsheetState(screen6ToBeBsheetParam);
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
@@ -12130,11 +12140,11 @@ function App() {
                     </div>
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
                       <span>인증/OTP</span>
-              {renderScreen6Bsheet('tobe')}
                     </div>
                   </div>
                 </>
               )}
+              {renderScreen6Bsheet('tobe')}
             </div>
               </div>
             </div>
