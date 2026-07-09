@@ -8134,6 +8134,191 @@ function App() {
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(true);
+const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
+  const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(false);
+
+  const renderScreen6Search = (mode, onClose) => {
+    const bondSearchList = [
+      { name: '신한은행15-08이15A', code: 'B00C01118', retail: '', interest: '이표' },
+      { name: '신한은행18-07이15A', code: 'B00C01147', retail: '', interest: '이표' },
+      { name: '신한은행18-09이15A', code: 'B00C01149', retail: '', interest: '이표' },
+      { name: '신한은행19-11단15A', code: 'B00C0115B', retail: '', interest: '단리' },
+      { name: '신한은행20-01이15A', code: 'B00C01161', retail: '', interest: '이표' },
+      { name: '신한은행20-02이15A', code: 'B00C01162', retail: '', interest: '이표' },
+      { name: '신한은행20-12이15A', code: 'B00C0116C', retail: '', interest: '이표' },
+      { name: '신한은행21-02-단15-A', code: 'B00C01172', retail: '', interest: '단리' },
+      { name: '신한은행21-03-이-15-A', code: 'B00C01173', originalInterest: '이표', interest: '이표' },
+      { name: '신한은행21-08-이-15-A', code: 'B00C01178', retail: '', interest: '이표' },
+      { name: '신한은행22-02-이-15-A', code: 'B00C01182', retail: '', interest: '이표' },
+      { name: '신한은행22-04-이-15-A', code: 'B00C01184', retail: '', interest: '' },
+      { name: '신한은행22-08-복-20-A', code: 'B00C01188', retail: '', interest: '복리' },
+      { name: '신한은행24-01-복-20-A', code: 'B00C011A1', retail: '', interest: '복리' }
+    ];
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '48px',
+          padding: '0 12px',
+          borderBottom: '1px solid #f1f5f9',
+          gap: '12px'
+        }}>
+          <button 
+            onClick={onClose}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+          <span style={{ fontSize: '1.05rem', fontWeight: '800', flex: 1, textAlign: 'center', marginLeft: '-22px' }}>종목찾기</span>
+        </div>
+
+        {/* Scrollable Tabs */}
+        <div style={{
+          display: 'flex',
+          gap: '16px',
+          overflowX: 'auto',
+          padding: '0 12px',
+          borderBottom: '1px solid #f1f5f9',
+          scrollbarWidth: 'none',
+          whiteSpace: 'nowrap'
+        }}>
+          {[
+            { label: '선물옵션', active: false },
+            { label: '야간선물옵션', active: false },
+            { label: '해외선물', active: false },
+            { label: '장내채권', active: true },
+            { label: '금현물', active: false }
+          ].map((tab) => (
+            <div 
+              key={tab.label}
+              style={{
+                padding: '12px 4px',
+                fontSize: '0.85rem',
+                fontWeight: tab.active ? '800' : '500',
+                color: tab.active ? '#111111' : '#777777',
+                borderBottom: tab.active ? '2.5px solid #111111' : '2.5px solid transparent',
+                cursor: 'pointer'
+              }}
+            >
+              {tab.label}
+            </div>
+          ))}
+        </div>
+
+        {/* Search bar input wrapper */}
+        <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: '#f1f5f9',
+            borderRadius: '4px',
+            padding: '8px 10px',
+            gap: '8px'
+          }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            <input 
+              type="text" 
+              placeholder="종목명, 종목코드, 초성입력" 
+              style={{ border: 'none', background: 'none', outline: 'none', fontSize: '0.8rem', width: '100%', color: '#333333' }}
+              readOnly
+            />
+          </div>
+
+          {/* Select filter dropdowns */}
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              border: '1px solid #e2e8f0',
+              borderRadius: '4px',
+              padding: '6px 10px',
+              fontSize: '0.8rem',
+              color: '#333',
+              backgroundColor: '#fff',
+              cursor: 'pointer'
+            }}>
+              <span>전체</span>
+              <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+            </div>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              border: '1px solid #e2e8f0',
+              borderRadius: '4px',
+              padding: '6px 10px',
+              fontSize: '0.8rem',
+              color: '#333',
+              backgroundColor: '#fff',
+              cursor: 'pointer'
+            }}>
+              <span>전체</span>
+              <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Table header */}
+        <div style={{
+          display: 'flex',
+          backgroundColor: '#f8fafc',
+          padding: '6px 12px',
+          fontSize: '0.75rem',
+          fontWeight: '700',
+          color: '#64748b',
+          borderTop: '1px solid #e2e8f0',
+          borderBottom: '1px solid #e2e8f0'
+        }}>
+          <span style={{ flex: 1 }}>종목명</span>
+          <span style={{ width: '40px', textAlign: 'center' }}>소매</span>
+          <span style={{ width: '50px', textAlign: 'center' }}>이자</span>
+        </div>
+
+        {/* List of items */}
+        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          {bondSearchList.map((bond, idx) => (
+            <div 
+              key={idx}
+              onClick={onClose}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '12px',
+                borderBottom: '1px solid #f1f5f9',
+                cursor: 'pointer',
+                transition: 'background-color 0.15s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
+                <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
+              </div>
+              <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
+              <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
   const [screen6AsIsPaymentType, setScreen6AsIsPaymentType] = useState('고객');
   const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account'
   const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account'
@@ -8621,7 +8806,7 @@ function App() {
                               <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px' }}>삼척블루파워10</span>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                              <button style={{ border: 'none', background: 'none', color: '#111', padding: 0, display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                              <button onClick={() => { if (isSwitchOff) setScreen6ToBeSearchOpen(true); else setScreen6AsIsSearchOpen(true); }} style={{ border: 'none', background: 'none', color: '#111', padding: 0, display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
                               </button>
                               <button style={{ border: 'none', background: 'none', color: '#111', padding: 0, display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
@@ -8895,7 +9080,7 @@ function App() {
                               <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px' }}>삼척블루파워9</span>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                              <button 
+                              <button onClick={() => { if (isSwitchOff) setScreen6ToBeSearchOpen(true); else setScreen6AsIsSearchOpen(true); }} 
                                 onClick={() => setScreen6AsIsSubScreen('menu')}
                                 style={{ border: 'none', background: 'none', color: '#111', padding: 0, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
                               >
@@ -11117,8 +11302,14 @@ function App() {
                   position: 'relative',
                   borderRadius: '0px'
                 }}>
-                  {renderScreen6AsIs(false)}
-                  {renderScreen6Bsheet('asis')}
+                  {screen6AsIsSearchOpen ? (
+                    renderScreen6Search('asis', () => setScreen6AsIsSearchOpen(false))
+                  ) : (
+                    <>
+                      {renderScreen6AsIs(false)}
+                      {renderScreen6Bsheet('asis')}
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -11184,7 +11375,9 @@ function App() {
                   position: 'relative',
                   borderRadius: '0px'
                 }}>
-                  {!screen6ToBeSwitchOn ? (
+                  {screen6ToBeSearchOpen ? (
+                    renderScreen6Search('tobe', () => setScreen6ToBeSearchOpen(false))
+                  ) : !screen6ToBeSwitchOn ? (
                     renderScreen6AsIs(true)
                   ) : screen6ToBeSubScreen === 'bondCurrentPrice' ? (
                     <>
@@ -11238,7 +11431,7 @@ function App() {
                           >
                             ☰
                           </span>
-                          <span style={{ fontSize: '1.2rem', cursor: 'pointer' }}>
+                          <span onClick={() => setScreen6ToBeSearchOpen(true)} style={{ fontSize: '1.2rem', cursor: 'pointer' }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
                           </span>
                           <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px', marginLeft: '4px' }}>삼척블루파워9</span>
@@ -11595,7 +11788,7 @@ function App() {
                           >
                             ☰
                           </span>
-                          <span style={{ fontSize: '1.2rem', cursor: 'pointer' }}>
+                          <span onClick={() => setScreen6ToBeSearchOpen(true)} style={{ fontSize: '1.2rem', cursor: 'pointer' }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
                           </span>
                           <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px', marginLeft: '4px' }}>삼척블루파워9</span>
