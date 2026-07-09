@@ -8471,7 +8471,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             이해관계인 등 확인
           </h2>
           <p style={{ fontSize: '0.85rem', color: '#666666', margin: '0 0 24px 0', lineHeight: 1.5 }}>
-            채권 매수를 진행하기 위해 아래 문항을 읽고 본인의 해당 여부를 정확하게 확인해 주시기 바랍니다.
+            채권 매수를 진행하기 위해 아래 문항을 읽고 본인의 해당 여부를 정확하게 확인해 주시기 바랍니다. 고객님과 발행자(회사)의 관계에 따라 투자가 불가능 할수 있습니다.
           </p>
 
           {/* Question 1 */}
