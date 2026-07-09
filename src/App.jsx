@@ -8518,7 +8518,7 @@ function App() {
                             </div>
                             <div style={{ border: '1px solid #cbd5e1', borderRadius: '4px', padding: '4px 8px', fontSize: '11px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', minWidth: '130px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: '700' }}>
-                                <span>200-233354(01)</span>
+                                <span>{isSwitchOff ? '200-233354(41)' : '200-233354(01)'}</span>
                                 <span style={{ fontSize: '8px', color: '#666', marginLeft: '4px' }}>▼</span>
                               </div>
                               <div style={{ color: '#333', fontSize: '11px', marginTop: '1px' }}>김대신</div>
