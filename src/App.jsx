@@ -8136,6 +8136,7 @@ function App() {
   const [screen6ToBeCautionQ1, setScreen6ToBeCautionQ1] = useState(null);
   const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
   const [screen6CalcAmount, setScreen6CalcAmount] = useState('');
+  const [screen6AsIsModalOpen, setScreen6AsIsModalOpen] = useState(false);
   const [screen6SelectedBond, setScreen6SelectedBond] = useState(null);
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
@@ -9757,7 +9758,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                               초기화
                             </button>
                             <button 
-                              onClick={() => setScreen6AsIsSubScreen('cautionAgreement')}
+                              onClick={() => setScreen6AsIsModalOpen(true)}
                               style={{ width: '132px', height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                             >
                               매수
@@ -10253,6 +10254,55 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                       )}
                     </div>
                   )}
+        {screen6AsIsModalOpen && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              width: '260px',
+              backgroundColor: '#ffffff',
+              borderRadius: '2px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                padding: '32px 20px',
+                fontSize: '0.86rem',
+                color: '#333333',
+                textAlign: 'center',
+                lineHeight: '1.4',
+                fontWeight: '600'
+              }}>
+                퇴직연금 대상 종목이 아닙니다.
+              </div>
+              <button 
+                onClick={() => setScreen6AsIsModalOpen(false)}
+                style={{
+                  height: '42px',
+                  backgroundColor: '#222222',
+                  color: '#ffffff',
+                  border: 'none',
+                  fontSize: '0.88rem',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        )}
       </>
     );
   };
@@ -10327,6 +10377,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (screen6tobeq2Param) setScreen6ToBeCautionQ2(screen6tobeq2Param);
     const screen6calcamountParam = params.get('screen6calcamount');
     if (screen6calcamountParam) setScreen6CalcAmount(screen6calcamountParam);
+    const screen6asismodalParam = params.get('screen6asismodal');
+    if (screen6asismodalParam) setScreen6AsIsModalOpen(screen6asismodalParam === 'true');
 
     const screen4SubParam = params.get('screen4SubScreen');
     if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
@@ -10409,6 +10461,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (screen6ToBeCautionQ1) params.set('screen6tobeq1', screen6ToBeCautionQ1); else params.delete('screen6tobeq1');
     if (screen6ToBeCautionQ2) params.set('screen6tobeq2', screen6ToBeCautionQ2); else params.delete('screen6tobeq2');
     if (screen6CalcAmount) params.set('screen6calcamount', screen6CalcAmount); else params.delete('screen6calcamount');
+    if (screen6AsIsModalOpen) params.set('screen6asismodal', 'true'); else params.delete('screen6asismodal');
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -10437,7 +10490,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -10475,6 +10528,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
       if (screen6tobeq2Param) setScreen6ToBeCautionQ2(screen6tobeq2Param);
       const screen6calcamountParam = params.get('screen6calcamount');
       if (screen6calcamountParam) setScreen6CalcAmount(screen6calcamountParam);
+      const screen6asismodalParam = params.get('screen6asismodal');
+      if (screen6asismodalParam) setScreen6AsIsModalOpen(screen6asismodalParam === 'true');
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
