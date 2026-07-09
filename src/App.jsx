@@ -8591,8 +8591,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             disabled={isConfirmDisabled}
             style={{
               flex: 2,
-              backgroundColor: isConfirmDisabled ? '#cbd5e1' : '#222222',
-              color: '#ffffff',
+              backgroundColor: isConfirmDisabled ? '#f3f4f6' : '#222222',
+              color: isConfirmDisabled ? '#a1a1aa' : '#ffffff',
               border: 'none',
               fontSize: '1rem',
               fontWeight: '700',
