@@ -8135,6 +8135,131 @@ function App() {
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(true);
   const [screen6AsIsPaymentType, setScreen6AsIsPaymentType] = useState('고객');
+  const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account'
+  const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account'
+
+  const renderScreen6Bsheet = (mode) => {
+    const bsheetState = mode === 'asis' ? screen6AsIsBsheetState : screen6ToBeBsheetState;
+    const setBsheetState = mode === 'asis' ? setScreen6AsIsBsheetState : setScreen6ToBeBsheetState;
+
+    if (bsheetState === 'closed') return null;
+
+    return (
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        zIndex: 999,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        borderRadius: '24px'
+      }}>
+        <div 
+          onClick={() => setBsheetState('closed')}
+          style={{ flex: 1 }} 
+        />
+        
+        <div style={{
+          backgroundColor: '#ffffff',
+          borderTopLeftRadius: '16px',
+          borderTopRightRadius: '16px',
+          padding: '20px 16px 24px 16px',
+          boxShadow: '0 -4px 16px rgba(0,0,0,0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          color: '#111111',
+          fontFamily: 'sans-serif'
+        }}>
+          {bsheetState === 'product' ? (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <span style={{ fontSize: '18px', fontWeight: 'bold' }}>상품 선택</span>
+                <button 
+                  onClick={() => setBsheetState('account')}
+                  style={{
+                    border: '1px solid #2366ca',
+                    color: '#2366ca',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '4px',
+                    padding: '4px 10px',
+                    fontSize: '12px',
+                    fontWeight: '700',
+                    cursor: 'pointer'
+                  }}
+                >
+                  다른 계좌 선택
+                </button>
+              </div>
+              
+              <div 
+                onClick={() => setBsheetState('closed')}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '16px 4px',
+                  cursor: 'pointer',
+                  borderBottom: '1px solid #f1f5f9'
+                }}
+              >
+                <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>
+                  {mode === 'asis' ? '(01) 종합투자상품' : '(41) 개인형퇴직연금(IRP)'}
+                </span>
+                <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <span style={{ fontSize: '18px', fontWeight: 'bold' }}>사용하실 계좌 선택</span>
+                <span style={{ fontSize: '18px', cursor: 'pointer', color: '#555555' }}>⚙</span>
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <div 
+                  onClick={() => setBsheetState('product')}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '14px 4px',
+                    cursor: 'pointer',
+                    borderBottom: '1px solid #f1f5f9'
+                  }}
+                >
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354</span>
+                    <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
+                  </div>
+                  <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+                </div>
+                
+                <div 
+                  onClick={() => setBsheetState('product')}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '14px 4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>161-119731</span>
+                    <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   const renderScreen6AsIs = (isSwitchOff = false) => {
     return (
@@ -8516,7 +8641,7 @@ function App() {
                                 ▲ 19.4 (0.19%)
                               </span>
                             </div>
-                            <div style={{ border: '1px solid #cbd5e1', borderRadius: '4px', padding: '4px 8px', fontSize: '11px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', minWidth: '130px' }}>
+                            <div onClick={() => { if (isSwitchOff) setScreen6ToBeBsheetState('product'); else setScreen6AsIsBsheetState('product'); }} style={{ border: '1px solid #cbd5e1', borderRadius: '4px', padding: '4px 8px', fontSize: '11px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', minWidth: '130px', cursor: 'pointer' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: '700' }}>
                                 <span>{isSwitchOff ? '200-233354(41)' : '200-233354(01)'}</span>
                                 <span style={{ fontSize: '8px', color: '#666', marginLeft: '4px' }}>▼</span>
@@ -10982,6 +11107,7 @@ function App() {
                   position: 'relative'
                 }}>
                   {renderScreen6AsIs(false)}
+                  {renderScreen6Bsheet('asis')}
                 </div>
               </div>
 
@@ -12004,6 +12130,7 @@ function App() {
                     </div>
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
                       <span>인증/OTP</span>
+              {renderScreen6Bsheet('tobe')}
                     </div>
                   </div>
                 </>
