@@ -8256,10 +8256,12 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            backgroundColor: '#f1f5f9',
-            borderRadius: '4px',
-            padding: '8px 10px',
-            gap: '8px'
+            border: '1px solid #d1d5db',
+            borderRadius: '8px',
+            padding: '0 12px',
+            height: '38px',
+            gap: '8px',
+            backgroundColor: '#ffffff'
           }}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
             <input 
