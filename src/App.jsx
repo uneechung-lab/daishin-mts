@@ -9593,6 +9593,10 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (screen6AsIsBsheetParam) setScreen6AsIsBsheetState(screen6AsIsBsheetParam);
     const screen6ToBeBsheetParam = params.get('screen6tobebsheet');
     if (screen6ToBeBsheetParam) setScreen6ToBeBsheetState(screen6ToBeBsheetParam);
+    const screen6AsIsSearchParam = params.get('screen6asissearch');
+    if (screen6AsIsSearchParam) setScreen6AsIsSearchOpen(screen6AsIsSearchParam === 'true');
+    const screen6ToBeSearchParam = params.get('screen6tobesearch');
+    if (screen6ToBeSearchParam) setScreen6ToBeSearchOpen(screen6ToBeSearchParam === 'true');
 
     const screen4SubParam = params.get('screen4SubScreen');
     if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
@@ -9668,6 +9672,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     params.set('screen6tobeswitch', screen6ToBeSwitchOn ? 'true' : 'false');
     params.set('screen6asisbsheet', screen6AsIsBsheetState);
     params.set('screen6tobebsheet', screen6ToBeBsheetState);
+    params.set('screen6asissearch', screen6AsIsSearchOpen ? 'true' : 'false');
+    params.set('screen6tobesearch', screen6ToBeSearchOpen ? 'true' : 'false');
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -9696,7 +9702,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -9720,6 +9726,10 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
       if (screen6AsIsBsheetParam) setScreen6AsIsBsheetState(screen6AsIsBsheetParam);
       const screen6ToBeBsheetParam = params.get('screen6tobebsheet');
       if (screen6ToBeBsheetParam) setScreen6ToBeBsheetState(screen6ToBeBsheetParam);
+      const screen6AsIsSearchParam = params.get('screen6asissearch');
+      if (screen6AsIsSearchParam) setScreen6AsIsSearchOpen(screen6AsIsSearchParam === 'true');
+      const screen6ToBeSearchParam = params.get('screen6tobesearch');
+      if (screen6ToBeSearchParam) setScreen6ToBeSearchOpen(screen6ToBeSearchParam === 'true');
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
