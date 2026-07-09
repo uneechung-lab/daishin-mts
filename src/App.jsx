@@ -8217,6 +8217,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         </div>
 
         {/* Scrollable Tabs */}
+        {mode !== 'tobe' && (
         <div style={{
           display: 'flex',
           gap: '16px',
@@ -8248,6 +8249,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             </div>
           ))}
         </div>
+        )}
 
         {/* Search bar input wrapper */}
         <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -8269,6 +8271,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           </div>
 
           {/* Select filter dropdowns */}
+          {mode !== 'tobe' && (
           <div style={{ display: 'flex', gap: '8px' }}>
             <div style={{
               flex: 1,
@@ -8303,6 +8306,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
             </div>
           </div>
+          )}
         </div>
 
         {/* Table header */}
