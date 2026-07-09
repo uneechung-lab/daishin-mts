@@ -8135,6 +8135,7 @@ function App() {
   const [screen6AsIsCautionQ2, setScreen6AsIsCautionQ2] = useState(null);
   const [screen6ToBeCautionQ1, setScreen6ToBeCautionQ1] = useState(null);
   const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
+  const [screen6CalcAmount, setScreen6CalcAmount] = useState('');
   const [screen6SelectedBond, setScreen6SelectedBond] = useState(null);
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
@@ -8837,7 +8838,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
         {/* Bottom Actions Bar */}
         <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
-          <button style={{
+          <button onClick={() => setScreen6ToBeSubScreen('bondCalc')} style={{
             flex: 1,
             backgroundColor: '#ffffff',
             color: '#111111',
@@ -8863,6 +8864,216 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             매수
           </button>
         </div>
+      </div>
+    );
+  };
+
+  const renderScreen6Calc = (mode) => {
+    const handleClose = () => {
+      setScreen6ToBeSubScreen('bondDetails');
+    };
+
+    const handleCalculate = () => {
+      if (!screen6CalcAmount) return;
+      alert(`입력하신 ${Number(screen6CalcAmount).toLocaleString()}원 기준 투자 수익 가계산이 완료되었습니다.\n예상 세후 총 수령금액은 ${(Number(screen6CalcAmount) * 1.0645).toLocaleString(undefined, {maximumFractionDigits: 0})}원 입니다.`);
+    };
+
+    const isCalcDisabled = !screen6CalcAmount;
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif',
+        position: 'relative'
+      }}>
+        {/* Phone Camera & Status Bar */}
+        <div style={styles.phoneCamera} />
+        <div style={styles.phoneHeaderBar}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#475569' }}>SKT 5:06</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800', color: '#333' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              97
+            </div>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '48px',
+          padding: '0 16px',
+          borderBottom: '1px solid #f1f5f9'
+        }}>
+          <button 
+            onClick={handleClose}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <span style={{ fontSize: '1rem', fontWeight: '800' }}>투자 수익 가계산</span>
+          <span style={{ border: '1px solid #94a3b8', borderRadius: '50%', width: '15px', height: '15px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', color: '#94a3b8', fontWeight: 'bold', cursor: 'pointer' }}>!</span>
+        </div>
+
+        {/* Content */}
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+          {/* Top Bond Info Block */}
+          <div style={{ padding: '16px 20px', borderBottom: '8px solid #f8fafc' }}>
+            <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
+              <span style={{ color: '#10b981' }}>보통위험</span>
+              <span style={{ color: '#64748b' }}>•</span>
+              <span style={{ color: '#475569' }}>A</span>
+              <span style={{ color: '#64748b' }}>•</span>
+              <span style={{ color: '#475569' }}>금융회사채</span>
+            </div>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 4px 0', color: '#111111' }}>
+              한국투자캐피탈133
+            </h2>
+            <div style={{ fontSize: '0.78rem', color: '#888888' }}>
+              KR6214341G28
+            </div>
+          </div>
+
+          {/* Investment Amount Input Section */}
+          <div style={{ padding: '20px', borderBottom: '8px solid #f8fafc' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#111111' }}>투자금액/수량</span>
+              <div style={{ display: 'flex', border: '1px solid #cbd5e1', borderRadius: '4px', overflow: 'hidden' }}>
+                <span style={{ padding: '3px 8px', fontSize: '0.72rem', fontWeight: '800', backgroundColor: '#f1f5f9', color: '#111111' }}>금액</span>
+                <span style={{ padding: '3px 8px', fontSize: '0.72rem', backgroundColor: '#ffffff', color: '#64748b' }}>수량</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #cbd5e1', paddingBottom: '6px' }}>
+              <span style={{ fontSize: '0.88rem', color: '#64748b', width: '60px' }}>금액</span>
+              <input 
+                type="number"
+                value={screen6CalcAmount}
+                onChange={(e) => setScreen6CalcAmount(e.target.value)}
+                placeholder="1,000원 이상 입력"
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  outline: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '700',
+                  textAlign: 'right',
+                  paddingRight: '6px'
+                }}
+              />
+              <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#111111' }}>원</span>
+            </div>
+            <div style={{ textAlign: 'right', marginTop: '6px', fontSize: '0.75rem', color: '#2366ca', fontWeight: '700' }}>
+              예상매수수량 {screen6CalcAmount ? Math.floor(Number(screen6CalcAmount) / 10005.1).toLocaleString() : 0}원
+            </div>
+          </div>
+
+          {/* Trade Info Section */}
+          <div style={{ padding: '20px', borderBottom: '8px solid #f8fafc' }}>
+            <h3 style={{ fontSize: '0.92rem', fontWeight: '800', margin: '0 0 16px 0' }}>매매정보</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수일자</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>2026.07.09</span>
+                  <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                </div>
+              </div>
+              <div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수수익률</span>
+                <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>4.800 %</span>
+                </div>
+              </div>
+              <div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수단가</span>
+                <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>10,005.1 원</span>
+                </div>
+              </div>
+              <div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매도일자</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>2028.02.04</span>
+                  <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tax Type Section */}
+          <div style={{ padding: '20px', borderBottom: '8px solid #f8fafc' }}>
+            <h3 style={{ fontSize: '0.92rem', fontWeight: '800', margin: '0 0 16px 0' }}>과세유형</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '4px' }}>과세기준</span>
+                <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#111111' }}>개인</span>
+              </div>
+              <div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>과세구분</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>정상과세</span>
+                  <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Notice Section */}
+          <div style={{ padding: '20px' }}>
+            <h3 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#475569', margin: '0 0 8px 0' }}>유의사항</h3>
+            <p style={{ fontSize: '0.72rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+              • 투자 수익 계산은 단순 참고자료로 실제 매수 시 현금흐름 및 수익률은 예상 결과와 다를 수 있습니다.
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom Button */}
+        <button 
+          onClick={handleCalculate}
+          disabled={isCalcDisabled}
+          style={{
+            height: '52px',
+            backgroundColor: isCalcDisabled ? '#e2e8f0' : '#222222',
+            color: isCalcDisabled ? '#a1a1aa' : '#ffffff',
+            border: 'none',
+            fontSize: '1rem',
+            fontWeight: '700',
+            cursor: isCalcDisabled ? 'not-allowed' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          예상 결과보기
+        </button>
       </div>
     );
   };
@@ -10114,6 +10325,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (screen6tobeq1Param) setScreen6ToBeCautionQ1(screen6tobeq1Param);
     const screen6tobeq2Param = params.get('screen6tobeq2');
     if (screen6tobeq2Param) setScreen6ToBeCautionQ2(screen6tobeq2Param);
+    const screen6calcamountParam = params.get('screen6calcamount');
+    if (screen6calcamountParam) setScreen6CalcAmount(screen6calcamountParam);
 
     const screen4SubParam = params.get('screen4SubScreen');
     if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
@@ -10195,6 +10408,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (screen6AsIsCautionQ2) params.set('screen6asisq2', screen6AsIsCautionQ2); else params.delete('screen6asisq2');
     if (screen6ToBeCautionQ1) params.set('screen6tobeq1', screen6ToBeCautionQ1); else params.delete('screen6tobeq1');
     if (screen6ToBeCautionQ2) params.set('screen6tobeq2', screen6ToBeCautionQ2); else params.delete('screen6tobeq2');
+    if (screen6CalcAmount) params.set('screen6calcamount', screen6CalcAmount); else params.delete('screen6calcamount');
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -10223,7 +10437,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -10259,6 +10473,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
       if (screen6tobeq1Param) setScreen6ToBeCautionQ1(screen6tobeq1Param);
       const screen6tobeq2Param = params.get('screen6tobeq2');
       if (screen6tobeq2Param) setScreen6ToBeCautionQ2(screen6tobeq2Param);
+      const screen6calcamountParam = params.get('screen6calcamount');
+      if (screen6calcamountParam) setScreen6CalcAmount(screen6calcamountParam);
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
@@ -12747,6 +12963,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                     renderScreen6Caution('tobe')
                   ) : screen6ToBeSubScreen === 'bondDetails' ? (
                     renderScreen6Details('tobe')
+                  ) : screen6ToBeSubScreen === 'bondCalc' ? (
+                    renderScreen6Calc('tobe')
                   ) : (
                     <>
                       {/* Status Bar */}
