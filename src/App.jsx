@@ -8156,7 +8156,7 @@ function App() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        borderRadius: '24px'
+        borderRadius: '0px'
       }}>
         <div 
           onClick={() => setBsheetState('closed')}
@@ -11114,7 +11114,8 @@ function App() {
                   height: '800px',
                   display: 'flex',
                   flexDirection: 'column',
-                  position: 'relative'
+                  position: 'relative',
+                  borderRadius: '0px'
                 }}>
                   {renderScreen6AsIs(false)}
                   {renderScreen6Bsheet('asis')}
@@ -11180,7 +11181,8 @@ function App() {
                   height: '800px',
                   display: 'flex',
                   flexDirection: 'column',
-                  position: 'relative'
+                  position: 'relative',
+                  borderRadius: '0px'
                 }}>
                   {!screen6ToBeSwitchOn ? (
                     renderScreen6AsIs(true)
