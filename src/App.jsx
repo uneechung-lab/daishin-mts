@@ -8135,6 +8135,7 @@ function App() {
   const [screen6AsIsCautionQ2, setScreen6AsIsCautionQ2] = useState(null);
   const [screen6ToBeCautionQ1, setScreen6ToBeCautionQ1] = useState(null);
   const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
+  const [screen6SelectedBond, setScreen6SelectedBond] = useState(null);
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(true);
@@ -8142,7 +8143,17 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(false);
 
   const renderScreen6Search = (mode, onClose) => {
+    const handleSelectBond = (bond) => {
+      if (mode === 'tobe') {
+        setScreen6SelectedBond(bond);
+        setScreen6ToBeSubScreen('bondDetails');
+        onClose();
+      } else {
+        onClose();
+      }
+    };
     const bondSearchList = [
+      { name: '한국투자캐피탈133', code: 'B214341G2', retail: '', interest: '이표' },
       { name: '신한은행15-08이15A', code: 'B00C01118', retail: '', interest: '이표' },
       { name: '신한은행18-07이15A', code: 'B00C01147', retail: '', interest: '이표' },
       { name: '신한은행18-09이15A', code: 'B00C01149', retail: '', interest: '이표' },
@@ -8336,7 +8347,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           {bondSearchList.map((bond, idx) => (
             <div 
               key={idx}
-              onClick={onClose}
+              onClick={() => handleSelectBond(bond)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -8603,6 +8614,253 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             }}
           >
             확인
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderScreen6Details = (mode) => {
+    const handleClose = () => {
+      setScreen6ToBeSubScreen('bondCurrentPrice');
+      setScreen6ToBeSearchOpen(true); // Open the search screen again
+    };
+
+    const handleBuy = () => {
+      setScreen6ToBeSubScreen('bondOrder');
+    };
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif',
+        position: 'relative'
+      }}>
+        {/* Phone Camera & Status Bar */}
+        <div style={styles.phoneCamera} />
+        <div style={styles.phoneHeaderBar}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#475569' }}>SKT 5:02</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800', color: '#333' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              94
+            </div>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '48px',
+          padding: '0 12px',
+          borderBottom: '1px solid #f1f5f9'
+        }}>
+          <button 
+            onClick={handleClose}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Details Content */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
+          {/* Badges */}
+          <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
+            <span style={{ color: '#10b981' }}>보통위험</span>
+            <span style={{ color: '#64748b' }}>•</span>
+            <span style={{ color: '#475569' }}>A</span>
+            <span style={{ color: '#64748b' }}>•</span>
+            <span style={{ color: '#475569' }}>금융회사채</span>
+          </div>
+
+          {/* Title */}
+          <h2 style={{ fontSize: '1.4rem', fontWeight: '800', margin: '0 0 4px 0', color: '#111111' }}>
+            한국투자캐피탈133
+          </h2>
+          <div style={{ fontSize: '0.8rem', color: '#888888', marginBottom: '20px' }}>
+            B214341G2
+          </div>
+
+          {/* Key Rates Info Grid */}
+          <div style={{ display: 'flex', padding: '12px 0', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9', marginBottom: '16px' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.75rem', color: '#888888', marginBottom: '4px' }}>매수수익률</span>
+              <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#de201e' }}>4.800%</span>
+            </div>
+            <div style={{ width: '1px', backgroundColor: '#e2e8f0' }} />
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.75rem', color: '#888888', marginBottom: '4px' }}>매수단가</span>
+              <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#111111' }}>10,005.1원</span>
+            </div>
+            <div style={{ width: '1px', backgroundColor: '#e2e8f0' }} />
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.75rem', color: '#888888', marginBottom: '4px' }}>가능수량</span>
+              <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#111111' }}>1,146,593,000</span>
+            </div>
+          </div>
+
+          {/* Card: Return & Period */}
+          <div style={{
+            backgroundColor: '#f8fafc',
+            borderRadius: '8px',
+            padding: '16px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '24px'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                은행환산수익률(세전,연) 
+                <span style={{ border: '1px solid #94a3b8', borderRadius: '50%', width: '12px', height: '12px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', color: '#94a3b8', fontWeight: 'bold' }}>i</span>
+              </span>
+              <span style={{ fontSize: '1.25rem', fontWeight: '800', color: '#de201e' }}>4.848%</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+              <span style={{ fontSize: '0.78rem', color: '#64748b' }}>투자기간</span>
+              <span style={{ fontSize: '1.1rem', fontWeight: '800', color: '#111111' }}>1년 6개월 26일</span>
+              <span style={{ fontSize: '0.7rem', color: '#888888' }}>2028.02.04 만기</span>
+            </div>
+          </div>
+
+          {/* Section: Expected Returns */}
+          <div style={{ borderTop: '8px solid #f8fafc', margin: '0 -16px 20px -16px', padding: '20px 16px 0 16px' }}>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 16px 0' }}>투자 수익 예상 하기</h3>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '16px' }}>
+              <div style={{
+                borderBottom: '2px solid #111111',
+                padding: '4px 20px',
+                fontSize: '1.1rem',
+                fontWeight: '800',
+                color: '#111111'
+              }}>
+                1,000
+              </div>
+              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#333' }}>만원 매수 신청 시</span>
+            </div>
+
+            {/* Yield Table Card */}
+            <div style={{
+              backgroundColor: '#f8fafc',
+              borderRadius: '8px',
+              padding: '14px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px'
+            }}>
+              {[
+                { label: '예상투자금액', val: '9,999,096원', color: '#2366ca', weight: 'bold' },
+                { label: '총 수령금액(세전)', val: '10,749,720원', color: '#111111', weight: 'bold' },
+                { label: '이자지급액(세전)', val: '678,271원', color: '#555555' },
+                { label: '만기(매도)상환금', val: '10,071,449원', color: '#555555' },
+                { label: '총 수령금액(세후)', val: '10,645,310원', color: '#111111', weight: '800' }
+              ].map((row, rIdx) => (
+                <div key={rIdx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                  <span style={{ color: '#475569', fontWeight: row.weight ? '700' : 'normal' }}>{row.label}</span>
+                  <span style={{ color: row.color, fontWeight: row.weight || '500' }}>{row.val}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '14px 0 10px 0' }}>
+              <span style={{ fontSize: '0.78rem', color: '#2366ca', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                더보기
+                <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="3 3 8 9 3 15" /></svg>
+              </span>
+            </div>
+            <p style={{ fontSize: '0.68rem', color: '#94a3b8', margin: '0 0 20px 0', lineHeight: 1.4 }}>
+              * 상기 금액은 이해를 돕기 위한 예상 금액으로 실제와 차이가 발생할 수 있습니다.
+            </p>
+          </div>
+
+          {/* Section: Basic Info */}
+          <div style={{ borderTop: '8px solid #f8fafc', margin: '0 -16px 0 -16px', padding: '20px 16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: 0 }}>기본정보</h3>
+              <span style={{ border: '1px solid #94a3b8', borderRadius: '50%', width: '14px', height: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', color: '#94a3b8', fontWeight: 'bold', cursor: 'pointer' }}>i</span>
+            </div>
+
+            {/* Info Table */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[
+                { label: '위험등급', val: '4등급(보통위험)' },
+                { label: '신용등급', val: 'A' },
+                { label: '표면금리', val: '4.321 %' },
+                { label: '매수수익률', val: '4.800 %' },
+                { label: '매수단가', val: '10,005.1 원' },
+                { label: '민평금리', val: '5.182 %' },
+                { label: '민평단가', val: '9,948.1 원' },
+                { label: '매매단가차이(비율)', val: '57원(0.57%)' },
+                { label: '발행일', val: '2026.02.04' },
+                { label: '만기일', val: '2028.02.04' },
+                { label: '채권종류', val: '금융회사채' },
+                { label: '이자지급방법', val: '이표채(고정)' },
+                { label: '이자계산주기', val: '3개월' },
+                { label: '변제순위', val: '선순위' }
+              ].map((row, rIdx) => (
+                <div key={rIdx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', borderBottom: '1px solid #f8fafc', paddingBottom: '8px' }}>
+                  <span style={{ color: '#64748b' }}>{row.label}</span>
+                  <span style={{ color: '#111111', fontWeight: '700' }}>{row.val}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Actions Bar */}
+        <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
+          <button style={{
+            flex: 1,
+            backgroundColor: '#ffffff',
+            color: '#111111',
+            border: 'none',
+            fontSize: '0.95rem',
+            fontWeight: '700',
+            cursor: 'pointer'
+          }}>
+            투자 수익 가계산
+          </button>
+          <button 
+            onClick={handleBuy}
+            style={{
+              flex: 1,
+              backgroundColor: '#de201e',
+              color: '#ffffff',
+              border: 'none',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}
+          >
+            매수
           </button>
         </div>
       </div>
@@ -12487,6 +12745,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                     </>
                   ) : screen6ToBeSubScreen === 'cautionAgreement' ? (
                     renderScreen6Caution('tobe')
+                  ) : screen6ToBeSubScreen === 'bondDetails' ? (
+                    renderScreen6Details('tobe')
                   ) : (
                     <>
                       {/* Status Bar */}
