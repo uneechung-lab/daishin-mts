@@ -8448,7 +8448,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   }}
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354</span>
+                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>{mode === 'tobe' ? '200-233354(01)' : '200-233354'}</span>
                     <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
                   </div>
                   <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
@@ -8465,7 +8465,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   }}
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>161-119731</span>
+                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>{mode === 'tobe' ? '161-119731(41)' : '161-119731'}</span>
                     <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
                   </div>
                 </div>
