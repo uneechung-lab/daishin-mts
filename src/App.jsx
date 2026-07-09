@@ -8567,25 +8567,44 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           </div>
         </div>
 
-        {/* Bottom Confirm Button */}
-        <button 
-          onClick={handleConfirm}
-          disabled={isConfirmDisabled}
-          style={{
-            height: '52px',
-            backgroundColor: isConfirmDisabled ? '#94a3b8' : '#111111',
-            color: '#ffffff',
-            border: 'none',
-            fontSize: '1rem',
-            fontWeight: '700',
-            cursor: isConfirmDisabled ? 'not-allowed' : 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          확인
-        </button>
+        {/* Bottom buttons */}
+        <div style={{ display: 'flex', height: '52px' }}>
+          <button 
+            onClick={handleClose}
+            style={{
+              flex: 1,
+              backgroundColor: '#f3f4f6',
+              color: '#111111',
+              border: 'none',
+              fontSize: '1rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            취소
+          </button>
+          <button 
+            onClick={handleConfirm}
+            disabled={isConfirmDisabled}
+            style={{
+              flex: 2,
+              backgroundColor: isConfirmDisabled ? '#cbd5e1' : '#222222',
+              color: '#ffffff',
+              border: 'none',
+              fontSize: '1rem',
+              fontWeight: '700',
+              cursor: isConfirmDisabled ? 'not-allowed' : 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            확인
+          </button>
+        </div>
       </div>
     );
   };
