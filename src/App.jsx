@@ -8432,13 +8432,16 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <span style={{ fontSize: '18px', fontWeight: 'bold' }}>사용하실 계좌 선택</span>
-                <span style={{ fontSize: '18px', cursor: 'pointer', color: '#555555' }}>⚙</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555555" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
               </div>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {mode === 'tobe' ? (
                   <>
-                    {/* First Account (TO-BE: 161-119731(41)) */}
+                    {/* First Account (TO-BE: 200-233354(41)) */}
                     <div 
                       onClick={() => setBsheetState('product')}
                       style={{
@@ -8451,7 +8454,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                       }}
                     >
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>161-119731(41)</span>
+                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(41)</span>
                         <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
                       </div>
                       <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
@@ -8484,8 +8487,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         padding: '14px 4px',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #f1f5f9'
+                        cursor: 'pointer'
                       }}
                     >
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -8493,23 +8495,6 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
                       </div>
                       <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
-                    </div>
-                    
-                    {/* Second Account (AS-IS: 161-119731) */}
-                    <div 
-                      onClick={() => setBsheetState('product')}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '14px 4px',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>161-119731</span>
-                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
-                      </div>
                     </div>
                   </>
                 )}
