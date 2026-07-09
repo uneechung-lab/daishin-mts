@@ -8319,8 +8319,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           fontSize: '0.75rem',
           fontWeight: '700',
           color: '#64748b',
-          borderTop: '1px solid #e2e8f0',
-          borderBottom: '1px solid #e2e8f0'
+
+
         }}>
           <span style={{ flex: 1 }}>종목명</span>
           <span style={{ width: '40px', textAlign: 'center' }}>소매</span>
