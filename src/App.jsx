@@ -8515,7 +8515,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             </div>
             {q1 === 'yes' && (
               <div style={{ color: '#de201e', fontSize: '0.78rem', fontWeight: '800', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                ⚠️ 선택하신 채권의 매수가 불가능합니다.
+                선택하신 채권의 매수가 불가능합니다.
               </div>
             )}
           </div>
@@ -8561,7 +8561,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             </div>
             {q2 === 'yes' && (
               <div style={{ color: '#de201e', fontSize: '0.78rem', fontWeight: '800', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                ⚠️ 선택하신 채권의 매수가 불가능합니다.
+                선택하신 채권의 매수가 불가능합니다.
               </div>
             )}
           </div>
