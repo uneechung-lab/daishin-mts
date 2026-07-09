@@ -8412,6 +8412,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         position: 'relative'
       }}>
         {/* Phone Camera & Status Bar */}
+        {mode === 'tobe' && (
+          <>
         <div style={styles.phoneCamera} />
         <div style={styles.phoneHeaderBar}>
           <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#475569' }}>SKT 12:30</span>
@@ -8441,6 +8443,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             </div>
           </div>
         </div>
+          </>
+        )}
 
         {/* Header */}
         <div style={{
