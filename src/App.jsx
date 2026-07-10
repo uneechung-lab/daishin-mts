@@ -9356,7 +9356,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               paddingRight: '2px',
               position: 'relative'
             }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: '400', fontFamily: 'sans-serif', marginLeft: '0px', zIndex: 1 }}>₩</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: '400', fontFamily: 'sans-serif', marginLeft: '0px', zIndex: 1, display: 'inline-block', transform: 'scaleX(1.35)' }}>₩</span>
               <span style={{
                 fontSize: '0.45rem',
                 fontWeight: '900',
