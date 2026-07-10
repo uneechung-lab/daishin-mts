@@ -9352,20 +9352,25 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               lineHeight: 1,
               cursor: 'pointer',
               color: isDark ? '#ffffff' : '#111111',
-              marginTop: '1px',
+              marginTop: '2px',
               paddingRight: '2px',
-              position: 'relative',
-              width: '26px',
-              height: '32px'
+              position: 'relative'
             }}>
-              {/* SVG Won symbol */}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'absolute', top: '2px', left: '0px' }}>
-                <path d="M6 6l4 12 2-8 2 8 4-12" />
-                <line x1="4" y1="10" x2="20" y2="10" />
-                <line x1="4" y1="13" x2="20" y2="13" />
-              </svg>
-              {/* '종합' text shifted slightly to the right */}
-              <span style={{ fontSize: '0.48rem', fontWeight: '800', position: 'absolute', bottom: '2px', left: '8px', letterSpacing: '-0.5px', whiteSpace: 'nowrap' }}>종합</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: '400', fontFamily: 'sans-serif', marginLeft: '0px', zIndex: 1 }}>₩</span>
+              <span style={{
+                fontSize: '0.45rem',
+                fontWeight: '900',
+                marginTop: '-5px',
+                marginLeft: '6px',
+                letterSpacing: '-0.5px',
+                backgroundColor: isDark ? '#121826' : '#ffffff',
+                border: isDark ? '1px solid #121826' : '1px solid #ffffff',
+                borderRadius: '2px',
+                padding: '0px 2px',
+                color: isDark ? '#cbd5e1' : '#111111',
+                boxShadow: isDark ? '0 0 0 1.2px #121826' : '0 0 0 1.2px #ffffff',
+                zIndex: 2
+              }}>종합</span>
             </div>
 
             {/* Custom Ribbon Bookmark Icon without Star */}
