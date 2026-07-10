@@ -8127,10 +8127,18 @@ function App() {
   const [orderPrice, setOrderPrice] = useState(stockData['신대증 30'].price);
   const [orderQty, setOrderQty] = useState(10);
   const [stockSelectorOpen, setStockSelectorOpen] = useState(false);
-  const [activeScreen, setActiveScreen] = useState(1);
+   const [activeScreen, setActiveScreen] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const num = parseInt(params.get('screen'), 10);
+    return (num >= 1 && num <= 9) ? num : 1;
+  });
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-  const [asIsSubScreen, setAsIsSubScreen] = useState('menu'); // 'menu', 'currentPrice', 'stockSearch'
-  const [toBeSubScreen, setToBeSubScreen] = useState('menu'); // 'menu', 'etfMall'
+  const [asIsSubScreen, setAsIsSubScreen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('asis') || 'menu';
+  });
+  const [toBeSubScreen, setToBeSubScreen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('tobe') || 'menu';
+  });
   const [screen6AsIsCautionQ1, setScreen6AsIsCautionQ1] = useState(null);
   const [screen6AsIsCautionQ2, setScreen6AsIsCautionQ2] = useState(null);
   const [screen6ToBeCautionQ1, setScreen6ToBeCautionQ1] = useState(null);
@@ -8138,9 +8146,15 @@ function App() {
   const [screen6CalcAmount, setScreen6CalcAmount] = useState('');
   const [screen6AsIsModalOpen, setScreen6AsIsModalOpen] = useState(false);
   const [screen6SelectedBond, setScreen6SelectedBond] = useState(null);
-  const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
-  const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState('menu'); // 'menu', 'bondCurrentPrice', 'bondOrder'
-  const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(true);
+  const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6asis') || 'menu';
+  });
+  const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6tobe') || 'menu';
+  });
+  const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
+  });
 const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(false);
 
@@ -8377,8 +8391,12 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBePaymentType, setScreen6ToBePaymentType] = useState('고객');
   const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account'
   const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account'
-  const [screen6AsIsOrderTab, setScreen6AsIsOrderTab] = useState('매수'); // '매수', '매도', '정정/취소'
-  const [screen6ToBeOrderTab, setScreen6ToBeOrderTab] = useState('매수'); // '매수', '매도', '정정/취소', '미체결/체결'
+  const [screen6AsIsOrderTab, setScreen6AsIsOrderTab] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6AsIsOrderTab') || '매수';
+  });
+  const [screen6ToBeOrderTab, setScreen6ToBeOrderTab] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6ToBeOrderTab') || '매수';
+  });
 
   const renderScreen6Caution = (mode) => {
     const q1 = mode === 'asis' ? screen6AsIsCautionQ1 : screen6ToBeCautionQ1;
@@ -9759,6 +9777,61 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                     <div style={{ borderBottom: '1px solid #cbd5e1', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#ccc' }}>수량 입력</div>
                                   </div>
                                 </>
+                              ) : screen6AsIsOrderTab === '매도' ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                  {/* 주문단위 */}
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f1f5f9', padding: '0 12px', fontSize: '12px', height: '32px', boxSizing: 'border-box' }}>
+                                    <span style={{ color: '#333' }}>주문단위</span>
+                                    <span style={{ fontWeight: '700' }}>10,000</span>
+                                  </div>
+                                  {/* 단가 */}
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #ccc', height: '32px', boxSizing: 'border-box' }}>
+                                    <span style={{ fontSize: '12px', color: '#333' }}>단가</span>
+                                    <span style={{ fontSize: '12px', color: '#ccc' }}>단가 입력</span>
+                                  </div>
+                                  {/* 수량 */}
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #ccc', height: '32px', boxSizing: 'border-box' }}>
+                                    <span style={{ fontSize: '12px', color: '#333' }}>수량</span>
+                                    <span style={{ fontSize: '12px', color: '#ccc' }}>수량 입력 <strong style={{ color: '#333' }}>원</strong></span>
+                                  </div>
+                                  {/* 날짜 선택 */}
+                                  <div style={{
+                                    border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                    display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                    height: '32px', boxSizing: 'border-box'
+                                  }}>
+                                    <span>2026.07.10</span>
+                                    <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                  </div>
+                                  {/* 잔고선택 & 보유잔고 */}
+                                  <div style={{ display: 'flex', gap: '6px' }}>
+                                    <div style={{
+                                      flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                      height: '32px', boxSizing: 'border-box'
+                                    }}>
+                                      <span>잔고선택</span>
+                                      <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                    </div>
+                                    <div style={{
+                                      flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                      height: '32px', boxSizing: 'border-box'
+                                    }}>
+                                      <span>보유잔고</span>
+                                      <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                    </div>
+                                  </div>
+                                  {/* 과세선택 */}
+                                  <div style={{
+                                    border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                    display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                    height: '32px', boxSizing: 'border-box'
+                                  }}>
+                                    <span>과세선택</span>
+                                    <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                  </div>
+                                </div>
                               ) : (
                                 <>
                                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -9776,7 +9849,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 </>
                               )}
 
-                              {screen6AsIsOrderTab !== '정정/취소' && (
+                              {screen6AsIsOrderTab === '매수' && (
                                 <div style={{ 
                                   borderTop: '1px solid #f1f5f9', 
                                   paddingTop: '8px', 
@@ -12908,68 +12981,158 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             </div>
                           </div>
 
-                          {/* Order Unit instead of Dropdown */}
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            border: '1px solid #cbd5e1',
-                            borderRadius: '4px',
-                            padding: '0 10px',
-                            height: '36px',
-                            boxSizing: 'border-box',
-                            fontSize: '12px',
-                            color: '#333333',
-                            backgroundColor: '#f8fafc'
-                          }}>
-                            <span style={{ fontWeight: '500', color: '#666666' }}>주문단위</span>
-                            <span style={{ fontWeight: '700', color: '#333333' }}>10,000</span>
-                          </div>
+                           {/* Order Form Content */}
+                           {screen6ToBeOrderTab === '매도' ? (
+                             <>
+                               {/* 주문단위 */}
+                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f1f5f9', padding: '8px 12px', fontSize: '12px' }}>
+                                 <span style={{ color: '#333' }}>주문단위</span>
+                                 <span style={{ fontWeight: '700' }}>10,000</span>
+                               </div>
+                               {/* 단가 */}
+                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #ccc', padding: '6px 0' }}>
+                                 <span style={{ fontSize: '12px', color: '#333' }}>단가</span>
+                                 <span style={{ fontSize: '12px', color: '#ccc' }}>단가 입력</span>
+                               </div>
+                               {/* 수량 */}
+                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #ccc', padding: '6px 0' }}>
+                                 <span style={{ fontSize: '12px', color: '#333' }}>수량</span>
+                                 <span style={{ fontSize: '12px', color: '#ccc' }}>수량 입력 <strong style={{ color: '#333' }}>원</strong></span>
+                               </div>
+                               {/* 드롭다운 그룹 (행간 일정하게 gap: 6px) */}
+                               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px' }}>
+                                 {/* 날짜 선택 */}
+                                 <div style={{
+                                   border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                   display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                   height: '36px', boxSizing: 'border-box'
+                                 }}>
+                                   <span>2026.07.10</span>
+                                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                 </div>
+                                 {/* 잔고선택 & 보유잔고 */}
+                                 <div style={{ display: 'flex', gap: '6px' }}>
+                                   <div style={{
+                                     flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                     display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                     height: '36px', boxSizing: 'border-box'
+                                   }}>
+                                     <span>잔고선택</span>
+                                     <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                   </div>
+                                   <div style={{
+                                     flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                     display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                     height: '36px', boxSizing: 'border-box'
+                                   }}>
+                                     <span>보유잔고</span>
+                                     <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                   </div>
+                                 </div>
+                                 {/* 과세선택 */}
+                                 <div style={{
+                                   border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                   display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                   height: '36px', boxSizing: 'border-box'
+                                 }}>
+                                   <span>과세선택</span>
+                                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                 </div>
+                               </div>
+                             </>
+                           ) : screen6ToBeOrderTab === '정정/취소' ? (
+                             <>
+                               <div style={{
+                                 border: '1px solid #cbd5e1',
+                                 borderRadius: '2px',
+                                 padding: '4px 8px',
+                                 fontSize: '11px',
+                                 display: 'flex',
+                                 justifyContent: 'space-between',
+                                 alignItems: 'center',
+                                 backgroundColor: '#ffffff',
+                                 cursor: 'pointer',
+                                 height: '28px',
+                                 boxSizing: 'border-box'
+                               }}>
+                                 <span style={{ color: '#333' }}>미체결내역</span>
+                                 <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                               </div>
+                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                 <span style={{ fontSize: '12px', color: '#333' }}>단가</span>
+                                 <div style={{ borderBottom: '1px solid #cbd5e1', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#ccc' }}>단가 입력</div>
+                                </div>
+                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                 <span style={{ fontSize: '12px', color: '#333' }}>수량</span>
+                                 <div style={{ borderBottom: '1px solid #cbd5e1', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#ccc' }}>수량 입력</div>
+                               </div>
+                             </>
+                           ) : (
+                             <>
+                               {/* Order Unit instead of Dropdown */}
+                               <div style={{
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 justifyContent: 'space-between',
+                                 border: '1px solid #cbd5e1',
+                                 borderRadius: '4px',
+                                 padding: '0 10px',
+                                 height: '36px',
+                                 boxSizing: 'border-box',
+                                 fontSize: '12px',
+                                 color: '#333333',
+                                 backgroundColor: '#f8fafc'
+                               }}>
+                                 <span style={{ fontWeight: '500', color: '#666666' }}>주문단위</span>
+                                 <span style={{ fontWeight: '700', color: '#333333' }}>10,000</span>
+                               </div>
 
-                          {/* Price input */}
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'stretch',
-                            border: '1px solid #fca5a5',
-                            backgroundColor: '#fff5f5',
-                            borderRadius: '4px',
-                            height: '36px',
-                            boxSizing: 'border-box',
-                            overflow: 'hidden'
-                          }}>
-                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
-                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 'bold', color: '#333333' }}>10,065원</div>
-                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
-                          </div>
+                               {/* Price input */}
+                               <div style={{
+                                 display: 'flex',
+                                 alignItems: 'stretch',
+                                 border: '1px solid #fca5a5',
+                                 backgroundColor: '#fff5f5',
+                                 borderRadius: '4px',
+                                 height: '36px',
+                                 boxSizing: 'border-box',
+                                 overflow: 'hidden'
+                               }}>
+                                 <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 'bold', color: '#333333' }}>10,065원</div>
+                                 <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                               </div>
 
-                          {/* Quantity input */}
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'stretch',
-                            border: '1px solid #cbd5e1',
-                            borderRadius: '4px',
-                            height: '36px',
-                            boxSizing: 'border-box',
-                            overflow: 'hidden'
-                          }}>
-                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
-                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: '#94a3b8' }}>수량 입력</div>
-                            <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
-                          </div>
+                               {/* Quantity input */}
+                               <div style={{
+                                 display: 'flex',
+                                 alignItems: 'stretch',
+                                 border: '1px solid #cbd5e1',
+                                 borderRadius: '4px',
+                                 height: '36px',
+                                 boxSizing: 'border-box',
+                                 overflow: 'hidden'
+                               }}>
+                                 <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: '#94a3b8' }}>수량 입력</div>
+                                 <button style={{ border: 'none', background: 'none', width: '32px', fontSize: '16px', fontWeight: 'bold', color: '#333333', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                               </div>
 
-                          {/* Max button */}
-                          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <button style={{
-                              border: '1px solid #cbd5e1',
-                              backgroundColor: '#ffffff',
-                              padding: '4px 16px',
-                              borderRadius: '4px',
-                              fontSize: '11px',
-                              color: '#333333',
-                              fontWeight: '600',
-                              cursor: 'pointer'
-                            }}>최대</button>
-                          </div>
+                               {/* Max button */}
+                               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                 <button style={{
+                                   border: '1px solid #cbd5e1',
+                                   backgroundColor: '#ffffff',
+                                   padding: '4px 16px',
+                                   borderRadius: '4px',
+                                   fontSize: '11px',
+                                   color: '#333333',
+                                   fontWeight: '600',
+                                   cursor: 'pointer'
+                                 }}>최대</button>
+                               </div>
+                             </>
+                           )}
 
                           {/* Info rows */}
                           <div style={{ display: 'flex', flexDirection: 'column', marginTop: 'auto' }}>
