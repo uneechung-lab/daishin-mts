@@ -9884,7 +9884,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                               </button>
                             )}
                             {screen6AsIsOrderTab === '정정/취소' ? (
-                              <div style={{ display: 'flex', gap: '6px', flex: 1 }}>
+                              <div style={{ display: 'flex', gap: '6px', width: '212px' }}>
                                 <button onClick={() => {}} style={{ flex: 1, height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>취소</button>
                                 <button onClick={() => {}} style={{ flex: 1, height: '32px', backgroundColor: '#00b050', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>정정</button>
                               </div>
