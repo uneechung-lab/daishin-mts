@@ -9798,31 +9798,31 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 </div>
                               )}
                             </div>
+                          </div>
 
-                            {/* Action Buttons - inside right column */}
-                            <div style={{ display: 'flex', gap: '6px', paddingTop: '8px' }}>
-                              {screen6AsIsOrderTab !== '정정/취소' && (
-                                <button
-                                  onClick={() => setScreen6AsIsSubScreen('bondCurrentPrice')}
-                                  style={{ width: '72px', height: '32px', backgroundColor: '#ffffff', border: '1px solid #d1d5db', color: '#111111', fontSize: '11px', fontWeight: '500', cursor: 'pointer', borderRadius: '0px', flexShrink: 0 }}
-                                >
-                                  초기화
-                                </button>
-                              )}
-                              {screen6AsIsOrderTab === '정정/취소' ? (
-                                <>
-                                  <button onClick={() => {}} style={{ flex: 1, height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>취소</button>
-                                  <button onClick={() => {}} style={{ flex: 1, height: '32px', backgroundColor: '#00b050', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>정정</button>
-                                </>
-                              ) : (
-                                <button
-                                  onClick={() => setScreen6AsIsModalOpen(true)}
-                                  style={{ flex: 1, height: '32px', backgroundColor: screen6AsIsOrderTab === '매도' ? '#2563eb' : '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}
-                                >
-                                  {screen6AsIsOrderTab}
-                                </button>
-                              )}
-                            </div>
+                          {/* Reset & Order Buttons */}
+                          <div style={{ display: 'flex', gap: '8px', padding: '8px 14px', backgroundColor: '#fff', justifyContent: 'flex-end', alignItems: 'center' }}>
+                            {screen6AsIsOrderTab !== '정정/취소' && (
+                              <button 
+                                onClick={() => setScreen6AsIsSubScreen('bondCurrentPrice')}
+                                style={{ width: '72px', height: '32px', backgroundColor: '#ffffff', border: '1px solid #d1d5db', color: '#111111', fontSize: '11px', fontWeight: '500', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                              >
+                                초기화
+                              </button>
+                            )}
+                            {screen6AsIsOrderTab === '정정/취소' ? (
+                              <div style={{ display: 'flex', gap: '6px', flex: 1 }}>
+                                <button onClick={() => {}} style={{ flex: 1, height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>취소</button>
+                                <button onClick={() => {}} style={{ flex: 1, height: '32px', backgroundColor: '#00b050', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>정정</button>
+                              </div>
+                            ) : (
+                              <button 
+                                onClick={() => setScreen6AsIsModalOpen(true)}
+                                style={{ width: '132px', height: '32px', backgroundColor: screen6AsIsOrderTab === '매도' ? '#2563eb' : '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                              >
+                                {screen6AsIsOrderTab}
+                              </button>
+                            )}
                           </div>
 
                           {/* Price / Time Info Ticker */}
