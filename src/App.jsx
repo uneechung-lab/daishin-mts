@@ -9472,7 +9472,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
         {/* Balance Grid Table Header */}
         <div style={{
-          backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+          backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
           borderTop: 'none',
           borderBottom: 'none',
           fontSize: '10px',
