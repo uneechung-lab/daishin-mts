@@ -9284,14 +9284,18 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                 <div style={{
                   border: isDark ? '1px solid #94a3b8' : '1px solid #333',
                   borderRadius: '3px',
-                  width: '17px',
-                  height: '10px',
-                  boxSizing: 'border-box',
-                  padding: '1px',
+                  padding: '0px 3px',
+                  fontSize: '0.62rem',
+                  fontWeight: '900',
+                  height: '14px',
                   display: 'flex',
-                  alignItems: 'stretch'
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: isDark ? '#94a3b8' : '#333',
+                  color: isDark ? '#0b0f19' : '#fff',
+                  lineHeight: 1
                 }}>
-                  <div style={{ backgroundColor: isDark ? '#10b981' : '#00b050', width: '80%' }}></div>
+                  86
                 </div>
               </div>
             </div>
