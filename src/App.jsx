@@ -9264,27 +9264,39 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
     return (
       <>
-        {/* Galaxy S20 Central Punch-hole Camera */}
-        <div style={styles.phoneCamera} />
+        {/* Render status bar only in TO-BE mode, since AS-IS parent wrapper already renders it */}
+        {!isAsIs && (
+          <>
+            {/* Galaxy S20 Central Punch-hole Camera */}
+            <div style={styles.phoneCamera} />
 
-        {/* Phone Status Bar */}
-        <div style={{
-          height: '24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 12px',
-          fontSize: '11px',
-          fontWeight: '600',
-          color: isDark ? '#cbd5e1' : '#333333',
-          backgroundColor: isDark ? '#121826' : '#ffffff'
-        }}>
-          <span>05:21</span>
-          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L16.35 6.22C15.15 4.19 13.73 3 12 3zm0 18c4.97 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61L7.65 17.78C8.85 19.81 10.27 21 12 21z"/></svg>
-            <span style={{ fontSize: '10px' }}>89%</span>
-          </div>
-        </div>
+            {/* Phone Status Bar (Consistent with other TO-BE screens) */}
+            <div style={styles.phoneHeaderBar}>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700', color: isDark ? '#94a3b8' : '#475569' }}>SKT 10:39</span>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: '800', color: isDark ? '#94a3b8' : '#333' }}>5G</span>
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                  <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                  <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                  <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                  <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                </div>
+                <div style={{
+                  border: isDark ? '1px solid #94a3b8' : '1px solid #333',
+                  borderRadius: '3px',
+                  width: '17px',
+                  height: '10px',
+                  boxSizing: 'border-box',
+                  padding: '1px',
+                  display: 'flex',
+                  alignItems: 'stretch'
+                }}>
+                  <div style={{ backgroundColor: isDark ? '#10b981' : '#00b050', width: '80%' }}></div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Header */}
         <div style={{
