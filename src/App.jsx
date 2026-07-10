@@ -9364,11 +9364,10 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                 marginLeft: '6px',
                 letterSpacing: '-0.5px',
                 backgroundColor: isDark ? '#121826' : '#ffffff',
-                border: isDark ? '1px solid #121826' : '1px solid #ffffff',
-                borderRadius: '2px',
-                padding: '0px 2px',
+                border: isDark ? '0.5px solid #121826' : '0.5px solid #ffffff',
+                borderRadius: '1px',
+                padding: '0px 1.5px',
                 color: isDark ? '#cbd5e1' : '#111111',
-                boxShadow: isDark ? '0 0 0 1.2px #121826' : '0 0 0 1.2px #ffffff',
                 zIndex: 2
               }}>종합</span>
             </div>
