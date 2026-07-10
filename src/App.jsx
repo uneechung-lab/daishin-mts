@@ -9443,9 +9443,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   color: isActive 
                     ? (isDark ? '#60a5fa' : '#2563eb') 
                     : (isDark ? '#cbd5e1' : '#555555'),
-                  border: isActive 
-                    ? `1px solid ${isDark ? '#3b82f6' : '#bfdbfe'}` 
-                    : '1px solid transparent'
+                  border: '1px solid transparent'
                 }}
               >
                 {pill}
@@ -9475,8 +9473,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         {/* Balance Grid Table Header */}
         <div style={{
           backgroundColor: isDark ? '#1e293b' : '#f8fafc',
-          borderTop: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
-          borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+          borderTop: 'none',
+          borderBottom: 'none',
           fontSize: '10px',
           color: isDark ? '#94a3b8' : '#555555',
           padding: '6px 12px',
