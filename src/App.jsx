@@ -9776,36 +9776,40 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 </>
                               )}
 
-                              <div style={{ 
-                                borderTop: '1px solid #f1f5f9', 
-                                paddingTop: '8px', 
-                                display: 'flex', 
-                                flexDirection: 'column', 
-                                gap: '6px',
-                                marginTop: 'auto'
-                              }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
-                                  <span style={{ color: '#666' }}>{isSwitchOff ? '최대가능금액(원)' : '주문가능금액(원)'}</span>
-                                  <span style={{ fontWeight: '700' }}>0</span>
-                                </div>
-                                {isSwitchOff && (
+                              {screen6AsIsOrderTab !== '정정/취소' && (
+                                <div style={{ 
+                                  borderTop: '1px solid #f1f5f9', 
+                                  paddingTop: '8px', 
+                                  display: 'flex', 
+                                  flexDirection: 'column', 
+                                  gap: '6px',
+                                  marginTop: 'auto'
+                                }}>
                                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
-                                    <span style={{ color: '#666' }}>위험한도(원)</span>
+                                    <span style={{ color: '#666' }}>{isSwitchOff ? '최대가능금액(원)' : '주문가능금액(원)'}</span>
                                     <span style={{ fontWeight: '700' }}>0</span>
                                   </div>
-                                )}
-                              </div>
+                                  {isSwitchOff && (
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+                                      <span style={{ color: '#666' }}>위험한도(원)</span>
+                                      <span style={{ fontWeight: '700' }}>0</span>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           </div>
 
                           {/* Reset & Order Buttons */}
                           <div style={{ display: 'flex', gap: '8px', padding: '8px 14px', backgroundColor: '#fff', justifyContent: 'flex-end', alignItems: 'center' }}>
-                            <button 
-                              onClick={() => setScreen6AsIsSubScreen('bondCurrentPrice')}
-                              style={{ width: '72px', height: '32px', backgroundColor: '#ffffff', border: '1px solid #d1d5db', color: '#111111', fontSize: '11px', fontWeight: '500', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                              초기화
-                            </button>
+                            {screen6AsIsOrderTab !== '정정/취소' && (
+                              <button 
+                                onClick={() => setScreen6AsIsSubScreen('bondCurrentPrice')}
+                                style={{ width: '72px', height: '32px', backgroundColor: '#ffffff', border: '1px solid #d1d5db', color: '#111111', fontSize: '11px', fontWeight: '500', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                              >
+                                초기화
+                              </button>
+                            )}
                             {screen6AsIsOrderTab === '정정/취소' ? (
                               <div style={{ display: 'flex', gap: '6px' }}>
                                 <button onClick={() => {}} style={{ width: '66px', height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>취소</button>
@@ -12817,14 +12821,14 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                       {/* Order Tabs */}
                       <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
                         {['매수', '매도', '정정/취소', '미체결/체결'].map((tab) => (
-                          <div key={tab} style={{
+                          <div key={tab} onClick={() => setScreen6ToBeOrderTab(tab)} style={{
                             flex: 1,
                             textAlign: 'center',
                             padding: '12px 0',
                             fontSize: '12px',
                             fontWeight: '700',
-                            color: tab === '매수' ? '#de201e' : '#666666',
-                            borderBottom: tab === '매수' ? '2.5px solid #de201e' : 'none',
+                            color: tab === screen6ToBeOrderTab ? (tab === '매수' ? '#de201e' : tab === '매도' ? '#2563eb' : '#059669') : '#666666',
+                            borderBottom: tab === screen6ToBeOrderTab ? `2.5px solid ${tab === '매수' ? '#de201e' : tab === '매도' ? '#2563eb' : '#059669'}` : 'none',
                             cursor: 'pointer'
                           }}>{tab}</div>
                         ))}
@@ -12969,63 +12973,47 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
                           {/* Info rows */}
                           <div style={{ display: 'flex', flexDirection: 'column', marginTop: 'auto' }}>
-                            {/* Row 1: 주문가능 금액 ⓘ (right aligned) */}
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '8px' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#666666' }}>
-                                <span>주문가능 금액</span>
-                                <span style={{
-                                  border: '1px solid #3b82f6',
-                                  borderRadius: '50%',
-                                  width: '12px',
-                                  height: '12px',
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  fontSize: '8px',
-                                  color: '#3b82f6',
-                                  fontWeight: 'bold'
-                                }}>i</span>
+                            {screen6ToBeOrderTab !== '정정/취소' && screen6ToBeOrderTab !== '미체결/체결' && (
+                              <>
+                                {/* Row 1: 주문가능 금액 */}
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '8px' }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#666666' }}>
+                                    <span>주문가능 금액</span>
+                                    <span style={{ border: '1px solid #3b82f6', borderRadius: '50%', width: '12px', height: '12px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', color: '#3b82f6', fontWeight: 'bold' }}>i</span>
+                                  </div>
+                                  <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111', marginTop: '2px' }}>3,400,000원</span>
+                                </div>
+
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '8px' }}>
+                                  <div style={{ fontSize: '11px', color: '#666666' }}>위험자산 매수 가능 금액</div>
+                                  <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111', marginTop: '2px' }}>400,000원</span>
+                                </div>
+
+                                {/* Divider line */}
+                                <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '4px 0' }} />
+
+                                {/* Row 3: 초기화 / 주문금액 */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '12px' }}>
+                                  <span style={{ fontSize: '12px', color: '#666666', textDecoration: 'underline', cursor: 'pointer', paddingBottom: '4px' }}>초기화</span>
+                                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                                    <span style={{ fontSize: '11px', color: '#666666' }}>주문금액</span>
+                                    <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#111111', marginTop: '2px' }}>0원</span>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+
+                            {/* Action Button */}
+                            {screen6ToBeOrderTab === '정정/취소' ? (
+                              <div style={{ display: 'flex', gap: '8px' }}>
+                                <button onClick={() => {}} style={{ flex: 1, border: 'none', backgroundColor: '#de201e', color: '#ffffff', padding: '12px 0', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>취소</button>
+                                <button onClick={() => {}} style={{ flex: 1, border: 'none', backgroundColor: '#00b050', color: '#ffffff', padding: '12px 0', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>정정</button>
                               </div>
-                              <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111', marginTop: '2px' }}>3,400,000원</span>
-                            </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '8px' }}>
-                              <div style={{ fontSize: '11px', color: '#666666' }}>위험자산 매수 가능 금액</div>
-                              <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111', marginTop: '2px' }}>400,000원</span>
-                            </div>
-
-                            {/* Divider line */}
-                            <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '4px 0' }} />
-
-                            {/* Row 3: 초기화 / 주문금액 0원 */}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '12px' }}>
-                              <span style={{
-                                fontSize: '12px',
-                                color: '#666666',
-                                textDecoration: 'underline',
-                                cursor: 'pointer',
-                                paddingBottom: '4px'
-                              }}>초기화</span>
-                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                                <span style={{ fontSize: '11px', color: '#666666' }}>주문금액</span>
-                                <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#111111', marginTop: '2px' }}>0원</span>
-                              </div>
-                            </div>
-
-                            {/* Button: 매수 */}
-                            <button onClick={() => setScreen6ToBeSubScreen('cautionAgreement')} style={{
-                              width: '100%',
-                              border: 'none',
-                              backgroundColor: '#de201e',
-                              color: '#ffffff',
-                              padding: '12px 0',
-                              borderRadius: '4px',
-                              fontSize: '14px',
-                              fontWeight: 'bold',
-                              cursor: 'pointer'
-                            }}>
-                              매수
-                            </button>
+                            ) : screen6ToBeOrderTab === '미체결/체결' ? null : (
+                              <button onClick={() => setScreen6ToBeSubScreen('cautionAgreement')} style={{ width: '100%', border: 'none', backgroundColor: screen6ToBeOrderTab === '매도' ? '#2563eb' : '#de201e', color: '#ffffff', padding: '12px 0', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>
+                                {screen6ToBeOrderTab}
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>
