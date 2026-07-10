@@ -9347,22 +9347,22 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'flex-start',
               justifyContent: 'center',
               lineHeight: 1,
               cursor: 'pointer',
               color: isDark ? '#ffffff' : '#111111',
-              marginTop: '2px'
+              marginTop: '2px',
+              paddingRight: '2px'
             }}>
-              <span style={{ fontSize: '1.15rem', fontWeight: '800', fontFamily: 'sans-serif' }}>₩</span>
-              <span style={{ fontSize: '0.52rem', fontWeight: '800', marginTop: '-3px', letterSpacing: '-0.5px' }}>종합</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: '800', fontFamily: 'sans-serif', marginLeft: '0px' }}>₩</span>
+              <span style={{ fontSize: '0.48rem', fontWeight: '800', marginTop: '-4px', marginLeft: '6px', letterSpacing: '-0.5px' }}>종합</span>
             </div>
 
-            {/* Custom Ribbon Bookmark Icon with Star inside */}
+            {/* Custom Ribbon Bookmark Icon without Star */}
             <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: isDark ? '#ffffff' : '#111111' }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="miter">
                 <path d="M5 3h14v18l-7-4.5L5 21V3z" />
-                <polygon points="12 7.5 13.5 11 17 11 14 13 15.5 16.5 12 14.5 8.5 16.5 10 13 7 11 10.5 11" fill="currentColor" stroke="none" />
               </svg>
             </div>
           </div>
