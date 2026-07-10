@@ -9310,21 +9310,61 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           height: '46px',
           padding: '0 12px',
           borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
-          backgroundColor: isDark ? '#121826' : '#ffffff'
+          backgroundColor: isDark ? '#121826' : '#ffffff',
+          position: 'relative'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span 
-              onClick={() => setSubScreen('menu')}
-              style={{ fontSize: '1.2rem', cursor: 'pointer', color: isDark ? '#cbd5e1' : '#333' }}
-            >
-              ☰
-            </span>
-            <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px', color: isDark ? '#ffffff' : '#111' }}>장내채권</span>
-            <span style={{ fontSize: '1.1rem', cursor: 'pointer', color: isDark ? '#94a3b8' : '#666', fontWeight: 'bold' }}>↺</span>
+          {/* Far Left: Hamburger Menu */}
+          <span 
+            onClick={() => setSubScreen('menu')}
+            style={{ fontSize: '1.4rem', cursor: 'pointer', color: isDark ? '#cbd5e1' : '#111111', display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </span>
+
+          {/* Absolute Center: Title & Refresh */}
+          <div style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}>
+            <span style={{ fontWeight: '800', fontSize: '1.05rem', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>장내채권</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a0a0a0" strokeWidth="2.2" style={{ cursor: 'pointer' }}>
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+            </svg>
           </div>
+
+          {/* Far Right: Icons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: '800', color: isDark ? '#ffffff' : '#111', cursor: 'pointer', border: isDark ? '1px solid #475569' : '1px solid #ddd', padding: '2px 4px', borderRadius: '2px' }}>₩종합</span>
-            <span style={{ fontSize: '1.1rem', cursor: 'pointer', color: isDark ? '#475569' : '#ccc' }}>★</span>
+            {/* Custom ₩종합 Icon */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              lineHeight: 1,
+              cursor: 'pointer',
+              color: isDark ? '#ffffff' : '#111111',
+              marginTop: '2px'
+            }}>
+              <span style={{ fontSize: '1.15rem', fontWeight: '800', fontFamily: 'sans-serif' }}>₩</span>
+              <span style={{ fontSize: '0.52rem', fontWeight: '800', marginTop: '-3px', letterSpacing: '-0.5px' }}>종합</span>
+            </div>
+
+            {/* Custom Ribbon Bookmark Icon with Star inside */}
+            <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: isDark ? '#ffffff' : '#111111' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="miter">
+                <path d="M5 3h14v18l-7-4.5L5 21V3z" />
+                <polygon points="12 7.5 13.5 11 17 11 14 13 15.5 16.5 12 14.5 8.5 16.5 10 13 7 11 10.5 11" fill="currentColor" stroke="none" />
+              </svg>
+            </div>
           </div>
         </div>
 
