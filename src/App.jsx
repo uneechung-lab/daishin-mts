@@ -8374,8 +8374,11 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     );
   };
   const [screen6AsIsPaymentType, setScreen6AsIsPaymentType] = useState('고객');
+  const [screen6ToBePaymentType, setScreen6ToBePaymentType] = useState('고객');
   const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account'
   const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account'
+  const [screen6AsIsOrderTab, setScreen6AsIsOrderTab] = useState('매수'); // '매수', '매도', '정정/취소'
+  const [screen6ToBeOrderTab, setScreen6ToBeOrderTab] = useState('매수'); // '매수', '매도', '정정/취소', '미체결/체결'
 
   const renderScreen6Caution = (mode) => {
     const q1 = mode === 'asis' ? screen6AsIsCautionQ1 : screen6ToBeCautionQ1;
@@ -9622,18 +9625,31 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
                           {/* Order Tabs */}
                           <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
-                            {['매수', '매도', '정정/취소'].map((tab) => (
-                              <div key={tab} style={{
-                                flex: 1,
-                                textAlign: 'center',
-                                padding: '12px 0',
-                                fontSize: '13px',
-                                fontWeight: '700',
-                                color: tab === '매수' ? '#de201e' : '#888888',
-                                borderBottom: tab === '매수' ? '2.5px solid #de201e' : 'none',
-                                cursor: 'pointer'
-                              }}>{tab}</div>
-                            ))}
+                            {['매수', '매도', '정정/취소'].map((tab) => {
+                              const isTabActive = tab === screen6AsIsOrderTab;
+                              let activeColor = '#de201e';
+                              if (tab === '매도') activeColor = '#2563eb';
+                              else if (tab === '정정/취소') activeColor = '#00b050';
+
+                              return (
+                                <div 
+                                  key={tab} 
+                                  onClick={() => setScreen6AsIsOrderTab(tab)}
+                                  style={{
+                                    flex: 1,
+                                    textAlign: 'center',
+                                    padding: '12px 0',
+                                    fontSize: '13px',
+                                    fontWeight: '700',
+                                    color: isTabActive ? activeColor : '#888888',
+                                    borderBottom: isTabActive ? `2.5px solid ${activeColor}` : 'none',
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  {tab}
+                                </div>
+                              );
+                            })}
                           </div>
 
                           {/* Order Contents Panel */}
@@ -9672,7 +9688,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
                             {/* Right: Form inputs */}
                             <div style={{ flex: 1, padding: '12px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                              {isSwitchOff && (
+                              {isSwitchOff && (screen6AsIsOrderTab === '매도' || screen6AsIsOrderTab === '정정/취소') && (
                                 <div style={{
                                   display: 'flex',
                                   border: '1px solid #cbd5e1',
@@ -9716,24 +9732,57 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   </div>
                                 </div>
                               )}
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <span style={{ fontSize: '12px', color: '#333' }}>주문단위</span>
-                                <div style={{ backgroundColor: '#f1f5f9', padding: '6px 12px', borderRadius: '2px', fontSize: '12px', fontWeight: '700', width: '120px', textAlign: 'right' }}>10,000</div>
-                              </div>
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <span style={{ fontSize: '12px', color: '#333' }}>단가</span>
-                                <div style={{ borderBottom: '1px solid #94a3b8', padding: '4px 0', fontSize: '12px', fontWeight: '700', width: '120px', textAlign: 'right' }}>10,065.0</div>
-                              </div>
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <span style={{ fontSize: '12px', color: '#333' }}>수량</span>
-                                <div style={{ borderBottom: '1px solid #94a3b8', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#94a3b8' }}>수량 입력 <span style={{ color: '#333', fontWeight: '700' }}>원</span></div>
-                              </div>
+                              {screen6AsIsOrderTab === '정정/취소' ? (
+                                <>
+                                  <div style={{
+                                    border: '1px solid #cbd5e1',
+                                    borderRadius: '2px',
+                                    padding: '4px 8px',
+                                    fontSize: '11px',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    backgroundColor: '#ffffff',
+                                    cursor: 'pointer',
+                                    height: '28px',
+                                    boxSizing: 'border-box'
+                                  }}>
+                                    <span style={{ color: '#333' }}>미체결내역</span>
+                                    <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ fontSize: '12px', color: '#333' }}>단가</span>
+                                    <div style={{ borderBottom: '1px solid #cbd5e1', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#ccc' }}>단가 입력</div>
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ fontSize: '12px', color: '#333' }}>수량</span>
+                                    <div style={{ borderBottom: '1px solid #cbd5e1', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#ccc' }}>수량 입력</div>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ fontSize: '12px', color: '#333' }}>주문단위</span>
+                                    <div style={{ backgroundColor: '#f1f5f9', padding: '6px 12px', borderRadius: '2px', fontSize: '12px', fontWeight: '700', width: '120px', textAlign: 'right' }}>10,000</div>
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ fontSize: '12px', color: '#333' }}>단가</span>
+                                    <div style={{ borderBottom: '1px solid #94a3b8', padding: '4px 0', fontSize: '12px', fontWeight: '700', width: '120px', textAlign: 'right' }}>10,065.0</div>
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ fontSize: '12px', color: '#333' }}>수량</span>
+                                    <div style={{ borderBottom: '1px solid #94a3b8', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#94a3b8' }}>수량 입력 <span style={{ color: '#333', fontWeight: '700' }}>원</span></div>
+                                  </div>
+                                </>
+                              )}
+
                               <div style={{ 
                                 borderTop: '1px solid #f1f5f9', 
                                 paddingTop: '8px', 
                                 display: 'flex', 
                                 flexDirection: 'column', 
-                                gap: '6px' 
+                                gap: '6px',
+                                marginTop: 'auto'
                               }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
                                   <span style={{ color: '#666' }}>{isSwitchOff ? '최대가능금액(원)' : '주문가능금액(원)'}</span>
@@ -9757,12 +9806,19 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             >
                               초기화
                             </button>
-                            <button 
-                              onClick={() => setScreen6AsIsModalOpen(true)}
-                              style={{ width: '132px', height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                              매수
-                            </button>
+                            {screen6AsIsOrderTab === '정정/취소' ? (
+                              <div style={{ display: 'flex', gap: '6px' }}>
+                                <button onClick={() => {}} style={{ width: '66px', height: '32px', backgroundColor: '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>취소</button>
+                                <button onClick={() => {}} style={{ width: '66px', height: '32px', backgroundColor: '#00b050', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px' }}>정정</button>
+                              </div>
+                            ) : (
+                              <button 
+                                onClick={() => setScreen6AsIsModalOpen(true)}
+                                style={{ width: '132px', height: '32px', backgroundColor: screen6AsIsOrderTab === '매도' ? '#2563eb' : '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                              >
+                                {screen6AsIsOrderTab}
+                              </button>
+                            )}
                           </div>
 
                           {/* Price / Time Info Ticker */}
@@ -10419,6 +10475,12 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     const asisSimParam = params.get('asisSimulationStep');
     if (asisSimParam) setAsisSimulationStep(asisSimParam);
 
+    // Restore order tabs
+    const screen6AsIsOrderTabParam = params.get('screen6AsIsOrderTab');
+    if (screen6AsIsOrderTabParam) setScreen6AsIsOrderTab(screen6AsIsOrderTabParam);
+    const screen6ToBeOrderTabParam = params.get('screen6ToBeOrderTab');
+    if (screen6ToBeOrderTabParam) setScreen6ToBeOrderTab(screen6ToBeOrderTabParam);
+
     // Restore Pension Receipt Status states from URL params on mount
     const statusActiveTabParam = params.get('statusActiveTab');
     if (statusActiveTabParam) setStatusActiveTab(statusActiveTabParam);
@@ -10485,12 +10547,16 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     
     // Sync asisSimulationStep
     params.set('asisSimulationStep', asisSimulationStep);
+
+    // Sync order tabs
+    params.set('screen6AsIsOrderTab', screen6AsIsOrderTab);
+    params.set('screen6ToBeOrderTab', screen6ToBeOrderTab);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -12205,7 +12271,21 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   
                   {/* Premium Switch (On/Off) */}
                   <div 
-                    onClick={() => setScreen6ToBeSwitchOn(!screen6ToBeSwitchOn)}
+                    onClick={() => {
+                      const nextSwitch = !screen6ToBeSwitchOn;
+                      setScreen6ToBeSwitchOn(nextSwitch);
+                      if (nextSwitch) {
+                        // Switch to TO BE: sync to tobe subscreen
+                        if (screen6AsIsSubScreen === 'bondCurrentPrice' || screen6AsIsSubScreen === 'bondOrder') {
+                          setScreen6ToBeSubScreen(screen6AsIsSubScreen);
+                        }
+                      } else {
+                        // Switch to AS IS: sync to asis subscreen
+                        if (screen6ToBeSubScreen === 'bondCurrentPrice' || screen6ToBeSubScreen === 'bondOrder') {
+                          setScreen6AsIsSubScreen(screen6ToBeSubScreen);
+                        }
+                      }
+                    }}
                     style={{
                       width: '60px',
                       height: '28px',
@@ -12253,7 +12333,12 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   {screen6ToBeSearchOpen ? (
                     renderScreen6Search('tobe', () => setScreen6ToBeSearchOpen(false))
                   ) : !screen6ToBeSwitchOn ? (
-                    renderScreen6AsIs(true)
+                    (() => {
+                      // Dynamically sync subscreen to AS IS renderer
+                      const originalAsIsScreen = screen6AsIsSubScreen;
+                      // Temporarily match screen6AsIsSubScreen to screen6ToBeSubScreen to render the active page
+                      return renderScreen6AsIs(true);
+                    })()
                   ) : screen6ToBeSubScreen === 'bondCurrentPrice' ? (
                     <>
                       {/* Galaxy S20 Central Punch-hole Camera */}
