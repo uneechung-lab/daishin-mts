@@ -9252,6 +9252,296 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     );
   };
 
+  const renderScreen6Balance = (mode, isSwitchOff = false) => {
+    const isAsIs = mode === 'asis';
+    const subScreen = isAsIs ? screen6AsIsSubScreen : screen6ToBeSubScreen;
+    const setSubScreen = isAsIs ? setScreen6AsIsSubScreen : setScreen6ToBeSubScreen;
+    const setOrderTab = isAsIs ? setScreen6AsIsOrderTab : setScreen6ToBeOrderTab;
+
+    const accountText = isAsIs 
+      ? (isSwitchOff ? '200-233354(41) 김대신' : '200-233354(01) 김대신')
+      : '782-000000(41) 김대신';
+
+    return (
+      <>
+        {/* Galaxy S20 Central Punch-hole Camera */}
+        <div style={styles.phoneCamera} />
+
+        {/* Phone Status Bar */}
+        <div style={{
+          height: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 12px',
+          fontSize: '11px',
+          fontWeight: '600',
+          color: isDark ? '#cbd5e1' : '#333333',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          <span>05:21</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L16.35 6.22C15.15 4.19 13.73 3 12 3zm0 18c4.97 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61L7.65 17.78C8.85 19.81 10.27 21 12 21z"/></svg>
+            <span style={{ fontSize: '10px' }}>89%</span>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '46px',
+          padding: '0 12px',
+          borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span 
+              onClick={() => setSubScreen('menu')}
+              style={{ fontSize: '1.2rem', cursor: 'pointer', color: isDark ? '#cbd5e1' : '#333' }}
+            >
+              ☰
+            </span>
+            <span style={{ fontWeight: '800', fontSize: '0.98rem', letterSpacing: '-0.3px', color: isDark ? '#ffffff' : '#111' }}>장내채권</span>
+            <span style={{ fontSize: '1.1rem', cursor: 'pointer', color: isDark ? '#94a3b8' : '#666', fontWeight: 'bold' }}>↺</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: '800', color: isDark ? '#ffffff' : '#111', cursor: 'pointer', border: isDark ? '1px solid #475569' : '1px solid #ddd', padding: '2px 4px', borderRadius: '2px' }}>₩종합</span>
+            <span style={{ fontSize: '1.1rem', cursor: 'pointer', color: isDark ? '#475569' : '#ccc' }}>★</span>
+          </div>
+        </div>
+
+        {/* Tabs: 미체결, 체결, 잔고 */}
+        <div style={{
+          display: 'flex',
+          borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          {['미체결', '체결', '잔고'].map((tab) => {
+            const isActive = tab === '잔고';
+            return (
+              <div
+                key={tab}
+                onClick={() => {
+                  if (tab === '미체결' || tab === '체결') {
+                    setSubScreen('bondOrder');
+                    setOrderTab('정정/취소');
+                  }
+                }}
+                style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  padding: '12px 0',
+                  fontSize: '13px',
+                  fontWeight: isActive ? '800' : '500',
+                  color: isActive ? (isDark ? '#3b82f6' : '#111111') : (isDark ? '#94a3b8' : '#777777'),
+                  borderBottom: isActive ? `2px solid ${isDark ? '#3b82f6' : '#111111'}` : 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                {tab}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Scrollable Pills Filter Bar */}
+        <div style={{
+          display: 'flex',
+          gap: '8px',
+          overflowX: 'auto',
+          padding: '8px 12px',
+          backgroundColor: isDark ? '#0f172a' : '#ffffff',
+          scrollbarWidth: 'none',
+          whiteSpace: 'nowrap',
+          borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+        }}>
+          {['국내주식', '해외주식', '금현물', '펀드', '장내채권', '장외채권'].map((pill) => {
+            const isActive = pill === '장내채권';
+            return (
+              <div
+                key={pill}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: '16px',
+                  fontSize: '11px',
+                  fontWeight: isActive ? '700' : '500',
+                  cursor: 'pointer',
+                  backgroundColor: isActive 
+                    ? (isDark ? 'rgba(59, 130, 246, 0.15)' : '#eff6ff') 
+                    : (isDark ? '#1e293b' : '#f1f5f9'),
+                  color: isActive 
+                    ? (isDark ? '#60a5fa' : '#2563eb') 
+                    : (isDark ? '#cbd5e1' : '#555555'),
+                  border: isActive 
+                    ? `1px solid ${isDark ? '#3b82f6' : '#bfdbfe'}` 
+                    : '1px solid transparent'
+                }}
+              >
+                {pill}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Dropdown Box */}
+        <div style={{ padding: '8px 12px', backgroundColor: isDark ? '#0f172a' : '#ffffff' }}>
+          <div style={{
+            border: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+            borderRadius: '4px',
+            padding: '8px 12px',
+            fontSize: '12px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            cursor: 'pointer'
+          }}>
+            <span style={{ fontWeight: '600', color: isDark ? '#ffffff' : '#333333' }}>{accountText}</span>
+            <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
+          </div>
+        </div>
+
+        {/* Balance Grid Table Header */}
+        <div style={{
+          backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+          borderTop: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+          borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+          fontSize: '10px',
+          color: isDark ? '#94a3b8' : '#555555',
+          padding: '6px 12px',
+          display: 'flex',
+          textAlign: 'center'
+        }}>
+          <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
+            <span>종목명</span>
+            <span style={{ opacity: 0.8 }}>종목코드</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+            <span>수량</span>
+            <span style={{ opacity: 0.8 }}>매수일</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
+            <span>수익률</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+            <span>과세구분</span>
+            <span style={{ opacity: 0.8 }}>잔고구분</span>
+          </div>
+        </div>
+
+        {/* Table Body Area */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: isDark ? '#0f172a' : '#ffffff',
+          color: isDark ? '#94a3b8' : '#888888',
+          fontSize: '13px'
+        }}>
+          잔고 내역이 없습니다.
+        </div>
+
+        {/* Bottom Banner */}
+        <div style={{
+          padding: '8px 12px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderTop: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9',
+          backgroundColor: isDark ? '#0f172a' : '#ffffff',
+          fontSize: '11px'
+        }}>
+          <span style={{ color: '#2563eb', fontWeight: '600', cursor: 'pointer' }}>프라임 투자상담 &gt;</span>
+          <span style={{ color: '#888888', cursor: 'pointer' }}>다시보기 않기</span>
+        </div>
+
+        {/* Ticker (Nasdaq) */}
+        <div style={{
+          height: '24px',
+          backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 12px',
+          borderTop: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+          fontSize: '0.72rem'
+        }}>
+          <span style={{ fontWeight: '800', color: isDark ? '#cbd5e1' : '#333333' }}>나스닥 종합</span>
+          <span style={{ color: '#de201e', fontWeight: '800' }}>26,206.89 ▲ 336.24 (1.30%)</span>
+        </div>
+
+        {/* Bottom Bar Navigation */}
+        <div style={{
+          height: '44px',
+          display: 'flex',
+          alignItems: 'stretch',
+          borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          {/* Home button */}
+          <button 
+            onClick={() => setSubScreen('menu')}
+            style={{ width: '48px', border: 'none', background: 'none', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: isDark ? '#cbd5e1' : '#333' }}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          </button>
+
+          {/* Middle text tabs */}
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+            {[
+              { key: 'bondCurrentPrice', label: `장내채권\n현재가` },
+              { key: 'bondBalance', label: `장내채권\n잔고` },
+              { key: '장외채권 매매', label: `장외채권\n매매` },
+              { key: '장외채권 잔고', label: `장외채권\n잔고` }
+            ].map((tab, idx) => {
+              const isSelected = tab.key === 'bondBalance';
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => {
+                    if (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance') {
+                      setSubScreen(tab.key);
+                    }
+                  }}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    background: 'none',
+                    borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                    cursor: 'pointer',
+                    fontSize: '0.73rem',
+                    fontWeight: isSelected ? '800' : '500',
+                    color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    whiteSpace: 'pre-line',
+                    lineHeight: '1.2',
+                    padding: '2px 2px'
+                  }}
+                >
+                  {tab.key === 'bondCurrentPrice' && !isAsIs ? '장내채권\n투자하기' : tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Back/Exit button */}
+          <button 
+            onClick={() => setSubScreen('menu')}
+            style={{ width: '48px', border: 'none', background: 'none', borderLeft: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: isDark ? '#cbd5e1' : '#333' }}><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+          </button>
+        </div>
+      </>
+    );
+  };
+
   const renderScreen6AsIs = (isSwitchOff = false) => {
     return (
       <>
@@ -9497,9 +9787,9 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
                               {[
                                 { name: '장내채권 현재가', onClick: () => setScreen6AsIsSubScreen('bondCurrentPrice') },
-                                { name: '장내채권 주문' },
+                                { name: '장내채권 주문', onClick: () => { setScreen6AsIsSubScreen('bondOrder'); setScreen6AsIsOrderTab('매수'); } },
                                 { name: '장내채권 미체결/체결' },
-                                { name: '장내채권 잔고' }
+                                { name: '장내채권 잔고', onClick: () => setScreen6AsIsSubScreen('bondBalance') }
                               ].map((item, idx) => (
                                 <div key={idx} onClick={item.onClick} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                                   <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
@@ -9940,9 +10230,17 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 { key: '장외채권 매매', label: `장외채권\n매매` },
                                 { key: '장외채권 잔고', label: `장외채권\n잔고` }
                               ].map((tab, idx) => {
+                                const isSelected = tab.key === '장내채권 현재가';
                                 return (
                                   <button
                                     key={tab.key}
+                                    onClick={() => {
+                                      if (tab.key === '장내채권 현재가') {
+                                        setScreen6AsIsSubScreen('bondCurrentPrice');
+                                      } else if (tab.key === '장내채권 잔고') {
+                                        setScreen6AsIsSubScreen('bondBalance');
+                                      }
+                                    }}
                                     style={{
                                       flex: 1,
                                       border: 'none',
@@ -9950,8 +10248,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                       borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
                                       cursor: 'pointer',
                                       fontSize: '0.73rem',
-                                      fontWeight: '500',
-                                      color: isDark ? '#cbd5e1' : '#333',
+                                      fontWeight: isSelected ? '800' : '500',
+                                      color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
                                       display: 'flex',
                                       alignItems: 'center',
                                       justifyContent: 'center',
@@ -9976,6 +10274,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             </button>
                           </div>
                         </>
+                      ) : screen6AsIsSubScreen === 'bondBalance' ? (
+                        renderScreen6Balance('asis', isSwitchOff)
                       ) : screen6AsIsSubScreen === 'cautionAgreement' ? (
                         renderScreen6Caution('asis')
                       ) : (
@@ -10348,9 +10648,17 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 { key: '장외채권 매매', label: `장외채권\n매매` },
                                 { key: '장외채권 잔고', label: `장외채권\n잔고` }
                               ].map((tab, idx) => {
+                                const isSelected = tab.key === '장내채권 현재가';
                                 return (
                                   <button
                                     key={tab.key}
+                                    onClick={() => {
+                                      if (tab.key === '장내채권 현재가') {
+                                        setScreen6AsIsSubScreen('bondCurrentPrice');
+                                      } else if (tab.key === '장내채권 잔고') {
+                                        setScreen6AsIsSubScreen('bondBalance');
+                                      }
+                                    }}
                                     style={{
                                       flex: 1,
                                       border: 'none',
@@ -10358,8 +10666,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                       borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
                                       cursor: 'pointer',
                                       fontSize: '0.73rem',
-                                      fontWeight: '500',
-                                      color: isDark ? '#cbd5e1' : '#333',
+                                      fontWeight: isSelected ? '800' : '500',
+                                      color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
                                       display: 'flex',
                                       alignItems: 'center',
                                       justifyContent: 'center',
@@ -12743,14 +13051,22 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         {/* Middle text tabs */}
                         <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
                           {[
-                            { key: '장내채권 현재가', label: `장내채권\n현재가` },
+                            { key: '장내채권 현재가', label: `장내채권\n투자하기` },
                             { key: '장내채권 잔고', label: `장내채권\n잔고` },
                             { key: '장외채권 매매', label: `장외채권\n매매` },
                             { key: '장외채권 잔고', label: `장외채권\n잔고` }
                           ].map((tab, idx) => {
+                            const isSelected = tab.key === '장내채권 현재가';
                             return (
                               <button
                                 key={tab.key}
+                                onClick={() => {
+                                  if (tab.key === '장내채권 현재가') {
+                                    setScreen6ToBeSubScreen('bondCurrentPrice');
+                                  } else if (tab.key === '장내채권 잔고') {
+                                    setScreen6ToBeSubScreen('bondBalance');
+                                  }
+                                }}
                                 style={{
                                   flex: 1,
                                   border: 'none',
@@ -12758,8 +13074,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
                                   cursor: 'pointer',
                                   fontSize: '0.73rem',
-                                  fontWeight: '500',
-                                  color: '#333',
+                                  fontWeight: isSelected ? '800' : '500',
+                                  color: isSelected ? '#4750b3' : '#333',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
@@ -13203,18 +13519,20 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         {/* Middle text tabs */}
                         <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
                           {[
-                            { key: '장내채권 현재가', label: `장내채권\n현재가` },
+                            { key: '장내채권 현재가', label: `장내채권\n투자하기` },
                             { key: '장내채권 잔고', label: `장내채권\n잔고` },
                             { key: '장외채권 매매', label: `장외채권\n매매` },
                             { key: '장외채권 잔고', label: `장외채권\n잔고` }
                           ].map((tab, idx) => {
-                            const isSelected = false;
+                            const isSelected = tab.key === '장내채권 현재가';
                             return (
                               <button
                                 key={tab.key}
                                 onClick={() => {
                                   if (tab.key === '장내채권 현재가') {
                                     setScreen6ToBeSubScreen('bondCurrentPrice');
+                                  } else if (tab.key === '장내채권 잔고') {
+                                    setScreen6ToBeSubScreen('bondBalance');
                                   }
                                 }}
                                 style={{
@@ -13250,6 +13568,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         </button>
                       </div>
                     </>
+                  ) : screen6ToBeSubScreen === 'bondBalance' ? (
+                    renderScreen6Balance('tobe')
                   ) : screen6ToBeSubScreen === 'cautionAgreement' ? (
                     renderScreen6Caution('tobe')
                   ) : screen6ToBeSubScreen === 'bondDetails' ? (
@@ -13417,11 +13737,21 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             onClick={() => setScreen6ToBeSubScreen('bondCurrentPrice')}
                             style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
                           >
-                            장내채권 현재가
+                            장내채권 투자하기
                           </span>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 주문</span>
+                          <span 
+                            onClick={() => { setScreen6ToBeSubScreen('bondOrder'); setScreen6ToBeOrderTab('매수'); }}
+                            style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
+                          >
+                            장내채권 주문
+                          </span>
                           <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 미체결/체결</span>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 잔고</span>
+                          <span 
+                            onClick={() => setScreen6ToBeSubScreen('bondBalance')}
+                            style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
+                          >
+                            장내채권 잔고
+                          </span>
                         </div>
                       </div>
                     </div>
