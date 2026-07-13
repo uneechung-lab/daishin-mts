@@ -2748,7 +2748,12 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         ).map((tab) => (
           <span 
             key={tab} 
-            onClick={() => setActiveMallTab(tab)}
+            onClick={() => {
+              setActiveMallTab(tab);
+              if (tab !== '전체') {
+                setSelectedChip('전체');
+              }
+            }}
             style={{ ...menuTabItemStyle(activeMallTab === tab), position: 'relative' }}
           >
             {tab}
@@ -2833,34 +2838,36 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           </div>
 
           {/* Filter Chips Row */}
-          <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-            {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
-              const isSelected = selectedChip === chip;
-              return (
-                <span
-                  key={chip}
-                  onClick={() => setSelectedChip(chip)}
-                  style={{
-                    padding: '9px 18px',
-                    borderRadius: '24px',
-                    fontSize: '0.78rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    backgroundColor: isSelected 
-                      ? (isDark ? '#334155' : '#e0e0e0') 
-                      : (isDark ? '#1e293b' : '#f1f1f1'),
-                    color: isSelected 
-                      ? (isDark ? '#ffffff' : '#111111') 
-                      : (isDark ? '#94a3b8' : '#666666'),
-                    whiteSpace: 'nowrap',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  {chip}
-                </span>
-              );
-            })}
-          </div>
+          {activeMallTab === '전체' && (
+            <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+              {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
+                const isSelected = selectedChip === chip;
+                return (
+                  <span
+                    key={chip}
+                    onClick={() => setSelectedChip(chip)}
+                    style={{
+                      padding: '9px 18px',
+                      borderRadius: '24px',
+                      fontSize: '0.78rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      backgroundColor: isSelected 
+                        ? (isDark ? '#334155' : '#e0e0e0') 
+                        : (isDark ? '#1e293b' : '#f1f1f1'),
+                      color: isSelected 
+                        ? (isDark ? '#ffffff' : '#111111') 
+                        : (isDark ? '#94a3b8' : '#666666'),
+                      whiteSpace: 'nowrap',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    {chip}
+                  </span>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}      {/* Ranking and List Area */}
       <div style={{ ...rankingSectionStyle, padding: '0' }}>
