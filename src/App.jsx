@@ -2776,7 +2776,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       </div>
 
       {/* Search Input Filter Row with Chips (from Stock Search screen) */}
-      {(etfMallNavMode === 'search' || activeMallTab === '추천') && (
+      {true && (
         <div style={{ 
           padding: '10px 14px 4px 14px', 
           borderBottom: 'none', 
