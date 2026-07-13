@@ -2722,22 +2722,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         <span style={{ fontWeight: '700', fontSize: '1.15rem', flex: 1, textAlign: 'center', pointerEvents: 'none' }}>
           {etfMallNavMode === 'search' ? '종목검색' : 'ETF/리츠 몰'}
         </span>
-        {etfMallNavMode === 'search' ? (
-          <div style={{ width: '22px' }} />
-        ) : (
-          <button 
-            onClick={() => {
-              setEtfMallNavMode('search');
-              setActiveMallTab('전체');
-            }}
-            style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </button>
-        )}
+        <div style={{ width: '22px' }} />
       </div>
 
       {/* Horizontal Tabs Menu */}
