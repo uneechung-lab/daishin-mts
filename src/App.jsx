@@ -2402,7 +2402,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     </div>
   );
 
-  const renderStockList = (list) => {
+  const renderStockList = (list, hidePriceInfo = false) => {
     return filterByChip(list).length === 0 ? renderEmptyState() : filterByChip(list).map((item, idx, arr) => {
       const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
       return (
@@ -2469,7 +2469,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           </div>
 
           {/* Col 2 & 3 Group */}
-          {etfMallNavMode !== 'search' && (
+          {etfMallNavMode !== 'search' && !hidePriceInfo && (
             item.quantity !== undefined && item.avgPrice !== undefined && ownedDisplayOption === '평가금' ? (
               /* 평가금 선택 시 단일 그룹으로 이미지처럼 정보 표기 */
               (() => {
@@ -2617,7 +2617,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           )}
 
           {/* Col 4 */}
-          {etfMallNavMode !== 'search' && (
+          {etfMallNavMode !== 'search' && !hidePriceInfo && (
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
               <div 
                 style={{ width: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, cursor: 'pointer' }}
@@ -3523,7 +3523,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           <div style={{ padding: '0px 0' }}>
             {searchQuery.trim() !== '' ? (
               <div>
-                {renderStockList(allList)}
+                {renderStockList(allList, true)}
               </div>
             ) : (
               <>
