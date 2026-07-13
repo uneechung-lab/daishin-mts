@@ -2142,6 +2142,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
   const [pendingFavoriteCode, setPendingFavoriteCode] = useState(null);
+  const [showKeyboard, setShowKeyboard] = useState(false);
   const toggleFavorite = (code) => {
     setFavorites(prev => 
       prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]
@@ -2640,7 +2641,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   };
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} onClick={() => setShowKeyboard(false)}>
       {/* Galaxy S20 Central Punch-hole Camera */}
       <div style={{
         width: '8px',
@@ -2776,6 +2777,10 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           gap: '10px'
         }}>
           <div 
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowKeyboard(true);
+            }}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -2793,6 +2798,14 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               placeholder="종목명, 종목코드, 초성입력"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowKeyboard(true);
+              }}
+              onFocus={(e) => {
+                e.stopPropagation();
+                setShowKeyboard(true);
+              }}
               style={{
                 border: 'none',
                 background: 'none',
@@ -3820,6 +3833,224 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             </div>
           </div>
         </>
+      )}
+      {/* Virtual Korean Keyboard */}
+      {showKeyboard && (
+        <div 
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: isDark ? '#151b26' : '#d2d5db',
+            padding: '8px 4px 10px 4px',
+            borderTop: isDark ? '1px solid #2d3748' : '1px solid #acafb5',
+            zIndex: 10005,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '6px',
+            boxShadow: '0 -4px 15px rgba(0, 0, 0, 0.15)',
+            boxSizing: 'border-box'
+          }}
+        >
+          {/* Row 1 */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '4px' }}>
+            {['ㅂ', 'ㅈ', 'ㄷ', 'ㄱ', 'ㅅ', 'ㅛ', 'ㅕ', 'ㅑ', 'ㅐ', 'ㅔ'].map((key) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSearchQuery(prev => prev + key)}
+                style={{
+                  flex: 1,
+                  height: '42px',
+                  borderRadius: '5px',
+                  border: 'none',
+                  backgroundColor: isDark ? '#2a3547' : '#ffffff',
+                  color: isDark ? '#ffffff' : '#000000',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 0,
+                  outline: 'none'
+                }}
+              >
+                {key}
+              </button>
+            ))}
+          </div>
+
+          {/* Row 2 */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '4px', padding: '0 10px' }}>
+            {['ㅁ', 'ㄴ', 'ㅇ', 'ㄹ', 'ㅎ', 'ㅗ', 'ㅓ', 'ㅏ', 'ㅣ'].map((key) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSearchQuery(prev => prev + key)}
+                style={{
+                  flex: 1,
+                  height: '42px',
+                  borderRadius: '5px',
+                  border: 'none',
+                  backgroundColor: isDark ? '#2a3547' : '#ffffff',
+                  color: isDark ? '#ffffff' : '#000000',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 0,
+                  outline: 'none'
+                }}
+              >
+                {key}
+              </button>
+            ))}
+          </div>
+
+          {/* Row 3 */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '4px' }}>
+            {/* Shift */}
+            <button
+              type="button"
+              onClick={() => {}}
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: isDark ? '#1a2230' : '#aaadb5',
+                color: isDark ? '#ffffff' : '#000000',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                outline: 'none'
+              }}
+            >
+              ⇧
+            </button>
+            {['ㅋ', 'ㅌ', 'ㅊ', 'ㅍ', 'ㅠ', 'ㅜ', 'ㅡ'].map((key) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSearchQuery(prev => prev + key)}
+                style={{
+                  flex: 1,
+                  height: '42px',
+                  borderRadius: '5px',
+                  border: 'none',
+                  backgroundColor: isDark ? '#2a3547' : '#ffffff',
+                  color: isDark ? '#ffffff' : '#000000',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 0,
+                  outline: 'none'
+                }}
+              >
+                {key}
+              </button>
+            ))}
+            {/* Backspace */}
+            <button
+              type="button"
+              onClick={() => setSearchQuery(prev => prev.slice(0, -1))}
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: isDark ? '#1a2230' : '#aaadb5',
+                color: isDark ? '#ffffff' : '#000000',
+                fontSize: '1.1rem',
+                cursor: 'pointer',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                outline: 'none'
+              }}
+            >
+              ⌫
+            </button>
+          </div>
+
+          {/* Row 4 */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '6px' }}>
+            {/* Number Toggle */}
+            <button
+              type="button"
+              style={{
+                width: '75px',
+                height: '42px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: isDark ? '#1a2230' : '#aaadb5',
+                color: isDark ? '#ffffff' : '#000000',
+                fontSize: '0.85rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                outline: 'none'
+              }}
+            >
+              123
+            </button>
+            {/* Space */}
+            <button
+              type="button"
+              onClick={() => setSearchQuery(prev => prev + ' ')}
+              style={{
+                flex: 1,
+                height: '42px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: isDark ? '#2a3547' : '#ffffff',
+                color: isDark ? '#ffffff' : '#000000',
+                fontSize: '0.9rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                outline: 'none'
+              }}
+            >
+              간격
+            </button>
+            {/* Done */}
+            <button
+              type="button"
+              onClick={() => setShowKeyboard(false)}
+              style={{
+                width: '75px',
+                height: '42px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: '#3b82f6',
+                color: '#ffffff',
+                fontSize: '0.85rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                outline: 'none'
+              }}
+            >
+              완료
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
