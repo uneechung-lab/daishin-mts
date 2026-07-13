@@ -2776,7 +2776,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       </div>
 
       {/* Search Input Filter Row with Chips (from Stock Search screen) */}
-      {etfMallNavMode === 'search' && (
+      {(etfMallNavMode === 'search' || activeMallTab === '추천') && (
         <div style={{ 
           padding: '10px 14px 4px 14px', 
           borderBottom: 'none', 
@@ -9387,8 +9387,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
           backgroundColor: isDark ? '#121826' : '#ffffff'
         }}>
-          {['미체결', '체결', '잔고'].map((tab) => {
-            const isActive = tab === '잔고';
+          {['미체결', '체결', isAsIs ? '잔고' : '장내(외)채권'].map((tab) => {
+            const isActive = tab === (isAsIs ? '잔고' : '장내(외)채권');
             return (
               <div
                 key={tab}
