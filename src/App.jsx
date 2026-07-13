@@ -2142,7 +2142,24 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
   const [pendingFavoriteCode, setPendingFavoriteCode] = useState(null);
-  const [showKeyboard, setShowKeyboard] = useState(false);
+  const [showKeyboard, setShowKeyboard] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('showKeyboard') === 'true';
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (showKeyboard) {
+      params.set('showKeyboard', 'true');
+    } else {
+      params.delete('showKeyboard');
+    }
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    if (window.location.search !== `?${params.toString()}`) {
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [showKeyboard]);
+
   const toggleFavorite = (code) => {
     setFavorites(prev => 
       prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]
@@ -4027,7 +4044,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                 outline: 'none'
               }}
             >
-              간격
             </button>
             {/* Done */}
             <button
