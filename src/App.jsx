@@ -3491,21 +3491,29 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {/* 전체 Tab View */}
         {activeMallTab === '전체' && (
           <div style={{ padding: '0px 0' }}>
-            {/* 최근 본 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              최근 본 종목
-            </div>
-            <div>
-              {renderStockList(recentViewedList.slice(0, 3))}
-            </div>
+            {searchQuery.trim() !== '' ? (
+              <div>
+                {renderStockList(allList)}
+              </div>
+            ) : (
+              <>
+                {/* 최근 본 종목 Section */}
+                <div style={sectionHeaderStyle}>
+                  최근 본 종목
+                </div>
+                <div>
+                  {renderStockList(recentViewedList.slice(0, 3))}
+                </div>
 
-            {/* 인기 종목 Section */}
-            <div style={sectionHeaderStyle}>
-              인기 종목
-            </div>
-            <div>
-              {renderStockList(allList)}
-            </div>
+                {/* 인기 종목 Section */}
+                <div style={sectionHeaderStyle}>
+                  인기 종목
+                </div>
+                <div>
+                  {renderStockList(allList)}
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
