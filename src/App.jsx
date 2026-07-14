@@ -2146,7 +2146,19 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     const params = new URLSearchParams(window.location.search);
     return params.get('showKeyboard') === 'true';
   });
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checkedItems, setCheckedItems] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const checked = params.get('checkedCodes');
+    if (checked) {
+      const initialChecked = {};
+      checked.split(',').forEach(code => {
+        initialChecked[code] = true;
+      });
+      return initialChecked;
+    }
+    return {};
+  });
+
   const toggleCheck = (code) => {
     setCheckedItems(prev => ({
       ...prev,
@@ -2161,11 +2173,17 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     } else {
       params.delete('showKeyboard');
     }
+    const codes = Object.keys(checkedItems).filter(key => checkedItems[key]);
+    if (codes.length > 0) {
+      params.set('checkedCodes', codes.join(','));
+    } else {
+      params.delete('checkedCodes');
+    }
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showKeyboard]);
+  }, [showKeyboard, checkedItems]);
 
   useEffect(() => {
     if (etfMallNavMode === 'search' && activeMallTab !== '전체') {
