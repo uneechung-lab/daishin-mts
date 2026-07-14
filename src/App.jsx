@@ -9797,8 +9797,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         borderBottom: '1px solid #f1f5f9'
                       }}
                     >
-                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
-                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#111111' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#111111', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   );
                 })}
@@ -9829,8 +9829,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         borderBottom: '1px solid #f1f5f9'
                       }}
                     >
-                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
-                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#111111' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#111111', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   );
                 })}
@@ -9861,8 +9861,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         borderBottom: '1px solid #f1f5f9'
                       }}
                     >
-                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
-                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#111111' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#111111', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   );
                 })}
