@@ -8993,6 +8993,9 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeUnexecutedOpen, setScreen6ToBeUnexecutedOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6ToBeUnexecutedOpen') === 'true';
   });
+  const [screen6BalanceActiveTab, setScreen6BalanceActiveTab] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6BalanceActiveTab') || '잔고';
+  });
   const [screen6AsIsOrderTab, setScreen6AsIsOrderTab] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6AsIsOrderTab') || '매수';
   });
@@ -10177,16 +10180,13 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
           backgroundColor: isDark ? '#121826' : '#ffffff'
         }}>
-          {['미체결', '체결', isAsIs ? '잔고' : '장내(외)채권'].map((tab) => {
-            const isActive = tab === (isAsIs ? '잔고' : '장내(외)채권');
+          {['미체결', '체결', '잔고'].map((tab) => {
+            const isActive = tab === screen6BalanceActiveTab;
             return (
               <div
                 key={tab}
                 onClick={() => {
-                  if (tab === '미체결' || tab === '체결') {
-                    setSubScreen('bondOrder');
-                    setOrderTab('정정/취소');
-                  }
+                  setScreen6BalanceActiveTab(tab);
                 }}
                 style={{
                   flex: 1,
@@ -10261,32 +10261,57 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         </div>
 
         {/* Balance Grid Table Header */}
-        <div style={{
-          backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
-          borderTop: 'none',
-          borderBottom: 'none',
-          fontSize: '10px',
-          color: isDark ? '#94a3b8' : '#555555',
-          padding: '6px 12px',
-          display: 'flex',
-          textAlign: 'center'
-        }}>
-          <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
-            <span>종목명</span>
-            <span style={{ opacity: 0.8 }}>종목코드</span>
+        {screen6BalanceActiveTab === '잔고' ? (
+          <div style={{
+            backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
+            borderTop: 'none',
+            borderBottom: 'none',
+            fontSize: '10px',
+            color: isDark ? '#94a3b8' : '#555555',
+            padding: '6px 12px',
+            display: 'flex',
+            textAlign: 'center'
+          }}>
+            <div style={{ flex: 1.5, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
+              <span>종목명</span>
+              <span style={{ opacity: 0.8 }}>종목코드</span>
+            </div>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+              <span>수량</span>
+              <span style={{ opacity: 0.8 }}>매수일</span>
+            </div>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
+              <span>수익률</span>
+            </div>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+              <span>과세구분</span>
+              <span style={{ opacity: 0.8 }}>잔고구분</span>
+            </div>
           </div>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
-            <span>수량</span>
-            <span style={{ opacity: 0.8 }}>매수일</span>
-          </div>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
-            <span>수익률</span>
-          </div>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
-            <span>과세구분</span>
-            <span style={{ opacity: 0.8 }}>잔고구분</span>
-          </div>
-        </div>
+        ) : (
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            fontSize: '10px',
+            textAlign: 'center',
+            backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
+            color: isDark ? '#94a3b8' : '#555555',
+            borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1'
+          }}>
+            <thead>
+              <tr style={{ color: isDark ? '#94a3b8' : '#555555', borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                <th rowSpan="2" style={{ width: '15%', padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>주문<br/>번호</th>
+                <th rowSpan="2" style={{ width: '35%', padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>종목명</th>
+                <th style={{ width: '25%', padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>매매구분</th>
+                <th style={{ width: '25%', padding: '4px 2px', fontWeight: '500' }}>수량</th>
+              </tr>
+              <tr style={{ color: isDark ? '#94a3b8' : '#555555' }}>
+                <th style={{ padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>단가</th>
+                <th style={{ padding: '4px 2px', fontWeight: '500' }}>{screen6BalanceActiveTab === '미체결' ? '미체결' : '체결금액'}</th>
+              </tr>
+            </thead>
+          </table>
+        )}
 
         {/* Table Body Area */}
         <div style={{
@@ -10298,7 +10323,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           color: isDark ? '#94a3b8' : '#888888',
           fontSize: '13px'
         }}>
-          잔고 내역이 없습니다.
+          {screen6BalanceActiveTab === '잔고' ? '잔고 내역이 없습니다.' : screen6BalanceActiveTab === '미체결' ? '미체결내역이 없습니다.' : '체결내역이 없습니다.'}
         </div>
 
         {/* Bottom Banner */}
@@ -10674,7 +10699,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                               {[
                                 { name: '장내채권 현재가', onClick: () => setScreen6AsIsSubScreen('bondCurrentPrice') },
                                 { name: '장내채권 주문', onClick: () => { setScreen6AsIsSubScreen('bondOrder'); setScreen6AsIsOrderTab('매수'); } },
-                                { name: '장내채권 미체결/체결' },
+                                { name: '장내채권 미체결/체결', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('미체결'); } },
                                 { name: '장내채권 잔고', onClick: () => setScreen6AsIsSubScreen('bondBalance') }
                               ].map((item, idx) => (
                                 <div key={idx} onClick={item.onClick} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
@@ -11875,12 +11900,13 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     // Sync unexecuted popups
     params.set('screen6AsIsUnexecutedOpen', screen6AsIsUnexecutedOpen ? 'true' : 'false');
     params.set('screen6ToBeUnexecutedOpen', screen6ToBeUnexecutedOpen ? 'true' : 'false');
+    params.set('screen6BalanceActiveTab', screen6BalanceActiveTab);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -14716,7 +14742,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             { name: '장외채권 매매' },
                             { name: '장내채권 매매', action: () => setScreen6ToBeSubScreen('bondCurrentPrice') },
                             { name: '장내채권 미체결/체결' },
-                            { name: '장내(외)채권 잔고', action: () => setScreen6ToBeSubScreen('bondBalance') },
+                            { name: '장내(외)채권 잔고', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('잔고'); } },
                             { name: '디폴트옵션 매매' },
                             { name: '매매내역 조회/취소' },
                             { name: 'ELB 청약예약' }
