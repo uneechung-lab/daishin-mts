@@ -10137,7 +10137,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   };
 
   const renderScreen6Balance = (mode, isSwitchOff = false) => {
-    const isAsIs = mode === 'asis';
+    const isAsIs = mode === 'asis' && !isSwitchOff;
     const subScreen = isAsIs ? screen6AsIsSubScreen : screen6ToBeSubScreen;
     const setSubScreen = isAsIs ? setScreen6AsIsSubScreen : setScreen6ToBeSubScreen;
     const setOrderTab = isAsIs ? setScreen6AsIsOrderTab : setScreen6ToBeOrderTab;
