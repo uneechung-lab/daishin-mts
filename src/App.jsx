@@ -3016,50 +3016,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               })}
             </div>
           )}
-
-          {etfMallNavMode === 'search' && searchQuery.trim() !== '' && (
-            <div 
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleAll();
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '6px 2px 2px 2px',
-                cursor: 'pointer',
-                userSelect: 'none',
-                alignSelf: 'flex-start'
-              }}
-            >
-              <div style={{
-                width: '18px',
-                height: '18px',
-                borderRadius: '4px',
-                border: isAllChecked
-                  ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
-                  : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
-                backgroundColor: isAllChecked
-                  ? (isDark ? '#ffffff' : '#000000')
-                  : 'transparent',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                {isAllChecked && (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                )}
-              </div>
-              <span style={{
-                fontSize: '0.82rem',
-                fontWeight: '600',
-                color: isDark ? '#ffffff' : '#111111'
-              }}>전체</span>
-            </div>
-          )}
         </div>
       )}      {/* Ranking and List Area */}
       <div style={{ ...rankingSectionStyle, padding: '0 0 ' + (etfMallNavMode === 'search' ? '60px' : '0') + ' 0' }}>
@@ -3710,8 +3666,48 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               </>
             )}
 
-            {searchQuery.trim() !== '' ? (
+            {(searchQuery.trim() !== '' || selectedChip !== '전체') ? (
               <div>
+                {etfMallNavMode === 'search' && (
+                  <div 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleAll();
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '8px 14px 4px 14px',
+                      cursor: 'pointer',
+                      userSelect: 'none',
+                      backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+                      borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+                    }}
+                  >
+                    <div style={{
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '4px',
+                      border: isAllChecked
+                        ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
+                        : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
+                      backgroundColor: isAllChecked
+                        ? (isDark ? '#ffffff' : '#000000')
+                        : 'transparent',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {isAllChecked && (
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                    </div>
+                    <span style={{ fontSize: '0.82rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111' }}>전체</span>
+                  </div>
+                )}
                 {renderStockList(allList, true)}
               </div>
             ) : (
