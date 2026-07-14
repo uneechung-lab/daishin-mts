@@ -3700,109 +3700,97 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             ) : (
               <>
                 {/* 최근 본 종목 Section */}
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center', 
-                  backgroundColor: isDark ? '#171e2e' : '#f1f3f5', 
-                  paddingRight: '14px',
-                  marginTop: '8px' 
-                }}>
-                  <div style={{ ...sectionHeaderStyle, marginTop: 0 }}>
-                    최근 본 종목
-                  </div>
-                  {etfMallNavMode === 'search' && (
-                    <div 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleRecentAll();
-                      }}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        cursor: 'pointer',
-                        userSelect: 'none'
-                      }}
-                    >
-                      <div style={{
-                        width: '16px',
-                        height: '16px',
-                        borderRadius: '4px',
-                        border: isRecentAllChecked
-                          ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
-                          : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
-                        backgroundColor: isRecentAllChecked
-                          ? (isDark ? '#ffffff' : '#000000')
-                          : 'transparent',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        {isRecentAllChecked && (
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                        )}
-                      </div>
-                      <span style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111' }}>전체</span>
-                    </div>
-                  )}
+                <div style={sectionHeaderStyle}>
+                  최근 본 종목
                 </div>
+                {etfMallNavMode === 'search' && (
+                  <div 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleRecentAll();
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '8px 14px 4px 14px',
+                      cursor: 'pointer',
+                      userSelect: 'none',
+                      backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+                      borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+                    }}
+                  >
+                    <div style={{
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '4px',
+                      border: isRecentAllChecked
+                        ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
+                        : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
+                      backgroundColor: isRecentAllChecked
+                        ? (isDark ? '#ffffff' : '#000000')
+                        : 'transparent',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {isRecentAllChecked && (
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                    </div>
+                    <span style={{ fontSize: '0.82rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111' }}>전체</span>
+                  </div>
+                )}
                 <div>
                   {renderStockList(recentViewedList.slice(0, 3))}
                 </div>
 
                 {/* 인기 종목 Section */}
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center', 
-                  backgroundColor: isDark ? '#171e2e' : '#f1f3f5', 
-                  paddingRight: '14px',
-                  marginTop: '8px' 
-                }}>
-                  <div style={{ ...sectionHeaderStyle, marginTop: 0 }}>
-                    인기 종목
-                  </div>
-                  {etfMallNavMode === 'search' && (
-                    <div 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        togglePopularAll();
-                      }}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        cursor: 'pointer',
-                        userSelect: 'none'
-                      }}
-                    >
-                      <div style={{
-                        width: '16px',
-                        height: '16px',
-                        borderRadius: '4px',
-                        border: isPopularAllChecked
-                          ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
-                          : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
-                        backgroundColor: isPopularAllChecked
-                          ? (isDark ? '#ffffff' : '#000000')
-                          : 'transparent',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        {isPopularAllChecked && (
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                        )}
-                      </div>
-                      <span style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111' }}>전체</span>
-                    </div>
-                  )}
+                <div style={sectionHeaderStyle}>
+                  인기 종목
                 </div>
+                {etfMallNavMode === 'search' && (
+                  <div 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePopularAll();
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '8px 14px 4px 14px',
+                      cursor: 'pointer',
+                      userSelect: 'none',
+                      backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+                      borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+                    }}
+                  >
+                    <div style={{
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '4px',
+                      border: isPopularAllChecked
+                        ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
+                        : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
+                      backgroundColor: isPopularAllChecked
+                        ? (isDark ? '#ffffff' : '#000000')
+                        : 'transparent',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {isPopularAllChecked && (
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                    </div>
+                    <span style={{ fontSize: '0.82rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111' }}>전체</span>
+                  </div>
+                )}
                 <div>
                   {renderStockList(allList)}
                 </div>
