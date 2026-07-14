@@ -10267,7 +10267,29 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         </div>
 
         {/* Balance Grid Table Header */}
-        {screen6BalanceActiveTab === '잔고' ? (
+        {!isAsIs && screen6BalanceActiveTab === '잔고' ? (
+          /* TO-BE Mode: Grid Layout with Additional Requested Columns */
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            fontSize: '9.5px',
+            textAlign: 'center',
+            backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+            color: isDark ? '#94a3b8' : '#475569',
+            borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+          }}>
+            <thead>
+              <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0' }}>
+                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>종목명<br/>종목코드</th>
+                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>매수단가<br/>매수금액</th>
+                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>주문가능수량<br/>보유수량</th>
+                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>수익률<br/>만기일</th>
+                <th style={{ padding: '6px 2px', fontWeight: '600' }}>과세구분<br/>잔고구분</th>
+              </tr>
+            </thead>
+          </table>
+        ) : screen6BalanceActiveTab === '잔고' ? (
+          /* AS-IS Mode: Default Grid Layout */
           <div style={{
             backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
             borderTop: 'none',
@@ -10323,13 +10345,57 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         <div style={{
           flex: 1,
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          flexDirection: 'column',
           backgroundColor: isDark ? '#0f172a' : '#ffffff',
-          color: isDark ? '#94a3b8' : '#888888',
-          fontSize: '13px'
+          color: isDark ? '#cbd5e1' : '#111111',
+          overflowY: 'auto'
         }}>
-          {screen6BalanceActiveTab === '잔고' ? '잔고 내역이 없습니다.' : screen6BalanceActiveTab === '미체결' ? '미체결내역이 없습니다.' : '체결내역이 없습니다.'}
+          {!isAsIs && screen6BalanceActiveTab === '잔고' ? (
+            /* TO-BE Mode: Grid List with Sample Data */
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '10px',
+              textAlign: 'center'
+            }}>
+              <tbody>
+                <tr style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9' }}>
+                  <td style={{ width: '25%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'left', paddingLeft: '6px' }}>
+                    <div style={{ fontWeight: '700', color: isDark ? '#ffffff' : '#111111' }}>삼척블루파워10</div>
+                    <div style={{ fontSize: '8px', color: '#888888', marginTop: '2px' }}>KR6002361A97</div>
+                  </td>
+                  <td style={{ width: '20%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
+                    <div>10,065.0원</div>
+                    <div style={{ color: '#888888', marginTop: '2px' }}>10,065,000원</div>
+                  </td>
+                  <td style={{ width: '20%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
+                    <div>10,000</div>
+                    <div style={{ color: '#888888', marginTop: '2px' }}>10,000</div>
+                  </td>
+                  <td style={{ width: '18%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
+                    <div style={{ color: '#de201e', fontWeight: '700' }}>+0.19%</div>
+                    <div style={{ fontSize: '8px', color: '#888888', marginTop: '2px' }}>2029.09.15</div>
+                  </td>
+                  <td style={{ width: '17%', padding: '8px 2px', textAlign: 'center' }}>
+                    <div>종합과세</div>
+                    <div style={{ fontSize: '9px', color: '#4750b3', fontWeight: '700', marginTop: '2px' }}>퇴직납입금</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ) : (
+            /* AS-IS or other tabs: Empty state */
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: isDark ? '#94a3b8' : '#888888',
+              fontSize: '13px'
+            }}>
+              {screen6BalanceActiveTab === '잔고' ? '잔고 내역이 없습니다.' : screen6BalanceActiveTab === '미체결' ? '미체결내역이 없습니다.' : '체결내역이 없습니다.'}
+            </div>
+          )}
         </div>
 
         {/* Bottom Banner */}
