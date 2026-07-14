@@ -14335,43 +14335,43 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                     }}>
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         {[
-                          { name: 'MY 연금', active: true },
-                          { name: 'IRP/퇴직연금', active: false },
+                          { name: 'IRP/퇴직연금', active: true },
                           { name: '연금저축', active: false },
-                          { name: '연금수령', active: false },
                           { name: '공지사항', active: false }
                         ].map((sub, idx) => (
                           <div
                             key={idx}
                             style={{
-                              padding: '14px 10px',
-                              fontSize: '0.85rem',
+                              padding: '18px 12px',
+                              fontSize: '0.96rem',
                               fontWeight: sub.active ? '800' : '500',
                               color: sub.active ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
                               backgroundColor: sub.active ? (isDark ? '#121826' : '#ffffff') : 'transparent',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'space-between'
+                              cursor: 'pointer'
                             }}
                           >
-                            <span>{sub.name}</span>
-                            {sub.badge && (
-                              <span style={{
-                                backgroundColor: '#00c3a5',
-                                color: '#ffffff',
-                                borderRadius: '50%',
-                                width: '14px',
-                                height: '14px',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '9px',
-                                fontWeight: 'bold',
-                                lineHeight: 1
-                              }}>{sub.badge}</span>
-                            )}
+                            {sub.name}
                           </div>
                         ))}
+                      </div>
+
+                      {/* RIA 가입 Banner */}
+                      <div style={{
+                        margin: '0 8px',
+                        borderRadius: '6px',
+                        background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)',
+                        padding: '10px 8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                        cursor: 'pointer'
+                      }}>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>RIA</span>
+                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>가입</span>
+                        </div>
+                        <span style={{ fontSize: '1.5rem' }}>🇰🇷</span>
                       </div>
                     </div>
 
@@ -14383,32 +14383,44 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                       backgroundColor: isDark ? '#121826' : '#ffffff',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '24px',
                       boxSizing: 'border-box'
                     }}>
                       <div>
-                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>채권매매</div>
-                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 12px 0' }} />
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '26px', marginTop: '12px' }}>
-                          <span 
-                            onClick={() => setScreen6ToBeSubScreen('bondCurrentPrice')}
-                            style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
-                          >
-                            장내채권 투자하기
-                          </span>
-                          <span 
-                            onClick={() => { setScreen6ToBeSubScreen('bondOrder'); setScreen6ToBeOrderTab('매수'); }}
-                            style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
-                          >
-                            장내채권 주문
-                          </span>
-                          <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>장내채권 미체결/체결</span>
-                          <span 
-                            onClick={() => setScreen6ToBeSubScreen('bondBalance')}
-                            style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
-                          >
-                            장내채권 잔고
-                          </span>
+                        <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
+                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 16px 0' }} />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                          {[
+                            { name: '전체상품검색' },
+                            { name: '자산배분펀드(TDF+디딤펀드)' },
+                            { name: '보유상품 매도후매수' },
+                            { name: '금융상품 매수' },
+                            { name: '금융상품 매도' },
+                            { name: '만기 예약매매' },
+                            { name: '자동 분할매수' },
+                            { name: '장외채권 매매' },
+                            { name: '장내채권 매매', action: () => setScreen6ToBeSubScreen('bondCurrentPrice') },
+                            { name: '장내채권 미체결/체결' },
+                            { name: '장내(외)잔고', action: () => setScreen6ToBeSubScreen('bondBalance') },
+                            { name: '디폴트옵션 매매' },
+                            { name: '매매내역 조회/취소' },
+                            { name: 'ELB 청약예약' }
+                          ].map((item, idx) => (
+                            <span 
+                              key={idx}
+                              onClick={item.action}
+                              style={{
+                                fontSize: '1.02rem',
+                                color: isDark ? '#cbd5e1' : '#222222',
+                                fontWeight: '500',
+                                cursor: item.action ? 'pointer' : 'default',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px'
+                              }}
+                            >
+                              {item.name}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     </div>
