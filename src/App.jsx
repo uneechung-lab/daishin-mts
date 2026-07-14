@@ -3656,9 +3656,9 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           <div style={{ padding: '0px 0' }}>
             {etfMallNavMode === 'default' && selectedStocks.length > 0 && (
               <>
-                {/* 선택한 종목 Section */}
+                {/* 검색한 종목 Section */}
                 <div style={sectionHeaderStyle}>
-                  선택한 종목
+                  검색한 종목
                 </div>
                 <div>
                   {renderStockList(selectedStocks)}
