@@ -10328,14 +10328,21 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           }}>
             <thead>
               <tr style={{ color: isDark ? '#94a3b8' : '#555555', borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
-                <th rowSpan="2" style={{ width: '15%', padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>주문<br/>번호</th>
-                <th rowSpan="2" style={{ width: '35%', padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>종목명</th>
-                <th style={{ width: '25%', padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>매매구분</th>
-                <th style={{ width: '25%', padding: '4px 2px', fontWeight: '500' }}>수량</th>
+                <th style={{ width: '20%', padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>주문#</th>
+                <th rowSpan="2" style={{ width: '35%', padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500', verticalAlign: 'middle' }}>종목명</th>
+                <th style={{ width: '20%', padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500', position: 'relative' }}>
+                  <span style={{ position: 'absolute', left: '2px', color: '#a0a0a0' }}>«</span>
+                  거래
+                </th>
+                <th style={{ width: '25%', padding: '6px 2px', fontWeight: '500', position: 'relative' }}>
+                  주문수량
+                  <span style={{ position: 'absolute', right: '2px', color: '#a0a0a0' }}>»</span>
+                </th>
               </tr>
               <tr style={{ color: isDark ? '#94a3b8' : '#555555' }}>
-                <th style={{ padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>단가</th>
-                <th style={{ padding: '4px 2px', fontWeight: '500' }}>{screen6BalanceActiveTab === '미체결' ? '미체결' : '체결금액'}</th>
+                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>원주문#</th>
+                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>구분</th>
+                <th style={{ padding: '6px 2px', fontWeight: '500' }}>{screen6BalanceActiveTab === '미체결' ? '미체결수량' : '체결수량'}</th>
               </tr>
             </thead>
           </table>
