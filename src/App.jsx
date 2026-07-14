@@ -8979,8 +8979,16 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   };
   const [screen6AsIsPaymentType, setScreen6AsIsPaymentType] = useState('고객');
   const [screen6ToBePaymentType, setScreen6ToBePaymentType] = useState('고객');
-  const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account'
-  const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account'
+  const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account', 'balance_select', 'hold_balance', 'tax_select'
+  const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account', 'balance_select', 'hold_balance', 'tax_select'
+  const [screen6AsIsBalanceType, setScreen6AsIsBalanceType] = useState('잔고선택');
+  const [screen6AsIsHoldBalanceType, setScreen6AsIsHoldBalanceType] = useState('보유잔고');
+  const [screen6AsIsTaxType, setScreen6AsIsTaxType] = useState('과세선택');
+  const [screen6ToBeBalanceType, setScreen6ToBeBalanceType] = useState('잔고선택');
+  const [screen6ToBeHoldBalanceType, setScreen6ToBeHoldBalanceType] = useState('보유잔고');
+  const [screen6ToBeTaxType, setScreen6ToBeTaxType] = useState('과세선택');
+  const [screen6AsIsUnexecutedOpen, setScreen6AsIsUnexecutedOpen] = useState(false);
+  const [screen6ToBeUnexecutedOpen, setScreen6ToBeUnexecutedOpen] = useState(false);
   const [screen6AsIsOrderTab, setScreen6AsIsOrderTab] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6AsIsOrderTab') || '매수';
   });
@@ -9762,6 +9770,102 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   {mode === 'asis' ? '(01) 종합투자상품' : '(41) 개인형퇴직연금(IRP)'}
                 </span>
                 <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+              </div>
+            </>
+          ) : bsheetState === 'balance_select' ? (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                <span style={{ fontSize: '16px', fontWeight: 'bold' }}>잔고선택</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {['매수', '입고', '취결', '실물'].map((item) => {
+                  const isSelected = (mode === 'asis' ? screen6AsIsBalanceType : screen6ToBeBalanceType) === item;
+                  return (
+                    <div 
+                      key={item}
+                      onClick={() => {
+                        if (mode === 'asis') setScreen6AsIsBalanceType(item);
+                        else setScreen6ToBeBalanceType(item);
+                        setBsheetState('closed');
+                      }}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '12px 4px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f1f5f9'
+                      }}
+                    >
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          ) : bsheetState === 'hold_balance' ? (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                <span style={{ fontSize: '16px', fontWeight: 'bold' }}>보유잔고 선택</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {['보유잔고', '보유잔고 전체', '매수가능 잔고', '담보 잔고'].map((item) => {
+                  const isSelected = (mode === 'asis' ? screen6AsIsHoldBalanceType : screen6ToBeHoldBalanceType) === item;
+                  return (
+                    <div 
+                      key={item}
+                      onClick={() => {
+                        if (mode === 'asis') setScreen6AsIsHoldBalanceType(item);
+                        else setScreen6ToBeHoldBalanceType(item);
+                        setBsheetState('closed');
+                      }}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '12px 4px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f1f5f9'
+                      }}
+                    >
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          ) : bsheetState === 'tax_select' ? (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                <span style={{ fontSize: '16px', fontWeight: 'bold' }}>과세선택</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {['종합과세', '분리과세'].map((item) => {
+                  const isSelected = (mode === 'asis' ? screen6AsIsTaxType : screen6ToBeTaxType) === item;
+                  return (
+                    <div 
+                      key={item}
+                      onClick={() => {
+                        if (mode === 'asis') setScreen6AsIsTaxType(item);
+                        else setScreen6ToBeTaxType(item);
+                        setBsheetState('closed');
+                      }}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '12px 4px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f1f5f9'
+                      }}
+                    >
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                  );
+                })}
               </div>
             </>
           ) : (
@@ -10729,7 +10833,10 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                               )}
                               {screen6AsIsOrderTab === '정정/취소' ? (
                                 <>
-                                  <div style={{
+                                  <div onClick={() => {
+                                    if (isSwitchOff) setScreen6ToBeUnexecutedOpen(true);
+                                    else setScreen6AsIsUnexecutedOpen(true);
+                                  }} style={{
                                     border: '1px solid #cbd5e1',
                                     borderRadius: '2px',
                                     padding: '4px 8px',
@@ -10782,30 +10889,48 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   </div>
                                   {/* 잔고선택 & 보유잔고 */}
                                   <div style={{ display: 'flex', gap: '6px' }}>
-                                    <div style={{
-                                      flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
-                                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
-                                      height: '32px', boxSizing: 'border-box'
-                                    }}>
-                                      <span>잔고선택</span>
+                                    <div 
+                                      onClick={() => {
+                                        if (isSwitchOff) setScreen6ToBeBsheetState('balance_select');
+                                        else setScreen6AsIsBsheetState('balance_select');
+                                      }}
+                                      style={{
+                                        flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                        display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                        height: '32px', boxSizing: 'border-box'
+                                      }}
+                                    >
+                                      <span>{isSwitchOff ? screen6ToBeBalanceType : screen6AsIsBalanceType}</span>
                                       <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                                     </div>
-                                    <div style={{
-                                      flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
-                                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
-                                      height: '32px', boxSizing: 'border-box'
-                                    }}>
-                                      <span>보유잔고</span>
+                                    <div 
+                                      onClick={() => {
+                                        if (isSwitchOff) setScreen6ToBeBsheetState('hold_balance');
+                                        else setScreen6AsIsBsheetState('hold_balance');
+                                      }}
+                                      style={{
+                                        flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                        display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                        height: '32px', boxSizing: 'border-box'
+                                      }}
+                                    >
+                                      <span>{isSwitchOff ? screen6ToBeHoldBalanceType : screen6AsIsHoldBalanceType}</span>
                                       <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                                     </div>
                                   </div>
                                   {/* 과세선택 */}
-                                  <div style={{
-                                    border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
-                                    display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
-                                    height: '32px', boxSizing: 'border-box'
-                                  }}>
-                                    <span>과세선택</span>
+                                  <div 
+                                    onClick={() => {
+                                      if (isSwitchOff) setScreen6ToBeBsheetState('tax_select');
+                                      else setScreen6AsIsBsheetState('tax_select');
+                                    }}
+                                    style={{
+                                      border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                      height: '32px', boxSizing: 'border-box'
+                                    }}
+                                  >
+                                    <span>{isSwitchOff ? screen6ToBeTaxType : screen6AsIsTaxType}</span>
                                     <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                                   </div>
                                 </div>
@@ -13349,6 +13474,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                     <>
                       {renderScreen6AsIs(false)}
                       {renderScreen6Bsheet('asis')}
+                      {screen6AsIsUnexecutedOpen && renderScreen6UnexecutedPopup('asis', () => setScreen6AsIsUnexecutedOpen(false))}
                     </>
                   )}
                 </div>
@@ -13437,7 +13563,13 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                       // Dynamically sync subscreen to AS IS renderer
                       const originalAsIsScreen = screen6AsIsSubScreen;
                       // Temporarily match screen6AsIsSubScreen to screen6ToBeSubScreen to render the active page
-                      return renderScreen6AsIs(true);
+                      return (
+                        <>
+                          {renderScreen6AsIs(true)}
+                          {renderScreen6Bsheet('tobe')}
+                          {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
+                        </>
+                      );
                     })()
                   ) : screen6ToBeSubScreen === 'bondCurrentPrice' ? (
                     <>
@@ -14048,7 +14180,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
                                      height: '36px', boxSizing: 'border-box'
                                    }}>
-                                     <span>잔고선택</span>
+                                     <span>{screen6ToBeBalanceType}</span>
                                      <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                                    </div>
                                    <div style={{
@@ -14056,7 +14188,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
                                      height: '36px', boxSizing: 'border-box'
                                    }}>
-                                     <span>보유잔고</span>
+                                     <span>{screen6ToBeHoldBalanceType}</span>
                                      <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                                    </div>
                                  </div>
@@ -14072,8 +14204,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                </div>
                              </>
                            ) : screen6ToBeOrderTab === '정정/취소' ? (
-                             <>
-                               <div style={{
+                              <>
+                                <div onClick={() => setScreen6ToBeUnexecutedOpen(true)} style={{
                                  border: '1px solid #cbd5e1',
                                  borderRadius: '2px',
                                  padding: '4px 8px',
@@ -14541,6 +14673,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                 </>
               )}
               {renderScreen6Bsheet('tobe')}
+              {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
             </div>
               </div>
             </div>
