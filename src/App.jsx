@@ -10683,7 +10683,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
                             {/* Right: Form inputs */}
                             <div style={{ flex: 1, padding: '12px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                              {isSwitchOff && (screen6AsIsOrderTab === '매도' || screen6AsIsOrderTab === '정정/취소') && (
+                              {isSwitchOff && (
                                 <div style={{
                                   display: 'flex',
                                   border: '1px solid #cbd5e1',
