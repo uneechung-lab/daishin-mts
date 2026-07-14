@@ -10170,7 +10170,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                 </td>
                 <td style={{ width: '20%', padding: '6px 2px', textAlign: 'center', verticalAlign: 'middle' }}>
                   <div style={{ fontWeight: '700' }}>종합과세</div>
-                  <div style={{ fontSize: '9px', color: '#2563eb', fontWeight: '700', marginTop: '4px' }}>퇴직납입금</div>
+                  <div style={{ fontSize: '9px', fontWeight: '700', marginTop: '4px' }}>퇴직납입금</div>
                 </td>
               </tr>
             </tbody>
@@ -10536,7 +10536,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </td>
                   <td style={{ width: '20%', padding: '6px 2px', textAlign: 'center', verticalAlign: 'middle' }}>
                     <div style={{ fontWeight: '700' }}>종합과세</div>
-                    <div style={{ fontSize: '9px', color: '#2563eb', fontWeight: '700', marginTop: '4px' }}>퇴직납입금</div>
+                    <div style={{ fontSize: '9px', fontWeight: '700', marginTop: '4px' }}>퇴직납입금</div>
                   </td>
                 </tr>
               </tbody>
