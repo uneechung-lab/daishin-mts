@@ -2502,7 +2502,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               whiteSpace: 'normal',
               lineHeight: '1.2'
             }}>{item.name}</span>
-            {item.quantity !== undefined && item.avgPrice !== undefined && (
+            {item.quantity !== undefined && item.avgPrice !== undefined && activeMallTab === '보유' && (
               <div style={{ display: 'flex', alignItems: 'center', marginTop: '1px' }}>
                 <span style={{ fontSize: '0.72rem', color: isDark ? '#94a3b8' : '#555555' }}>
                   {item.quantity}주 · 내 평균 {item.avgPrice.toLocaleString()}원
@@ -2520,7 +2520,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
           {/* Col 2 & 3 Group */}
           {etfMallNavMode !== 'search' && !hidePriceInfo && (
-            item.quantity !== undefined && item.avgPrice !== undefined && ownedDisplayOption === '평가금' ? (
+            item.quantity !== undefined && item.avgPrice !== undefined && activeMallTab === '보유' && ownedDisplayOption === '평가금' ? (
               /* 평가금 선택 시 단일 그룹으로 이미지처럼 정보 표기 */
               (() => {
                 const valuationAmount = item.quantity * item.price;
