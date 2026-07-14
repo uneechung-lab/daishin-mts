@@ -2987,33 +2987,54 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
           {/* Filter Chips Row */}
           {activeMallTab === '전체' && (
-            <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-              {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
-                const isSelected = selectedChip === chip;
-                return (
-                  <span
-                    key={chip}
-                    onClick={() => setSelectedChip(chip)}
-                    style={{
-                      padding: '9px 18px',
-                      borderRadius: '24px',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      backgroundColor: isSelected 
-                        ? (isDark ? '#334155' : '#e0e0e0') 
-                        : (isDark ? '#1e293b' : '#f1f1f1'),
-                      color: isSelected 
-                        ? (isDark ? '#ffffff' : '#111111') 
-                        : (isDark ? '#94a3b8' : '#666666'),
-                      whiteSpace: 'nowrap',
-                      transition: 'all 0.15s ease'
-                    }}
-                  >
-                    {chip}
-                  </span>
-                );
-              })}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none', flex: 1 }}>
+                {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
+                  const isSelected = selectedChip === chip;
+                  return (
+                    <span
+                      key={chip}
+                      onClick={() => setSelectedChip(chip)}
+                      style={{
+                        padding: '9px 18px',
+                        borderRadius: '24px',
+                        fontSize: '0.78rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        backgroundColor: isSelected 
+                          ? (isDark ? '#334155' : '#e0e0e0') 
+                          : (isDark ? '#1e293b' : '#f1f1f1'),
+                        color: isSelected 
+                          ? (isDark ? '#ffffff' : '#111111') 
+                          : (isDark ? '#94a3b8' : '#666666'),
+                        whiteSpace: 'nowrap',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      {chip}
+                    </span>
+                  );
+                })}
+              </div>
+              {selectedStocks.length > 0 && (
+                <button
+                  onClick={() => setCheckedItems({})}
+                  style={{
+                    border: 'none',
+                    background: 'none',
+                    padding: '4px 6px',
+                    fontSize: '0.74rem',
+                    fontWeight: '600',
+                    color: isDark ? '#94a3b8' : '#666666',
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                    whiteSpace: 'nowrap',
+                    outline: 'none'
+                  }}
+                >
+                  초기화
+                </button>
+              )}
             </div>
           )}
         </div>
