@@ -10274,7 +10274,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             borderCollapse: 'collapse',
             fontSize: '9.5px',
             textAlign: 'center',
-            backgroundColor: isDark ? '#1e293b' : '#f8fafc',
+            backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
             color: isDark ? '#94a3b8' : '#475569',
             borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
           }}>
@@ -10282,7 +10282,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0' }}>
                 <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>종목명<br/>종목코드</th>
                 <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>매수단가<br/>매수금액</th>
-                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>주문가능수량<br/>보유수량</th>
+                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>주문가능수량<br/>보유수량(매수일)</th>
                 <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>수익률<br/>만기일</th>
                 <th style={{ padding: '6px 2px', fontWeight: '600' }}>과세구분<br/>잔고구분</th>
               </tr>
@@ -10377,7 +10377,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   </td>
                   <td style={{ width: '20%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
                     <div>10,000</div>
-                    <div style={{ color: '#888888', marginTop: '2px' }}>10,000</div>
+                    <div style={{ color: '#888888', marginTop: '2px', fontSize: '8px' }}>10,000 (2026.07.10)</div>
                   </td>
                   <td style={{ width: '18%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
                     <div style={{ color: '#de201e', fontWeight: '700' }}>+0.19%</div>
