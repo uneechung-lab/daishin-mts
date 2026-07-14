@@ -2947,7 +2947,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           )}
         </div>
       )}      {/* Ranking and List Area */}
-      <div style={{ ...rankingSectionStyle, padding: '0 0 ' + (etfMallNavMode === 'search' ? '76px' : '0') + ' 0' }}>
+      <div style={{ ...rankingSectionStyle, padding: '0 0 ' + (etfMallNavMode === 'search' ? '60px' : '0') + ' 0' }}>
         {activeMallTab === '추천' && (
           <>
             {/* Section Title + Tabs */}
@@ -4133,13 +4133,10 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       {etfMallNavMode === 'search' && (
         <div style={{
           position: 'absolute',
-          bottom: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 'calc(100% - 28px)',
-          maxWidth: '350px',
-          zIndex: 100,
-          pointerEvents: 'none'
+          bottom: '0',
+          left: '0',
+          width: '100%',
+          zIndex: 100
         }}>
           <button
             onClick={() => {
@@ -4147,16 +4144,14 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             }}
             style={{
               width: '100%',
-              height: '48px',
+              height: '50px',
               backgroundColor: '#000000',
               color: '#ffffff',
-              border: isDark ? '1px solid #334155' : 'none',
-              borderRadius: '24px',
+              border: 'none',
+              borderRadius: '0',
               fontSize: '0.95rem',
               fontWeight: '700',
               cursor: 'pointer',
-              pointerEvents: 'auto',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
