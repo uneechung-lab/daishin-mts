@@ -10180,13 +10180,17 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
           backgroundColor: isDark ? '#121826' : '#ffffff'
         }}>
-          {['미체결', '체결', '잔고'].map((tab) => {
-            const isActive = tab === screen6BalanceActiveTab;
+          {['미체결', '체결', isAsIs ? '잔고' : '장내(외)채권 잔고'].map((tab) => {
+            const isActive = (tab === '미체결' && screen6BalanceActiveTab === '미체결') ||
+                             (tab === '체결' && screen6BalanceActiveTab === '체결') ||
+                             ((tab === '잔고' || tab === '장내(외)채권 잔고') && screen6BalanceActiveTab === '잔고');
             return (
               <div
                 key={tab}
                 onClick={() => {
-                  setScreen6BalanceActiveTab(tab);
+                  if (tab === '미체결') setScreen6BalanceActiveTab('미체결');
+                  else if (tab === '체결') setScreen6BalanceActiveTab('체결');
+                  else setScreen6BalanceActiveTab('잔고');
                 }}
                 style={{
                   flex: 1,
