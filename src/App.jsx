@@ -10209,42 +10209,44 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           })}
         </div>
 
-        {/* Scrollable Pills Filter Bar */}
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          overflowX: 'auto',
-          padding: '8px 12px',
-          backgroundColor: isDark ? '#0f172a' : '#ffffff',
-          scrollbarWidth: 'none',
-          whiteSpace: 'nowrap',
-          borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
-        }}>
-          {['국내주식', '해외주식', '금현물', '펀드', '장내채권'].map((pill) => {
-            const isActive = pill === '장내채권';
-            return (
-              <div
-                key={pill}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '16px',
-                  fontSize: '11px',
-                  fontWeight: isActive ? '700' : '500',
-                  cursor: 'pointer',
-                  backgroundColor: isActive 
-                    ? (isDark ? 'rgba(59, 130, 246, 0.15)' : '#eff6ff') 
-                    : (isDark ? '#1e293b' : '#f1f5f9'),
-                  color: isActive 
-                    ? (isDark ? '#60a5fa' : '#2563eb') 
-                    : (isDark ? '#cbd5e1' : '#555555'),
-                  border: '1px solid transparent'
-                }}
-              >
-                {pill}
-              </div>
-            );
-          })}
-        </div>
+        {/* Scrollable Pills Filter Bar (Only in AS-IS mode) */}
+        {isAsIs && (
+          <div style={{
+            display: 'flex',
+            gap: '8px',
+            overflowX: 'auto',
+            padding: '8px 12px',
+            backgroundColor: isDark ? '#0f172a' : '#ffffff',
+            scrollbarWidth: 'none',
+            whiteSpace: 'nowrap',
+            borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+          }}>
+            {['국내주식', '해외주식', '금현물', '펀드', '장내채권'].map((pill) => {
+              const isActive = pill === '장내채권';
+              return (
+                <div
+                  key={pill}
+                  style={{
+                    padding: '6px 12px',
+                    borderRadius: '16px',
+                    fontSize: '11px',
+                    fontWeight: isActive ? '700' : '500',
+                    cursor: 'pointer',
+                    backgroundColor: isActive 
+                      ? (isDark ? 'rgba(59, 130, 246, 0.15)' : '#eff6ff') 
+                      : (isDark ? '#1e293b' : '#f1f5f9'),
+                    color: isActive 
+                      ? (isDark ? '#60a5fa' : '#2563eb') 
+                      : (isDark ? '#cbd5e1' : '#555555'),
+                    border: '1px solid transparent'
+                  }}
+                >
+                  {pill}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Dropdown Box */}
         <div style={{ padding: '8px 12px', backgroundColor: isDark ? '#0f172a' : '#ffffff' }}>
