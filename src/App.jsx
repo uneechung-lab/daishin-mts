@@ -8987,8 +8987,12 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeBalanceType, setScreen6ToBeBalanceType] = useState('잔고선택');
   const [screen6ToBeHoldBalanceType, setScreen6ToBeHoldBalanceType] = useState('보유잔고');
   const [screen6ToBeTaxType, setScreen6ToBeTaxType] = useState('과세선택');
-  const [screen6AsIsUnexecutedOpen, setScreen6AsIsUnexecutedOpen] = useState(false);
-  const [screen6ToBeUnexecutedOpen, setScreen6ToBeUnexecutedOpen] = useState(false);
+  const [screen6AsIsUnexecutedOpen, setScreen6AsIsUnexecutedOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6AsIsUnexecutedOpen') === 'true';
+  });
+  const [screen6ToBeUnexecutedOpen, setScreen6ToBeUnexecutedOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6ToBeUnexecutedOpen') === 'true';
+  });
   const [screen6AsIsOrderTab, setScreen6AsIsOrderTab] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6AsIsOrderTab') || '매수';
   });
@@ -9797,8 +9801,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         borderBottom: '1px solid #f1f5f9'
                       }}
                     >
-                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#111111' : '#111111' }}>{item}</span>
-                      {isSelected && <span style={{ color: '#111111', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   );
                 })}
@@ -9829,8 +9833,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         borderBottom: '1px solid #f1f5f9'
                       }}
                     >
-                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#111111' : '#111111' }}>{item}</span>
-                      {isSelected && <span style={{ color: '#111111', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   );
                 })}
@@ -9861,8 +9865,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         borderBottom: '1px solid #f1f5f9'
                       }}
                     >
-                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#111111' : '#111111' }}>{item}</span>
-                      {isSelected && <span style={{ color: '#111111', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   );
                 })}
@@ -11867,12 +11871,16 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     // Sync order tabs
     params.set('screen6AsIsOrderTab', screen6AsIsOrderTab);
     params.set('screen6ToBeOrderTab', screen6ToBeOrderTab);
+
+    // Sync unexecuted popups
+    params.set('screen6AsIsUnexecutedOpen', screen6AsIsUnexecutedOpen ? 'true' : 'false');
+    params.set('screen6ToBeUnexecutedOpen', screen6ToBeUnexecutedOpen ? 'true' : 'false');
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
