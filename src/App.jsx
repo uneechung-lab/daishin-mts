@@ -10385,48 +10385,37 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               overflowX: showFiveTabs ? 'auto' : 'visible' 
             }}
           >
-            {(showFiveTabs ? [
+            {([
               { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
               { key: '보유상품 현황', label: `보유상품\n현황` },
               { key: '장외채권 매매', label: `장외채권\n매매` },
               { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` },
               { key: 'ETF/리츠 현재가', label: `ETF/리츠\n현재가` }
-            ] : [
-              { key: 'bondCurrentPrice', label: !isAsIs ? `장내채권\n투자하기` : `장내채권\n현재가` },
-              { key: 'bondBalance', label: `장내채권\n잔고` },
-              { key: '장외채권 매매', label: `장외채권\n매매` },
-              { key: '장외채권 잔고', label: `장외채권\n잔고` }
             ]).map((tab, idx) => {
-              const isSelected = showFiveTabs
-                ? false
-                : (tab.key === 'bondBalance');
-              const borderRightCount = showFiveTabs ? 4 : 3;
+              const isSelected = (tab.key === '장내(외)채권 잔고' && subScreen === 'bondBalance') ||
+                                 (tab.key === 'ETF/리츠 주문' && subScreen === 'bondOrder') ||
+                                 (tab.key === 'ETF/리츠 현재가' && subScreen === 'bondCurrentPrice');
+              const borderRightCount = 4;
               return (
                 <button
                   key={tab.key}
                   onClick={() => {
-                    if (showFiveTabs) {
-                      if (tab.key === 'ETF/리츠 현재가') {
-                        setSubScreen('bondCurrentPrice');
-                      } else if (tab.key === '장내(외)채권 잔고') {
-                        setSubScreen('bondBalance');
-                      } else if (tab.key === 'ETF/리츠 주문') {
-                        setSubScreen('bondOrder');
-                      }
-                    } else {
-                      if (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance') {
-                        setSubScreen(tab.key);
-                      }
+                    if (tab.key === 'ETF/리츠 현재가') {
+                      setSubScreen('bondCurrentPrice');
+                    } else if (tab.key === '장내(외)채권 잔고') {
+                      setSubScreen('bondBalance');
+                    } else if (tab.key === 'ETF/리츠 주문') {
+                      setSubScreen('bondOrder');
                     }
                   }}
                   style={{
-                    flex: showFiveTabs ? 'none' : 1,
-                    width: showFiveTabs ? '76px' : 'auto',
-                    flexShrink: showFiveTabs ? 0 : 1,
+                    flex: 'none',
+                    width: '76px',
+                    flexShrink: 0,
                     border: 'none',
                     background: 'none',
                     borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                    cursor: (showFiveTabs ? (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') : (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance')) ? 'pointer' : 'default',
+                    cursor: (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') ? 'pointer' : 'default',
                     fontSize: showFiveTabs ? '0.7rem' : '0.73rem',
                     fontWeight: isSelected ? '800' : '500',
                     color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
@@ -14494,56 +14483,45 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
                         {/* Middle text tabs */}
                         <div 
-                          className={!screen6ToBeSwitchOn ? "no-scrollbar" : ""} 
+                          className="no-scrollbar" 
                           style={{ 
                             flex: 1, 
                             display: 'flex', 
                             alignItems: 'stretch', 
-                            overflowX: !screen6ToBeSwitchOn ? 'auto' : 'visible' 
+                            overflowX: 'auto' 
                           }}
                         >
-                          {(!screen6ToBeSwitchOn ? [
+                          {([
                             { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
                             { key: '보유상품 현황', label: `보유상품\n현황` },
                             { key: '장외채권 매매', label: `장외채권\n매매` },
                             { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` },
                             { key: 'ETF/리츠 현재가', label: `ETF/리츠\n현재가` }
-                          ] : [
-                            { key: 'bondCurrentPrice', label: `장내채권\n투자하기` },
-                            { key: 'bondBalance', label: `장내채권\n잔고` },
-                            { key: '장외채권 매매', label: `장외채권\n매매` },
-                            { key: '장외채권 잔고', label: `장외채권\n잔고` }
                           ]).map((tab, idx) => {
-                            const isSelected = !screen6ToBeSwitchOn
-                              ? false
-                              : (tab.key === 'bondCurrentPrice');
-                            const borderRightCount = !screen6ToBeSwitchOn ? 4 : 3;
+                            const isSelected = (tab.key === '장내(외)채권 잔고' && screen6ToBeSubScreen === 'bondBalance') ||
+                                               (tab.key === 'ETF/리츠 주문' && screen6ToBeSubScreen === 'bondOrder') ||
+                                               (tab.key === 'ETF/리츠 현재가' && screen6ToBeSubScreen === 'bondCurrentPrice');
+                            const borderRightCount = 4;
                             return (
                               <button
                                 key={tab.key}
                                 onClick={() => {
-                                  if (!screen6ToBeSwitchOn) {
-                                    if (tab.key === 'ETF/리츠 현재가') {
-                                      setScreen6ToBeSubScreen('bondCurrentPrice');
-                                    } else if (tab.key === '장내(외)채권 잔고') {
-                                      setScreen6ToBeSubScreen('bondBalance');
-                                    } else if (tab.key === 'ETF/리츠 주문') {
-                                      setScreen6ToBeSubScreen('bondOrder');
-                                    }
-                                  } else {
-                                    if (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance') {
-                                      setScreen6ToBeSubScreen(tab.key);
-                                    }
+                                  if (tab.key === 'ETF/리츠 현재가') {
+                                    setScreen6ToBeSubScreen('bondCurrentPrice');
+                                  } else if (tab.key === '장내(외)채권 잔고') {
+                                    setScreen6ToBeSubScreen('bondBalance');
+                                  } else if (tab.key === 'ETF/리츠 주문') {
+                                    setScreen6ToBeSubScreen('bondOrder');
                                   }
                                 }}
                                 style={{
-                                  flex: !screen6ToBeSwitchOn ? 'none' : 1,
-                                  width: !screen6ToBeSwitchOn ? '76px' : 'auto',
-                                  flexShrink: !screen6ToBeSwitchOn ? 0 : 1,
+                                  flex: 'none',
+                                  width: '76px',
+                                  flexShrink: 0,
                                   border: 'none',
                                   background: 'none',
                                   borderRight: idx < borderRightCount ? '1px solid #f1f5f9' : 'none',
-                                  cursor: (!screen6ToBeSwitchOn ? (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') : (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance')) ? 'pointer' : 'default',
+                                  cursor: (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') ? 'pointer' : 'default',
                                   fontSize: !screen6ToBeSwitchOn ? '0.7rem' : '0.73rem',
                                   fontWeight: isSelected ? '800' : '500',
                                   color: isSelected ? '#4750b3' : '#333333',
