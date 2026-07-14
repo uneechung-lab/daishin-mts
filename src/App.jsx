@@ -2146,6 +2146,13 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     const params = new URLSearchParams(window.location.search);
     return params.get('showKeyboard') === 'true';
   });
+  const [checkedItems, setCheckedItems] = useState({});
+  const toggleCheck = (code) => {
+    setCheckedItems(prev => ({
+      ...prev,
+      [code]: !prev[code]
+    }));
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -2414,8 +2421,12 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       return (
         <div key={idx} 
           onClick={() => {
-            setToBePrevSubScreen('etfMall');
-            setToBeSubScreen('tigerDetail');
+            if (etfMallNavMode === 'search') {
+              toggleCheck(item.code);
+            } else {
+              setToBePrevSubScreen('etfMall');
+              setToBeSubScreen('tigerDetail');
+            }
           }}
           style={{
             display: 'flex',
@@ -2427,6 +2438,39 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             position: 'relative'
           }}
         >
+          {etfMallNavMode === 'search' && (
+            <div 
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '4px',
+                cursor: 'pointer',
+                flexShrink: 0
+              }}
+            >
+              <div style={{
+                width: '18px',
+                height: '18px',
+                borderRadius: '4px',
+                border: checkedItems[item.code]
+                  ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
+                  : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
+                backgroundColor: checkedItems[item.code]
+                  ? (isDark ? '#ffffff' : '#000000')
+                  : 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {checkedItems[item.code] && (
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </div>
+            </div>
+          )}
           {/* 원숫자 1번을 수량/평단가 앞에 위치시킴 */}
           {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
             <div style={{
@@ -2903,7 +2947,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           )}
         </div>
       )}      {/* Ranking and List Area */}
-      <div style={{ ...rankingSectionStyle, padding: '0' }}>
+      <div style={{ ...rankingSectionStyle, padding: '0 0 ' + (etfMallNavMode === 'search' ? '76px' : '0') + ' 0' }}>
         {activeMallTab === '추천' && (
           <>
             {/* Section Title + Tabs */}
@@ -4084,6 +4128,49 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               완료
             </button>
           </div>
+        </div>
+      )}
+      {etfMallNavMode === 'search' && (
+        <div style={{
+          position: 'absolute',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'calc(100% - 28px)',
+          maxWidth: '350px',
+          zIndex: 100,
+          pointerEvents: 'none'
+        }}>
+          <button
+            onClick={() => {
+              setEtfMallNavMode('default');
+            }}
+            style={{
+              width: '100%',
+              height: '48px',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              border: isDark ? '1px solid #334155' : 'none',
+              borderRadius: '24px',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              pointerEvents: 'auto',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.opacity = '0.9';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.opacity = '1';
+            }}
+          >
+            확인
+          </button>
         </div>
       )}
     </div>
