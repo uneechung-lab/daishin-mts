@@ -10272,19 +10272,29 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           <table style={{
             width: '100%',
             borderCollapse: 'collapse',
-            fontSize: '9.5px',
+            fontSize: '9px',
             textAlign: 'center',
             backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
-            color: isDark ? '#94a3b8' : '#475569',
-            borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0'
+            color: isDark ? '#94a3b8' : '#555555',
+            borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1'
           }}>
             <thead>
-              <tr style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0' }}>
-                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>종목명<br/>종목코드</th>
-                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>매수단가<br/>매수금액</th>
-                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>주문가능수량<br/>보유수량(매수일)</th>
-                <th style={{ padding: '6px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>수익률<br/>만기일</th>
-                <th style={{ padding: '6px 2px', fontWeight: '600' }}>과세구분<br/>잔고구분</th>
+              <tr style={{ color: isDark ? '#94a3b8' : '#555555', borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                <th style={{ width: '22%', padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>종목명</th>
+                <th style={{ width: '20%', padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>수량</th>
+                <th style={{ width: '20%', padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600' }}>매수단가</th>
+                <th rowSpan="3" style={{ width: '18%', padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '600', verticalAlign: 'middle' }}>수익률</th>
+                <th style={{ width: '20%', padding: '4px 2px', fontWeight: '600' }}>과세구분</th>
+              </tr>
+              <tr style={{ color: isDark ? '#94a3b8' : '#555555', borderBottom: isDark ? '1px solid #334155' : '1px solid #cbd5e1' }}>
+                <th rowSpan="2" style={{ padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500', verticalAlign: 'middle' }}>종목코드</th>
+                <th style={{ padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>주문가능수량</th>
+                <th style={{ padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>매수금액</th>
+                <th rowSpan="2" style={{ padding: '4px 2px', fontWeight: '500', verticalAlign: 'middle' }}>잔고구분</th>
+              </tr>
+              <tr style={{ color: isDark ? '#94a3b8' : '#555555' }}>
+                <th style={{ padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>매수일</th>
+                <th style={{ padding: '4px 2px', borderRight: isDark ? '1px solid #334155' : '1px solid #e2e8f0', fontWeight: '500' }}>만기일</th>
               </tr>
             </thead>
           </table>
@@ -10362,30 +10372,33 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             <table style={{
               width: '100%',
               borderCollapse: 'collapse',
-              fontSize: '10px',
-              textAlign: 'center'
+              fontSize: '9.5px',
+              textAlign: 'center',
+              backgroundColor: isDark ? '#0f172a' : '#ffffff',
+              color: isDark ? '#cbd5e1' : '#111111'
             }}>
               <tbody>
                 <tr style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9' }}>
-                  <td style={{ width: '25%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'left', paddingLeft: '6px' }}>
+                  <td style={{ width: '22%', padding: '6px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'left', paddingLeft: '4px' }}>
                     <div style={{ fontWeight: '700', color: isDark ? '#ffffff' : '#111111' }}>삼척블루파워10</div>
-                    <div style={{ fontSize: '8px', color: '#888888', marginTop: '2px' }}>KR6002361A97</div>
+                    <div style={{ fontSize: '8px', color: '#888888', marginTop: '4px' }}>KR6002361A97</div>
                   </td>
-                  <td style={{ width: '20%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
-                    <div>10,065.0원</div>
-                    <div style={{ color: '#888888', marginTop: '2px' }}>10,065,000원</div>
-                  </td>
-                  <td style={{ width: '20%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
+                  <td style={{ width: '20%', padding: '6px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '4px' }}>
                     <div>10,000</div>
-                    <div style={{ color: '#888888', marginTop: '2px', fontSize: '8px' }}>10,000 (2026.07.10)</div>
+                    <div style={{ color: '#555555', marginTop: '2px' }}>10,000</div>
+                    <div style={{ color: '#888888', marginTop: '2px', fontSize: '8px' }}>2026.07.10</div>
                   </td>
-                  <td style={{ width: '18%', padding: '8px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '6px' }}>
-                    <div style={{ color: '#de201e', fontWeight: '700' }}>+0.19%</div>
-                    <div style={{ fontSize: '8px', color: '#888888', marginTop: '2px' }}>2029.09.15</div>
+                  <td style={{ width: '20%', padding: '6px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '4px' }}>
+                    <div>10,065.0원</div>
+                    <div style={{ color: '#555555', marginTop: '2px' }}>10,065,000원</div>
+                    <div style={{ color: '#888888', marginTop: '2px', fontSize: '8px' }}>2029.09.15</div>
                   </td>
-                  <td style={{ width: '17%', padding: '8px 2px', textAlign: 'center' }}>
+                  <td style={{ width: '18%', padding: '6px 2px', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', textAlign: 'right', paddingRight: '4px', color: '#de201e', fontWeight: '700', verticalAlign: 'middle' }}>
+                    +0.19%
+                  </td>
+                  <td style={{ width: '20%', padding: '6px 2px', textAlign: 'center', verticalAlign: 'middle' }}>
                     <div>종합과세</div>
-                    <div style={{ fontSize: '9px', color: '#4750b3', fontWeight: '700', marginTop: '2px' }}>퇴직납입금</div>
+                    <div style={{ fontSize: '9px', color: '#4750b3', fontWeight: '700', marginTop: '4px' }}>퇴직납입금</div>
                   </td>
                 </tr>
               </tbody>
