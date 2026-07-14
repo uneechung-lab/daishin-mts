@@ -2773,6 +2773,10 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     });
   };
 
+  const selectedStocks = [...recentViewedList, ...allList].filter(
+    (item, idx, self) => checkedItems[item.code] && self.findIndex(t => t.code === item.code) === idx
+  );
+
   return (
     <div style={containerStyle} onClick={() => setShowKeyboard(false)}>
       {/* Galaxy S20 Central Punch-hole Camera */}
@@ -2833,6 +2837,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           <button 
             onClick={() => {
               setEtfMallNavMode('default');
+              setActiveMallTab('전체');
             }}
             style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit', position: 'relative', zIndex: 10 }}
           >
@@ -3693,6 +3698,18 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {/* 전체 Tab View */}
         {activeMallTab === '전체' && (
           <div style={{ padding: '0px 0' }}>
+            {etfMallNavMode === 'default' && selectedStocks.length > 0 && (
+              <>
+                {/* 선택한 종목 Section */}
+                <div style={sectionHeaderStyle}>
+                  선택한 종목
+                </div>
+                <div>
+                  {renderStockList(selectedStocks)}
+                </div>
+              </>
+            )}
+
             {searchQuery.trim() !== '' ? (
               <div>
                 {renderStockList(allList, true)}
@@ -4331,6 +4348,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           <button
             onClick={() => {
               setEtfMallNavMode('default');
+              setActiveMallTab('전체');
             }}
             style={{
               width: '100%',
