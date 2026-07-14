@@ -8993,6 +8993,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeUnexecutedOpen, setScreen6ToBeUnexecutedOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6ToBeUnexecutedOpen') === 'true';
   });
+  const [screen6ToBeHoldBalancePopupOpen, setScreen6ToBeHoldBalancePopupOpen] = useState(false);
   const [screen6BalanceActiveTab, setScreen6BalanceActiveTab] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6BalanceActiveTab') || '잔고';
   });
@@ -10039,6 +10040,97 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           fontWeight: '500'
         }}>
           미체결내역이 없습니다.
+        </div>
+      </div>
+    );
+  };
+
+  const renderScreen6HoldBalancePopup = (onClose) => {
+    return (
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#ffffff',
+        zIndex: 1000,
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'sans-serif',
+        color: '#111111'
+      }}>
+        {/* Title Bar */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '48px',
+          borderBottom: '1px solid #e2e8f0',
+          position: 'relative',
+          padding: '0 16px',
+          boxSizing: 'border-box'
+        }}>
+          {/* Close button */}
+          <button 
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '20px',
+              cursor: 'pointer',
+              color: '#333333',
+              padding: '0',
+              lineHeight: 1
+            }}
+          >
+            ✕
+          </button>
+          
+          <div style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontWeight: '700',
+            fontSize: '15px'
+          }}>
+            보유잔고
+          </div>
+        </div>
+
+        {/* Table Header */}
+        <table style={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontSize: '11px',
+          textAlign: 'center',
+          backgroundColor: '#f1f5f9',
+          color: '#555555',
+          borderBottom: '1px solid #cbd5e1'
+        }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid #cbd5e1' }}>
+              <th style={{ width: '40%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>종목명</th>
+              <th rowSpan="2" style={{ width: '30%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500', verticalAlign: 'middle' }}>매수일</th>
+              <th style={{ width: '30%', padding: '6px 2px', fontWeight: '500' }}>잔고구분</th>
+            </tr>
+            <tr>
+              <th style={{ padding: '6px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>수량</th>
+              <th style={{ padding: '6px 2px', fontWeight: '500' }}>과세구분</th>
+            </tr>
+          </thead>
+        </table>
+
+        {/* Empty state content */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#a0a0a0',
+          fontSize: '13px',
+          fontWeight: '500'
+        }}>
+          보유잔고가 없습니다.
         </div>
       </div>
     );
@@ -13757,6 +13849,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                           {renderScreen6AsIs(true)}
                           {renderScreen6Bsheet('tobe')}
                           {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
+              {screen6ToBeHoldBalancePopupOpen && renderScreen6HoldBalancePopup(() => setScreen6ToBeHoldBalancePopupOpen(false))}
                         </>
                       );
                     })()
@@ -14372,14 +14465,17 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                      <span>{screen6ToBeBalanceType}</span>
                                      <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                                    </div>
-                                   <div style={{
-                                     flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
-                                     display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
-                                     height: '36px', boxSizing: 'border-box'
-                                   }}>
-                                     <span>{screen6ToBeHoldBalanceType}</span>
-                                     <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
-                                   </div>
+                                   <div 
+                                      onClick={() => setScreen6ToBeHoldBalancePopupOpen(true)}
+                                      style={{
+                                        flex: 1, border: '1px solid #cbd5e1', borderRadius: '2px', padding: '0 10px', fontSize: '12px',
+                                        display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', cursor: 'pointer',
+                                        height: '36px', boxSizing: 'border-box'
+                                      }}
+                                    >
+                                      <span>{screen6ToBeHoldBalanceType}</span>
+                                      <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                                    </div>
                                  </div>
                                  {/* 과세선택 */}
                                  <div style={{
