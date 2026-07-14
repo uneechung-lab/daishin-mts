@@ -10823,29 +10823,28 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                     <span style={{ fontSize: '12px', color: '#333' }}>수량</span>
                                     <div style={{ borderBottom: '1px solid #94a3b8', padding: '4px 0', fontSize: '12px', width: '120px', textAlign: 'right', color: '#94a3b8' }}>수량 입력 <span style={{ color: '#333', fontWeight: '700' }}>원</span></div>
                                   </div>
-                                </>
-                              )}
-
-                              {screen6AsIsOrderTab === '매수' && (
-                                <div style={{ 
-                                  borderTop: '1px solid #f1f5f9', 
-                                  paddingTop: '8px', 
-                                  display: 'flex', 
-                                  flexDirection: 'column', 
-                                  gap: '6px',
-                                  marginTop: 'auto'
-                                }}>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
-                                    <span style={{ color: '#666' }}>{isSwitchOff ? '최대가능금액(원)' : '주문가능금액(원)'}</span>
-                                    <span style={{ fontWeight: '700' }}>0</span>
-                                  </div>
-                                  {isSwitchOff && (
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
-                                      <span style={{ color: '#666' }}>위험한도(원)</span>
-                                      <span style={{ fontWeight: '700' }}>0</span>
+                                  {screen6AsIsOrderTab === '매수' && (
+                                    <div style={{ 
+                                      borderTop: '1px solid #f1f5f9', 
+                                      paddingTop: '6px', 
+                                      display: 'flex', 
+                                      flexDirection: 'column', 
+                                      gap: '4px',
+                                      marginTop: '6px'
+                                    }}>
+                                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+                                        <span style={{ color: '#666' }}>{isSwitchOff ? '최대가능금액(원)' : '주문가능금액(원)'}</span>
+                                        <span style={{ fontWeight: '700' }}>0</span>
+                                      </div>
+                                      {isSwitchOff && (
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+                                          <span style={{ color: '#666' }}>위험한도(원)</span>
+                                          <span style={{ fontWeight: '700' }}>0</span>
+                                        </div>
+                                      )}
                                     </div>
                                   )}
-                                </div>
+                                </>
                               )}
                             </div>
                           </div>
