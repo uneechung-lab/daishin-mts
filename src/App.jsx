@@ -10220,7 +10220,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           whiteSpace: 'nowrap',
           borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
         }}>
-          {['국내주식', '해외주식', '금현물', '펀드', '장내채권', '장외채권'].map((pill) => {
+          {['국내주식', '해외주식', '금현물', '펀드', '장내채권'].map((pill) => {
             const isActive = pill === '장내채권';
             return (
               <div
