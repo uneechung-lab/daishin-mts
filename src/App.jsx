@@ -11196,7 +11196,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                     </div>
                                     <div 
                                       onClick={() => {
-                                        if (isSwitchOff) setScreen6ToBeBsheetState('hold_balance');
+                                        if (isSwitchOff) setScreen6ToBeHoldBalancePopupOpen(true);
                                         else setScreen6AsIsBsheetState('hold_balance');
                                       }}
                                       style={{
