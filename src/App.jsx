@@ -14716,7 +14716,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             { name: '장외채권 매매' },
                             { name: '장내채권 매매', action: () => setScreen6ToBeSubScreen('bondCurrentPrice') },
                             { name: '장내채권 미체결/체결' },
-                            { name: '장내(외)잔고', action: () => setScreen6ToBeSubScreen('bondBalance') },
+                            { name: '장내(외)채권 잔고', action: () => setScreen6ToBeSubScreen('bondBalance') },
                             { name: '디폴트옵션 매매' },
                             { name: '매매내역 조회/취소' },
                             { name: 'ELB 청약예약' }
