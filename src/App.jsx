@@ -9847,6 +9847,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     const subScreen = isAsIs ? screen6AsIsSubScreen : screen6ToBeSubScreen;
     const setSubScreen = isAsIs ? setScreen6AsIsSubScreen : setScreen6ToBeSubScreen;
     const setOrderTab = isAsIs ? setScreen6AsIsOrderTab : setScreen6ToBeOrderTab;
+    const showFiveTabs = !isAsIs && !screen6ToBeSwitchOn;
 
     const accountText = isAsIs 
       ? (isSwitchOff ? '200-233354(41) 김대신' : '200-233354(01) 김대신')
@@ -10147,8 +10148,16 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           </button>
 
           {/* Middle text tabs */}
-          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
-            {((!isAsIs && !screen6ToBeSwitchOn) ? [
+          <div 
+            className={showFiveTabs ? "no-scrollbar" : ""} 
+            style={{ 
+              flex: 1, 
+              display: 'flex', 
+              alignItems: 'stretch', 
+              overflowX: showFiveTabs ? 'auto' : 'visible' 
+            }}
+          >
+            {(showFiveTabs ? [
               { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
               { key: '보유상품 현황', label: `보유상품\n현황` },
               { key: '장외채권 매매', label: `장외채권\n매매` },
@@ -10160,15 +10169,15 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               { key: '장외채권 매매', label: `장외채권\n매매` },
               { key: '장외채권 잔고', label: `장외채권\n잔고` }
             ]).map((tab, idx) => {
-              const isSelected = (!isAsIs && !screen6ToBeSwitchOn)
-                ? (tab.key === '장내(외)채권 잔고')
+              const isSelected = showFiveTabs
+                ? false
                 : (tab.key === 'bondBalance');
-              const borderRightCount = (!isAsIs && !screen6ToBeSwitchOn) ? 4 : 3;
+              const borderRightCount = showFiveTabs ? 4 : 3;
               return (
                 <button
                   key={tab.key}
                   onClick={() => {
-                    if (!isAsIs && !screen6ToBeSwitchOn) {
+                    if (showFiveTabs) {
                       if (tab.key === 'ETF/리츠 현재가') {
                         setSubScreen('bondCurrentPrice');
                       } else if (tab.key === '장내(외)채권 잔고') {
@@ -10183,12 +10192,14 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                     }
                   }}
                   style={{
-                    flex: 1,
+                    flex: showFiveTabs ? 'none' : 1,
+                    width: showFiveTabs ? '76px' : 'auto',
+                    flexShrink: showFiveTabs ? 0 : 1,
                     border: 'none',
                     background: 'none',
                     borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                    cursor: ((!isAsIs && !screen6ToBeSwitchOn) ? (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') : (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance')) ? 'pointer' : 'default',
-                    fontSize: (!isAsIs && !screen6ToBeSwitchOn) ? '0.66rem' : '0.73rem',
+                    cursor: (showFiveTabs ? (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') : (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance')) ? 'pointer' : 'default',
+                    fontSize: showFiveTabs ? '0.7rem' : '0.73rem',
                     fontWeight: isSelected ? '800' : '500',
                     color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
                     display: 'flex',
@@ -10899,7 +10910,15 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             </button>
 
                             {/* Middle text tabs */}
-                            <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+                            <div 
+                              className={isSwitchOff ? "no-scrollbar" : ""} 
+                              style={{ 
+                                flex: 1, 
+                                display: 'flex', 
+                                alignItems: 'stretch', 
+                                overflowX: isSwitchOff ? 'auto' : 'visible' 
+                              }}
+                            >
                               {(isSwitchOff ? [
                                 { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
                                 { key: '보유상품 현황', label: `보유상품\n현황` },
@@ -10913,7 +10932,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 { key: '장외채권 잔고', label: `장외채권\n잔고` }
                               ]).map((tab, idx) => {
                                 const isSelected = isSwitchOff 
-                                  ? (tab.key === 'ETF/리츠 주문')
+                                  ? false
                                   : (tab.key === '장내채권 현재가');
                                 const borderRightCount = isSwitchOff ? 4 : 3;
                                 return (
@@ -10937,7 +10956,9 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                       }
                                     }}
                                     style={{
-                                      flex: 1,
+                                      flex: isSwitchOff ? 'none' : 1,
+                                      width: isSwitchOff ? '76px' : 'auto',
+                                      flexShrink: isSwitchOff ? 0 : 1,
                                       border: 'none',
                                       background: 'none',
                                       borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
@@ -14212,7 +14233,15 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         </button>
 
                         {/* Middle text tabs */}
-                        <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+                        <div 
+                          className={!screen6ToBeSwitchOn ? "no-scrollbar" : ""} 
+                          style={{ 
+                            flex: 1, 
+                            display: 'flex', 
+                            alignItems: 'stretch', 
+                            overflowX: !screen6ToBeSwitchOn ? 'auto' : 'visible' 
+                          }}
+                        >
                           {(!screen6ToBeSwitchOn ? [
                             { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
                             { key: '보유상품 현황', label: `보유상품\n현황` },
@@ -14226,7 +14255,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             { key: '장외채권 잔고', label: `장외채권\n잔고` }
                           ]).map((tab, idx) => {
                             const isSelected = !screen6ToBeSwitchOn
-                              ? (tab.key === 'ETF/리츠 주문')
+                              ? false
                               : (tab.key === 'bondCurrentPrice');
                             const borderRightCount = !screen6ToBeSwitchOn ? 4 : 3;
                             return (
@@ -14248,12 +14277,14 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   }
                                 }}
                                 style={{
-                                  flex: 1,
+                                  flex: !screen6ToBeSwitchOn ? 'none' : 1,
+                                  width: !screen6ToBeSwitchOn ? '76px' : 'auto',
+                                  flexShrink: !screen6ToBeSwitchOn ? 0 : 1,
                                   border: 'none',
                                   background: 'none',
                                   borderRight: idx < borderRightCount ? '1px solid #f1f5f9' : 'none',
                                   cursor: (!screen6ToBeSwitchOn ? (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') : (tab.key === 'bondCurrentPrice' || tab.key === 'bondBalance')) ? 'pointer' : 'default',
-                                  fontSize: !screen6ToBeSwitchOn ? '0.66rem' : '0.73rem',
+                                  fontSize: !screen6ToBeSwitchOn ? '0.7rem' : '0.73rem',
                                   fontWeight: isSelected ? '800' : '500',
                                   color: isSelected ? '#4750b3' : '#333333',
                                   display: 'flex',
