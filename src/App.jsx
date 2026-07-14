@@ -9946,6 +9946,97 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     );
   };
 
+  const renderScreen6UnexecutedPopup = (mode, onClose) => {
+    return (
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#ffffff',
+        zIndex: 1000,
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'sans-serif',
+        color: '#111111'
+      }}>
+        {/* Title Bar */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '48px',
+          borderBottom: '1px solid #e2e8f0',
+          position: 'relative',
+          padding: '0 16px',
+          boxSizing: 'border-box'
+        }}>
+          {/* Close button */}
+          <button 
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '20px',
+              cursor: 'pointer',
+              color: '#333333',
+              padding: '0',
+              lineHeight: 1
+            }}
+          >
+            ✕
+          </button>
+          
+          <div style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontWeight: '700',
+            fontSize: '15px'
+          }}>
+            미체결 내역
+          </div>
+        </div>
+
+        {/* Table Header */}
+        <table style={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontSize: '11px',
+          textAlign: 'center',
+          backgroundColor: '#f8fafc',
+          borderBottom: '1px solid #e2e8f0'
+        }}>
+          <thead>
+            <tr style={{ color: '#475569', borderBottom: '1px solid #f1f5f9' }}>
+              <th rowSpan="2" style={{ width: '15%', padding: '6px 2px', borderRight: '1px solid #f1f5f9', fontWeight: '500' }}>주문<br/>번호</th>
+              <th rowSpan="2" style={{ width: '35%', padding: '6px 2px', borderRight: '1px solid #f1f5f9', fontWeight: '500' }}>종목명</th>
+              <th style={{ width: '25%', padding: '4px 2px', borderRight: '1px solid #f1f5f9', fontWeight: '500' }}>매매구분</th>
+              <th style={{ width: '25%', padding: '4px 2px', fontWeight: '500' }}>수량</th>
+            </tr>
+            <tr style={{ color: '#475569' }}>
+              <th style={{ padding: '4px 2px', borderRight: '1px solid #f1f5f9', fontWeight: '500' }}>단가</th>
+              <th style={{ padding: '4px 2px', fontWeight: '500' }}>미체결</th>
+            </tr>
+          </thead>
+        </table>
+
+        {/* Empty state content */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#94a3b8',
+          fontSize: '13px',
+          fontWeight: '500'
+        }}>
+          미체결내역이 없습니다.
+        </div>
+      </div>
+    );
+  };
+
   const renderScreen6Balance = (mode, isSwitchOff = false) => {
     const isAsIs = mode === 'asis';
     const subScreen = isAsIs ? screen6AsIsSubScreen : screen6ToBeSubScreen;
