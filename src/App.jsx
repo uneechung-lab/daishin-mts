@@ -10826,11 +10826,11 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   {screen6AsIsOrderTab === '매수' && (
                                     <div style={{ 
                                       borderTop: '1px solid #f1f5f9', 
-                                      paddingTop: '6px', 
+                                      paddingTop: '10px', 
                                       display: 'flex', 
                                       flexDirection: 'column', 
-                                      gap: '4px',
-                                      marginTop: '6px'
+                                      gap: '8px',
+                                      marginTop: '10px'
                                     }}>
                                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
                                         <span style={{ color: '#666' }}>{isSwitchOff ? '최대가능금액(원)' : '주문가능금액(원)'}</span>
