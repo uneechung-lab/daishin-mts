@@ -2160,6 +2160,12 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     }
   }, [showKeyboard]);
 
+  useEffect(() => {
+    if (etfMallNavMode === 'search' && activeMallTab !== '전체') {
+      setActiveMallTab('전체');
+    }
+  }, [etfMallNavMode, activeMallTab, setActiveMallTab]);
+
   const toggleFavorite = (code) => {
     setFavorites(prev => 
       prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]
@@ -2744,47 +2750,46 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       </div>
 
       {/* Horizontal Tabs Menu */}
-      <div style={menuTabsStyle}>
-        {(etfMallNavMode === 'search' 
-          ? ['전체', '추천', '보유', 'GO배당GO금리', 'TDF']
-          : ['추천', '보유', 'GO배당GO금리', 'TDF', '전체']
-        ).map((tab) => (
-          <span 
-            key={tab} 
-            onClick={() => {
-              setActiveMallTab(tab);
-              if (tab !== '전체') {
-                setSelectedChip('전체');
-              }
-            }}
-            style={{ ...menuTabItemStyle(activeMallTab === tab), position: 'relative' }}
-          >
-            {tab}
-            {tab === '추천' && activeMallTab === '추천' && isDrawerOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '-4px',
-                right: '-10px',
-                width: '17px',
-                height: '17px',
-                borderRadius: '50%',
-                backgroundColor: '#00c3a5',
-                color: '#ffffff',
-                fontSize: '11px',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                zIndex: 15
-              }}>1</div>
-            )}
-          </span>
-        ))}
-      </div>
+      {etfMallNavMode !== 'search' && (
+        <div style={menuTabsStyle}>
+          {['추천', '보유', 'GO배당GO금리', 'TDF', '전체'].map((tab) => (
+            <span 
+              key={tab} 
+              onClick={() => {
+                setActiveMallTab(tab);
+                if (tab !== '전체') {
+                  setSelectedChip('전체');
+                }
+              }}
+              style={{ ...menuTabItemStyle(activeMallTab === tab), position: 'relative' }}
+            >
+              {tab}
+              {tab === '추천' && activeMallTab === '추천' && isDrawerOpen && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-4px',
+                  right: '-10px',
+                  width: '17px',
+                  height: '17px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                  zIndex: 15
+                }}>1</div>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Search Input Filter Row with Chips (from Stock Search screen) */}
-      {true && (
+      {(etfMallNavMode === 'search' || activeMallTab === '전체') && (
         <div style={{ 
           padding: '10px 14px 4px 14px', 
           borderBottom: 'none', 
@@ -2796,6 +2801,10 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           <div 
             onClick={(e) => {
               e.stopPropagation();
+              if (etfMallNavMode !== 'search') {
+                setEtfMallNavMode('search');
+                setActiveMallTab('전체');
+              }
               setShowKeyboard(true);
             }}
             style={{
@@ -2806,7 +2815,8 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               padding: '0 12px',
               height: '38px',
               gap: '8px',
-              backgroundColor: isDark ? '#121826' : '#ffffff'
+              backgroundColor: isDark ? '#121826' : '#ffffff',
+              cursor: 'pointer'
             }}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="2.5" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
@@ -2817,10 +2827,18 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               onChange={(e) => setSearchQuery(e.target.value)}
               onClick={(e) => {
                 e.stopPropagation();
+                if (etfMallNavMode !== 'search') {
+                  setEtfMallNavMode('search');
+                  setActiveMallTab('전체');
+                }
                 setShowKeyboard(true);
               }}
               onFocus={(e) => {
                 e.stopPropagation();
+                if (etfMallNavMode !== 'search') {
+                  setEtfMallNavMode('search');
+                  setActiveMallTab('전체');
+                }
                 setShowKeyboard(true);
               }}
               style={{
