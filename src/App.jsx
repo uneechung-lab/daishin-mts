@@ -3006,7 +3006,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           {/* Filter Chips Row */}
           {activeMallTab === '전체' && (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
-              <div style={{ display: 'flex', gap: '8px', overflowX: 'visible', scrollbarWidth: 'none', flex: 1 }}>
+              <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none', flex: 1 }}>
                 {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
                   const isSelected = selectedChip === chip;
                   return (
@@ -5262,7 +5262,7 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
       <div style={{ 
         display: 'flex', 
         backgroundColor: isDark ? '#121826' : '#ffffff',
-        overflowX: 'visible',
+        overflowX: 'auto',
         whiteSpace: 'nowrap',
         msOverflowStyle: 'none',
         scrollbarWidth: 'none'
@@ -5333,7 +5333,7 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
         </div>
 
         {/* Filter Chips Row */}
-        <div style={{ display: 'flex', gap: '8px', overflowX: 'visible', scrollbarWidth: 'none' }}>
+        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
           {['전체', 'ETF', 'ETN', '리츠'].map((chip) => {
             const isSelected = selectedChip === chip;
             return (
@@ -8842,7 +8842,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         <div style={{
           display: 'flex',
           gap: '16px',
-          overflowX: 'visible',
+          overflowX: 'auto',
           padding: '0 12px',
           borderBottom: '1px solid #f1f5f9',
           scrollbarWidth: 'none',
@@ -10213,7 +10213,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         <div style={{
           display: 'flex',
           gap: '8px',
-          overflowX: 'visible',
+          overflowX: 'auto',
           padding: '8px 12px',
           backgroundColor: isDark ? '#0f172a' : '#ffffff',
           scrollbarWidth: 'none',
@@ -10389,11 +10389,11 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
               { key: '보유상품 현황', label: `보유상품\n현황` },
               { key: '장외채권 매매', label: `장외채권\n매매` },
-              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` },
+              { key: 'ETF/리츠 현재가', label: `ETF/리츠\n현재가` }
             ]).map((tab, idx) => {
-              const isSelected = (tab.key === '장내(외)채권 잔고' && subScreen === 'bondBalance') ||
-                                 (tab.key === 'ETF/리츠 주문' && subScreen === 'bondOrder');
-              const borderRightCount = 3;
+              const isSelected = false;
+              const borderRightCount = 4;
               return (
                 <button
                   key={tab.key}
@@ -10402,19 +10402,21 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                       setSubScreen('bondBalance');
                     } else if (tab.key === 'ETF/리츠 주문') {
                       setSubScreen('bondOrder');
+                    } else if (tab.key === 'ETF/리츠 현재가') {
+                      setSubScreen('bondCurrentPrice');
                     }
                   }}
                   style={{
-                    flex: 1,
-                    width: 'auto',
-                    flexShrink: 1,
+                    flex: 'none',
+                    width: '76px',
+                    flexShrink: 0,
                     border: 'none',
                     background: 'none',
                     borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                    cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') ? 'pointer' : 'default',
+                    cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가') ? 'pointer' : 'default',
                     fontSize: showFiveTabs ? '0.7rem' : '0.73rem',
-                    fontWeight: isSelected ? '800' : '500',
-                    color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
+                    fontWeight: '500',
+                    color: isDark ? '#cbd5e1' : '#333333',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -10555,7 +10557,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 textAlign: 'center',
                                 padding: '13px 0',
                                 fontSize: '0.96rem',
-                                fontWeight: isSelected ? '800' : '500',
+                                fontWeight: '500',
                                 color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
                                 borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
                                 cursor: 'pointer'
@@ -11153,35 +11155,37 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                               }}
                             >
                               {([
-                                { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
-                                { key: '보유상품 현황', label: `보유상품\n현황` },
-                                { key: '장외채권 매매', label: `장외채권\n매매` },
-                                { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
-                              ]).map((tab, idx) => {
-                                const isSelected = (tab.key === '장내(외)채권 잔고' && screen6AsIsSubScreen === 'bondBalance') ||
-                                                   (tab.key === 'ETF/리츠 주문' && screen6AsIsSubScreen === 'bondOrder');
-                                const borderRightCount = 3;
-                                return (
-                                  <button
-                                    key={tab.key}
-                                    onClick={() => {
-                                      if (tab.key === '장내(외)채권 잔고') {
-                                        setScreen6AsIsSubScreen('bondBalance');
-                                      } else if (tab.key === 'ETF/리츠 주문') {
-                                        setScreen6AsIsSubScreen('bondOrder');
-                                      }
-                                    }}
-                                    style={{
-                                      flex: 1,
-                                      width: 'auto',
-                                      flexShrink: 1,
-                                      border: 'none',
-                                      background: 'none',
-                                      borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                                      cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') ? 'pointer' : 'default',
+                                 { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
+                                 { key: '보유상품 현황', label: `보유상품\n현황` },
+                                 { key: '장외채권 매매', label: `장외채권\n매매` },
+                                 { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` },
+                                 { key: 'ETF/리츠 현재가', label: `ETF/리츠\n현재가` }
+                               ]).map((tab, idx) => {
+                                 const isSelected = false;
+                                 const borderRightCount = 4;
+                                 return (
+                                   <button
+                                     key={tab.key}
+                                     onClick={() => {
+                                       if (tab.key === '장내(외)채권 잔고') {
+                                         setScreen6AsIsSubScreen('bondBalance');
+                                       } else if (tab.key === 'ETF/리츠 주문') {
+                                         setScreen6AsIsSubScreen('bondOrder');
+                                       } else if (tab.key === 'ETF/리츠 현재가') {
+                                         setScreen6AsIsSubScreen('bondCurrentPrice');
+                                       }
+                                     }}
+                                     style={{
+                                       flex: 'none',
+                                       width: '76px',
+                                       flexShrink: 0,
+                                       border: 'none',
+                                       background: 'none',
+                                       borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                                       cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가') ? 'pointer' : 'default',
                                       fontSize: isSwitchOff ? '0.66rem' : '0.73rem',
-                                      fontWeight: isSelected ? '800' : '500',
-                                      color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
+                                      fontWeight: '500',
+                                      color: isDark ? '#cbd5e1' : '#333333',
                                       display: 'flex',
                                       alignItems: 'center',
                                       justifyContent: 'center',
@@ -11598,8 +11602,8 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                       borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
                                       cursor: 'pointer',
                                       fontSize: '0.73rem',
-                                      fontWeight: isSelected ? '800' : '500',
-                                      color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
+                                      fontWeight: '500',
+                                      color: isDark ? '#cbd5e1' : '#333333',
                                       display: 'flex',
                                       alignItems: 'center',
                                       justifyContent: 'center',
@@ -12289,7 +12293,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   textAlign: 'center',
                                   padding: '13px 0',
                                   fontSize: '0.96rem',
-                                  fontWeight: isSelected ? '800' : '500',
+                                  fontWeight: '500',
                                   color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
                                   borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
                                   cursor: 'pointer'
@@ -12617,7 +12621,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             textAlign: 'center',
                             padding: '13px 0',
                             fontSize: '0.96rem',
-                            fontWeight: isSelected ? '800' : '500',
+                            fontWeight: '500',
                             color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
                             borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
                             cursor: 'pointer'
@@ -12968,7 +12972,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 textAlign: 'center',
                                 padding: '13px 0',
                                 fontSize: '0.96rem',
-                                fontWeight: isSelected ? '800' : '500',
+                                fontWeight: '500',
                                 color: isSelected ? '#3b5bdb' : (isDark ? '#cbd5e1' : '#888888'),
                                 borderBottom: isSelected ? '3px solid #3b5bdb' : '3px solid transparent',
                                 cursor: 'pointer'
@@ -13007,7 +13011,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   style={{
                                     padding: '18px 12px',
                                     fontSize: '0.96rem',
-                                    fontWeight: isSelected ? '800' : '500',
+                                    fontWeight: '500',
                                     color: isSelected ? (isDark ? '#ffffff' : '#3b5bdb') : (isDark ? '#94a3b8' : '#777777'),
                                     backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
                                     cursor: 'default'
@@ -13265,7 +13269,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                 textAlign: 'center',
                                 padding: '13px 0',
                                 fontSize: '0.96rem',
-                                fontWeight: isSelected ? '800' : '500',
+                                fontWeight: '500',
                                 color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
                                 borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
                                 cursor: 'pointer'
@@ -13305,7 +13309,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   style={{
                                     padding: '18px 12px',
                                     fontSize: '0.96rem',
-                                    fontWeight: isSelected ? '800' : '500',
+                                    fontWeight: '500',
                                     color: isSelected ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
                                     backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
                                     cursor: 'default',
@@ -14018,7 +14022,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                   borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
                                   cursor: 'pointer',
                                   fontSize: '0.73rem',
-                                  fontWeight: isSelected ? '800' : '500',
+                                  fontWeight: '500',
                                   color: isSelected ? '#4750b3' : '#333',
                                   display: 'flex',
                                   alignItems: 'center',
@@ -14462,23 +14466,23 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
                         {/* Middle text tabs */}
                         <div 
-                          className="" 
+                          className="no-scrollbar" 
                           style={{ 
                             flex: 1, 
                             display: 'flex', 
                             alignItems: 'stretch', 
-                            overflowX: 'visible' 
+                            overflowX: 'auto' 
                           }}
                         >
                           {([
                             { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
                             { key: '보유상품 현황', label: `보유상품\n현황` },
                             { key: '장외채권 매매', label: `장외채권\n매매` },
-                            { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+                            { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` },
+                            { key: 'ETF/리츠 현재가', label: `ETF/리츠\n현재가` }
                           ]).map((tab, idx) => {
-                            const isSelected = (tab.key === '장내(외)채권 잔고' && screen6ToBeSubScreen === 'bondBalance') ||
-                                               (tab.key === 'ETF/리츠 주문' && screen6ToBeSubScreen === 'bondOrder');
-                            const borderRightCount = 3;
+                            const isSelected = false;
+                            const borderRightCount = 4;
                             return (
                               <button
                                 key={tab.key}
@@ -14487,19 +14491,21 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                     setScreen6ToBeSubScreen('bondBalance');
                                   } else if (tab.key === 'ETF/리츠 주문') {
                                     setScreen6ToBeSubScreen('bondOrder');
+                                  } else if (tab.key === 'ETF/리츠 현재가') {
+                                    setScreen6ToBeSubScreen('bondCurrentPrice');
                                   }
                                 }}
                                 style={{
-                                  flex: 1,
-                                  width: 'auto',
-                                  flexShrink: 1,
+                                  flex: 'none',
+                                  width: '76px',
+                                  flexShrink: 0,
                                   border: 'none',
                                   background: 'none',
-                                  borderRight: idx < borderRightCount ? '1px solid #f1f5f9' : 'none',
-                                  cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') ? 'pointer' : 'default',
+                                  borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                                  cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가') ? 'pointer' : 'default',
                                   fontSize: !screen6ToBeSwitchOn ? '0.7rem' : '0.73rem',
-                                  fontWeight: isSelected ? '800' : '500',
-                                  color: isSelected ? '#4750b3' : '#333333',
+                                  fontWeight: '500',
+                                  color: isDark ? '#cbd5e1' : '#333333',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
@@ -14608,7 +14614,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             textAlign: 'center',
                             padding: '13px 0',
                             fontSize: '0.96rem',
-                            fontWeight: isSelected ? '800' : '500',
+                            fontWeight: '500',
                             color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
                             borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
                           }}
