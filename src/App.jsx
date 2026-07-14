@@ -8993,7 +8993,9 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeUnexecutedOpen, setScreen6ToBeUnexecutedOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6ToBeUnexecutedOpen') === 'true';
   });
-  const [screen6ToBeHoldBalancePopupOpen, setScreen6ToBeHoldBalancePopupOpen] = useState(false);
+  const [screen6ToBeHoldBalancePopupOpen, setScreen6ToBeHoldBalancePopupOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6ToBeHoldBalancePopupOpen') === 'true';
+  });
   const [screen6BalanceActiveTab, setScreen6BalanceActiveTab] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6BalanceActiveTab') || '잔고';
   });
@@ -12100,13 +12102,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     // Sync unexecuted popups
     params.set('screen6AsIsUnexecutedOpen', screen6AsIsUnexecutedOpen ? 'true' : 'false');
     params.set('screen6ToBeUnexecutedOpen', screen6ToBeUnexecutedOpen ? 'true' : 'false');
+    params.set('screen6ToBeHoldBalancePopupOpen', screen6ToBeHoldBalancePopupOpen ? 'true' : 'false');
     params.set('screen6BalanceActiveTab', screen6BalanceActiveTab);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
