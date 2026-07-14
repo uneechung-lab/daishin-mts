@@ -10900,30 +10900,49 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
                             {/* Middle text tabs */}
                             <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
-                              {[
+                              {(isSwitchOff ? [
+                                { key: '장내(외)채권 잔고', label: `장내(외)채권\n잔고` },
+                                { key: '보유상품 현황', label: `보유상품\n현황` },
+                                { key: '장외채권 매매', label: `장외채권\n매매` },
+                                { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` },
+                                { key: 'ETF/리츠 현재가', label: `ETF/리츠\n현재가` }
+                              ] : [
                                 { key: '장내채권 현재가', label: `장내채권\n현재가` },
                                 { key: '장내채권 잔고', label: `장내채권\n잔고` },
                                 { key: '장외채권 매매', label: `장외채권\n매매` },
                                 { key: '장외채권 잔고', label: `장외채권\n잔고` }
-                              ].map((tab, idx) => {
-                                const isSelected = tab.key === '장내채권 현재가';
+                              ]).map((tab, idx) => {
+                                const isSelected = isSwitchOff 
+                                  ? (tab.key === 'ETF/리츠 주문')
+                                  : (tab.key === '장내채권 현재가');
+                                const borderRightCount = isSwitchOff ? 4 : 3;
                                 return (
                                   <button
                                     key={tab.key}
                                     onClick={() => {
-                                      if (tab.key === '장내채권 현재가') {
-                                        setScreen6AsIsSubScreen('bondCurrentPrice');
-                                      } else if (tab.key === '장내채권 잔고') {
-                                        setScreen6AsIsSubScreen('bondBalance');
+                                      if (isSwitchOff) {
+                                        if (tab.key === 'ETF/리츠 현재가') {
+                                          setScreen6AsIsSubScreen('bondCurrentPrice');
+                                        } else if (tab.key === '장내(외)채권 잔고') {
+                                          setScreen6AsIsSubScreen('bondBalance');
+                                        } else if (tab.key === 'ETF/리츠 주문') {
+                                          setScreen6AsIsSubScreen('bondOrder');
+                                        }
+                                      } else {
+                                        if (tab.key === '장내채권 현재가') {
+                                          setScreen6AsIsSubScreen('bondCurrentPrice');
+                                        } else if (tab.key === '장내채권 잔고') {
+                                          setScreen6AsIsSubScreen('bondBalance');
+                                        }
                                       }
                                     }}
                                     style={{
                                       flex: 1,
                                       border: 'none',
                                       background: 'none',
-                                      borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                                      cursor: 'pointer',
-                                      fontSize: '0.73rem',
+                                      borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                                      cursor: (isSwitchOff ? (tab.key === 'ETF/리츠 현재가' || tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문') : true) ? 'pointer' : 'default',
+                                      fontSize: isSwitchOff ? '0.66rem' : '0.73rem',
                                       fontWeight: isSelected ? '800' : '500',
                                       color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#333'),
                                       display: 'flex',
@@ -10932,7 +10951,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                                       textAlign: 'center',
                                       whiteSpace: 'pre-line',
                                       lineHeight: '1.2',
-                                      padding: '2px 2px'
+                                      padding: '2px 1px'
                                     }}
                                   >
                                     {tab.label}
