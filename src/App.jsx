@@ -2707,6 +2707,36 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     });
   };
 
+  const getCurrentlyDisplayedCodes = () => {
+    if (searchQuery.trim() !== '') {
+      return filterByChip(allList).map(item => item.code);
+    } else {
+      const list1 = filterByChip(recentViewedList.slice(0, 3));
+      const list2 = filterByChip(allList);
+      const combined = [...list1, ...list2];
+      return [...new Set(combined.map(item => item.code))];
+    }
+  };
+
+  const displayedCodes = getCurrentlyDisplayedCodes();
+  const isAllChecked = displayedCodes.length > 0 && displayedCodes.every(code => checkedItems[code]);
+
+  const toggleAll = () => {
+    setCheckedItems(prev => {
+      const next = { ...prev };
+      if (isAllChecked) {
+        displayedCodes.forEach(code => {
+          next[code] = false;
+        });
+      } else {
+        displayedCodes.forEach(code => {
+          next[code] = true;
+        });
+      }
+      return next;
+    });
+  };
+
   return (
     <div style={containerStyle} onClick={() => setShowKeyboard(false)}>
       {/* Galaxy S20 Central Punch-hole Camera */}
@@ -2943,6 +2973,50 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                   </span>
                 );
               })}
+            </div>
+          )}
+
+          {etfMallNavMode === 'search' && (
+            <div 
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleAll();
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 2px 2px 2px',
+                cursor: 'pointer',
+                userSelect: 'none',
+                alignSelf: 'flex-start'
+              }}
+            >
+              <div style={{
+                width: '18px',
+                height: '18px',
+                borderRadius: '4px',
+                border: isAllChecked
+                  ? (isDark ? '1.5px solid #ffffff' : '1.5px solid #000000')
+                  : (isDark ? '1.5px solid #475569' : '1.5px solid #cbd5e1'),
+                backgroundColor: isAllChecked
+                  ? (isDark ? '#ffffff' : '#000000')
+                  : 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {isAllChecked && (
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#000000' : '#ffffff'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </div>
+              <span style={{
+                fontSize: '0.82rem',
+                fontWeight: '600',
+                color: isDark ? '#ffffff' : '#111111'
+              }}>전체</span>
             </div>
           )}
         </div>
