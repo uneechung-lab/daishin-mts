@@ -10045,7 +10045,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     );
   };
 
-  const renderScreen6HoldBalancePopup = (onClose) => {
+    const renderScreen6HoldBalancePopup = (onClose) => {
     return (
       <div style={{
         position: 'absolute',
@@ -10097,46 +10097,88 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           </div>
         </div>
 
-        {/* Table Header */}
+        {/* Table Header (Identical to 장내(외)채권 잔고 그리드) */}
         <table style={{
           width: '100%',
           borderCollapse: 'collapse',
-          fontSize: '11px',
+          fontSize: '9px',
           textAlign: 'center',
           backgroundColor: '#f1f5f9',
           color: '#555555',
           borderBottom: '1px solid #cbd5e1'
         }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #cbd5e1' }}>
-              <th style={{ width: '40%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>종목명</th>
-              <th rowSpan="2" style={{ width: '30%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500', verticalAlign: 'middle' }}>매수일</th>
-              <th style={{ width: '30%', padding: '6px 2px', fontWeight: '500' }}>잔고구분</th>
+            <tr style={{ color: '#555555', borderBottom: '1px solid #cbd5e1' }}>
+              <th style={{ width: '22%', padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '600' }}>종목명</th>
+              <th style={{ width: '20%', padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '600' }}>수량</th>
+              <th style={{ width: '20%', padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '600' }}>매수단가</th>
+              <th style={{ width: '18%', padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '600' }}></th>
+              <th style={{ width: '20%', padding: '4px 2px', fontWeight: '600' }}>과세구분</th>
             </tr>
-            <tr>
-              <th style={{ padding: '6px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>수량</th>
-              <th style={{ padding: '6px 2px', fontWeight: '500' }}>과세구분</th>
+            <tr style={{ color: '#555555', borderBottom: '1px solid #cbd5e1' }}>
+              <th rowSpan="2" style={{ padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500', verticalAlign: 'middle' }}>종목코드</th>
+              <th style={{ padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>주문가능수량</th>
+              <th style={{ padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>매수금액</th>
+              <th style={{ padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '600' }}>수익률</th>
+              <th rowSpan="2" style={{ padding: '4px 2px', fontWeight: '500', verticalAlign: 'middle' }}>잔고구분</th>
+            </tr>
+            <tr style={{ color: '#555555' }}>
+              <th style={{ padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>매수일</th>
+              <th style={{ padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '500' }}>만기일</th>
+              <th style={{ padding: '4px 2px', borderRight: '1px solid #cbd5e1', fontWeight: '600' }}></th>
             </tr>
           </thead>
         </table>
 
-        {/* Empty state content */}
+        {/* Table Body (Identical to 장내(외)채권 잔고 그리드) */}
         <div style={{
           flex: 1,
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#a0a0a0',
-          fontSize: '13px',
-          fontWeight: '500'
+          flexDirection: 'column',
+          backgroundColor: '#ffffff',
+          color: '#111111',
+          overflowY: 'auto'
         }}>
-          보유잔고가 없습니다.
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            fontSize: '9.5px',
+            textAlign: 'center',
+            backgroundColor: '#ffffff',
+            color: '#111111'
+          }}>
+            <tbody>
+              <tr style={{ borderBottom: '1px solid #cbd5e1' }}>
+                <td style={{ width: '22%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', textAlign: 'left', paddingLeft: '4px' }}>
+                  <div style={{ fontWeight: '700', color: '#111111' }}>삼척블루파워10</div>
+                  <div style={{ fontSize: '8px', color: '#888888', marginTop: '4px' }}>KR6002361A97</div>
+                </td>
+                <td style={{ width: '20%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', textAlign: 'right', paddingRight: '4px' }}>
+                  <div style={{ fontWeight: '700' }}>10,000</div>
+                  <div style={{ color: '#555555', marginTop: '2px' }}>10,000</div>
+                  <div style={{ color: '#888888', marginTop: '2px', fontSize: '8px' }}>2026.07.10</div>
+                </td>
+                <td style={{ width: '20%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', textAlign: 'right', paddingRight: '4px' }}>
+                  <div style={{ fontWeight: '700' }}>10,065.0원</div>
+                  <div style={{ color: '#555555', marginTop: '2px' }}>10,065,000원</div>
+                  <div style={{ color: '#888888', marginTop: '2px', fontSize: '8px' }}>2029.09.15</div>
+                </td>
+                <td style={{ width: '18%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', textAlign: 'center', color: '#de201e', fontWeight: '700', verticalAlign: 'middle' }}>
+                  +0.19%
+                </td>
+                <td style={{ width: '20%', padding: '6px 2px', textAlign: 'center', verticalAlign: 'middle' }}>
+                  <div style={{ fontWeight: '700' }}>종합과세</div>
+                  <div style={{ fontSize: '9px', color: '#2563eb', fontWeight: '700', marginTop: '4px' }}>퇴직납입금</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     );
   };
 
-  const renderScreen6Balance = (mode, isSwitchOff = false) => {
+const renderScreen6Balance = (mode, isSwitchOff = false) => {
     const isAsIs = mode === 'asis' && !isSwitchOff;
     const subScreen = isAsIs ? screen6AsIsSubScreen : screen6ToBeSubScreen;
     const setSubScreen = isAsIs ? setScreen6AsIsSubScreen : setScreen6ToBeSubScreen;
