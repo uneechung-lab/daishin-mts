@@ -14741,7 +14741,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                             { name: '자동 분할매수' },
                             { name: '장외채권 매매' },
                             { name: '장내채권 매매', action: () => setScreen6ToBeSubScreen('bondCurrentPrice') },
-                            { name: '장내채권 미체결/체결' },
+                            { name: '장내채권 미체결/체결', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('미체결'); } },
                             { name: '장내(외)채권 잔고', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('잔고'); } },
                             { name: '디폴트옵션 매매' },
                             { name: '매매내역 조회/취소' },
