@@ -3016,7 +3016,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                   );
                 })}
               </div>
-              {selectedStocks.length > 0 && (
+              {selectedStocks.length > 0 && etfMallNavMode === 'default' && (
                 <button
                   onClick={() => setCheckedItems({})}
                   style={{
