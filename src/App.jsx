@@ -10049,7 +10049,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     const subScreen = isAsIs ? screen6AsIsSubScreen : screen6ToBeSubScreen;
     const setSubScreen = isAsIs ? setScreen6AsIsSubScreen : setScreen6ToBeSubScreen;
     const setOrderTab = isAsIs ? setScreen6AsIsOrderTab : setScreen6ToBeOrderTab;
-    const showFiveTabs = !isAsIs && !screen6ToBeSwitchOn;
+    const showFiveTabs = !isAsIs;
 
     const accountText = isAsIs 
       ? (isSwitchOff ? '200-233354(41) 김대신' : '200-233354(01) 김대신')
