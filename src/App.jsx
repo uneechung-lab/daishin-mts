@@ -3654,7 +3654,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         {/* 전체 Tab View */}
         {activeMallTab === '전체' && (
           <div style={{ padding: '0px 0' }}>
-            {etfMallNavMode === 'default' && selectedStocks.length > 0 && (
+            {etfMallNavMode === 'default' && selectedStocks.length > 0 && selectedChip === '전체' && (
               <>
                 {/* 검색한 종목 Section */}
                 <div style={sectionHeaderStyle}>
