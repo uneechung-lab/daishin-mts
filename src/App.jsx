@@ -12742,12 +12742,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen6ToBeUnexecutedOpen', screen6ToBeUnexecutedOpen ? 'true' : 'false');
     params.set('screen6ToBeHoldBalancePopupOpen', screen6ToBeHoldBalancePopupOpen ? 'true' : 'false');
     params.set('screen6BalanceActiveTab', screen6BalanceActiveTab);
+    params.set('screen6keypad', screen6CalcKeypadOpen ? 'true' : 'false');
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -12819,6 +12820,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (figmaExportParam) setIsFigmaExportMode(figmaExportParam === 'true');
       const asisSimParam = params.get('asisSimulationStep');
       if (asisSimParam) setAsisSimulationStep(asisSimParam);
+      const screen6KeypadParam = params.get('screen6keypad');
+      if (screen6KeypadParam) setScreen6CalcKeypadOpen(screen6KeypadParam === 'true');
 
       // Restoring statusActiveTab, statusViewMode, statusSelectedItem
       const statusActiveTabParam = params.get('statusActiveTab');
