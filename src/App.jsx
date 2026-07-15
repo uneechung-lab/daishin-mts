@@ -8770,6 +8770,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(false);
   const [screen6CalcActiveBondId, setScreen6CalcActiveBondId] = useState('kr133');
   const [screen6CalcYieldInput, setScreen6CalcYieldInput] = useState('4.800');
+  const [screen6CalcKeypadOpen, setScreen6CalcKeypadOpen] = useState(false);
 
   const renderScreen6Search = (mode, onClose) => {
     const handleSelectBond = (bond) => {
@@ -9711,30 +9712,17 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                 </div>
               </div>
-              <div>
+              <div 
+                onClick={isAsIs ? undefined : () => setScreen6CalcKeypadOpen(true)}
+                style={{ cursor: isAsIs ? 'default' : 'pointer' }}
+              >
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수수익률</span>
-                <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  {isAsIs ? (
-                    <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{currentBond.baseYield.toFixed(3)} %</span>
-                  ) : (
-                    <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                      <input
-                        type="number"
-                        step="0.001"
-                        value={screen6CalcYieldInput}
-                        onChange={(e) => setScreen6CalcYieldInput(e.target.value)}
-                        style={{
-                          flex: 1,
-                          border: 'none',
-                          outline: 'none',
-                          fontSize: '0.92rem',
-                          fontWeight: '700',
-                          color: '#111111',
-                          padding: 0
-                        }}
-                      />
-                      <span style={{ fontSize: '0.92rem', fontWeight: '700', marginLeft: '4px' }}>%</span>
-                    </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700', color: isAsIs ? '#111111' : '#2563eb' }}>
+                    {numericYield.toFixed(3)} %
+                  </span>
+                  {!isAsIs && (
+                    <span style={{ fontSize: '0.7rem', color: '#2563eb', fontWeight: 'bold' }}>▼</span>
                   )}
                 </div>
               </div>
@@ -9800,6 +9788,98 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         >
           예상 결과보기
         </button>
+
+        {/* Custom bottom numeric keypad */}
+        {screen6CalcKeypadOpen && (
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: '#f1f5f9',
+            borderTop: '1px solid #cbd5e1',
+            boxShadow: '0 -4px 12px rgba(0,0,0,0.15)',
+            zIndex: 999,
+            display: 'flex',
+            flexDirection: 'column',
+            fontFamily: 'sans-serif'
+          }}>
+            {/* Keypad Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '10px 16px',
+              borderBottom: '1px solid #e2e8f0',
+              backgroundColor: '#ffffff'
+            }}>
+              <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 'bold' }}>매수수익률 입력</span>
+              <span style={{ fontSize: '1rem', fontWeight: '800', color: '#2563eb' }}>{screen6CalcYieldInput}%</span>
+              <button 
+                onClick={() => setScreen6CalcKeypadOpen(false)}
+                style={{
+                  border: 'none',
+                  background: 'none',
+                  color: '#2563eb',
+                  fontWeight: '800',
+                  fontSize: '0.88rem',
+                  cursor: 'pointer'
+                }}
+              >
+                완료
+              </button>
+            </div>
+
+            {/* Keypad Keys Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '1px',
+              backgroundColor: '#cbd5e1',
+              padding: '1px'
+            }}>
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'delete'].map((key) => {
+                const isDelete = key === 'delete';
+                return (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      if (isDelete) {
+                        setScreen6CalcYieldInput(prev => {
+                          const next = prev.slice(0, -1);
+                          return next === '' ? '0' : next;
+                        });
+                      } else {
+                        // Prevent entering more than one dot
+                        if (key === '.' && screen6CalcYieldInput.includes('.')) return;
+                        // Limit to 3 decimal places
+                        if (screen6CalcYieldInput.includes('.') && screen6CalcYieldInput.split('.')[1]?.length >= 3) return;
+                        setScreen6CalcYieldInput(prev => {
+                          if (prev === '0' && key !== '.') return key;
+                          return prev + key;
+                        });
+                      }
+                    }}
+                    style={{
+                      height: '48px',
+                      backgroundColor: '#ffffff',
+                      border: 'none',
+                      fontSize: '1.15rem',
+                      fontWeight: '700',
+                      color: isDelete ? '#de201e' : '#111111',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {isDelete ? '⌫' : key}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     );
   };
