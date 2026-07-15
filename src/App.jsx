@@ -8735,6 +8735,9 @@ function App() {
   const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
   const [screen6CalcAmount, setScreen6CalcAmount] = useState('');
   const [screen6AsIsModalOpen, setScreen6AsIsModalOpen] = useState(false);
+  const [screen6ToBeNoPlanModalOpen, setScreen6ToBeNoPlanModalOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6tobeno-plan-modal') === 'true';
+  });
   const [screen6SelectedBond, setScreen6SelectedBond] = useState(null);
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6asis') || 'menu';
@@ -9708,6 +9711,96 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
     );
   };
 
+  const renderScreen6ToBeNoPlanModal = () => {
+    return (
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        zIndex: 1010,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0 24px',
+        boxSizing: 'border-box',
+        borderRadius: '0px'
+      }}>
+        <div style={{
+          width: '280px',
+          backgroundColor: '#ffffff',
+          borderRadius: '0px',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          border: 'none',
+          animation: 'fadeIn 0.2s ease-out'
+        }}>
+          <div style={{
+            padding: '32px 20px 28px 20px',
+            textAlign: 'center',
+            fontFamily: 'sans-serif'
+          }}>
+            <div style={{
+              fontSize: '14px',
+              color: '#111111',
+              lineHeight: '1.6',
+              fontWeight: '500',
+              wordBreak: 'keep-all'
+            }}>
+              선택하신 계좌는<br />
+              연금 플랜 미생성 계좌입니다.<br />
+              플랜 등록 후<br />
+              장내채권 매매가 가능합니다.
+            </div>
+          </div>
+          
+          <div style={{
+            display: 'flex',
+            height: '48px'
+          }}>
+            <button
+              onClick={() => setScreen6ToBeNoPlanModalOpen(false)}
+              style={{
+                flex: '3.5',
+                border: 'none',
+                backgroundColor: '#eeeeee',
+                color: '#111111',
+                fontSize: '14px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                outline: 'none'
+              }}
+            >
+              확인
+            </button>
+            <button
+              onClick={() => {
+                setScreen6ToBeNoPlanModalOpen(false);
+                alert('플랜 설정 등록 화면으로 이동합니다.');
+              }}
+              style={{
+                flex: '6.5',
+                border: 'none',
+                backgroundColor: '#222222',
+                color: '#ffffff',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                outline: 'none'
+              }}
+            >
+              플랜 설정하러 가기
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderScreen6Bsheet = (mode) => {
     const bsheetState = mode === 'asis' ? screen6AsIsBsheetState : screen6ToBeBsheetState;
     const setBsheetState = mode === 'asis' ? setScreen6AsIsBsheetState : setScreen6ToBeBsheetState;
@@ -9893,7 +9986,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   <>
                     {/* First Account (TO-BE: 200-233354(41)) */}
                     <div 
-                      onClick={() => setBsheetState('product')}
+                      onClick={() => setScreen6ToBeNoPlanModalOpen(true)}
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -12071,6 +12164,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (screen6ToBeCautionQ2) params.set('screen6tobeq2', screen6ToBeCautionQ2); else params.delete('screen6tobeq2');
     if (screen6CalcAmount) params.set('screen6calcamount', screen6CalcAmount); else params.delete('screen6calcamount');
     if (screen6AsIsModalOpen) params.set('screen6asismodal', 'true'); else params.delete('screen6asismodal');
+    if (screen6ToBeNoPlanModalOpen) params.set('screen6tobeno-plan-modal', 'true'); else params.delete('screen6tobeno-plan-modal');
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -12109,7 +12203,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -12149,6 +12243,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen6calcamountParam) setScreen6CalcAmount(screen6calcamountParam);
       const screen6asismodalParam = params.get('screen6asismodal');
       if (screen6asismodalParam) setScreen6AsIsModalOpen(screen6asismodalParam === 'true');
+      const screen6tobenoplanmodalParam = params.get('screen6tobeno-plan-modal');
+      if (screen6tobenoplanmodalParam) setScreen6ToBeNoPlanModalOpen(screen6tobenoplanmodalParam === 'true');
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
@@ -13897,6 +13993,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           {renderScreen6Bsheet('tobe')}
                           {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
               {screen6ToBeHoldBalancePopupOpen && renderScreen6HoldBalancePopup(() => setScreen6ToBeHoldBalancePopupOpen(false))}
+              {screen6ToBeNoPlanModalOpen && renderScreen6ToBeNoPlanModal()}
                         </>
                       );
                     })()
@@ -14993,6 +15090,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               )}
               {renderScreen6Bsheet('tobe')}
               {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
+              {screen6ToBeNoPlanModalOpen && renderScreen6ToBeNoPlanModal()}
             </div>
               </div>
             </div>
