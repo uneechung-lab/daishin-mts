@@ -10693,25 +10693,26 @@ const renderScreen6Ratio = (mode) => {
 
             {/* Donut Chart & Legend Row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'space-between', marginBottom: '16px' }}>
-              {/* SVG Donut Chart with Path Sectors (Universally supported by Figma import plugins as clean vector shape layers) */}
+              {/* SVG Donut Chart with Path Sectors (Doubled thickness with outer radius 40, inner radius 20, starting from 12 o'clock) */}
               <div style={{ width: '130px', height: '130px', position: 'relative' }}>
                 <svg width="130" height="130" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', display: 'block' }}>
                   {mode === 'tobe' ? (
                     <>
                       {/* TO-BE: 현금 65% (0% to 65% -> 0 to 234 deg) */}
-                      {/* Outer radius 50, Inner radius 34. Path: M 50 16 A 34 34... */}
-                      <path d="M 50 10 A 40 40 0 1 1 26.48 82.36 L 31.51 75.89 A 32 32 0 1 0 50 18 Z" fill="#00b094" />
+                      {/* Outer R=40, Inner R=20. Starting point: (90, 50). End point for 234 deg: x=50+40*cos(234)=26.48, y=50+40*sin(234)=17.64 */}
+                      <path d="M 90 50 A 40 40 0 1 1 26.48 17.64 L 38.24 33.82 A 20 20 0 1 0 70 50 Z" fill="#00b094" />
                       {/* TO-BE: 채권 23% (65% to 88% -> 234 to 316.8 deg) */}
-                      <path d="M 26.48 82.36 A 40 40 0 0 1 20.81 20.81 L 26.65 26.65 A 32 32 0 0 0 31.51 75.89 Z" fill="#a3e635" />
+                      {/* End point for 316.8 deg: x=50+40*cos(316.8)=79.16, y=50+40*sin(316.8)=22.62 */}
+                      <path d="M 26.48 17.64 A 40 40 0 0 1 79.16 22.62 L 64.58 36.31 A 20 20 0 0 0 38.24 33.82 Z" fill="#a3e635" />
                       {/* TO-BE: ETF 12% (88% to 100% -> 316.8 to 360 deg) */}
-                      <path d="M 20.81 20.81 A 40 40 0 0 1 50 10 L 50 18 A 32 32 0 0 0 26.65 26.65 Z" fill="#ff6b00" />
+                      <path d="M 79.16 22.62 A 40 40 0 0 1 90 50 L 70 50 A 20 20 0 0 0 64.58 36.31 Z" fill="#ff6b00" />
                     </>
                   ) : (
                     <>
                       {/* AS-IS: 현금 88% (0% to 88% -> 0 to 316.8 deg) */}
-                      <path d="M 50 10 A 40 40 0 1 1 20.81 20.81 L 26.65 26.65 A 32 32 0 1 0 50 18 Z" fill="#00b094" />
-                      {/* AS-IS: ETF 12% (88% to 100% -> 316.8 to 360 deg) */}
-                      <path d="M 20.81 20.81 A 40 40 0 0 1 50 10 L 50 18 A 32 32 0 0 0 26.65 26.65 Z" fill="#ff6b00" />
+                      <path d="M 90 50 A 40 40 0 1 1 79.16 22.62 L 64.58 36.31 A 20 20 0 1 0 70 50 Z" fill="#00b094" />
+                      {/* AS-IS: ETF 12% (88% to 100% -> 316.8 to 360/0 deg) */}
+                      <path d="M 79.16 22.62 A 40 40 0 0 1 90 50 L 70 50 A 20 20 0 0 0 64.58 36.31 Z" fill="#ff6b00" />
                     </>
                   )}
                 </svg>
