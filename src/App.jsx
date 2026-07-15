@@ -9790,96 +9790,118 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         </button>
 
         {/* Custom bottom numeric keypad */}
-        {screen6CalcKeypadOpen && (
-          <div style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: '#f1f5f9',
-            borderTop: '1px solid #cbd5e1',
-            boxShadow: '0 -4px 12px rgba(0,0,0,0.15)',
-            zIndex: 999,
-            display: 'flex',
-            flexDirection: 'column',
-            fontFamily: 'sans-serif'
-          }}>
-            {/* Keypad Header */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '10px 16px',
-              borderBottom: '1px solid #e2e8f0',
-              backgroundColor: '#ffffff'
-            }}>
-              <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 'bold' }}>매수수익률 입력</span>
-              <span style={{ fontSize: '1rem', fontWeight: '800', color: '#2563eb' }}>{screen6CalcYieldInput}%</span>
-              <button 
-                onClick={() => setScreen6CalcKeypadOpen(false)}
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  color: '#2563eb',
-                  fontWeight: '800',
-                  fontSize: '0.88rem',
-                  cursor: 'pointer'
-                }}
-              >
-                완료
-              </button>
-            </div>
+        {screen6CalcKeypadOpen && (() => {
+          const handleNumPress = (val) => {
+            if (screen6CalcYieldInput.includes('.') && screen6CalcYieldInput.split('.')[1]?.length >= 3) return;
+            setScreen6CalcYieldInput(prev => {
+              if (prev === '0') return val;
+              return prev + val;
+            });
+          };
 
-            {/* Keypad Keys Grid */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '1px',
+          const handleActionPress = (action) => {
+            if (action === 'delete') {
+              setScreen6CalcYieldInput(prev => {
+                const next = prev.slice(0, -1);
+                return next === '' ? '0' : next;
+              });
+            } else if (action === 'done') {
+              setScreen6CalcKeypadOpen(false);
+            } else if (action === '.') {
+              if (!screen6CalcYieldInput.includes('.')) {
+                setScreen6CalcYieldInput(prev => prev + '.');
+              }
+            }
+          };
+
+          const keypadStyles = {
+            whiteKey: {
+              height: '46px',
+              backgroundColor: '#ffffff',
+              border: 'none',
+              borderRadius: '5px',
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              color: '#111111',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            },
+            greyKey: {
+              height: '46px',
               backgroundColor: '#cbd5e1',
-              padding: '1px'
+              border: 'none',
+              borderRadius: '5px',
+              fontSize: '1.1rem',
+              fontWeight: '600',
+              color: '#475569',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            },
+            emptyKey: {
+              height: '46px',
+              backgroundColor: '#cbd5e1',
+              border: 'none',
+              borderRadius: '5px',
+              opacity: 0.5
+            }
+          };
+
+          return (
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: '#e2e8f0',
+              borderTop: '1px solid #cbd5e1',
+              boxShadow: '0 -4px 12px rgba(0,0,0,0.15)',
+              zIndex: 999,
+              display: 'flex',
+              flexDirection: 'column',
+              fontFamily: 'sans-serif',
+              padding: '8px 6px 16px 6px'
             }}>
-              {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'delete'].map((key) => {
-                const isDelete = key === 'delete';
-                return (
-                  <button
-                    key={key}
-                    onClick={() => {
-                      if (isDelete) {
-                        setScreen6CalcYieldInput(prev => {
-                          const next = prev.slice(0, -1);
-                          return next === '' ? '0' : next;
-                        });
-                      } else {
-                        // Prevent entering more than one dot
-                        if (key === '.' && screen6CalcYieldInput.includes('.')) return;
-                        // Limit to 3 decimal places
-                        if (screen6CalcYieldInput.includes('.') && screen6CalcYieldInput.split('.')[1]?.length >= 3) return;
-                        setScreen6CalcYieldInput(prev => {
-                          if (prev === '0' && key !== '.') return key;
-                          return prev + key;
-                        });
-                      }
-                    }}
-                    style={{
-                      height: '48px',
-                      backgroundColor: '#ffffff',
-                      border: 'none',
-                      fontSize: '1.15rem',
-                      fontWeight: '700',
-                      color: isDelete ? '#de201e' : '#111111',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {isDelete ? '⌫' : key}
-                  </button>
-                );
-              })}
+              {/* Keypad Keys Grid (4 columns, 4 rows) */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '6px',
+                width: '100%',
+                boxSizing: 'border-box'
+              }}>
+                {/* Row 1 */}
+                <button onClick={() => handleNumPress('1')} style={keypadStyles.whiteKey}>1</button>
+                <button onClick={() => handleNumPress('2')} style={keypadStyles.whiteKey}>2</button>
+                <button onClick={() => handleNumPress('3')} style={keypadStyles.whiteKey}>3</button>
+                <button onClick={() => handleActionPress('delete')} style={keypadStyles.greyKey}>⌫</button>
+
+                {/* Row 2 */}
+                <button onClick={() => handleNumPress('4')} style={keypadStyles.whiteKey}>4</button>
+                <button onClick={() => handleNumPress('5')} style={keypadStyles.whiteKey}>5</button>
+                <button onClick={() => handleNumPress('6')} style={keypadStyles.whiteKey}>6</button>
+                <button onClick={() => handleActionPress('done')} style={{ ...keypadStyles.greyKey, color: '#2563eb', fontWeight: '800' }}>완료</button>
+
+                {/* Row 3 */}
+                <button onClick={() => handleNumPress('7')} style={keypadStyles.whiteKey}>7</button>
+                <button onClick={() => handleNumPress('8')} style={keypadStyles.whiteKey}>8</button>
+                <button onClick={() => handleNumPress('9')} style={keypadStyles.whiteKey}>9</button>
+                <button onClick={() => handleActionPress('.')} style={keypadStyles.greyKey}>.</button>
+
+                {/* Row 4 */}
+                <div style={keypadStyles.emptyKey}></div>
+                <button onClick={() => handleNumPress('0')} style={keypadStyles.whiteKey}>0</button>
+                <div style={keypadStyles.emptyKey}></div>
+                <button onClick={() => handleActionPress(',')} style={keypadStyles.greyKey}>,</button>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
     );
   };
