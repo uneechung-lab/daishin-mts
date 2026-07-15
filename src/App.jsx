@@ -8768,6 +8768,8 @@ function App() {
   });
 const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(false);
+  const [screen6CalcActiveBondId, setScreen6CalcActiveBondId] = useState('kr133');
+  const [screen6CalcYieldInput, setScreen6CalcYieldInput] = useState('4.800');
 
   const renderScreen6Search = (mode, onClose) => {
     const handleSelectBond = (bond) => {
@@ -9528,17 +9530,50 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
       }
     };
 
+    const isAsIs = mode === 'asis';
+
+    // List of recently viewed bonds for TO-BE mode
+    const tobeBonds = [
+      { id: 'kr133', label: '한국투자캐피탈133', risk: '보통위험', type: '금융회사채', grade: 'A', code: 'KR6214341G28', baseYield: 4.800, basePrice: 10005.1, duration: 1.57, buyDate: '2026.07.09', sellDate: '2028.02.04' },
+      { id: 'g03250', label: '국고채03250-5303', risk: '매우낮은위험', type: '국채', grade: 'AAA', code: 'KR103502G338', baseYield: 3.250, basePrice: 9850.0, duration: 26.65, buyDate: '2026.07.15', sellDate: '2053.03.10' },
+      { id: 'energy', label: '경기에너지채권', risk: '보통위험', type: '회사채', grade: 'AA-', code: 'KR6034231E12', baseYield: 5.100, basePrice: 10120.0, duration: 3.33, buyDate: '2026.07.15', sellDate: '2029.11.15' },
+      { id: 'samchok', label: '삼척블루파워9', risk: '보통위험', type: '회사채', grade: 'A+', code: 'KR6382103E38', baseYield: 4.500, basePrice: 10084.4, duration: 2.20, buyDate: '2026.07.15', sellDate: '2028.09.25' }
+    ];
+
+    // Find active bond for TO-BE
+    const currentBond = isAsIs 
+      ? { id: 'asis_bond', label: '경기지역개발채권26-05', risk: '매우낮은위험', type: '지방채', grade: '', code: 'KR2044022G52', baseYield: 4.180, basePrice: 9040.5, duration: 4.88, buyDate: '2026.07.15', sellDate: '2031.05.31' }
+      : (tobeBonds.find(b => b.id === screen6CalcActiveBondId) || tobeBonds[0]);
+
+    // Yield value
+    const yieldInputVal = isAsIs ? '4.180' : screen6CalcYieldInput;
+    const numericYield = Number(yieldInputVal) || 0;
+
+    // Calculate Purchase Unit Price based on Yield dynamically (Pre-tax average evaluation yield simulation logic)
+    // Base formula: unitPrice = basePrice - (numericYield - baseYield) * 150
+    const calculatedUnitPrice = isAsIs 
+      ? 9040.5 
+      : Math.max(1000, currentBond.basePrice - (numericYield - currentBond.baseYield) * 150);
+
+    // Expected quantity (Math.floor(Amount / unitPrice) * 10)
+    const calculatedQuantity = screen6CalcAmount 
+      ? (isAsIs 
+          ? Math.floor(Number(screen6CalcAmount) / 9040.5 * 10000) 
+          : Math.floor(Number(screen6CalcAmount) / calculatedUnitPrice * 10000))
+      : 0;
+
+    // Expected Return (Total receivable amount)
+    // Pension mode has tax-deferral, using CM bond evaluation profit/loss return logic
+    const calculatedReturnAmount = screen6CalcAmount 
+      ? Math.round(Number(screen6CalcAmount) * (1 + (numericYield * currentBond.duration) / 100))
+      : 0;
+
     const handleCalculate = () => {
       if (!screen6CalcAmount) return;
-      if (mode === 'asis') {
-        alert(`입력하신 ${Number(screen6CalcAmount).toLocaleString()}원 기준 투자 수익 가계산이 완료되었습니다.\n예상 세후 총 수령금액은 ${(Number(screen6CalcAmount) * 1.0545).toLocaleString(undefined, {maximumFractionDigits: 0})}원 입니다.`);
-      } else {
-        alert(`입력하신 ${Number(screen6CalcAmount).toLocaleString()}원 기준 투자 수익 가계산이 완료되었습니다.\n예상 세후 총 수령금액은 ${(Number(screen6CalcAmount) * 1.0645).toLocaleString(undefined, {maximumFractionDigits: 0})}원 입니다.`);
-      }
+      alert(`입력하신 ${Number(screen6CalcAmount).toLocaleString()}원 기준 투자 수익 가계산이 완료되었습니다.\n예상 세후(또는 세전) 총 수령금액은 ${calculatedReturnAmount.toLocaleString()}원 입니다.`);
     };
 
     const isCalcDisabled = !screen6CalcAmount;
-    const isAsIs = mode === 'asis';
 
     return (
       <div style={{
@@ -9609,28 +9644,65 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
         {/* Content */}
         <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto' }}>
+          {/* Recently Viewed Bonds Bar for TO-BE */}
+          {!isAsIs && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 16px',
+              backgroundColor: '#f8fafc',
+              borderBottom: '1px solid #e2e8f0',
+              overflowX: 'auto',
+              whiteSpace: 'nowrap'
+            }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#64748b', marginRight: '4px' }}>최근조회</span>
+              {tobeBonds.map((bond) => {
+                const isActive = bond.id === screen6CalcActiveBondId;
+                return (
+                  <button
+                    key={bond.id}
+                    onClick={() => {
+                      setScreen6CalcActiveBondId(bond.id);
+                      setScreen6CalcYieldInput(bond.baseYield.toFixed(3));
+                    }}
+                    style={{
+                      border: isActive ? '1px solid #2563eb' : '1px solid #cbd5e1',
+                      borderRadius: '16px',
+                      padding: '4px 10px',
+                      fontSize: '0.72rem',
+                      fontWeight: '800',
+                      backgroundColor: isActive ? '#eff6ff' : '#ffffff',
+                      color: isActive ? '#2563eb' : '#475569',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    {bond.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           {/* Top Bond Info Block */}
           <div style={{ padding: '16px 20px', borderBottom: '8px solid #f8fafc' }}>
-            {isAsIs ? (
-              <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
-                <span style={{ color: '#2563eb' }}>매우낮은위험</span>
-                <span style={{ color: '#64748b' }}>•</span>
-                <span style={{ color: '#475569' }}>지방채</span>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
-                <span style={{ color: '#10b981' }}>보통위험</span>
-                <span style={{ color: '#64748b' }}>•</span>
-                <span style={{ color: '#475569' }}>A</span>
-                <span style={{ color: '#64748b' }}>•</span>
-                <span style={{ color: '#475569' }}>금융회사채</span>
-              </div>
-            )}
+            <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
+              <span style={{ color: currentBond.risk === '매우낮은위험' ? '#2563eb' : '#10b981' }}>{currentBond.risk}</span>
+              {currentBond.grade && (
+                <>
+                  <span style={{ color: '#64748b' }}>•</span>
+                  <span style={{ color: '#475569' }}>{currentBond.grade}</span>
+                </>
+              )}
+              <span style={{ color: '#64748b' }}>•</span>
+              <span style={{ color: '#475569' }}>{currentBond.type}</span>
+            </div>
             <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 4px 0', color: '#111111' }}>
-              {isAsIs ? '경기지역개발채권26-05' : '한국투자캐피탈133'}
+              {currentBond.label}
             </h2>
             <div style={{ fontSize: '0.78rem', color: '#888888' }}>
-              {isAsIs ? 'KR2044022G52' : 'KR6214341G28'}
+              {currentBond.code}
             </div>
           </div>
 
@@ -9663,7 +9735,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#111111' }}>원</span>
             </div>
             <div style={{ textAlign: 'right', marginTop: '6px', fontSize: '0.75rem', color: '#2366ca', fontWeight: '700' }}>
-              예상매수수량 {screen6CalcAmount ? (isAsIs ? Math.floor(Number(screen6CalcAmount) / 9040.5 * 10000) : Math.floor(Number(screen6CalcAmount) / 10005.1)).toLocaleString() : 0}원
+              예상매수수량 {calculatedQuantity.toLocaleString()}원
             </div>
           </div>
 
@@ -9674,26 +9746,47 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수일자</span>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '2026.07.15' : '2026.07.09'}</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{currentBond.buyDate}</span>
                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수수익률</span>
-                <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '4.180 %' : '4.800 %'}</span>
+                <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {isAsIs ? (
+                    <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{currentBond.baseYield.toFixed(3)} %</span>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                      <input
+                        type="number"
+                        step="0.001"
+                        value={screen6CalcYieldInput}
+                        onChange={(e) => setScreen6CalcYieldInput(e.target.value)}
+                        style={{
+                          flex: 1,
+                          border: 'none',
+                          outline: 'none',
+                          fontSize: '0.92rem',
+                          fontWeight: '700',
+                          color: '#111111',
+                          padding: 0
+                        }}
+                      />
+                      <span style={{ fontSize: '0.92rem', fontWeight: '700', marginLeft: '4px' }}>%</span>
+                    </div>
+                  )}
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수단가</span>
                 <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '9,040.5 원' : '10,005.1 원'}</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{calculatedUnitPrice.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })} 원</span>
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매도일자</span>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '2031.05.31' : '2028.02.04'}</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{currentBond.sellDate}</span>
                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                 </div>
               </div>
@@ -9711,7 +9804,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>과세구분</span>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>정상과세</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '정상과세' : '연금과세(또는 과세이연)'}</span>
                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                 </div>
               </div>
