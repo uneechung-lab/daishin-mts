@@ -9716,13 +9716,53 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                 onClick={isAsIs ? undefined : () => setScreen6CalcKeypadOpen(true)}
                 style={{ cursor: isAsIs ? 'default' : 'pointer' }}
               >
-                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수수익률</span>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700', color: isAsIs ? '#111111' : '#2563eb' }}>
+                <span style={{ 
+                  fontSize: '0.78rem', 
+                  color: (!isAsIs && screen6CalcKeypadOpen) ? '#2563eb' : '#64748b', 
+                  display: 'block', 
+                  marginBottom: '6px',
+                  fontWeight: (!isAsIs && screen6CalcKeypadOpen) ? '700' : 'normal'
+                }}>
+                  매수수익률
+                </span>
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center', 
+                  borderBottom: (!isAsIs && screen6CalcKeypadOpen) ? '2px solid #2563eb' : '1px solid #e2e8f0', 
+                  paddingBottom: '6px' 
+                }}>
+                  <span style={{ 
+                    fontSize: '0.92rem', 
+                    fontWeight: '700', 
+                    color: (!isAsIs && screen6CalcKeypadOpen) ? '#2563eb' : '#111111' 
+                  }}>
                     {numericYield.toFixed(3)} %
                   </span>
-                  {!isAsIs && (
-                    <span style={{ fontSize: '0.7rem', color: '#2563eb', fontWeight: 'bold' }}>▼</span>
+                  {!isAsIs && screen6CalcKeypadOpen && (
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setScreen6CalcYieldInput('0');
+                      }}
+                      style={{
+                        border: 'none',
+                        background: '#cbd5e1',
+                        color: '#ffffff',
+                        borderRadius: '50%',
+                        width: '16px',
+                        height: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '10px',
+                        cursor: 'pointer',
+                        padding: 0,
+                        lineHeight: 1
+                      }}
+                    >
+                      ✕
+                    </button>
                   )}
                 </div>
               </div>
