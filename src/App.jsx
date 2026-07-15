@@ -10779,7 +10779,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               flexDirection: 'column',
               justifyContent: 'space-between',
               alignItems: 'center',
-              padding: '24px 0 0 0',
+              padding: '0px',
               boxSizing: 'border-box',
               cursor: 'pointer',
               height: '100%',
@@ -10809,22 +10809,23 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               flex: 1,
               marginTop: '-50px'
             }}>
-              {/* Logo SVG */}
-              <div style={{ position: 'relative', width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg width="80" height="80" viewBox="0 0 60 60" fill="none">
-                  {/* Outer cube ribbon in dark grey */}
-                  <path d="M12 22 L30 12 L48 22 L48 38 L30 48 L12 38 Z" stroke="#3a3a3a" strokeWidth="8" strokeLinejoin="round" fill="none" />
-                  {/* Inner shape */}
-                  <rect x="23" y="23" width="14" height="14" fill="#3a3a3a" />
-                </svg>
-              </div>
-
-              {/* Semicircle indicator dots below logo */}
-              <div style={{ display: 'flex', gap: '5px', justifyContent: 'center', marginTop: '16px' }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca', opacity: 0.3 }} />
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca', opacity: 0.5 }} />
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca', opacity: 0.8 }} />
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca' }} />
+              {/* Logo Image with SVG fallback */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <img 
+                  src="/logo.png" 
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                  style={{ width: '110px', height: 'auto', objectFit: 'contain' }}
+                  alt="CI Logo"
+                />
+                <div style={{ display: 'none', flexDirection: 'column', alignItems: 'center' }}>
+                  <svg width="68" height="68" viewBox="0 0 60 60" fill="none">
+                    <path d="M12 22 L30 12 L48 22 L48 38 L30 48 L12 38 Z" stroke="#3a3a3a" strokeWidth="8" strokeLinejoin="round" fill="none" />
+                    <rect x="23" y="23" width="14" height="14" fill="#3a3a3a" />
+                  </svg>
+                </div>
               </div>
             </div>
 
