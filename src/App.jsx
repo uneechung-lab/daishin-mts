@@ -10825,8 +10825,23 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   };
 
   const renderScreen6AsIs = (isSwitchOff = false) => {
-    return (
-      <>
+    const outerSubScreen = screen6AsIsSubScreen;
+    const outerSetSubScreen = setScreen6AsIsSubScreen;
+    const outerOrderTab = screen6AsIsOrderTab;
+    const outerSetOrderTab = setScreen6AsIsOrderTab;
+    const outerUpdateModalOpen = screen6AsIsUpdateModalOpen;
+    const outerSetUpdateModalOpen = setScreen6AsIsUpdateModalOpen;
+
+    return (() => {
+      const screen6AsIsSubScreen = isSwitchOff ? screen6ToBeSubScreen : outerSubScreen;
+      const setScreen6AsIsSubScreen = isSwitchOff ? setScreen6ToBeSubScreen : outerSetSubScreen;
+      const screen6AsIsOrderTab = isSwitchOff ? screen6ToBeOrderTab : outerOrderTab;
+      const setScreen6AsIsOrderTab = isSwitchOff ? setScreen6ToBeOrderTab : outerSetOrderTab;
+      const screen6AsIsUpdateModalOpen = isSwitchOff ? false : outerUpdateModalOpen;
+      const setScreen6AsIsUpdateModalOpen = isSwitchOff ? (() => {}) : outerSetUpdateModalOpen;
+
+      return (
+        <>
         {screen6AsIsSubScreen === 'splash' ? (
           <div 
             onClick={() => setScreen6AsIsUpdateModalOpen(true)}
@@ -12328,7 +12343,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         )}
       </>
     );
-  };
+  })();
+};
 
   const [screen4SubScreen, setScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asIsScreen4SubScreen, setAsIsScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
