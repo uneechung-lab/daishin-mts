@@ -9986,7 +9986,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   <>
                     {/* First Account (TO-BE: 200-233354(41)) */}
                     <div 
-                      onClick={() => setScreen6ToBeNoPlanModalOpen(true)}
+                      onClick={() => { setScreen6ToBeNoPlanModalOpen(true); setBsheetState('closed'); }}
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
