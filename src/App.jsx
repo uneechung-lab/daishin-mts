@@ -8766,8 +8766,12 @@ function App() {
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
-const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
-  const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(false);
+  const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6asissearch') === 'true';
+  });
+  const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6tobesearch') === 'true';
+  });
   const [screen6CalcActiveBondId, setScreen6CalcActiveBondId] = useState('kr133');
   const [screen6CalcYieldInput, setScreen6CalcYieldInput] = useState('4.800');
   const [screen6CalcKeypadOpen, setScreen6CalcKeypadOpen] = useState(() => {
