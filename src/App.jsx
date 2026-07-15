@@ -5562,6 +5562,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (params.get(`${prefix}ShowSuccessModal`) === 'true') setShowSuccessModal(true);
     if (params.get(`${prefix}ShowCancelConfirmModal`) === 'true') setShowCancelConfirmModal(true);
     if (params.get(`${prefix}IsCancelled`) === 'true') setIsCancelled(true);
+    if (params.get(`${prefix}ShowDateLimitPopup`) === 'true') setShowDateLimitPopup(true);
   }, [isToBe]);
 
   useEffect(() => {
@@ -5588,6 +5589,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (showSuccessModal) params.set(`${prefix}ShowSuccessModal`, 'true'); else params.delete(`${prefix}ShowSuccessModal`);
     if (showCancelConfirmModal) params.set(`${prefix}ShowCancelConfirmModal`, 'true'); else params.delete(`${prefix}ShowCancelConfirmModal`);
     if (isCancelled) params.set(`${prefix}IsCancelled`, 'true'); else params.delete(`${prefix}IsCancelled`);
+    if (showDateLimitPopup) params.set(`${prefix}ShowDateLimitPopup`, 'true'); else params.delete(`${prefix}ShowDateLimitPopup`);
     
     params.set(`${prefix}SelectedDay`, selectedDay);
     params.set(`${prefix}SelectedMethod`, selectedMethod);
@@ -5599,7 +5601,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe, receiptStatus, showConfirmModal, showSuccessModal, showCancelConfirmModal, isCancelled]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe, receiptStatus, showConfirmModal, showSuccessModal, showCancelConfirmModal, isCancelled, showDateLimitPopup]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
