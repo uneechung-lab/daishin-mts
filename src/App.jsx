@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import logoImg from './assets/logo.png';
 
 // Mock Tick data for selected ETFs/REITs
 const stockData = {
@@ -10812,20 +10813,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               {/* Logo Image with SVG fallback */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <img 
-                  src="/logo.png" 
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
+                  src={logoImg} 
                   style={{ width: '100px', height: 'auto', objectFit: 'contain' }}
                   alt="CI Logo"
                 />
-                <div style={{ display: 'none', flexDirection: 'column', alignItems: 'center' }}>
-                  <svg width="64" height="64" viewBox="0 0 60 60" fill="none">
-                    <path d="M12 22 L30 12 L48 22 L48 38 L30 48 L12 38 Z" stroke="#3a3a3a" strokeWidth="8" strokeLinejoin="round" fill="none" />
-                    <rect x="23" y="23" width="14" height="14" fill="#3a3a3a" />
-                  </svg>
-                </div>
               </div>
             </div>
 
