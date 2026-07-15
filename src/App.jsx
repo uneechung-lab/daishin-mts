@@ -8770,7 +8770,9 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6ToBeSearchOpen, setScreen6ToBeSearchOpen] = useState(false);
   const [screen6CalcActiveBondId, setScreen6CalcActiveBondId] = useState('kr133');
   const [screen6CalcYieldInput, setScreen6CalcYieldInput] = useState('4.800');
-  const [screen6CalcKeypadOpen, setScreen6CalcKeypadOpen] = useState(false);
+  const [screen6CalcKeypadOpen, setScreen6CalcKeypadOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6keypad') === 'true';
+  });
 
   const renderScreen6Search = (mode, onClose) => {
     const handleSelectBond = (bond) => {
