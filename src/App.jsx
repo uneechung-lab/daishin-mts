@@ -10693,33 +10693,27 @@ const renderScreen6Ratio = (mode) => {
 
             {/* Donut Chart & Legend Row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'space-between', marginBottom: '16px' }}>
-              {/* SVG Donut Chart */}
-              <div style={{ width: '130px', height: '130px', position: 'relative' }}>
-                <svg width="130" height="130" viewBox="0 0 42 42">
-                  <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#e2e8f0" strokeWidth="6" />
-                  {mode === 'tobe' ? (
-                    <>
-                      {/* TO-BE: 현금 65% (green #00b094) */}
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#00b094" strokeWidth="6"
-                        strokeDasharray="65 35" strokeDashoffset="25" />
-                      {/* TO-BE: 채권 23% (light green #a3e635) */}
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#a3e635" strokeWidth="6"
-                        strokeDasharray="23 77" strokeDashoffset="60" />
-                      {/* TO-BE: ETF 12% (orange #ff6b00) */}
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#ff6b00" strokeWidth="6"
-                        strokeDasharray="12 88" strokeDashoffset="37" />
-                    </>
-                  ) : (
-                    <>
-                      {/* AS-IS: 현금 88% (green #00b094) */}
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#00b094" strokeWidth="6"
-                        strokeDasharray="88 12" strokeDashoffset="25" />
-                      {/* AS-IS: ETF 12% (orange #ff6b00) */}
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#ff6b00" strokeWidth="6"
-                        strokeDasharray="12 88" strokeDashoffset="37" />
-                    </>
-                  )}
-                </svg>
+              {/* Conic-gradient Donut Chart (Figma plugin compatible: strokeDasharray is not well-supported in figma import plugins) */}
+              <div style={{ 
+                width: '130px', 
+                height: '130px', 
+                borderRadius: '50%',
+                background: mode === 'tobe' 
+                  ? 'conic-gradient(#00b094 0% 65%, #a3e635 65% 88%, #ff6b00 88% 100%)'
+                  : 'conic-gradient(#00b094 0% 88%, #ff6b00 88% 100%)',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'inset 0 0 0 16px #ffffff, 0 1px 3px rgba(0,0,0,0.06)'
+              }}>
+                {/* Inner white circle to make it a donut */}
+                <div style={{
+                  width: '92px',
+                  height: '92px',
+                  borderRadius: '50%',
+                  backgroundColor: '#ffffff'
+                }} />
               </div>
 
               {/* Chart Legend */}
