@@ -8773,8 +8773,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   const [screen6CalcKeypadOpen, setScreen6CalcKeypadOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6keypad') === 'true';
   });
-  const [screen6SearchRecentChecked, setScreen6SearchRecentChecked] = useState([true, true, true]);
-  const [screen6SearchPopularChecked, setScreen6SearchPopularChecked] = useState([true, true, true]);
+  const [screen6SearchTab, setScreen6SearchTab] = useState('장내채권');
 
   const renderScreen6Search = (mode, onClose) => {
     const handleSelectBond = (bond) => {
@@ -8791,27 +8790,6 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
       { name: '신한은행15-08이15A', code: 'B00C01118', retail: '', interest: '이표' },
       { name: '신한은행18-07이15A', code: 'B00C01147', retail: '', interest: '이표' },
       { name: '신한은행18-09이15A', code: 'B00C01149', retail: '', interest: '이표' },
-      { name: '신한은행19-11단15A', code: 'B00C0115B', retail: '', interest: '단리' },
-      { name: '신한은행20-01이15A', code: 'B00C01161', retail: '', interest: '이표' },
-      { name: '신한은행20-02이15A', code: 'B00C01162', retail: '', interest: '이표' },
-      { name: '신한은행20-12이15A', code: 'B00C0116C', retail: '', interest: '이표' },
-      { name: '신한은행21-02-단15-A', code: 'B00C01172', retail: '', interest: '단리' },
-      { name: '신한은행21-03-이-15-A', code: 'B00C01173', originalInterest: '이표', interest: '이표' },
-      { name: '신한은행21-08-이-15-A', code: 'B00C01178', retail: '', interest: '이표' },
-      { name: '신한은행22-02-이-15-A', code: 'B00C01182', retail: '', interest: '이표' },
-      { name: '신한은행22-04-이-15-A', code: 'B00C01184', retail: '', interest: '' },
-      { name: '신한은행22-08-복-20-A', code: 'B00C01188', retail: '', interest: '복리' },
-      { name: '신한은행24-01-복-20-A', code: 'B00C011A1', retail: '', interest: '복리' }
-    ];
-
-    const recentlyViewedBonds = [
-      { name: '한국투자캐피탈133', code: 'B214341G2', retail: '', interest: '이표' },
-      { name: '신한은행15-08이15A', code: 'B00C01118', retail: '', interest: '이표' },
-      { name: '신한은행18-07이15A', code: 'B00C01147', retail: '', interest: '이표' },
-      { name: '신한은행18-09이15A', code: 'B00C01149', retail: '', interest: '이표' }
-    ];
-
-    const popularBonds = [
       { name: '신한은행19-11단15A', code: 'B00C0115B', retail: '', interest: '단리' },
       { name: '신한은행20-01이15A', code: 'B00C01161', retail: '', interest: '이표' },
       { name: '신한은행20-02이15A', code: 'B00C01162', retail: '', interest: '이표' },
@@ -8888,54 +8866,65 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
         {/* Scrollable Tabs */}
         {mode !== 'tobe' ? (
-          <div style={{
-            display: 'flex',
-            gap: '16px',
-            overflowX: 'auto',
-            padding: '0 12px',
-            borderBottom: '1px solid #f1f5f9',
-            scrollbarWidth: 'none',
-            whiteSpace: 'nowrap'
-          }}>
-            {[
-              { label: '선물옵션', active: false },
-              { label: '야간선물옵션', active: false },
-              { label: '해외선물', active: false },
-              { label: '장내채권', active: true },
-              { label: '금현물', active: false }
-            ].map((tab) => (
-              <div 
-                key={tab.label}
-                style={{
-                  padding: '12px 4px',
-                  fontSize: '0.85rem',
-                  fontWeight: tab.active ? '800' : '500',
-                  color: tab.active ? '#111111' : '#777777',
-                  borderBottom: tab.active ? '2.5px solid #111111' : '2.5px solid transparent',
-                  cursor: 'pointer'
-                }}
-              >
-                {tab.label}
-              </div>
-            ))}
-          </div>
+        <div style={{
+          display: 'flex',
+          gap: '16px',
+          overflowX: 'auto',
+          padding: '0 12px',
+          borderBottom: '1px solid #f1f5f9',
+          scrollbarWidth: 'none',
+          whiteSpace: 'nowrap'
+        }}>
+          {[
+            { label: '선물옵션', active: false },
+            { label: '야간선물옵션', active: false },
+            { label: '해외선물', active: false },
+            { label: '장내채권', active: true },
+            { label: '금현물', active: false }
+          ].map((tab) => (
+            <div 
+              key={tab.label}
+              style={{
+                padding: '12px 4px',
+                fontSize: '0.85rem',
+                fontWeight: tab.active ? '800' : '500',
+                color: tab.active ? '#111111' : '#777777',
+                borderBottom: tab.active ? '2.5px solid #111111' : '2.5px solid transparent',
+                cursor: 'pointer'
+              }}
+            >
+              {tab.label}
+            </div>
+          ))}
+        </div>
         ) : (
-          /* TO-BE Filter Chips */
-          <div style={{ display: 'flex', gap: '8px', padding: '0 12px 10px 12px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-            {['전체', '사채', '국채', '지방채'].map((t) => (
-              <span key={t} style={{
-                padding: '4px 12px',
-                borderRadius: '16px',
-                fontSize: '0.75rem',
-                backgroundColor: t === '전체' ? '#111111' : '#f8fafc',
-                color: t === '전체' ? '#ffffff' : '#64748b',
-                border: '1px solid #e2e8f0',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap'
-              }}>{t}</span>
-            ))}
-          </div>
+        <div style={{
+          display: 'flex',
+          gap: '16px',
+          padding: '0 12px',
+          borderBottom: '1px solid #f1f5f9',
+          whiteSpace: 'nowrap'
+        }}>
+          {[
+            { label: '최근조회', active: screen6SearchTab === '최근조회' },
+            { label: '장내채권', active: screen6SearchTab === '장내채권' }
+          ].map((tab) => (
+            <div 
+              key={tab.label}
+              onClick={() => setScreen6SearchTab(tab.label)}
+              style={{
+                padding: '12px 4px',
+                fontSize: '0.85rem',
+                fontWeight: tab.active ? '800' : '500',
+                color: tab.active ? '#111111' : '#777777',
+                borderBottom: tab.active ? '2.5px solid #111111' : '2.5px solid transparent',
+                cursor: 'pointer'
+              }}
+            >
+              {tab.label}
+            </div>
+          ))}
+        </div>
         )}
 
         {/* Search bar input wrapper */}
@@ -9005,116 +8994,41 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           padding: '6px 12px',
           fontSize: '0.75rem',
           fontWeight: '700',
-          color: '#64748b'
+          color: '#64748b',
+
+
         }}>
           <span style={{ flex: 1 }}>종목명</span>
           <span style={{ width: '40px', textAlign: 'center' }}>소매</span>
           <span style={{ width: '50px', textAlign: 'center' }}>이자</span>
         </div>
 
-        {mode === 'tobe' ? (
-          /* TO-BE Layout: 원래 테이블 리스트 구조(소매/이자 컬럼)를 유지한 채 최근 본 종목/인기 종목 섹션으로 분리 */
-          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-            {/* 최근 본 종목 Section */}
-            <div style={{
-              backgroundColor: '#f1f5f9',
-              padding: '8px 12px',
-              fontSize: '0.78rem',
-              fontWeight: '700',
-              color: '#475569',
-              borderBottom: '1px solid #e2e8f0'
-            }}>
-              최근 본 종목
+        {/* List of items */}
+        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          {bondSearchList.map((bond, idx) => (
+            <div 
+              key={idx}
+              onClick={() => handleSelectBond(bond)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '12px',
+                borderBottom: '1px solid #f1f5f9',
+                cursor: 'pointer',
+                transition: 'background-color 0.15s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
+                <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
+              </div>
+              <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
+              <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
             </div>
-            {recentlyViewedBonds.map((bond, idx) => (
-              <div 
-                key={`tobe-recent-${idx}`}
-                onClick={() => handleSelectBond(bond)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '12px',
-                  borderBottom: '1px solid #f1f5f9',
-                  cursor: 'pointer',
-                  transition: 'background-color 0.15s'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-              >
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
-                  <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
-                </div>
-                <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
-                <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
-              </div>
-            ))}
-
-            {/* 인기 종목 Section */}
-            <div style={{
-              backgroundColor: '#f1f5f9',
-              padding: '8px 12px',
-              fontSize: '0.78rem',
-              fontWeight: '700',
-              color: '#475569',
-              borderTop: '1px solid #e2e8f0',
-              borderBottom: '1px solid #e2e8f0',
-              marginTop: '8px'
-            }}>
-              인기 종목
-            </div>
-            {popularBonds.map((bond, idx) => (
-              <div 
-                key={`tobe-popular-${idx}`}
-                onClick={() => handleSelectBond(bond)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '12px',
-                  borderBottom: '1px solid #f1f5f9',
-                  cursor: 'pointer',
-                  transition: 'background-color 0.15s'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-              >
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
-                  <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
-                </div>
-                <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
-                <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
-              </div>
-            ))}
-          </div>
-        ) : (
-          /* AS-IS Layout: 기존 목록 리스트 (전체 종목을 섹션 구분 없이 플랫하게 노출) */
-          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-            {bondSearchList.map((bond, idx) => (
-              <div 
-                key={`asis-${idx}`}
-                onClick={() => handleSelectBond(bond)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '12px',
-                  borderBottom: '1px solid #f1f5f9',
-                  cursor: 'pointer',
-                  transition: 'background-color 0.15s'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-              >
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
-                  <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
-                </div>
-                <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
-                <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
-              </div>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
       </div>
     );
   };
