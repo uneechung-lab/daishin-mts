@@ -8735,6 +8735,17 @@ function App() {
   const [screen6ToBeCautionQ1, setScreen6ToBeCautionQ1] = useState(null);
   const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
   const [screen6CalcAmount, setScreen6CalcAmount] = useState('');
+  const [screen6ActiveAccount, setScreen6ActiveAccount] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6account') || '200-233354(41)';
+  });
+  const [screen6DepositTab, setScreen6DepositTab] = useState('고객납입금');
+  useEffect(() => {
+    if (screen6ActiveAccount === '200-233354(43)') {
+      setScreen6DepositTab('사용자');
+    } else {
+      setScreen6DepositTab('고객납입금');
+    }
+  }, [screen6ActiveAccount]);
   const [screen6AsIsModalOpen, setScreen6AsIsModalOpen] = useState(false);
   const [screen6AsIsUpdateModalOpen, setScreen6AsIsUpdateModalOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6asisupdate-modal') === 'true';
@@ -9990,7 +10001,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                   <>
                     {/* First Account (TO-BE: 200-233354(41)) */}
                     <div 
-                      onClick={() => { setScreen6ToBeNoPlanModalOpen(true); setBsheetState('closed'); }}
+                      onClick={() => { setScreen6ActiveAccount('200-233354(41)'); setScreen6ToBeNoPlanModalOpen(true); setBsheetState('closed'); }}
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -10004,12 +10015,12 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(41)</span>
                         <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
                       </div>
-                      <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+                      {screen6ActiveAccount === '200-233354(41)' && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                     
                     {/* Second Account (TO-BE: 200-233354(43)) */}
                     <div 
-                      onClick={() => setBsheetState('product')}
+                      onClick={() => { setScreen6ActiveAccount('200-233354(43)'); setBsheetState('closed'); }}
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -10023,11 +10034,12 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(43)</span>
                         <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.10</span>
                       </div>
+                      {screen6ActiveAccount === '200-233354(43)' && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
                     </div>
 
                     {/* Third Account (TO-BE: 200-233354(01)) */}
                     <div 
-                      onClick={() => setBsheetState('product')}
+                      onClick={() => { setScreen6ActiveAccount('200-233354(01)'); setBsheetState('closed'); }}
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -10040,6 +10052,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                         <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(01)</span>
                         <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
                       </div>
+                      {screen6ActiveAccount === '200-233354(01)' && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   </>
                 ) : (
@@ -12346,6 +12359,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (screen6AsIsModalOpen) params.set('screen6asismodal', 'true'); else params.delete('screen6asismodal');
     if (screen6AsIsUpdateModalOpen) params.set('screen6asisupdate-modal', 'true'); else params.delete('screen6asisupdate-modal');
     if (screen6ToBeNoPlanModalOpen) params.set('screen6tobeno-plan-modal', 'true'); else params.delete('screen6tobeno-plan-modal');
+    params.set('screen6account', screen6ActiveAccount);
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('mallTab', activeMallTab);
@@ -12384,7 +12398,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -12426,6 +12440,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen6asismodalParam) setScreen6AsIsModalOpen(screen6asismodalParam === 'true');
       const screen6asisupdateParam = params.get('screen6asisupdate-modal');
       if (screen6asisupdateParam) setScreen6AsIsUpdateModalOpen(screen6asisupdateParam === 'true');
+      const screen6ActiveAccountParam = params.get('screen6account');
+      if (screen6ActiveAccountParam) setScreen6ActiveAccount(screen6ActiveAccountParam);
       const screen6tobenoplanmodalParam = params.get('screen6tobeno-plan-modal');
       if (screen6tobenoplanmodalParam) setScreen6ToBeNoPlanModalOpen(screen6tobenoplanmodalParam === 'true');
       const screen4SubParam = params.get('screen4SubScreen');
@@ -14647,18 +14663,21 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         </div>
 
                         {/* Account selection dropdown */}
-                        <div style={{
-                          border: '1px solid #e2e8f0',
-                          borderRadius: '6px',
-                          padding: '8px 12px',
-                          marginTop: '8px',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          backgroundColor: '#f8fafc',
-                          cursor: 'pointer'
-                        }}>
-                          <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-000000(41) 김대신</span>
+                        <div 
+                          onClick={() => setScreen6ToBeBsheetState('account')}
+                          style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '6px',
+                            padding: '8px 12px',
+                            marginTop: '8px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            backgroundColor: '#f8fafc',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>{screen6ActiveAccount} 김대신</span>
                           <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
                         </div>
                       </div>
@@ -14722,35 +14741,60 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             borderRadius: '6px',
                             padding: '2px',
                             height: '36px',
-                            boxSizing: 'border-box'
+                            boxSizing: 'border-box',
+                            width: '100%'
                           }}>
-                            <div style={{
-                              flex: 1,
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '11px',
-                              fontWeight: '700',
-                              color: '#333333',
-                              backgroundColor: '#ffffff',
-                              borderRadius: '4px',
-                              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-                              cursor: 'pointer'
-                            }}>
-                              고객납입금
-                            </div>
-                            <div style={{
-                              flex: 1,
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '11px',
-                              fontWeight: '600',
-                              color: '#666666',
-                              cursor: 'pointer'
-                            }}>
-                              퇴직납입금
-                            </div>
+                            {screen6ActiveAccount === '200-233354(43)' ? (
+                              ['사용자', '가입자1', '가입자2'].map((tab) => {
+                                const isSelected = screen6DepositTab === tab;
+                                return (
+                                  <div
+                                    key={tab}
+                                    onClick={() => setScreen6DepositTab(tab)}
+                                    style={{
+                                      flex: 1,
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      fontSize: '11px',
+                                      fontWeight: isSelected ? '700' : '600',
+                                      color: isSelected ? '#333333' : '#666666',
+                                      backgroundColor: isSelected ? '#ffffff' : 'transparent',
+                                      borderRadius: '4px',
+                                      boxShadow: isSelected ? '0 1px 2px rgba(0,0,0,0.05)' : 'none',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    {tab}
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              ['고객납입금', '퇴직납입금'].map((tab) => {
+                                const isSelected = screen6DepositTab === tab;
+                                return (
+                                  <div
+                                    key={tab}
+                                    onClick={() => setScreen6DepositTab(tab)}
+                                    style={{
+                                      flex: 1,
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      fontSize: '11px',
+                                      fontWeight: isSelected ? '700' : '600',
+                                      color: isSelected ? '#333333' : '#666666',
+                                      backgroundColor: isSelected ? '#ffffff' : 'transparent',
+                                      borderRadius: '4px',
+                                      boxShadow: isSelected ? '0 1px 2px rgba(0,0,0,0.05)' : 'none',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    {tab}
+                                  </div>
+                                );
+                              })
+                            )}
                           </div>
 
                            {/* Order Form Content */}
