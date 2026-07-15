@@ -8747,6 +8747,9 @@ function App() {
     }
   }, [screen6ActiveAccount]);
   const [screen6AsIsModalOpen, setScreen6AsIsModalOpen] = useState(false);
+  const [screen6CompanyBondModalOpen, setScreen6CompanyBondModalOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6companybondmodal') === 'true';
+  });
   const [screen6AsIsUpdateModalOpen, setScreen6AsIsUpdateModalOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6asisupdate-modal') === 'true';
   });
@@ -11649,7 +11652,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               </div>
                             ) : (
                               <button 
-                                onClick={() => setScreen6AsIsModalOpen(true)}
+                                onClick={() => {
+                                  if (screen6ActiveAccount === '200-233354(43)' && screen6AsIsOrderTab === '매수') {
+                                    setScreen6CompanyBondModalOpen(true);
+                                  } else {
+                                    setScreen6AsIsModalOpen(true);
+                                  }
+                                }}
                                 style={{ width: '132px', height: '32px', backgroundColor: screen6AsIsOrderTab === '매도' ? '#2563eb' : '#de201e', border: 'none', color: '#ffffff', fontSize: '11px', fontWeight: '700', cursor: 'pointer', borderRadius: '0px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                               >
                                 {screen6AsIsOrderTab}
@@ -12227,6 +12236,55 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
         )}
+        {screen6CompanyBondModalOpen && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              width: '260px',
+              backgroundColor: '#ffffff',
+              borderRadius: '2px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                padding: '24px 20px',
+                fontSize: '0.86rem',
+                color: '#333333',
+                textAlign: 'center',
+                lineHeight: '1.45',
+                fontWeight: '600'
+              }}>
+                재직 중이신 회사(또는 계열사)가 발행한 채권은 관련 법령에 따라 퇴직연금으로 매수할 수 없습니다. 다른 상품을 선택해 주세요.
+              </div>
+              <button 
+                onClick={() => setScreen6CompanyBondModalOpen(false)}
+                style={{
+                  height: '42px',
+                  backgroundColor: '#222222',
+                  color: '#ffffff',
+                  border: 'none',
+                  fontSize: '0.88rem',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        )}
       </>
     );
   };
@@ -12392,6 +12450,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (screen6ToBeCautionQ2) params.set('screen6tobeq2', screen6ToBeCautionQ2); else params.delete('screen6tobeq2');
     if (screen6CalcAmount) params.set('screen6calcamount', screen6CalcAmount); else params.delete('screen6calcamount');
     if (screen6AsIsModalOpen) params.set('screen6asismodal', 'true'); else params.delete('screen6asismodal');
+    if (screen6CompanyBondModalOpen) params.set('screen6companybondmodal', 'true'); else params.delete('screen6companybondmodal');
     if (screen6AsIsUpdateModalOpen) params.set('screen6asisupdate-modal', 'true'); else params.delete('screen6asisupdate-modal');
     if (screen6ToBeNoPlanModalOpen) params.set('screen6tobeno-plan-modal', 'true'); else params.delete('screen6tobeno-plan-modal');
     params.set('screen6account', screen6ActiveAccount);
@@ -12433,7 +12492,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -12477,6 +12536,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen6asisupdateParam) setScreen6AsIsUpdateModalOpen(screen6asisupdateParam === 'true');
       const screen6ActiveAccountParam = params.get('screen6account');
       if (screen6ActiveAccountParam) setScreen6ActiveAccount(screen6ActiveAccountParam);
+      const screen6CompanyBondModalParam = params.get('screen6companybondmodal');
+      if (screen6CompanyBondModalParam) setScreen6CompanyBondModalOpen(screen6CompanyBondModalParam === 'true');
       const screen6tobenoplanmodalParam = params.get('screen6tobeno-plan-modal');
       if (screen6tobenoplanmodalParam) setScreen6ToBeNoPlanModalOpen(screen6tobenoplanmodalParam === 'true');
       const screen4SubParam = params.get('screen4SubScreen');
@@ -15027,7 +15088,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 <button onClick={() => {}} style={{ flex: 1, border: 'none', backgroundColor: '#00b050', color: '#ffffff', padding: '12px 0', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>정정</button>
                               </div>
                             ) : screen6ToBeOrderTab === '미체결/체결' ? null : (
-                              <button onClick={() => setScreen6ToBeSubScreen('cautionAgreement')} style={{ width: '100%', border: 'none', backgroundColor: screen6ToBeOrderTab === '매도' ? '#2563eb' : '#de201e', color: '#ffffff', padding: '12px 0', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>
+                              <button onClick={() => {
+                                if (screen6ActiveAccount === '200-233354(43)' && screen6ToBeOrderTab === '매수') {
+                                  setScreen6CompanyBondModalOpen(true);
+                                } else {
+                                  setScreen6ToBeSubScreen('cautionAgreement');
+                                }
+                              }} style={{ width: '100%', border: 'none', backgroundColor: screen6ToBeOrderTab === '매도' ? '#2563eb' : '#de201e', color: '#ffffff', padding: '12px 0', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>
                                 {screen6ToBeOrderTab}
                               </button>
                             )}
