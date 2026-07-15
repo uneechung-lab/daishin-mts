@@ -8804,6 +8804,27 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
       { name: '신한은행24-01-복-20-A', code: 'B00C011A1', retail: '', interest: '복리' }
     ];
 
+    const recentlyViewedBonds = [
+      { name: '한국투자캐피탈133', code: 'B214341G2', retail: '', interest: '이표' },
+      { name: '신한은행15-08이15A', code: 'B00C01118', retail: '', interest: '이표' },
+      { name: '신한은행18-07이15A', code: 'B00C01147', retail: '', interest: '이표' },
+      { name: '신한은행18-09이15A', code: 'B00C01149', retail: '', interest: '이표' }
+    ];
+
+    const popularBonds = [
+      { name: '신한은행19-11단15A', code: 'B00C0115B', retail: '', interest: '단리' },
+      { name: '신한은행20-01이15A', code: 'B00C01161', retail: '', interest: '이표' },
+      { name: '신한은행20-02이15A', code: 'B00C01162', retail: '', interest: '이표' },
+      { name: '신한은행20-12이15A', code: 'B00C0116C', retail: '', interest: '이표' },
+      { name: '신한은행21-02-단15-A', code: 'B00C01172', retail: '', interest: '단리' },
+      { name: '신한은행21-03-이-15-A', code: 'B00C01173', originalInterest: '이표', interest: '이표' },
+      { name: '신한은행21-08-이-15-A', code: 'B00C01178', retail: '', interest: '이표' },
+      { name: '신한은행22-02-이-15-A', code: 'B00C01182', retail: '', interest: '이표' },
+      { name: '신한은행22-04-이-15-A', code: 'B00C01184', retail: '', interest: '' },
+      { name: '신한은행22-08-복-20-A', code: 'B00C01188', retail: '', interest: '복리' },
+      { name: '신한은행24-01-복-20-A', code: 'B00C011A1', retail: '', interest: '복리' }
+    ];
+
     return (
       <div style={{
         display: 'flex',
@@ -9185,9 +9206,57 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
             </div>
 
             <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-              {bondSearchList.map((bond, idx) => (
+              {/* 최근 본 종목 Section */}
+              <div style={{
+                backgroundColor: '#f1f5f9',
+                padding: '8px 12px',
+                fontSize: '0.78rem',
+                fontWeight: '700',
+                color: '#475569',
+                borderBottom: '1px solid #e2e8f0'
+              }}>
+                최근 본 종목
+              </div>
+              {recentlyViewedBonds.map((bond, idx) => (
                 <div 
-                  key={idx}
+                  key={`asis-recent-${idx}`}
+                  onClick={() => handleSelectBond(bond)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px',
+                    borderBottom: '1px solid #f1f5f9',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.15s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
+                    <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
+                  </div>
+                  <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
+                  <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
+                </div>
+              ))}
+
+              {/* 인기 종목 Section */}
+              <div style={{
+                backgroundColor: '#f1f5f9',
+                padding: '8px 12px',
+                fontSize: '0.78rem',
+                fontWeight: '700',
+                color: '#475569',
+                borderTop: '1px solid #e2e8f0',
+                borderBottom: '1px solid #e2e8f0',
+                marginTop: '8px'
+              }}>
+                인기 종목
+              </div>
+              {popularBonds.map((bond, idx) => (
+                <div 
+                  key={`asis-popular-${idx}`}
                   onClick={() => handleSelectBond(bond)}
                   style={{
                     display: 'flex',
