@@ -8998,314 +8998,121 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
           )}
         </div>
 
+        {/* Table header */}
+        <div style={{
+          display: 'flex',
+          backgroundColor: '#f8fafc',
+          padding: '6px 12px',
+          fontSize: '0.75rem',
+          fontWeight: '700',
+          color: '#64748b'
+        }}>
+          <span style={{ flex: 1 }}>종목명</span>
+          <span style={{ width: '40px', textAlign: 'center' }}>소매</span>
+          <span style={{ width: '50px', textAlign: 'center' }}>이자</span>
+        </div>
+
         {mode === 'tobe' ? (
-          /* TO-BE Layout: 최근 본 종목 & 인기 종목 with Checkboxes */
+          /* TO-BE Layout: 원래 테이블 리스트 구조(소매/이자 컬럼)를 유지한 채 최근 본 종목/인기 종목 섹션으로 분리 */
           <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-            {/* 최근 본 종목 */}
+            {/* 최근 본 종목 Section */}
             <div style={{
-              padding: '6px 14px',
-              backgroundColor: '#f8fafc',
-              fontSize: '0.75rem',
+              backgroundColor: '#f1f5f9',
+              padding: '8px 12px',
+              fontSize: '0.78rem',
               fontWeight: '700',
-              color: '#64748b',
-              borderBottom: '1px solid #f1f5f9'
+              color: '#475569',
+              borderBottom: '1px solid #e2e8f0'
             }}>
               최근 본 종목
             </div>
-            
-            <div 
-              onClick={() => {
-                const allChecked = screen6SearchRecentChecked.every(Boolean);
-                setScreen6SearchRecentChecked([!allChecked, !allChecked, !allChecked]);
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 14px',
-                cursor: 'pointer',
-                backgroundColor: '#ffffff',
-                borderBottom: '1px solid #f1f5f9'
-              }}
-            >
-              <div style={{
-                width: '18px',
-                height: '18px',
-                borderRadius: '4px',
-                border: screen6SearchRecentChecked.every(Boolean) ? '1.5px solid #000000' : '1.5px solid #cbd5e1',
-                backgroundColor: screen6SearchRecentChecked.every(Boolean) ? '#000000' : 'transparent',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                {screen6SearchRecentChecked.every(Boolean) && (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                )}
-              </div>
-              <span style={{ fontSize: '0.82rem', fontWeight: '700', color: '#111111' }}>전체</span>
-            </div>
-
-            {[
-              { id: 0, name: '한국투자캐피탈133', code: 'B214341G2', sub: 'A 금융회사채', bondObj: { id: 'kr133', label: '한국투자캐피탈133', code: 'KR6214341G28', risk: '보통위험', grade: 'A', type: '금융회사채', baseYield: 4.800, buyDate: '2026.07.09', sellDate: '2028.02.04' } },
-              { id: 1, name: '국고채03250-5303', code: 'KR103502G338', sub: 'AAA 국채', bondObj: { id: 'gov325', label: '국고채03250-5303', code: 'KR103502G338', risk: '매우낮은위험', grade: 'AAA', type: '국채', baseYield: 3.250, buyDate: '2026.07.15', sellDate: '2053.03.10' } },
-              { id: 2, name: '경기에너지채권', code: 'KR6034231E12', sub: 'AA- 일반사채', bondObj: { id: 'gyeonggi', label: '경기에너지채권', code: 'KR6034231E12', risk: '낮은위험', grade: 'AA-', type: '일반사채', baseYield: 4.150, buyDate: '2026.07.12', sellDate: '2030.12.15' } }
-            ].map((item, index) => (
+            {recentlyViewedBonds.map((bond, idx) => (
               <div 
-                key={item.id}
-                onClick={() => {
-                  setScreen6SearchRecentChecked(prev => {
-                    const next = [...prev];
-                    next[index] = !next[index];
-                    return next;
-                  });
-                }}
+                key={`tobe-recent-${idx}`}
+                onClick={() => handleSelectBond(bond)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  padding: '12px 14px',
+                  padding: '12px',
                   borderBottom: '1px solid #f1f5f9',
                   cursor: 'pointer',
-                  gap: '8px'
+                  transition: 'background-color 0.15s'
                 }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
-                <div style={{
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '4px',
-                  border: screen6SearchRecentChecked[index] ? '1.5px solid #000000' : '1.5px solid #cbd5e1',
-                  backgroundColor: screen6SearchRecentChecked[index] ? '#000000' : 'transparent',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  {screen6SearchRecentChecked[index] && (
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#111111' }}>{item.name}</span>
-                  <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>{item.sub} | {item.code}</span>
+                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
+                  <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
                 </div>
+                <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
+                <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
               </div>
             ))}
 
-            {/* 인기 종목 */}
+            {/* 인기 종목 Section */}
             <div style={{
-              padding: '6px 14px',
-              backgroundColor: '#f8fafc',
-              fontSize: '0.75rem',
+              backgroundColor: '#f1f5f9',
+              padding: '8px 12px',
+              fontSize: '0.78rem',
               fontWeight: '700',
-              color: '#64748b',
-              borderBottom: '1px solid #f1f5f9',
-              marginTop: '10px'
+              color: '#475569',
+              borderTop: '1px solid #e2e8f0',
+              borderBottom: '1px solid #e2e8f0',
+              marginTop: '8px'
             }}>
               인기 종목
             </div>
-
-            <div 
-              onClick={() => {
-                const allChecked = screen6SearchPopularChecked.every(Boolean);
-                setScreen6SearchPopularChecked([!allChecked, !allChecked, !allChecked]);
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 14px',
-                cursor: 'pointer',
-                backgroundColor: '#ffffff',
-                borderBottom: '1px solid #f1f5f9'
-              }}
-            >
-              <div style={{
-                width: '18px',
-                height: '18px',
-                borderRadius: '4px',
-                border: screen6SearchPopularChecked.every(Boolean) ? '1.5px solid #000000' : '1.5px solid #cbd5e1',
-                backgroundColor: screen6SearchPopularChecked.every(Boolean) ? '#000000' : 'transparent',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                {screen6SearchPopularChecked.every(Boolean) && (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                )}
-              </div>
-              <span style={{ fontSize: '0.82rem', fontWeight: '700', color: '#111111' }}>전체</span>
-            </div>
-
-            {[
-              { id: 0, name: '삼척블루파워9', code: 'B00C01173', sub: 'A- 일반사채', bondObj: { id: 'samcheok', label: '삼척블루파워9', code: 'KR6003251D11', risk: '보통위험', grade: 'A-', type: '일반사채', baseYield: 5.100, buyDate: '2026.07.10', sellDate: '2029.04.18' } },
-              { id: 1, name: '신한은행15-08이15A', code: 'B00C01118', sub: 'AAA 금융회사채', bondObj: { id: 'shinhan15', label: '신한은행15-08이15A', code: 'B00C01118', risk: '낮은위험', grade: 'AAA', type: '금융회사채', baseYield: 3.850, buyDate: '2026.07.11', sellDate: '2028.08.15' } },
-              { id: 2, name: '신한은행18-09이15A', code: 'B00C01149', sub: 'AAA 금융회사채', bondObj: { id: 'shinhan18', label: '신한은행18-09이15A', code: 'B00C01149', risk: '낮은위험', grade: 'AAA', type: '금융회사채', baseYield: 3.900, buyDate: '2026.07.12', sellDate: '2029.09.15' } }
-            ].map((item, index) => (
+            {popularBonds.map((bond, idx) => (
               <div 
-                key={item.id}
-                onClick={() => {
-                  setScreen6SearchPopularChecked(prev => {
-                    const next = [...prev];
-                    next[index] = !next[index];
-                    return next;
-                  });
-                }}
+                key={`tobe-popular-${idx}`}
+                onClick={() => handleSelectBond(bond)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  padding: '12px 14px',
+                  padding: '12px',
                   borderBottom: '1px solid #f1f5f9',
                   cursor: 'pointer',
-                  gap: '8px'
+                  transition: 'background-color 0.15s'
                 }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
-                <div style={{
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '4px',
-                  border: screen6SearchPopularChecked[index] ? '1.5px solid #000000' : '1.5px solid #cbd5e1',
-                  backgroundColor: screen6SearchPopularChecked[index] ? '#000000' : 'transparent',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  {screen6SearchPopularChecked[index] && (
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#111111' }}>{item.name}</span>
-                  <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>{item.sub} | {item.code}</span>
+                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
+                  <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
                 </div>
+                <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
+                <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
               </div>
             ))}
           </div>
         ) : (
-          /* AS-IS Layout: 기존 목록 리스트 */
-          <>
-            {/* Table header */}
-            <div style={{
-              display: 'flex',
-              backgroundColor: '#f8fafc',
-              padding: '6px 12px',
-              fontSize: '0.75rem',
-              fontWeight: '700',
-              color: '#64748b'
-            }}>
-              <span style={{ flex: 1 }}>종목명</span>
-              <span style={{ width: '40px', textAlign: 'center' }}>소매</span>
-              <span style={{ width: '50px', textAlign: 'center' }}>이자</span>
-            </div>
-
-            <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-              {/* 최근 본 종목 Section */}
-              <div style={{
-                backgroundColor: '#f1f5f9',
-                padding: '8px 12px',
-                fontSize: '0.78rem',
-                fontWeight: '700',
-                color: '#475569',
-                borderBottom: '1px solid #e2e8f0'
-              }}>
-                최근 본 종목
-              </div>
-              {recentlyViewedBonds.map((bond, idx) => (
-                <div 
-                  key={`asis-recent-${idx}`}
-                  onClick={() => handleSelectBond(bond)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px',
-                    borderBottom: '1px solid #f1f5f9',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.15s'
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                >
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                    <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
-                    <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
-                  </div>
-                  <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
-                  <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
+          /* AS-IS Layout: 기존 목록 리스트 (전체 종목을 섹션 구분 없이 플랫하게 노출) */
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+            {bondSearchList.map((bond, idx) => (
+              <div 
+                key={`asis-${idx}`}
+                onClick={() => handleSelectBond(bond)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '12px',
+                  borderBottom: '1px solid #f1f5f9',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.15s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
+                  <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
                 </div>
-              ))}
-
-              {/* 인기 종목 Section */}
-              <div style={{
-                backgroundColor: '#f1f5f9',
-                padding: '8px 12px',
-                fontSize: '0.78rem',
-                fontWeight: '700',
-                color: '#475569',
-                borderTop: '1px solid #e2e8f0',
-                borderBottom: '1px solid #e2e8f0',
-                marginTop: '8px'
-              }}>
-                인기 종목
+                <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
+                <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
               </div>
-              {popularBonds.map((bond, idx) => (
-                <div 
-                  key={`asis-popular-${idx}`}
-                  onClick={() => handleSelectBond(bond)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px',
-                    borderBottom: '1px solid #f1f5f9',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.15s'
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                >
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                    <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#222' }}>{bond.name}</span>
-                    <span style={{ fontSize: '0.7rem', color: '#888' }}>{bond.code}</span>
-                  </div>
-                  <span style={{ width: '40px', textAlign: 'center', fontSize: '0.8rem', color: '#333' }}>{bond.retail}</span>
-                  <span style={{ width: '50px', textAlign: 'center', fontSize: '0.8rem', color: '#333', fontWeight: '600' }}>{bond.interest}</span>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-        
-        {/* TO-BE Confirm Sticky Button */}
-        {mode === 'tobe' && (
-          <div style={{ padding: '8px 12px 16px 12px', borderTop: '1px solid #f1f5f9' }}>
-            <button 
-              onClick={() => {
-                // Return default selected bond 'kr133'
-                const firstCheckedBond = { id: 'kr133', label: '한국투자캐피탈133', code: 'KR6214341G28', risk: '보통위험', grade: 'A', type: '금융회사채', baseYield: 4.800, buyDate: '2026.07.09', sellDate: '2028.02.04' };
-                setScreen6SelectedBond(firstCheckedBond);
-                setScreen6ToBeSubScreen('bondDetails');
-                onClose();
-              }}
-              style={{
-                width: '100%',
-                height: '46px',
-                backgroundColor: '#111111',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '6px',
-                fontSize: '0.92rem',
-                fontWeight: '800',
-                cursor: 'pointer'
-              }}
-            >
-              확인
-            </button>
+            ))}
           </div>
         )}
       </div>
