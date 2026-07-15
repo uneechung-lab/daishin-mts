@@ -10705,12 +10705,14 @@ const renderScreen6Ratio = (mode) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: 'inset 0 0 0 16px #ffffff, 0 1px 3px rgba(0,0,0,0.06)'
+                boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+                padding: '16px',
+                boxSizing: 'border-box'
               }}>
                 {/* Inner white circle to make it a donut */}
                 <div style={{
-                  width: '92px',
-                  height: '92px',
+                  flex: 1,
+                  height: '100%',
                   borderRadius: '50%',
                   backgroundColor: '#ffffff'
                 }} />
