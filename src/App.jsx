@@ -5533,6 +5533,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
 
   // New interactive states for application/cancellation modal flows
   const [receiptStatus, setReceiptStatus] = useState('form'); // 'form', 'inquiry'
+  const [showDateLimitPopup, setShowDateLimitPopup] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState(false);
@@ -5774,6 +5775,17 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     const formattedMonth = String(selectedMonth).padStart(2, '0');
     const formattedDate = String(selectedDate).padStart(2, '0');
     if (isToBe) {
+      // Calculate date difference from today (2026-07-15)
+      const selected = new Date(selectedYear, selectedMonth - 1, selectedDate);
+      const today = new Date(2026, 6, 15); // Month index 6 is July
+      const diffTime = selected - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays > 60 || diffDays < 0) {
+        setShowDatePicker(false);
+        setShowDateLimitPopup(true);
+        return;
+      }
       setStartDateStr(`${selectedYear}.${formattedMonth}.${formattedDate}`);
     } else {
       setStartDateStr(`${selectedYear}.${formattedMonth}`);
@@ -7496,6 +7508,60 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                 네
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Date limit warning popup (Attachment 2) */}
+      {showDateLimitPopup && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 4000
+        }}>
+          <div style={{
+            width: '260px',
+            backgroundColor: '#ffffff',
+            borderRadius: '2px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              padding: '32px 20px',
+              fontSize: '0.86rem',
+              color: '#333333',
+              textAlign: 'center',
+              lineHeight: '1.5',
+              fontWeight: '600',
+              wordBreak: 'keep-all'
+            }}>
+              수령 개시일자는 신청일로부터 최장60일 
+              <br />
+              이내로 설정 할 수있습니다.
+            </div>
+            <button 
+              onClick={() => setShowDateLimitPopup(false)}
+              style={{
+                height: '42px',
+                backgroundColor: '#222222',
+                color: '#ffffff',
+                border: 'none',
+                fontSize: '0.88rem',
+                fontWeight: '700',
+                cursor: 'pointer'
+              }}
+            >
+              확인
+            </button>
           </div>
         </div>
       )}
