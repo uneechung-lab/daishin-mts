@@ -10007,7 +10007,25 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
                       <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
                     </div>
                     
-                    {/* Second Account (TO-BE: 200-233354(01)) */}
+                    {/* Second Account (TO-BE: 200-233354(43)) */}
+                    <div 
+                      onClick={() => setBsheetState('product')}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '14px 4px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f1f5f9'
+                      }}
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(43)</span>
+                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.10</span>
+                      </div>
+                    </div>
+
+                    {/* Third Account (TO-BE: 200-233354(01)) */}
                     <div 
                       onClick={() => setBsheetState('product')}
                       style={{
