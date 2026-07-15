@@ -11336,9 +11336,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 ▲ 19.4 (0.19%)
                               </span>
                             </div>
-                            <div onClick={() => { if (isSwitchOff) setScreen6ToBeBsheetState('product'); else setScreen6AsIsBsheetState('product'); }} style={{ border: '1px solid #cbd5e1', borderRadius: '4px', padding: '4px 8px', fontSize: '11px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', minWidth: '130px', cursor: 'pointer' }}>
+                            <div onClick={() => { if (isSwitchOff) setScreen6ToBeBsheetState('account'); else setScreen6AsIsBsheetState('product'); }} style={{ border: '1px solid #cbd5e1', borderRadius: '4px', padding: '4px 8px', fontSize: '11px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', minWidth: '130px', cursor: 'pointer' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: '700' }}>
-                                <span>{isSwitchOff ? '200-233354(41)' : '200-233354(01)'}</span>
+                                <span>{isSwitchOff ? screen6ActiveAccount : '200-233354(01)'}</span>
                                 <span style={{ fontSize: '8px', color: '#666', marginLeft: '4px' }}>▼</span>
                               </div>
                               <div style={{ color: '#333', fontSize: '11px', marginTop: '1px' }}>김대신</div>
@@ -11411,48 +11411,83 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             {/* Right: Form inputs */}
                             <div style={{ flex: 1, padding: '12px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                               {isSwitchOff && (
-                                <div style={{
-                                  display: 'flex',
-                                  border: '1px solid #cbd5e1',
-                                  height: '32px',
-                                  boxSizing: 'border-box',
-                                  overflow: 'hidden',
-                                  marginBottom: '4px'
-                                }}>
-                                  <div 
-                                    onClick={() => setScreen6AsIsPaymentType('고객')}
-                                    style={{
-                                      flex: 1,
-                                      backgroundColor: screen6AsIsPaymentType === '고객' ? '#525b62' : '#ffffff',
-                                      color: screen6AsIsPaymentType === '고객' ? '#ffffff' : '#777777',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      fontSize: '11px',
-                                      fontWeight: '700',
-                                      cursor: 'pointer'
-                                    }}
-                                  >
-                                    고객납입금
+                                screen6ActiveAccount === '200-233354(43)' ? (
+                                  <div style={{
+                                    display: 'flex',
+                                    border: '1px solid #cbd5e1',
+                                    height: '32px',
+                                    boxSizing: 'border-box',
+                                    overflow: 'hidden',
+                                    marginBottom: '4px'
+                                  }}>
+                                    {['사용자', '가입자1', '가입자2'].map((tab, idx) => {
+                                      const isSelected = screen6AsIsPaymentType === tab || (screen6AsIsPaymentType === '고객' && idx === 0);
+                                      return (
+                                        <div
+                                          key={tab}
+                                          onClick={() => setScreen6AsIsPaymentType(tab)}
+                                          style={{
+                                            flex: 1,
+                                            backgroundColor: isSelected ? '#525b62' : '#ffffff',
+                                            color: isSelected ? '#ffffff' : '#777777',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '11px',
+                                            fontWeight: '700',
+                                            cursor: 'pointer',
+                                            borderLeft: idx > 0 ? '1px solid #cbd5e1' : 'none'
+                                          }}
+                                        >
+                                          {tab}
+                                        </div>
+                                      );
+                                    })}
                                   </div>
-                                  <div 
-                                    onClick={() => setScreen6AsIsPaymentType('퇴직')}
-                                    style={{
-                                      flex: 1,
-                                      backgroundColor: screen6AsIsPaymentType === '퇴직' ? '#525b62' : '#ffffff',
-                                      color: screen6AsIsPaymentType === '퇴직' ? '#ffffff' : '#777777',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      fontSize: '11px',
-                                      fontWeight: '700',
-                                      cursor: 'pointer',
-                                      borderLeft: '1px solid #cbd5e1'
-                                    }}
-                                  >
-                                    퇴직납입금
+                                ) : (
+                                  <div style={{
+                                    display: 'flex',
+                                    border: '1px solid #cbd5e1',
+                                    height: '32px',
+                                    boxSizing: 'border-box',
+                                    overflow: 'hidden',
+                                    marginBottom: '4px'
+                                  }}>
+                                    <div 
+                                      onClick={() => setScreen6AsIsPaymentType('고객')}
+                                      style={{
+                                        flex: 1,
+                                        backgroundColor: screen6AsIsPaymentType === '고객' ? '#525b62' : '#ffffff',
+                                        color: screen6AsIsPaymentType === '고객' ? '#ffffff' : '#777777',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '11px',
+                                        fontWeight: '700',
+                                        cursor: 'pointer'
+                                      }}
+                                    >
+                                      고객납입금
+                                    </div>
+                                    <div 
+                                      onClick={() => setScreen6AsIsPaymentType('퇴직')}
+                                      style={{
+                                        flex: 1,
+                                        backgroundColor: screen6AsIsPaymentType === '퇴직' ? '#525b62' : '#ffffff',
+                                        color: screen6AsIsPaymentType === '퇴직' ? '#ffffff' : '#777777',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '11px',
+                                        fontWeight: '700',
+                                        cursor: 'pointer',
+                                        borderLeft: '1px solid #cbd5e1'
+                                      }}
+                                    >
+                                      퇴직납입금
+                                    </div>
                                   </div>
-                                </div>
+                                )
                               )}
                               {screen6AsIsOrderTab === '정정/취소' ? (
                                 <>
