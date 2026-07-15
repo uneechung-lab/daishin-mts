@@ -9129,7 +9129,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1, padding: '24px 20px', overflowY: 'auto' }}>
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, padding: '24px 20px', overflowY: isFigmaExportMode ? 'visible' : 'auto' }}>
           <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 12px 0', lineHeight: 1.3 }}>
             이해관계인 등 확인
           </h2>
@@ -9343,7 +9343,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         </div>
 
         {/* Details Content */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', padding: '16px' }}>
           {/* Badges */}
           <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
             <span style={{ color: '#10b981' }}>보통위험</span>
@@ -9521,15 +9521,24 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
   const renderScreen6Calc = (mode) => {
     const handleClose = () => {
-      setScreen6ToBeSubScreen('bondDetails');
+      if (mode === 'asis') {
+        setScreen6AsIsSubScreen('menu');
+      } else {
+        setScreen6ToBeSubScreen('bondDetails');
+      }
     };
 
     const handleCalculate = () => {
       if (!screen6CalcAmount) return;
-      alert(`입력하신 ${Number(screen6CalcAmount).toLocaleString()}원 기준 투자 수익 가계산이 완료되었습니다.\n예상 세후 총 수령금액은 ${(Number(screen6CalcAmount) * 1.0645).toLocaleString(undefined, {maximumFractionDigits: 0})}원 입니다.`);
+      if (mode === 'asis') {
+        alert(`입력하신 ${Number(screen6CalcAmount).toLocaleString()}원 기준 투자 수익 가계산이 완료되었습니다.\n예상 세후 총 수령금액은 ${(Number(screen6CalcAmount) * 1.0545).toLocaleString(undefined, {maximumFractionDigits: 0})}원 입니다.`);
+      } else {
+        alert(`입력하신 ${Number(screen6CalcAmount).toLocaleString()}원 기준 투자 수익 가계산이 완료되었습니다.\n예상 세후 총 수령금액은 ${(Number(screen6CalcAmount) * 1.0645).toLocaleString(undefined, {maximumFractionDigits: 0})}원 입니다.`);
+      }
     };
 
     const isCalcDisabled = !screen6CalcAmount;
+    const isAsIs = mode === 'asis';
 
     return (
       <div style={{
@@ -9542,35 +9551,39 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         position: 'relative'
       }}>
         {/* Phone Camera & Status Bar */}
-        <div style={styles.phoneCamera} />
-        <div style={styles.phoneHeaderBar}>
-          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#475569' }}>SKT 5:06</span>
-          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.65rem', fontWeight: '800', color: '#333' }}>5G</span>
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
-              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
-              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
-              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
-              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+        {!isAsIs && (
+          <>
+            <div style={styles.phoneCamera} />
+            <div style={styles.phoneHeaderBar}>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#475569' }}>SKT 10:47</span>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: '800', color: '#333' }}>5G</span>
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                  <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+                  <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+                  <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+                  <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+                </div>
+                <div style={{
+                  border: '1px solid #333',
+                  borderRadius: '3px',
+                  padding: '0px 3px',
+                  fontSize: '0.62rem',
+                  fontWeight: '900',
+                  height: '14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#333',
+                  color: '#fff',
+                  lineHeight: 1
+                }}>
+                  100
+                </div>
+              </div>
             </div>
-            <div style={{
-              border: '1px solid #333',
-              borderRadius: '3px',
-              padding: '0px 3px',
-              fontSize: '0.62rem',
-              fontWeight: '900',
-              height: '14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#333',
-              color: '#fff',
-              lineHeight: 1
-            }}>
-              97
-            </div>
-          </div>
-        </div>
+          </>
+        )}
 
         {/* Header */}
         <div style={{
@@ -9595,21 +9608,29 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1, overflowY: 'auto' }}>
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto' }}>
           {/* Top Bond Info Block */}
           <div style={{ padding: '16px 20px', borderBottom: '8px solid #f8fafc' }}>
-            <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
-              <span style={{ color: '#10b981' }}>보통위험</span>
-              <span style={{ color: '#64748b' }}>•</span>
-              <span style={{ color: '#475569' }}>A</span>
-              <span style={{ color: '#64748b' }}>•</span>
-              <span style={{ color: '#475569' }}>금융회사채</span>
-            </div>
+            {isAsIs ? (
+              <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
+                <span style={{ color: '#2563eb' }}>매우낮은위험</span>
+                <span style={{ color: '#64748b' }}>•</span>
+                <span style={{ color: '#475569' }}>지방채</span>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', fontSize: '0.75rem', fontWeight: '800' }}>
+                <span style={{ color: '#10b981' }}>보통위험</span>
+                <span style={{ color: '#64748b' }}>•</span>
+                <span style={{ color: '#475569' }}>A</span>
+                <span style={{ color: '#64748b' }}>•</span>
+                <span style={{ color: '#475569' }}>금융회사채</span>
+              </div>
+            )}
             <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 4px 0', color: '#111111' }}>
-              한국투자캐피탈133
+              {isAsIs ? '경기지역개발채권26-05' : '한국투자캐피탈133'}
             </h2>
             <div style={{ fontSize: '0.78rem', color: '#888888' }}>
-              KR6214341G28
+              {isAsIs ? 'KR2044022G52' : 'KR6214341G28'}
             </div>
           </div>
 
@@ -9642,7 +9663,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#111111' }}>원</span>
             </div>
             <div style={{ textAlign: 'right', marginTop: '6px', fontSize: '0.75rem', color: '#2366ca', fontWeight: '700' }}>
-              예상매수수량 {screen6CalcAmount ? Math.floor(Number(screen6CalcAmount) / 10005.1).toLocaleString() : 0}원
+              예상매수수량 {screen6CalcAmount ? (isAsIs ? Math.floor(Number(screen6CalcAmount) / 9040.5 * 10000) : Math.floor(Number(screen6CalcAmount) / 10005.1)).toLocaleString() : 0}원
             </div>
           </div>
 
@@ -9653,26 +9674,26 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수일자</span>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>2026.07.09</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '2026.07.15' : '2026.07.09'}</span>
                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수수익률</span>
                 <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>4.800 %</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '4.180 %' : '4.800 %'}</span>
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수단가</span>
                 <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>10,005.1 원</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '9,040.5 원' : '10,005.1 원'}</span>
                 </div>
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매도일자</span>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>2028.02.04</span>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '2031.05.31' : '2028.02.04'}</span>
                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                 </div>
               </div>
@@ -10312,7 +10333,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
   };
 
 const renderScreen6Balance = (mode, isSwitchOff = false) => {
-    const isAsIs = mode === 'asis' && !isSwitchOff;
+    const isAsIs = mode === 'asis';
     const subScreen = isAsIs ? screen6AsIsSubScreen : screen6ToBeSubScreen;
     const setSubScreen = isAsIs ? setScreen6AsIsSubScreen : setScreen6ToBeSubScreen;
     const setOrderTab = isAsIs ? setScreen6AsIsOrderTab : setScreen6ToBeOrderTab;
@@ -10629,12 +10650,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Table Body Area */}
         <div style={{
-          flex: 1,
+          flex: isFigmaExportMode ? 'none' : 1,
           display: 'flex',
           flexDirection: 'column',
           backgroundColor: isDark ? '#0f172a' : '#ffffff',
           color: isDark ? '#cbd5e1' : '#111111',
-          overflowY: 'auto'
+          overflowY: isFigmaExportMode ? 'visible' : 'auto'
         }}>
           {!isAsIs && screen6BalanceActiveTab === '잔고' ? (
             /* TO-BE Mode: Grid List with Sample Data */
@@ -10761,6 +10782,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       setSubScreen('bondOrder');
                     } else if (tab.key === 'ETF/리츠 현재가') {
                       setSubScreen('bondCurrentPrice');
+                    } else if (tab.key === '장외채권 매매') {
+                      setSubScreen('bondCalc');
                     }
                   }}
                   style={{
@@ -10770,7 +10793,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     border: 'none',
                     background: 'none',
                     borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                    cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가') ? 'pointer' : 'default',
+                    cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가' || tab.key === '장외채권 매매') ? 'pointer' : 'default',
                     fontSize: showFiveTabs ? '0.7rem' : '0.73rem',
                     fontWeight: '500',
                     color: isDark ? '#cbd5e1' : '#333333',
@@ -11163,7 +11186,17 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           {/* 장외채권 */}
                           <div>
                             <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>장외채권</div>
-                            <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 12px 0' }} />
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                              {[
+                                { name: '장외채권 매매', onClick: () => setScreen6AsIsSubScreen('bondCalc') },
+                                { name: '장외채권 잔고', onClick: () => setScreen6AsIsSubScreen('bondBalance') }
+                              ].map((item, idx) => (
+                                <div key={idx} onClick={item.onClick} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                  <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                </div>
+                              ))}
+                            </div>
+                            <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0 12px 0' }} />
                           </div>
 
                           {/* 단기사채 */}
@@ -11729,6 +11762,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                          setScreen6AsIsSubScreen('bondOrder');
                                        } else if (tab.key === 'ETF/리츠 현재가') {
                                          setScreen6AsIsSubScreen('bondCurrentPrice');
+                                       } else if (tab.key === '장외채권 매매') {
+                                         setScreen6AsIsSubScreen('bondCalc');
                                        }
                                      }}
                                      style={{
@@ -11738,7 +11773,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                        border: 'none',
                                        background: 'none',
                                        borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                                       cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가') ? 'pointer' : 'default',
+                                       cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가' || tab.key === '장외채권 매매') ? 'pointer' : 'default',
                                       fontSize: isSwitchOff ? '0.66rem' : '0.73rem',
                                       fontWeight: '500',
                                       color: isDark ? '#cbd5e1' : '#333333',
@@ -11770,6 +11805,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         renderScreen6Balance('asis', isSwitchOff)
                       ) : screen6AsIsSubScreen === 'cautionAgreement' ? (
                         renderScreen6Caution('asis')
+                      ) : screen6AsIsSubScreen === 'bondCalc' ? (
+                        renderScreen6Calc('asis')
                       ) : (
                         <>
                           {/* Header */}
@@ -12148,6 +12185,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                       if (tab.key === '장내채권 현재가') {
                                         setScreen6AsIsSubScreen('bondCurrentPrice');
                                       } else if (tab.key === '장내채권 잔고') {
+                                        setScreen6AsIsSubScreen('bondBalance');
+                                      } else if (tab.key === '장외채권 매매') {
+                                        setScreen6AsIsSubScreen('bondCalc');
+                                      } else if (tab.key === '장외채권 잔고') {
                                         setScreen6AsIsSubScreen('bondBalance');
                                       }
                                     }}
@@ -12719,7 +12760,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       </button>
 
       {/* Floating Figma Export Mode Toggle Button */}
-      {activeScreen === 4 && (
+      {(activeScreen === 4 || activeScreen === 6) && (
         <button
           onClick={() => setIsFigmaExportMode(!isFigmaExportMode)}
           style={{
@@ -14181,11 +14222,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   ...styles.phoneMockup,
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
-                  height: '800px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative',
-                  borderRadius: '0px'
+                  borderRadius: '0px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
                   {screen6AsIsSearchOpen ? (
                     renderScreen6Search('asis', () => setScreen6AsIsSearchOpen(false))
@@ -14269,11 +14311,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   ...styles.phoneMockup,
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
-                  height: '800px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative',
-                  borderRadius: '0px'
+                  borderRadius: '0px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
                   {screen6ToBeSearchOpen ? (
                     renderScreen6Search('tobe', () => setScreen6ToBeSearchOpen(false))
@@ -14632,6 +14675,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                   if (tab.key === '장내채권 현재가') {
                                     setScreen6ToBeSubScreen('bondCurrentPrice');
                                   } else if (tab.key === '장내채권 잔고') {
+                                    setScreen6ToBeSubScreen('bondBalance');
+                                  } else if (tab.key === '장외채권 매매') {
+                                    setScreen6ToBeSubScreen('bondCalc');
+                                  } else if (tab.key === '장외채권 잔고') {
                                     setScreen6ToBeSubScreen('bondBalance');
                                   }
                                 }}
@@ -15150,6 +15197,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                     setScreen6ToBeSubScreen('bondOrder');
                                   } else if (tab.key === 'ETF/리츠 현재가') {
                                     setScreen6ToBeSubScreen('bondCurrentPrice');
+                                  } else if (tab.key === '장외채권 매매') {
+                                    setScreen6ToBeSubScreen('bondCalc');
                                   }
                                 }}
                                 style={{
@@ -15159,7 +15208,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                   border: 'none',
                                   background: 'none',
                                   borderRight: idx < borderRightCount ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                                  cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가') ? 'pointer' : 'default',
+                                  cursor: (tab.key === '장내(외)채권 잔고' || tab.key === 'ETF/리츠 주문' || tab.key === 'ETF/리츠 현재가' || tab.key === '장외채권 매매') ? 'pointer' : 'default',
                                   fontSize: !screen6ToBeSwitchOn ? '0.7rem' : '0.73rem',
                                   fontWeight: '500',
                                   color: isDark ? '#cbd5e1' : '#333333',
