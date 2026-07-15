@@ -8900,8 +8900,6 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
         ) : (
         <div style={{
           display: 'flex',
-          gap: '16px',
-          padding: '0 12px',
           borderBottom: '1px solid #f1f5f9',
           whiteSpace: 'nowrap'
         }}>
@@ -8913,7 +8911,9 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
               key={tab.label}
               onClick={() => setScreen6SearchTab(tab.label)}
               style={{
-                padding: '12px 4px',
+                flex: 1,
+                textAlign: 'center',
+                padding: '12px 0',
                 fontSize: '0.85rem',
                 fontWeight: tab.active ? '800' : '500',
                 color: tab.active ? '#111111' : '#777777',
