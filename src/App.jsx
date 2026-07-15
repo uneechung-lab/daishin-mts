@@ -9644,46 +9644,7 @@ const [screen6AsIsSearchOpen, setScreen6AsIsSearchOpen] = useState(false);
 
         {/* Content */}
         <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto' }}>
-          {/* Recently Viewed Bonds Bar for TO-BE */}
-          {!isAsIs && (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '10px 16px',
-              backgroundColor: '#f8fafc',
-              borderBottom: '1px solid #e2e8f0',
-              overflowX: 'auto',
-              whiteSpace: 'nowrap'
-            }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#64748b', marginRight: '4px' }}>최근조회</span>
-              {tobeBonds.map((bond) => {
-                const isActive = bond.id === screen6CalcActiveBondId;
-                return (
-                  <button
-                    key={bond.id}
-                    onClick={() => {
-                      setScreen6CalcActiveBondId(bond.id);
-                      setScreen6CalcYieldInput(bond.baseYield.toFixed(3));
-                    }}
-                    style={{
-                      border: isActive ? '1px solid #2563eb' : '1px solid #cbd5e1',
-                      borderRadius: '16px',
-                      padding: '4px 10px',
-                      fontSize: '0.72rem',
-                      fontWeight: '800',
-                      backgroundColor: isActive ? '#eff6ff' : '#ffffff',
-                      color: isActive ? '#2563eb' : '#475569',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    {bond.label}
-                  </button>
-                );
-              })}
-            </div>
-          )}
+
 
           {/* Top Bond Info Block */}
           <div style={{ padding: '16px 20px', borderBottom: '8px solid #f8fafc' }}>
