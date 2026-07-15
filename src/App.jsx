@@ -8735,12 +8735,15 @@ function App() {
   const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
   const [screen6CalcAmount, setScreen6CalcAmount] = useState('');
   const [screen6AsIsModalOpen, setScreen6AsIsModalOpen] = useState(false);
+  const [screen6AsIsUpdateModalOpen, setScreen6AsIsUpdateModalOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6asisupdate-modal') === 'true';
+  });
   const [screen6ToBeNoPlanModalOpen, setScreen6ToBeNoPlanModalOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeno-plan-modal') === 'true';
   });
   const [screen6SelectedBond, setScreen6SelectedBond] = useState(null);
   const [screen6AsIsSubScreen, setScreen6AsIsSubScreen] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen6asis') || 'menu';
+    return new URLSearchParams(window.location.search).get('screen6asis') || 'splash';
   });
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobe') || 'menu';
@@ -10766,7 +10769,174 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   const renderScreen6AsIs = (isSwitchOff = false) => {
     return (
       <>
-        {screen6AsIsSubScreen === 'menu' ? (
+        {screen6AsIsSubScreen === 'splash' ? (
+          <div 
+            onClick={() => setScreen6AsIsUpdateModalOpen(true)}
+            style={{
+              flex: 1,
+              backgroundColor: '#ffffff',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '24px 0 0 0',
+              boxSizing: 'border-box',
+              cursor: 'pointer',
+              height: '100%',
+              position: 'relative'
+            }}
+          >
+            {/* Status Bar */}
+            <div style={{
+              ...styles.phoneHeaderBar,
+              backgroundColor: '#ffffff',
+              color: '#333333',
+              borderBottom: 'none',
+              width: '100%',
+              padding: '0 16px',
+              boxSizing: 'border-box'
+            }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 9:44</span>
+              <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+            </div>
+
+            {/* Logo area */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+              marginTop: '-50px'
+            }}>
+              {/* Logo SVG */}
+              <div style={{ position: 'relative', width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="80" height="80" viewBox="0 0 60 60" fill="none">
+                  {/* Outer cube ribbon in dark grey */}
+                  <path d="M12 22 L30 12 L48 22 L48 38 L30 48 L12 38 Z" stroke="#3a3a3a" strokeWidth="8" strokeLinejoin="round" fill="none" />
+                  {/* Inner shape */}
+                  <rect x="23" y="23" width="14" height="14" fill="#3a3a3a" />
+                </svg>
+              </div>
+
+              {/* Semicircle indicator dots below logo */}
+              <div style={{ display: 'flex', gap: '5px', justifyContent: 'center', marginTop: '16px' }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca', opacity: 0.3 }} />
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca', opacity: 0.5 }} />
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca', opacity: 0.8 }} />
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#2366ca' }} />
+              </div>
+            </div>
+
+            {/* Bottom info section */}
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: '30px' }}>
+              {/* Security Toast message */}
+              <div style={{
+                backgroundColor: '#333333',
+                color: '#ffffff',
+                padding: '12px 16px',
+                fontSize: '11px',
+                textAlign: 'center',
+                width: '82%',
+                borderRadius: '0px',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                lineHeight: '1.5',
+                wordBreak: 'keep-all',
+                fontWeight: '500',
+                marginBottom: '12px'
+              }}>
+                고객님의 안전한 금융거래를 위해<br />
+                보안프로그램을 실행중입니다(V3)
+              </div>
+              
+              <div style={{
+                color: '#666666',
+                fontSize: '12px',
+                fontWeight: '500',
+                textAlign: 'center'
+              }}>
+                고객인증을 시작합니다.
+              </div>
+            </div>
+
+            {/* Android Navigation Bar */}
+            <div style={{
+              width: '100%',
+              height: '42px',
+              backgroundColor: '#f1f5f9',
+              display: 'flex',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              borderTop: '1px solid #e2e8f0'
+            }}>
+              <div style={{ width: '16px', height: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '2px' }}>
+                <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8' }} />
+                <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8' }} />
+                <div style={{ width: '2px', height: '12px', backgroundColor: '#94a3b8' }} />
+              </div>
+              <div style={{ width: '14px', height: '14px', borderRadius: '4px', border: '2px solid #94a3b8' }} />
+              <div style={{ width: '0', height: '0', borderTop: '6px solid transparent', borderBottom: '6px solid transparent', borderRight: '8px solid #94a3b8' }} />
+            </div>
+
+            {/* Update Modal Overlay */}
+            {screen6AsIsUpdateModalOpen && (
+              <div 
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 1000
+                }}
+              >
+                <div style={{
+                  width: '260px',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '2px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    padding: '36px 20px',
+                    fontSize: '0.86rem',
+                    color: '#333333',
+                    textAlign: 'center',
+                    lineHeight: '1.5',
+                    fontWeight: '600',
+                    wordBreak: 'keep-all'
+                  }}>
+                    신규 버전 업데이트가 필요합니다.
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setScreen6AsIsUpdateModalOpen(false);
+                      setScreen6AsIsSubScreen('menu');
+                    }}
+                    style={{
+                      height: '42px',
+                      backgroundColor: '#222222',
+                      color: '#ffffff',
+                      border: 'none',
+                      fontSize: '0.88rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    최신 버전 업데이트
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : screen6AsIsSubScreen === 'menu' ? (
                     <>
                       {/* Status Bar */}
                       <div style={{
@@ -12164,6 +12334,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (screen6ToBeCautionQ2) params.set('screen6tobeq2', screen6ToBeCautionQ2); else params.delete('screen6tobeq2');
     if (screen6CalcAmount) params.set('screen6calcamount', screen6CalcAmount); else params.delete('screen6calcamount');
     if (screen6AsIsModalOpen) params.set('screen6asismodal', 'true'); else params.delete('screen6asismodal');
+    if (screen6AsIsUpdateModalOpen) params.set('screen6asisupdate-modal', 'true'); else params.delete('screen6asisupdate-modal');
     if (screen6ToBeNoPlanModalOpen) params.set('screen6tobeno-plan-modal', 'true'); else params.delete('screen6tobeno-plan-modal');
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
@@ -12203,7 +12374,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6AsIsModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -12243,6 +12414,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen6calcamountParam) setScreen6CalcAmount(screen6calcamountParam);
       const screen6asismodalParam = params.get('screen6asismodal');
       if (screen6asismodalParam) setScreen6AsIsModalOpen(screen6asismodalParam === 'true');
+      const screen6asisupdateParam = params.get('screen6asisupdate-modal');
+      if (screen6asisupdateParam) setScreen6AsIsUpdateModalOpen(screen6asisupdateParam === 'true');
       const screen6tobenoplanmodalParam = params.get('screen6tobeno-plan-modal');
       if (screen6tobenoplanmodalParam) setScreen6ToBeNoPlanModalOpen(screen6tobenoplanmodalParam === 'true');
       const screen4SubParam = params.get('screen4SubScreen');
