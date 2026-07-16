@@ -2315,23 +2315,29 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   ];
 
   const ownedList = [
-    { name: 'KODEX 현대차로보틱스밸류체인TO', code: 'A0204D0', limit: '투자한도70%', price: 15300, pct: 3.0, positive: true, quantity: 10, avgPrice: 14850 },
-    { name: 'DAISHIN343 금융&지주고배당', code: 'A0189Z0', limit: '투자한도70%', price: 125400, pct: -0.5, positive: false, quantity: 5, avgPrice: 126030 },
-    { name: '대신글로벌코어리츠', code: 'A390140', limit: '투자한도100%', price: 2950, pct: 1.2, positive: true, quantity: 100, avgPrice: 2915 },
-    { name: 'TIGER 미국S&P500', code: 'A0191B0', limit: '투자한도70%', price: 28325, pct: 0.21, positive: true, quantity: 20, avgPrice: 28165 },
-    { name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0192C0', limit: '투자한도100%', price: 14550, pct: 1.11, positive: true, quantity: 50, avgPrice: 14390 },
-    { name: 'ACE 미국나스닥100', code: 'A0193D0', limit: '투자한도70%', price: 21050, pct: -1.05, positive: false, quantity: 15, avgPrice: 21270 },
-    { name: 'KODEX 200', code: 'A005930', limit: '투자한도100%', price: 32450, pct: -0.37, positive: false, quantity: 30, avgPrice: 32570 }
+    { name: 'KODEX 현대차로보틱스밸류체인TO', code: 'A0204D0', limit: '투자한도70%', price: 15300, pct: 3.0, positive: true, quantity: 10, avgPrice: 14850, volume: 152000 },
+    { name: 'DAISHIN343 금융&지주고배당', code: 'A0189Z0', limit: '투자한도70%', price: 125400, pct: -0.5, positive: false, quantity: 5, avgPrice: 126030, volume: 12000 },
+    { name: '대신글로벌코어리츠', code: 'A390140', limit: '투자한도100%', price: 2950, pct: 1.2, positive: true, quantity: 100, avgPrice: 2915, volume: 850000 },
+    { name: 'TIGER 미국S&P500', code: 'A0191B0', limit: '투자한도70%', price: 28325, pct: 0.21, positive: true, quantity: 20, avgPrice: 28165, volume: 2100000 },
+    { name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0192C0', limit: '투자한도100%', price: 14550, pct: 1.11, positive: true, quantity: 50, avgPrice: 14390, volume: 32000 },
+    { name: 'ACE 미국나스닥100', code: 'A0193D0', limit: '투자한도70%', price: 21050, pct: -1.05, positive: false, quantity: 15, avgPrice: 21270, volume: 450000 },
+    { name: 'KODEX 200', code: 'A005930', limit: '투자한도100%', price: 32450, pct: -0.37, positive: false, quantity: 30, avgPrice: 32570, volume: 3200000 }
   ];
 
   const getSortedOwnedList = () => {
     let list = [...ownedList];
-    if (ownedSortOption === '평가금액 많은 순') {
+    if (ownedSortOption === '평가금 많은 순') {
       list.sort((a, b) => (b.quantity * b.price) - (a.quantity * a.price));
     } else if (ownedSortOption === '수익률 높은 순') {
+      list.sort((a, b) => {
+        const yieldA = ((a.price - a.avgPrice) / a.avgPrice) * 100;
+        const yieldB = ((b.price - b.avgPrice) / b.avgPrice) * 100;
+        return yieldB - yieldA;
+      });
+    } else if (ownedSortOption === '등락률 높은 순') {
       list.sort((a, b) => b.pct - a.pct);
-    } else if (ownedSortOption === '수익률 낮은 순') {
-      list.sort((a, b) => a.pct - b.pct);
+    } else if (ownedSortOption === '거래량 많은 순') {
+      list.sort((a, b) => (b.volume || 0) - (a.volume || 0));
     }
     return list;
   };
@@ -3904,8 +3910,9 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               {[
                 '수익률 높은 순',
-                '평가금액 많은 순',
-                '수익률 낮은 순'
+                '등락률 높은 순',
+                '평가금 많은 순',
+                '거래량 많은 순'
               ].map((option) => {
                 const isSelected = ownedSortOption === option;
                 return (
@@ -16737,7 +16744,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>정렬기준 선택</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
-                          <li>좌측 정렬 선택 버튼 클릭 시 바텀시트 정렬 옵션 메뉴(`수익률 높은 순`, `평가금액 많은 순`, `수익률 낮은 순`) 호출 및 정렬 스위칭</li>
+                          <li>좌측 정렬 선택 버튼 클릭 시 바텀시트 정렬 옵션 메뉴(`수익률 높은 순`, `등락률 높은 순`, `평가금 많은 순`, `거래량 많은 순`) 호출 및 정렬 스위칭</li>
                         </ul>
                       </div>
                     </li>
