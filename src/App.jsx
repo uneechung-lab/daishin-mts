@@ -6243,23 +6243,12 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               </div>
               <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
                 <div style={{ position: 'relative', flex: 1 }}>
-                  <input 
-                    type="text" 
-                    value={directAccountNumber} 
-                    onChange={(e) => setDirectAccountNumber(e.target.value)}
-                    placeholder="계좌번호 직접입력"
-                    inputMode="none"
-                    onFocus={() => {
-                      setActiveField('account');
-                      setShowNumericKeypad(true);
-                    }}
-                    style={{ ...inputStyle, marginTop: 0, width: '100%', backgroundColor: 'transparent', boxSizing: 'border-box' }} 
-                  />
+                  {renderStyledInput(directAccountNumber, setDirectAccountNumber, "계좌번호 직접입력", "account", true, false, { boxSizing: 'border-box' })}
                   {isToBe && isDrawerOpen && (
                     <span style={{
                       position: 'absolute',
                       top: '12px',
-                      right: '10px',
+                      right: '28px',
                       width: '18px',
                       height: '18px',
                       borderRadius: '50%',
