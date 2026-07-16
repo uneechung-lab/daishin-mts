@@ -5502,7 +5502,11 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     const prefix = isToBe ? 'tobe' : 'asis';
     return params.get(`${prefix}CustomAmount`) || '2,500,000 원';
   });
-  const [customPeriod, setCustomPeriod] = useState('');
+  const [customPeriod, setCustomPeriod] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}CustomPeriod`) || '';
+  });
   const [showPeriodPicker, setShowPeriodPicker] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -5526,9 +5530,21 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   // Keypad & Inputs Editable States
   const [showNumericKeypad, setShowNumericKeypad] = useState(false);
   const [activeField, setActiveField] = useState(null); // 'amount', 'account', 'phone', 'immediateAmount'
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [directAccountNumber, setDirectAccountNumber] = useState('');
-  const [immediateAmount, setImmediateAmount] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}PhoneNumber`) || '';
+  });
+  const [directAccountNumber, setDirectAccountNumber] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}DirectAccountNumber`) || '';
+  });
+  const [immediateAmount, setImmediateAmount] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}ImmediateAmount`) || '';
+  });
   const [showNoticePopup, setShowNoticePopup] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
 
@@ -5631,12 +5647,16 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     params.set(`${prefix}SelectedPeriod`, selectedPeriod);
     params.set(`${prefix}SelectedBank`, selectedBank);
     params.set(`${prefix}CustomAmount`, customAmount);
+    params.set(`${prefix}PhoneNumber`, phoneNumber);
+    params.set(`${prefix}DirectAccountNumber`, directAccountNumber);
+    params.set(`${prefix}CustomPeriod`, customPeriod);
+    params.set(`${prefix}ImmediateAmount`, immediateAmount);
 
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe, receiptStatus, showConfirmModal, showSuccessModal, showCancelConfirmModal, isCancelled, showDateLimitPopup]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe, receiptStatus, showConfirmModal, showSuccessModal, showCancelConfirmModal, isCancelled, showDateLimitPopup, phoneNumber, directAccountNumber, customPeriod, immediateAmount]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
