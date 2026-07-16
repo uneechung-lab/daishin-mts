@@ -1865,8 +1865,7 @@ function AsIsCurrentPriceView({ setAsIsSubScreen, isDark }) {
                 '1개월',
                 '3개월',
                 '6개월',
-                '1년',
-                '3년'
+                '1년'
               ].map((option) => {
                 const isSelected = sortOption === option;
                 return (
@@ -4128,8 +4127,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                 '1개월',
                 '3개월',
                 '6개월',
-                '1년',
-                '3년'
+                '1년'
               ].map((option) => {
                 const isSelected = sortOption === option;
                 return (
