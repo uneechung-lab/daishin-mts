@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import logoImg from './assets/logo.png';
 
@@ -5532,6 +5532,40 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   const [showNoticePopup, setShowNoticePopup] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
 
+  const contentRef = useRef(null);
+
+  // Restore scroll position on load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (contentRef.current) {
+        const params = new URLSearchParams(window.location.search);
+        const prefix = isToBe ? 'tobe' : 'asis';
+        const urlScrollTop = params.get(`${prefix}ScrollTop`);
+        if (urlScrollTop) {
+          contentRef.current.scrollTop = parseInt(urlScrollTop, 10);
+        } else {
+          const savedScroll = sessionStorage.getItem(`${prefix}PensionRequestScrollTop`);
+          if (savedScroll) {
+            contentRef.current.scrollTop = parseInt(savedScroll, 10);
+          }
+        }
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleScroll = (e) => {
+    const scrollTop = e.target.scrollTop;
+    const prefix = isToBe ? 'tobe' : 'asis';
+    sessionStorage.setItem(`${prefix}PensionRequestScrollTop`, scrollTop);
+    
+    // Dynamically update URL param silently
+    const params = new URLSearchParams(window.location.search);
+    params.set(`${prefix}ScrollTop`, scrollTop);
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, '', newUrl);
+  };
+
   // New interactive states for application/cancellation modal flows
   const [receiptStatus, setReceiptStatus] = useState('form'); // 'form', 'inquiry'
   const [showDateLimitPopup, setShowDateLimitPopup] = useState(false);
@@ -5987,7 +6021,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
         </div>
       ) : (
         <>
-          <div style={contentStyle}>
+          <div ref={contentRef} onScroll={handleScroll} style={contentStyle}>
             {/* Account Dropdown */}
             <div style={{ position: 'relative' }}>
               {isToBe ? (
