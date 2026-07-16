@@ -2532,7 +2532,9 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               </div>
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>{item.limit.replace('투자한도', '')}</span>
+              <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>
+                {item.limit.startsWith('투자한도') ? '투자한도 ' + item.limit.replace('투자한도', '') : item.limit}
+              </span>
               <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
               <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
                 {item.code}
@@ -3205,7 +3207,9 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                       </div>
                       {/* 투자한도 + code + 구분 (matches style of renderStockList) */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>{item.limit.replace('투자한도', '')}</span>
+                        <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>
+                          {item.limit.startsWith('투자한도') ? '투자한도 ' + item.limit.replace('투자한도', '') : item.limit}
+                        </span>
                         <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
                         <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
                           {item.code}
@@ -3376,7 +3380,9 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                             color: '#3b82f6',
                             letterSpacing: '-0.1px',
                             flexShrink: 0
-                          }}>{item.limit.replace('투자한도', '')}</span>
+                          }}>
+                            {item.limit.startsWith('투자한도') ? '투자한도 ' + item.limit.replace('투자한도', '') : item.limit}
+                          </span>
                           <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
                           <span style={{
                             fontSize: '0.72rem',
