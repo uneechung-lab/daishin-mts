@@ -2372,6 +2372,21 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     { name: 'KoAct 배당성장액티브', code: 'A476850', limit: '투자한도70%', price: 27545, pct: 1.21, positive: true, hasK: true, hasN: false }
   ];
 
+  const etnList = [
+    { name: '삼성 레버리지 천연가스 선물 ETN', code: 'A530001', limit: '투자한도70%', price: 9250, pct: 4.85, positive: true },
+    { name: '신한 인버스 2X WTI원유 선물 ETN', code: 'A500015', limit: '투자한도70%', price: 12400, pct: -3.12, positive: false },
+    { name: '메리츠 S&P 국채 10년 ETN', code: 'A570021', limit: '투자한도100%', price: 10050, pct: 0.15, positive: true },
+    { name: 'KB 레버리지 구리 선물 ETN', code: 'A580012', limit: '투자한도70%', price: 15420, pct: 2.30, positive: true }
+  ];
+
+  const reitsList = [
+    { name: 'SK리츠', code: 'A395400', limit: '투자한도100%', price: 4120, pct: -0.85, positive: false },
+    { name: '제이알글로벌리츠', code: 'A348950', limit: '투자한도100%', price: 3850, pct: 0.52, positive: true },
+    { name: '롯데리츠', code: 'A330590', limit: '투자한도100%', price: 3200, pct: -1.23, positive: false },
+    { name: '신한서부티엔디리츠', code: 'A388720', limit: '투자한도100%', price: 3010, pct: 0.00, positive: true },
+    { name: '한화플러스액티브리츠', code: 'A412210', limit: '투자한도100%', price: 4890, pct: 1.88, positive: true }
+  ];
+
   // Merge lists to form a general list
   const allList = [
     { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true  },
@@ -2382,7 +2397,9 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     ...recentViewedList,
     ...ownedList,
     ...tdfList,
-    ...goDividendList
+    ...goDividendList,
+    ...etnList,
+    ...reitsList
   ].filter((item, index, self) => 
     self.findIndex(t => t.name === item.name) === index
   );
