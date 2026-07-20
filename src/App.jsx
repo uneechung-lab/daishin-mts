@@ -3783,7 +3783,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                     <span style={{ fontSize: '0.82rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111' }}>전체</span>
                   </div>
                 )}
-                {renderStockList(allList, true)}
+                {renderStockList(allList, false)}
               </div>
             ) : (
               <>
