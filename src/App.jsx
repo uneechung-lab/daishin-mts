@@ -2524,7 +2524,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               whiteSpace: 'normal',
               lineHeight: '1.2'
             }}>{item.name}</span>
-            {item.quantity !== undefined && item.avgPrice !== undefined && activeMallTab === '보유' && (
+            {item.quantity !== undefined && item.avgPrice !== undefined && activeMallTab === '보유' && ownedDisplayOption === '평가금' && (
               <div style={{ display: 'flex', alignItems: 'center', marginTop: '1px' }}>
                 <span style={{ fontSize: '0.72rem', color: isDark ? '#94a3b8' : '#555555' }}>
                   {item.quantity}주 · 내 평균 {item.avgPrice.toLocaleString()}원
