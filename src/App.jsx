@@ -3717,6 +3717,15 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
             {(searchQuery.trim() !== '' || selectedChip !== '전체') ? (
               <div>
+                {selectedChip === 'ETF' && (
+                  <div style={sectionHeaderStyle}>시가총액 순</div>
+                )}
+                {selectedChip === 'ETN' && (
+                  <div style={sectionHeaderStyle}>시가총액 순</div>
+                )}
+                {selectedChip === '리츠' && (
+                  <div style={sectionHeaderStyle}>종목명 순</div>
+                )}
                 {etfMallNavMode === 'search' && (
                   <div 
                     onClick={(e) => {
