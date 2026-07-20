@@ -2548,12 +2548,12 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                 </span>
               </div>
             )}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', fontSize: '0.72rem', color: isDark ? '#94a3b8' : '#888888' }}>
+              <span>
                 {item.limit.startsWith('투자한도') ? '투자한도 ' + item.limit.replace('투자한도', '') : item.limit}
               </span>
-              <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
-              <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
+              <span>|</span>
+              <span>
                 {item.code}
               </span>
             </div>
@@ -2620,26 +2620,16 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               /* 기존 Col 2 & 3 Group */
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
                 {/* Col 2 */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
-                    <span style={{
-                      fontSize: '0.92rem',
-                      fontWeight: '700',
-                      color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
-                      letterSpacing: '-0.3px'
-                    }}>{item.price.toLocaleString()}</span>
-                    <span style={{
-                      fontSize: '0.72rem',
-                      color: isDark ? '#64748b' : '#888888',
-                      letterSpacing: '-0.1px'
-                    }}>
-                      {(item.volume || 109760).toLocaleString()}
-                    </span>
-                  </div>
-                  
-                  {/* K / N Stack */}
-                  {(item.hasK !== false || item.hasN !== false) && (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                    {/* Row 1: Price and K Badge */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{
+                        fontSize: '0.92rem',
+                        fontWeight: '700',
+                        color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
+                        letterSpacing: '-0.3px'
+                      }}>{item.price.toLocaleString()}</span>
                       {item.hasK !== false && (
                         <div style={{
                           width: '12px',
@@ -2656,6 +2646,16 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                           lineHeight: 1
                         }}>K</div>
                       )}
+                    </div>
+                    {/* Row 2: Volume and N Badge */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        color: isDark ? '#64748b' : '#888888',
+                        letterSpacing: '-0.1px'
+                      }}>
+                        {(item.volume || 109760).toLocaleString()}
+                      </span>
                       {item.hasN !== false && (
                         <div style={{
                           width: '12px',
@@ -2672,13 +2672,13 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                         }}>N</div>
                       )}
                     </div>
-                  )}
+                  </div>
 
                   {/* Arrow next to badges */}
                   <span style={{
                     fontSize: '0.62rem',
                     color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
-                    marginLeft: '2px',
+                    marginRight: '2px',
                     flexShrink: 0
                   }}>
                     {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
