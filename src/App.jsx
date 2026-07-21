@@ -10452,70 +10452,60 @@ function App() {
           ) : (
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <span style={{ fontSize: '18px', fontWeight: 'bold' }}>사용하실 계좌 선택</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555555" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                </svg>
+                <span style={{ fontSize: '18px', fontWeight: 'bold' }}>상품선택</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555555" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ cursor: 'pointer' }}>
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                  <span 
+                    onClick={() => setBsheetState('closed')}
+                    style={{ fontSize: '20px', fontWeight: '300', cursor: 'pointer', lineHeight: 1, color: '#333' }}
+                  >
+                    ✕
+                  </span>
+                </div>
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {mode === 'tobe' ? (
                   <>
-                    {/* First Account (TO-BE: 200-233354(41)) */}
-                    <div 
-                      onClick={() => { setScreen6ActiveAccount('200-233354(41)'); setScreen6ToBeNoPlanModalOpen(true); setBsheetState('closed'); }}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '14px 4px',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #f1f5f9'
-                      }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(41)</span>
-                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.09</span>
+                    {/* Account Group (200-233354 김대신) */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '18px', fontWeight: '800', color: '#111111', letterSpacing: '-0.3px' }}>200-233354</span>
+                        <span style={{ fontSize: '16px', fontWeight: '700', color: '#333333' }}>김대신</span>
                       </div>
-                      {screen6ActiveAccount === '200-233354(41)' && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
-                    </div>
-                    
-                    {/* Second Account (TO-BE: 200-233354(43)) */}
-                    <div 
-                      onClick={() => { setScreen6ActiveAccount('200-233354(43)'); setBsheetState('closed'); }}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '14px 4px',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #f1f5f9'
-                      }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(43)</span>
-                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.07.10</span>
-                      </div>
-                      {screen6ActiveAccount === '200-233354(43)' && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
-                    </div>
 
-                    {/* Third Account (TO-BE: 200-233354(01)) */}
-                    <div 
-                      onClick={() => { setScreen6ActiveAccount('200-233354(01)'); setBsheetState('closed'); }}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '14px 4px',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>200-233354(01)</span>
-                        <span style={{ fontSize: '11px', color: '#888888' }}>최근사용일자 : 2026.06.22</span>
+                      {/* Sub-item 1: 41 개인형 퇴직연금(IRP) */}
+                      <div 
+                        onClick={() => { setScreen6ActiveAccount('200-233354(41)'); setBsheetState('closed'); }}
+                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '16px', cursor: 'pointer' }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
+                          <span style={{ fontSize: '15px', fontWeight: '700', color: '#111111', textDecoration: 'underline' }}>41</span>
+                          <span style={{ fontSize: '15px', fontWeight: '700', color: '#111111', textDecoration: 'underline' }}>개인형 퇴직연금(IRP)</span>
+                        </div>
+                        {screen6ActiveAccount === '200-233354(41)' && (
+                          <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
+                        )}
                       </div>
-                      {screen6ActiveAccount === '200-233354(01)' && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
+
+                      {/* Sub-item 2: 43 퇴직연금(DC) */}
+                      <div 
+                        onClick={() => { setScreen6ActiveAccount('200-233354(43)'); setBsheetState('closed'); }}
+                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '16px', cursor: 'pointer' }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
+                          <span style={{ fontSize: '15px', fontWeight: '400', color: '#111111' }}>43</span>
+                          <span style={{ fontSize: '15px', fontWeight: '400', color: '#111111' }}>퇴직연금(DC)</span>
+                        </div>
+                        {screen6ActiveAccount === '200-233354(43)' && (
+                          <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
+                        )}
+                      </div>
                     </div>
                   </>
                 ) : (
