@@ -8943,7 +8943,7 @@ function App() {
   const [screen6ToBeCautionQ2, setScreen6ToBeCautionQ2] = useState(null);
   const [screen6CalcAmount, setScreen6CalcAmount] = useState('');
   const [screen6ActiveAccount, setScreen6ActiveAccount] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen6account') || '200-233354(41)';
+    return new URLSearchParams(window.location.search).get('screen6account') || '200-233354(01)';
   });
   const [screen6DepositTab, setScreen6DepositTab] = useState('고객납입금');
   useEffect(() => {
@@ -10477,6 +10477,21 @@ function App() {
                         <span style={{ fontSize: '16px', fontWeight: '700', color: '#333333' }}>김대신</span>
                       </div>
 
+                      {/* Sub-item 0: 01 종합투자상품 */}
+                      <div 
+                        onClick={() => { setScreen6ActiveAccount('200-233354(01)'); setBsheetState('closed'); }}
+                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '16px', cursor: 'pointer' }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
+                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(01)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(01)' ? 'underline' : 'none' }}>01</span>
+                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(01)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(01)' ? 'underline' : 'none' }}>종합투자상품</span>
+                        </div>
+                        {screen6ActiveAccount === '200-233354(01)' && (
+                          <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
+                        )}
+                      </div>
+
                       {/* Sub-item 1: 41 개인형 퇴직연금(IRP) */}
                       <div 
                         onClick={() => { setScreen6ActiveAccount('200-233354(41)'); setBsheetState('closed'); }}
@@ -10484,8 +10499,8 @@ function App() {
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
-                          <span style={{ fontSize: '15px', fontWeight: '700', color: '#111111', textDecoration: 'underline' }}>41</span>
-                          <span style={{ fontSize: '15px', fontWeight: '700', color: '#111111', textDecoration: 'underline' }}>개인형 퇴직연금(IRP)</span>
+                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(41)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(41)' ? 'underline' : 'none' }}>41</span>
+                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(41)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(41)' ? 'underline' : 'none' }}>개인형 퇴직연금(IRP)</span>
                         </div>
                         {screen6ActiveAccount === '200-233354(41)' && (
                           <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
@@ -10499,8 +10514,8 @@ function App() {
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
-                          <span style={{ fontSize: '15px', fontWeight: '400', color: '#111111' }}>43</span>
-                          <span style={{ fontSize: '15px', fontWeight: '400', color: '#111111' }}>퇴직연금(DC)</span>
+                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(43)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(43)' ? 'underline' : 'none' }}>43</span>
+                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(43)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(43)' ? 'underline' : 'none' }}>퇴직연금(DC)</span>
                         </div>
                         {screen6ActiveAccount === '200-233354(43)' && (
                           <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
