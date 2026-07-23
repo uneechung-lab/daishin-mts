@@ -10336,21 +10336,52 @@ function App() {
                 </button>
               </div>
               
-              <div 
-                onClick={() => setBsheetState('closed')}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '16px 4px',
-                  cursor: 'pointer',
-                  borderBottom: '1px solid #f1f5f9'
-                }}
-              >
-                <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>
-                  {mode === 'asis' ? '(01) 종합투자상품' : '(41) 개인형퇴직연금(IRP)'}
-                </span>
-                <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {mode === 'asis' ? (
+                  <div 
+                    onClick={() => { setScreen6ActiveAccount('200-233354(01)'); setBsheetState('closed'); }}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: '16px 4px',
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #f1f5f9'
+                    }}
+                  >
+                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#111111' }}>
+                      (01) 종합투자상품
+                    </span>
+                    <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>
+                  </div>
+                ) : (
+                  [
+                    { id: '200-233354(01)', label: '(01) 종합투자상품' },
+                    { id: '200-233354(41)', label: '(41) 퇴직연금상품' },
+                    { id: '200-233354(43)', label: '(43) 퇴직연금(DC_가입자)' }
+                  ].map((item) => {
+                    const isSelected = screen6ActiveAccount === item.id || (item.id === '200-233354(01)' && screen6ActiveAccount === '200-233354');
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={() => { setScreen6ActiveAccount(item.id); setBsheetState('closed'); }}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '16px 4px',
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #f1f5f9'
+                        }}
+                      >
+                        <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '400', color: '#111111' }}>
+                          {item.label}
+                        </span>
+                        {isSelected && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
+                      </div>
+                    );
+                  })
+                )}
               </div>
             </>
           ) : bsheetState === 'balance_select' ? (
@@ -10485,62 +10516,34 @@ function App() {
                 )}
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {mode === 'tobe' ? (
-                  <>
-                    {/* Account Group (200-233354 김대신) */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '18px', fontWeight: '800', color: '#111111', letterSpacing: '-0.3px' }}>200-233354</span>
-                        <span style={{ fontSize: '16px', fontWeight: '700', color: '#333333' }}>김대신</span>
-                      </div>
-
-                      {/* Sub-item 0: 01 종합투자상품 */}
-                      <div 
-                        onClick={() => { setScreen6ActiveAccount('200-233354(01)'); setBsheetState('closed'); }}
-                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '16px', cursor: 'pointer' }}
+                  [
+                    { id: '200-233354(01)', label: '(01) 종합투자상품' },
+                    { id: '200-233354(41)', label: '(41) 퇴직연금상품' },
+                    { id: '200-233354(43)', label: '(43) 퇴직연금(DC_가입자)' }
+                  ].map((item) => {
+                    const isSelected = screen6ActiveAccount === item.id || (item.id === '200-233354(01)' && screen6ActiveAccount === '200-233354');
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={() => { setScreen6ActiveAccount(item.id); setBsheetState('closed'); }}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '16px 4px',
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #f1f5f9'
+                        }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
-                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(01)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(01)' ? 'underline' : 'none' }}>01</span>
-                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(01)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(01)' ? 'underline' : 'none' }}>종합투자상품</span>
-                        </div>
-                        {screen6ActiveAccount === '200-233354(01)' && (
-                          <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
-                        )}
+                        <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '400', color: '#111111' }}>
+                          {item.label}
+                        </span>
+                        {isSelected && <span style={{ color: '#2366ca', fontSize: '16px', fontWeight: 'bold' }}>✓</span>}
                       </div>
-
-                      {/* Sub-item 1: 41 개인형 퇴직연금(IRP) */}
-                      <div 
-                        onClick={() => { setScreen6ActiveAccount('200-233354(41)'); setBsheetState('closed'); }}
-                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '16px', cursor: 'pointer' }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
-                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(41)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(41)' ? 'underline' : 'none' }}>41</span>
-                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(41)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(41)' ? 'underline' : 'none' }}>개인형 퇴직연금(IRP)</span>
-                        </div>
-                        {screen6ActiveAccount === '200-233354(41)' && (
-                          <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
-                        )}
-                      </div>
-
-                      {/* Sub-item 2: 43 퇴직연금(DC) */}
-                      <div 
-                        onClick={() => { setScreen6ActiveAccount('200-233354(43)'); setBsheetState('closed'); }}
-                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '16px', cursor: 'pointer' }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ fontSize: '14px', color: '#999999', marginTop: '-2px' }}>└</span>
-                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(43)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(43)' ? 'underline' : 'none' }}>43</span>
-                          <span style={{ fontSize: '15px', fontWeight: screen6ActiveAccount === '200-233354(43)' ? '700' : '400', color: '#111111', textDecoration: screen6ActiveAccount === '200-233354(43)' ? 'underline' : 'none' }}>퇴직연금(DC)</span>
-                        </div>
-                        {screen6ActiveAccount === '200-233354(43)' && (
-                          <span style={{ color: '#333333', fontSize: '15px', fontWeight: 'bold' }}>✓</span>
-                        )}
-                      </div>
-                    </div>
-                  </>
+                    );
+                  })
                 ) : (
                   <>
                     {/* First Account (AS-IS: 200-233354) */}
