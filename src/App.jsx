@@ -9972,7 +9972,7 @@ function App() {
                   display: 'flex', 
                   justifyContent: 'space-between', 
                   alignItems: 'center', 
-                  borderBottom: (!isAsIs && screen6CalcKeypadOpen) ? '2px solid #2563eb' : '1px solid #e2e8f0', 
+                  borderBottom: isAsIs ? 'none' : ((!isAsIs && screen6CalcKeypadOpen) ? '2px solid #2563eb' : '1px solid #e2e8f0'), 
                   paddingBottom: '6px' 
                 }}>
                   <span style={{ 
@@ -10011,7 +10011,7 @@ function App() {
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>매수단가</span>
-                <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                <div style={{ borderBottom: 'none', paddingBottom: '6px' }}>
                   <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{calculatedUnitPrice.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })} 원</span>
                 </div>
               </div>
