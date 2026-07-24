@@ -9250,10 +9250,14 @@ function App() {
   const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account', 'balance_select', 'hold_balance', 'tax_select'
   const [screen6AsIsBalanceType, setScreen6AsIsBalanceType] = useState('잔고선택');
   const [screen6AsIsHoldBalanceType, setScreen6AsIsHoldBalanceType] = useState('보유잔고');
-  const [screen6AsIsTaxType, setScreen6AsIsTaxType] = useState('과세선택');
+  const [screen6AsIsTaxType, setScreen6AsIsTaxType] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6AsIsTaxType') || '정상과세';
+  });
   const [screen6ToBeBalanceType, setScreen6ToBeBalanceType] = useState('잔고선택');
   const [screen6ToBeHoldBalanceType, setScreen6ToBeHoldBalanceType] = useState('보유잔고');
-  const [screen6ToBeTaxType, setScreen6ToBeTaxType] = useState('과세선택');
+  const [screen6ToBeTaxType, setScreen6ToBeTaxType] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6ToBeTaxType') || '연금과세(또는 과세이연)';
+  });
   const [screen6AsIsUnexecutedOpen, setScreen6AsIsUnexecutedOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6AsIsUnexecutedOpen') === 'true';
   });
@@ -10035,8 +10039,14 @@ function App() {
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>과세구분</span>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? '정상과세' : '연금과세(또는 과세이연)'}</span>
+                <div 
+                  onClick={() => {
+                    if (isAsIs) setScreen6AsIsBsheetState('tax_select');
+                    else setScreen6ToBeBsheetState('tax_select');
+                  }}
+                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}
+                >
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? screen6AsIsTaxType : screen6ToBeTaxType}</span>
                   <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
                 </div>
               </div>
@@ -10451,10 +10461,13 @@ function App() {
           ) : bsheetState === 'tax_select' ? (
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                <span style={{ fontSize: '16px', fontWeight: 'bold' }}>과세선택</span>
+                <span style={{ fontSize: '16px', fontWeight: 'bold' }}>과세 구분 선택</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {['종합과세', '분리과세'].map((item) => {
+                {(mode === 'asis' 
+                  ? ['정상과세', '비과세', '세금우대', '분리과세']
+                  : ['연금과세(또는 과세이연)', '연금소득세(연금수령 시)', '기타소득세(중도 해지나 일시금 인출 시)']
+                ).map((item) => {
                   const isSelected = (mode === 'asis' ? screen6AsIsTaxType : screen6ToBeTaxType) === item;
                   return (
                     <div 
@@ -10468,7 +10481,7 @@ function App() {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        padding: '12px 4px',
+                        padding: '14px 4px',
                         cursor: 'pointer',
                         borderBottom: '1px solid #f1f5f9'
                       }}
