@@ -9256,7 +9256,7 @@ function App() {
   const [screen6ToBeBalanceType, setScreen6ToBeBalanceType] = useState('잔고선택');
   const [screen6ToBeHoldBalanceType, setScreen6ToBeHoldBalanceType] = useState('보유잔고');
   const [screen6ToBeTaxType, setScreen6ToBeTaxType] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen6ToBeTaxType') || '연금과세(또는 과세이연)';
+    return new URLSearchParams(window.location.search).get('screen6ToBeTaxType') || '연금소득세(연금수령 시)';
   });
   const [screen6AsIsUnexecutedOpen, setScreen6AsIsUnexecutedOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6AsIsUnexecutedOpen') === 'true';
@@ -10466,7 +10466,7 @@ function App() {
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {(mode === 'asis' 
                   ? ['정상과세', '비과세', '세금우대', '분리과세']
-                  : ['연금과세(또는 과세이연)', '연금소득세(연금수령 시)', '기타소득세(중도 해지나 일시금 인출 시)']
+                  : ['연금소득세(연금수령 시)', '기타소득세(중도 해지나 일시금 인출 시)']
                 ).map((item) => {
                   const isSelected = (mode === 'asis' ? screen6AsIsTaxType : screen6ToBeTaxType) === item;
                   return (
@@ -10486,8 +10486,8 @@ function App() {
                         borderBottom: '1px solid #f1f5f9'
                       }}
                     >
-                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '500', color: isSelected ? '#de201e' : '#111111' }}>{item}</span>
-                      {isSelected && <span style={{ color: '#de201e', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                      <span style={{ fontSize: '14px', fontWeight: isSelected ? '700' : '400', color: '#111111' }}>{item}</span>
+                      {isSelected && <span style={{ color: '#111111', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                     </div>
                   );
                 })}
