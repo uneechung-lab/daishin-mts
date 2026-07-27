@@ -10893,7 +10893,7 @@ const renderScreen6Ratio = (mode) => {
             보유상품 현황
           </span>
 
-          <div>
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
             <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
             </button>
@@ -13350,28 +13350,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             금융상품 투자하기
           </span>
 
-          <div>
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
             <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
             </button>
-          </div>
-        </div>
-
-        {/* Account Selector */}
-        <div style={{ padding: '8px 12px', backgroundColor: '#ffffff' }}>
-          <div style={{
-            border: '1px solid #cbd5e1',
-            borderRadius: '4px',
-            padding: '8px 12px',
-            fontSize: '12px',
-            display: 'flex',
-            justify: 'space-between',
-            alignItems: 'center',
-            backgroundColor: '#ffffff',
-            cursor: 'pointer'
-          }}>
-            <span style={{ fontWeight: '600', color: '#333333' }}>200-123454(41) 김대신</span>
-            <span style={{ fontSize: '8px', color: '#888888' }}>▼</span>
           </div>
         </div>
 
@@ -13379,7 +13361,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#ffffff', padding: '16px 14px' }}>
           {/* Asset Summary Section */}
           <div style={{ marginBottom: '24px' }}>
-            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>내 자산현황</h3>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>내 금융상품</h3>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
