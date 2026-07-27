@@ -13272,7 +13272,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   })();
 };
 
-  const renderScreen6ToBeMenu = (isPage5 = false) => {
+  const renderScreen6ToBeMenu = (isPage5 = false, isToBe = true) => {
     return (
       <>
         {/* Status Bar */}
@@ -13426,36 +13426,40 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             boxSizing: 'border-box'
           }}>
             <div>
-              <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
-                {[
-                  { name: '전체자산 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
-                  { name: '보유상품 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
-                  { name: '투자비율 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
-                  { name: '디폴트옵션 현황' },
-                  { name: '만기예정' },
-                  { name: '통합 거래내역' },
-                  { name: '연간납입한도 설정' },
-                  { name: '가입확인서 발급' },
-                  { name: '실물이전 사전조회' }
-                ].map((item, idx) => (
-                  <span 
-                    key={idx}
-                    onClick={item.action}
-                    style={{
-                      fontSize: '1.02rem',
-                      color: isDark ? '#cbd5e1' : '#222222',
-                      fontWeight: '500',
-                      cursor: item.action ? 'pointer' : 'default',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px'
-                    }}
-                  >
-                    {item.name}
-                  </span>
-                ))}
-              </div>
+              {!isPage5 && (
+                <>
+                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+                    {[
+                      { name: '전체자산 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
+                      { name: '보유상품 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
+                      { name: '투자비율 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
+                      { name: '디폴트옵션 현황' },
+                      { name: '만기예정' },
+                      { name: '통합 거래내역' },
+                      { name: '연간납입한도 설정' },
+                      { name: '가입확인서 발급' },
+                      { name: '실물이전 사전조회' }
+                    ].map((item, idx) => (
+                      <span 
+                        key={idx}
+                        onClick={item.action}
+                        style={{
+                          fontSize: '1.02rem',
+                          color: isDark ? '#cbd5e1' : '#222222',
+                          fontWeight: '500',
+                          cursor: item.action ? 'pointer' : 'default',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}
+                      >
+                        {item.name}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
 
               <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
               <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 16px 0' }} />
@@ -13502,62 +13506,6 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </span>
                 ))}
               </div>
-
-              {isPage5 && (
-                <>
-                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginTop: '32px', marginBottom: '16px' }}>연금세금</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '24px' }}>
-                    {[
-                      { name: '예상세금 계산기' },
-                      { name: '예상퇴직소득세 계산기' },
-                      { name: '연금개시 시뮬레이션' }
-                    ].map((item, idx) => (
-                      <span 
-                        key={idx}
-                        style={{
-                          fontSize: '1.02rem',
-                          color: isDark ? '#cbd5e1' : '#222222',
-                          fontWeight: '500',
-                          cursor: 'default',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px'
-                        }}
-                      >
-                        {item.name}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0 24px 0' }} />
-
-                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>IRP 관리</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '16px' }}>
-                    {[
-                      { name: '연금수령 신청' },
-                      { name: '연금수령 신청 조회/취소' },
-                      { name: '연금수령 현황' },
-                      { name: 'IRP 해지신청' },
-                      { name: 'IRP 해지신청 조회/취소' }
-                    ].map((item, idx) => (
-                      <span 
-                        key={idx}
-                        style={{
-                          fontSize: '1.02rem',
-                          color: isDark ? '#cbd5e1' : '#222222',
-                          fontWeight: '500',
-                          cursor: 'default',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px'
-                        }}
-                      >
-                        {item.name}
-                      </span>
-                    ))}
-                  </div>
-                </>
-              )}
             </div>
           </div>
         </div>
