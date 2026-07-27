@@ -15523,7 +15523,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {renderScreen6ToBeMenu(false)}
+                  {renderScreen6ToBeMenu(true, false)}
                 </div>
               </div>
 
@@ -15551,7 +15551,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {renderScreen6ToBeMenu(true)}
+                  {renderScreen6ToBeMenu(true, true)}
                 </div>
               </div>
             </div>
