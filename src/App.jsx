@@ -13460,7 +13460,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
               <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 16px 0' }} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                {(isPage5 ? [
+                {(isToBe ? [
                   { name: '전체상품검색' },
                   { name: '금융상품 투자하기' },
                   { name: '장외채권 매매' },
