@@ -8974,6 +8974,7 @@ function App() {
   const [screen5ToBeSubScreen, setScreen5ToBeSubScreen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5sub') || 'menu';
   });
+  const [screen5Agreed, setScreen5Agreed] = useState(false);
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -13794,27 +13795,22 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Agreement / Service Guide Card (Image 2 Content & Style) */}
+          {/* Agreement / Service Guide (Page 4 Style) */}
           <div style={{ padding: '20px 16px' }}>
-            <div style={{
-              backgroundColor: '#eef2ff',
-              borderRadius: '12px',
-              padding: '20px 18px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '22px', height: '22px', backgroundColor: '#1e1b4b', borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                </div>
-                <span style={{ fontSize: '1.02rem', fontWeight: '800', color: '#1e1b4b' }}>
-                  서비스 이용 안내 및 동의
+            <div style={{ position: 'relative' }}>
+              <label 
+                style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
+              >
+                <input 
+                  type="checkbox" 
+                  checked={screen5Agreed} 
+                  onChange={(e) => setScreen5Agreed(e.target.checked)} 
+                  style={{ marginTop: '3px', cursor: 'pointer' }} 
+                />
+                <span style={{ fontSize: '0.78rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
+                  적립식 투자 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
                 </span>
-              </div>
-              <p style={{ fontSize: '0.86rem', color: '#4338ca', margin: 0, lineHeight: '1.4' }}>
-                서비스 이용에 동의하셔야 신청이 가능합니다.
-              </p>
+              </label>
             </div>
           </div>
 
