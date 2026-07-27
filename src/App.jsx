@@ -13795,8 +13795,17 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Agreement / Service Guide (Page 4 Style) */}
-          <div style={{ padding: '20px 16px' }}>
+        </div>
+
+        {/* Floating Bottom Action Area (Agreement + Action Button) */}
+        <div style={{
+          flexShrink: 0,
+          backgroundColor: '#ffffff',
+          borderTop: '1px solid #e2e8f0',
+          boxShadow: '0 -2px 10px rgba(0,0,0,0.04)'
+        }}>
+          {/* Checkbox Agreement */}
+          <div style={{ padding: '12px 16px', backgroundColor: '#ffffff' }}>
             <div style={{ position: 'relative' }}>
               <label 
                 style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
@@ -13814,20 +13823,18 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-        </div>
-
-        {/* Bottom Black Action Button Bar (Image 1 & Image 2 Style) */}
-        <div style={{
-          backgroundColor: '#1c1c1e',
-          color: '#ffffff',
-          padding: '16px 0',
-          textAlign: 'center',
-          fontSize: '1.02rem',
-          fontWeight: '700',
-          cursor: 'pointer',
-          flexShrink: 0
-        }}>
-          적립 투자 신청하기
+          {/* Bottom Black Action Button Bar */}
+          <div style={{
+            backgroundColor: '#1c1c1e',
+            color: '#ffffff',
+            padding: '14px 0',
+            textAlign: 'center',
+            fontSize: '1.02rem',
+            fontWeight: '700',
+            cursor: 'pointer'
+          }}>
+            적립 투자 신청하기
+          </div>
         </div>
 
         {/* Bottom Navigation Tab Bar (identical to Screen 6 & Screen 5) */}
