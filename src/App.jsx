@@ -13718,20 +13718,23 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         {/* Contents Container */}
         <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
           
-          {/* Account Selector Bar (Image 1 & 2 Style) */}
-          <div style={{ padding: '14px 16px 10px 16px' }}>
-            <div style={{
-              border: '1px solid #cbd5e1',
-              borderRadius: '6px',
-              padding: '10px 14px',
-              display: 'flex',
-              justify: 'space-between',
-              alignItems: 'center',
-              backgroundColor: '#ffffff',
-              cursor: 'pointer'
-            }}>
-              <span style={{ fontSize: '0.92rem', fontWeight: '600', color: '#1e293b' }}>782-100029(41) 김대진</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2.5"><polyline points="6 9 12 15 18 9" /></svg>
+          {/* Account Selector Bar (Identical to Page 6 보유상품 현황 style) */}
+          <div style={{ padding: '8px 12px' }}>
+            <div 
+              onClick={() => setScreen6ToBeBsheetState('account')}
+              style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                padding: '8px 12px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#f8fafc',
+                cursor: 'pointer'
+              }}
+            >
+              <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-100029(41) 김대진</span>
+              <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
             </div>
           </div>
 
