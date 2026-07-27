@@ -13272,6 +13272,331 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   })();
 };
 
+  const renderScreen6ToBeMenu = (isPage5 = false) => {
+    return (
+      <>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#4750b3',
+          color: '#ffffff',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
+          <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+        </div>
+
+        {/* Top user bar (French Blue Theme) */}
+        <div style={{
+          backgroundColor: '#4750b3',
+          padding: '16px 15px 12px 15px',
+          color: '#ffffff',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                fontSize: '0.82rem', 
+                opacity: 0.9, 
+                color: '#ffffff',
+                cursor: 'pointer'
+              }}>
+                내 정보
+                <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+                <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#00c3a5', width: '5px', height: '5px', borderRadius: '50%' }}></span>
+              </div>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+            </div>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: '#ffffff',
+            borderRadius: '4px',
+            padding: '8px 12px',
+            gap: '8px'
+          }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            <input type="text" placeholder="메뉴를 검색하세요." disabled style={{ border: 'none', background: 'none', outline: 'none', width: '100%', fontSize: '0.82rem', fontWeight: '600' }} />
+          </div>
+        </div>
+
+        {/* Main Category Tabs */}
+        <div style={{
+          display: 'flex',
+          borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
+            const isSelected = tab === '연금';
+            return (
+              <div
+                key={tab}
+                style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  padding: '13px 0',
+                  fontSize: '0.96rem',
+                  fontWeight: '500',
+                  color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
+                  borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
+                }}
+              >
+                {tab}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Split Content Area */}
+        <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+          {/* Left Submenu Navigation */}
+          <div style={{
+            width: '115px',
+            backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
+            borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            paddingBottom: '12px',
+            boxSizing: 'border-box'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {[
+                { name: 'IRP/퇴직연금', active: true },
+                { name: '연금저축', active: false },
+                { name: '공지사항', active: false }
+              ].map((sub, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    padding: '18px 12px',
+                    fontSize: '0.96rem',
+                    fontWeight: sub.active ? '800' : '500',
+                    color: sub.active ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
+                    backgroundColor: sub.active ? (isDark ? '#121826' : '#ffffff') : 'transparent',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {sub.name}
+                </div>
+              ))}
+            </div>
+
+            {/* RIA 가입 Banner */}
+            <div style={{
+              margin: '0 8px',
+              borderRadius: '6px',
+              background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)',
+              padding: '10px 8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+              cursor: 'pointer'
+            }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>RIA</span>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>가입</span>
+              </div>
+              <span style={{ fontSize: '1.5rem' }}>🇰🇷</span>
+            </div>
+          </div>
+
+          {/* Right menu content */}
+          <div style={{
+            flex: 1,
+            padding: '18px 16px',
+            overflowY: 'auto',
+            backgroundColor: isDark ? '#121826' : '#ffffff',
+            display: 'flex',
+            flexDirection: 'column',
+            boxSizing: 'border-box'
+          }}>
+            <div>
+              <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+                {[
+                  { name: '전체자산 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
+                  { name: '보유상품 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
+                  { name: '투자비율 현황', action: () => { setScreen6ToBeSubScreen('investmentRatio'); setActiveScreen(6); } },
+                  { name: '디폴트옵션 현황' },
+                  { name: '만기예정' },
+                  { name: '통합 거래내역' },
+                  { name: '연간납입한도 설정' },
+                  { name: '가입확인서 발급' },
+                  { name: '실물이전 사전조회' }
+                ].map((item, idx) => (
+                  <span 
+                    key={idx}
+                    onClick={item.action}
+                    style={{
+                      fontSize: '1.02rem',
+                      color: isDark ? '#cbd5e1' : '#222222',
+                      fontWeight: '500',
+                      cursor: item.action ? 'pointer' : 'default',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                ))}
+              </div>
+
+              <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
+              <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 16px 0' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {(isPage5 ? [
+                  { name: '전체상품검색' },
+                  { name: '금융상품 투자하기' },
+                  { name: '금융상품 매도' },
+                  { name: '만기 예약매매' },
+                  { name: '자동 분할매수' },
+                  { name: '장외채권 매매' },
+                  { name: '장내채권 매매', action: () => { setScreen6ToBeSubScreen('bondCurrentPrice'); setActiveScreen(6); } },
+                  { name: '장내채권 미체결/체결', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('미체결'); setActiveScreen(6); } },
+                  { name: '장내(외)채권 잔고', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('잔고'); setActiveScreen(6); } },
+                  { name: '디폴트옵션 매매' },
+                  { name: '매매내역 조회/취소' },
+                  { name: 'ELB 청약예약' }
+                ] : [
+                  { name: '전체상품검색' },
+                  { name: '자산배분펀드(TDF+디딤펀드)' },
+                  { name: '보유상품 매도후매수' },
+                  { name: '금융상품 매수' },
+                  { name: '금융상품 매도' },
+                  { name: '만기 예약매매' },
+                  { name: '자동 분할매수' },
+                  { name: '장외채권 매매' },
+                  { name: '장내채권 매매', action: () => { setScreen6ToBeSubScreen('bondCurrentPrice'); setActiveScreen(6); } },
+                  { name: '장내채권 미체결/체결', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('미체결'); setActiveScreen(6); } },
+                  { name: '장내(외)채권 잔고', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('잔고'); setActiveScreen(6); } },
+                  { name: '디폴트옵션 매매' },
+                  { name: '매매내역 조회/취소' },
+                  { name: 'ELB 청약예약' }
+                ]).map((item, idx) => (
+                  <span 
+                    key={idx}
+                    onClick={item.action}
+                    style={{
+                      fontSize: '1.02rem',
+                      color: isDark ? '#cbd5e1' : '#222222',
+                      fontWeight: '500',
+                      cursor: item.action ? 'pointer' : 'default',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                ))}
+              </div>
+
+              {isPage5 && (
+                <>
+                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginTop: '32px', marginBottom: '16px' }}>연금세금</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '24px' }}>
+                    {[
+                      { name: '예상세금 계산기' },
+                      { name: '예상퇴직소득세 계산기' },
+                      { name: '연금개시 시뮬레이션' }
+                    ].map((item, idx) => (
+                      <span 
+                        key={idx}
+                        style={{
+                          fontSize: '1.02rem',
+                          color: isDark ? '#cbd5e1' : '#222222',
+                          fontWeight: '500',
+                          cursor: 'default',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}
+                      >
+                        {item.name}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '16px 0 24px 0' }} />
+
+                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>IRP 관리</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '16px' }}>
+                    {[
+                      { name: '연금수령 신청' },
+                      { name: '연금수령 신청 조회/취소' },
+                      { name: '연금수령 현황' },
+                      { name: 'IRP 해지신청' },
+                      { name: 'IRP 해지신청 조회/취소' }
+                    ].map((item, idx) => (
+                      <span 
+                        key={idx}
+                        style={{
+                          fontSize: '1.02rem',
+                          color: isDark ? '#cbd5e1' : '#222222',
+                          fontWeight: '500',
+                          cursor: 'default',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}
+                      >
+                        {item.name}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Bar */}
+        <div style={{
+          height: '48px',
+          backgroundColor: '#000000',
+          color: '#ffffff',
+          display: 'flex',
+          fontSize: '0.78rem',
+          fontWeight: '800',
+          borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+        }}>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+              <line x1="12" y1="2" x2="12" y2="12" />
+            </svg>
+            <span>고객지원</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+            <span>이벤트</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+            <span>업무/거래신청</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
+            <span>인증/OTP</span>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   const [screen4SubScreen, setScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asIsScreen4SubScreen, setAsIsScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asisSimulationStep, setAsisSimulationStep] = useState('main'); // 'main', 'daishin_form', 'daishin_result', 'other_q1', 'other_result'
@@ -13720,7 +14045,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       </button>
 
       {/* Floating Figma Export Mode Toggle Button */}
-      {(activeScreen === 4 || activeScreen === 6) && (
+      {(activeScreen === 4 || activeScreen === 5 || activeScreen === 6) && (
         <button
           onClick={() => setIsFigmaExportMode(!isFigmaExportMode)}
           style={{
@@ -15161,6 +15486,94 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               연금수령 신청
             </div>
           </div>
+        ) : activeScreen === 5 ? (
+          /* Screen 5: 장내 채권 매매 시스템 메뉴 (AS IS, TO BE 모두 6페이지 TO BE 메뉴화면) */
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '32px',
+            flexShrink: 0
+          }}>
+            {/* Emulators Row */}
+            <div style={{
+              display: 'flex',
+              gap: '60px',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              {/* AS IS Emulator */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>AS IS</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
+                  borderRadius: '0px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
+                }}>
+                  {renderScreen6ToBeMenu(false)}
+                </div>
+              </div>
+
+              {/* TO BE Emulator */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>TO BE</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
+                  borderRadius: '0px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
+                }}>
+                  {renderScreen6ToBeMenu(true)}
+                </div>
+              </div>
+            </div>
+
+            {/* Task Title */}
+            <div style={{
+              fontSize: '1.35rem',
+              fontWeight: '600',
+              color: isDark ? '#94a3b8' : '#475569',
+              letterSpacing: '-0.5px',
+              textAlign: 'center',
+              opacity: 0.85,
+              marginTop: '8px',
+              wordBreak: 'keep-all'
+            }}>
+              연금저축 펀드분할매수 시스템
+            </div>
+          </div>
         ) : activeScreen === 6 ? (
           /* Screen 6: 장내 채권 매매 시스템 */
           <div style={{
@@ -16220,258 +16633,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   ) : screen6ToBeSubScreen === 'bondCalc' ? (
                     renderScreen6Calc('tobe')
                   ) : (
-                    <>
-                      {/* Status Bar */}
-                      <div style={{
-                        ...styles.phoneHeaderBar,
-                        backgroundColor: '#4750b3',
-                        color: '#ffffff',
-                        borderBottom: 'none'
-                      }}>
-                        <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
-                        <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
-                      </div>
-
-                  {/* Top user bar (French Blue Theme) */}
-                  <div style={{
-                    backgroundColor: '#4750b3',
-                    padding: '16px 15px 12px 15px',
-                    color: '#ffffff',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '12px'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
-                        <span style={{ 
-                          display: 'inline-flex', 
-                          alignItems: 'center', 
-                          fontSize: '0.82rem', 
-                          opacity: 0.9, 
-                          color: '#ffffff',
-                          cursor: 'pointer'
-                        }}>
-                          내 정보
-                          <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
-                        </span>
-                      </div>
-                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
-                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
-                          <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#00c3a5', width: '5px', height: '5px', borderRadius: '50%' }}></span>
-                        </div>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-                      </div>
-                    </div>
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      backgroundColor: '#ffffff',
-                      borderRadius: '4px',
-                      padding: '8px 12px',
-                      gap: '8px'
-                    }}>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-                      <input type="text" placeholder="메뉴를 검색하세요." disabled style={{ border: 'none', background: 'none', outline: 'none', width: '100%', fontSize: '0.82rem', fontWeight: '600' }} />
-                    </div>
-                  </div>
-
-                  {/* Main Category Tabs */}
-                  <div style={{
-                    display: 'flex',
-                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
-                    backgroundColor: isDark ? '#121826' : '#ffffff'
-                  }}>
-                    {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
-                      const isSelected = tab === '연금';
-                      return (
-                        <div
-                          key={tab}
-                          style={{
-                            flex: 1,
-                            textAlign: 'center',
-                            padding: '13px 0',
-                            fontSize: '0.96rem',
-                            fontWeight: '500',
-                            color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
-                            borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
-                          }}
-                        >
-                          {tab}
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Split Content Area */}
-                  <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-                    {/* Left Submenu Navigation */}
-                    <div style={{
-                      width: '115px',
-                      backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
-                      borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      paddingBottom: '12px',
-                      boxSizing: 'border-box'
-                    }}>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        {[
-                          { name: 'IRP/퇴직연금', active: true },
-                          { name: '연금저축', active: false },
-                          { name: '공지사항', active: false }
-                        ].map((sub, idx) => (
-                          <div
-                            key={idx}
-                            style={{
-                              padding: '18px 12px',
-                              fontSize: '0.96rem',
-                              fontWeight: sub.active ? '800' : '500',
-                              color: sub.active ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
-                              backgroundColor: sub.active ? (isDark ? '#121826' : '#ffffff') : 'transparent',
-                              cursor: 'pointer'
-                            }}
-                          >
-                            {sub.name}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* RIA 가입 Banner */}
-                      <div style={{
-                        margin: '0 8px',
-                        borderRadius: '6px',
-                        background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)',
-                        padding: '10px 8px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                        cursor: 'pointer'
-                      }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>RIA</span>
-                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>가입</span>
-                        </div>
-                        <span style={{ fontSize: '1.5rem' }}>🇰🇷</span>
-                      </div>
-                    </div>
-
-                    {/* Right menu content */}
-                    <div style={{
-                      flex: 1,
-                      padding: '18px 16px',
-                      overflowY: 'auto',
-                      backgroundColor: isDark ? '#121826' : '#ffffff',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      boxSizing: 'border-box'
-                    }}>
-                      <div>
-                        <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
-                          {[
-                            { name: '전체자산 현황', action: () => setScreen6ToBeSubScreen('investmentRatio') },
-                            { name: '보유상품 현황', action: () => setScreen6ToBeSubScreen('investmentRatio') },
-                            { name: '투자비율 현황', action: () => setScreen6ToBeSubScreen('investmentRatio') },
-                            { name: '디폴트옵션 현황' },
-                            { name: '만기예정' },
-                            { name: '통합 거래내역' },
-                            { name: '연간납입한도 설정' },
-                            { name: '가입확인서 발급' },
-                            { name: '실물이전 사전조회' }
-                          ].map((item, idx) => (
-                            <span 
-                              key={idx}
-                              onClick={item.action}
-                              style={{
-                                fontSize: '1.02rem',
-                                color: isDark ? '#cbd5e1' : '#222222',
-                                fontWeight: '500',
-                                cursor: item.action ? 'pointer' : 'default',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px'
-                              }}
-                            >
-                              {item.name}
-                            </span>
-                          ))}
-                        </div>
-
-                        <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
-                        <div style={{ height: '1px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#f1f3f5', margin: '4px 0 16px 0' }} />
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                          {[
-                            { name: '전체상품검색' },
-                            { name: '자산배분펀드(TDF+디딤펀드)' },
-                            { name: '보유상품 매도후매수' },
-                            { name: '금융상품 매수' },
-                            { name: '금융상품 매도' },
-                            { name: '만기 예약매매' },
-                            { name: '자동 분할매수' },
-                            { name: '장외채권 매매' },
-                            { name: '장내채권 매매', action: () => setScreen6ToBeSubScreen('bondCurrentPrice') },
-                            { name: '장내채권 미체결/체결', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('미체결'); } },
-                            { name: '장내(외)채권 잔고', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('잔고'); } },
-                            { name: '디폴트옵션 매매' },
-                            { name: '매매내역 조회/취소' },
-                            { name: 'ELB 청약예약' }
-                          ].map((item, idx) => (
-                            <span 
-                              key={idx}
-                              onClick={item.action}
-                              style={{
-                                fontSize: '1.02rem',
-                                color: isDark ? '#cbd5e1' : '#222222',
-                                fontWeight: '500',
-                                cursor: item.action ? 'pointer' : 'default',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px'
-                              }}
-                            >
-                              {item.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Footer Bar */}
-                  <div style={{
-                    height: '48px',
-                    backgroundColor: '#000000',
-                    color: '#ffffff',
-                    display: 'flex',
-                    fontSize: '0.78rem',
-                    fontWeight: '800',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.15)'
-                  }}>
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-                        <line x1="12" y1="2" x2="12" y2="12" />
-                      </svg>
-                      <span>고객지원</span>
-                    </div>
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      <span>이벤트</span>
-                    </div>
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      <span>업무/거래신청</span>
-                    </div>
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
-                      <span>인증/OTP</span>
-                    </div>
-                  </div>
-                </>
-              )}
+                    renderScreen6ToBeMenu()
+                  )}
               {renderScreen6Bsheet('tobe')}
               {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
               {screen6ToBeNoPlanModalOpen && renderScreen6ToBeNoPlanModal()}
@@ -17063,6 +17226,116 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
             </>
           )
+          ) : activeScreen === 5 ? (
+            /* Descriptions for Screen 5: 연금저축 펀드분할매수 시스템 */
+            <>
+              {isAsIsToBeExpanded && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>연금 계좌 분할매수 기능 제약 및 메뉴 파편화</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      기존 연금저축 펀드 분할매수는 CMS 입금을 통한 매수만 지원되었으며, IRP 및 연금저축 관련 주문/잔고/자동매수 메뉴가 MTS/HTS 내에 여러 개로 파편화되어 있어 사용자 접근성이 떨어지고 매수 재원 선택에 제약이 있었습니다.
+                    </p>
+                  </div>
+          
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>통합 투자 메뉴 신설 및 매수 재원 다양화</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      퇴직연금 및 연금저축용 통합 투자 메뉴를 신설하여 메뉴 구조를 일원화합니다. 보유 펀드 매도금액, 단순 예수금, CMS/자동대체 입금액 등 다양한 매수 재원을 직접 선택할 수 있도록 개선하고, 연금저축 전용 '펀드 모으기' 서비스를 신규 제공하여 자산 재투자의 직관성을 강화합니다.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div 
+                onClick={() => setIsAsIsToBeExpanded(!isAsIsToBeExpanded)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '8px 0',
+                  userSelect: 'none',
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  transition: 'opacity 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                {isAsIsToBeExpanded ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="18 15 12 9 6 15" />
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                )}
+              </div>
+        
+              <div style={{
+                backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                borderRadius: '12px',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '14px',
+                border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)'
+              }}>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
+                  주요 핵심 구현 사항
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>통합 분기 메뉴 구축 및 진입 경로 단권화</strong>
+                      <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                        <li style={{ marginBottom: '2px' }}>파편화된 메뉴를 퇴직연금 [금융상품 투자하기] 및 연금저축 [연금펀드 투자하기]로 통합 신설합니다.</li>
+                        <li>화면 상단 Sticky 영역에 총 평가금액, 보유 금융상품 평가금액, 투자가능금액을 전 계좌 합산하여 실시간 표출합니다.</li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>매수 재원 다변화 및 선택 제어</strong>
+                      <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                        <li style={{ marginBottom: '2px' }}>보유 현금(예수금) 및 보유 펀드를 매도 재원으로 자유롭게 선택 가능하도록 개선합니다.</li>
+                        <li>이미 다른 적립식 투자에 지정된 보유 상품도 중복 선택을 허용하며, 수량 초과 입력 시 경고 팝업을 노출하되 입력 자체는 가능하도록 제약을 완화합니다.</li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>신규 '펀드 모으기' 프로세스 및 자동 재투자 로직 구현</strong>
+                      <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                        <li style={{ marginBottom: '2px' }}>매수 금액, 매수 일자(1~31일), 모을 기간(3개월~5년) 및 펀드별 비율(합계 100%)을 설정하는 4-Step 신청 Flow를 신설합니다.</li>
+                        <li>매수 당일 1차 실패 시 2차 재시도(오후 13~14시) 배치를 실행하여 매수 성공률을 극대화합니다.</li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>직원/WTS 관리 화면 및 알림 체계 고도화</strong>
+                      <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
+                        <li style={{ marginBottom: '2px' }}>사이버스(HTS) 내 [분할매수 신청내역] 구획을 분리 신설하고, WTS 내 매도 상품 선택 방식을 단일 선택(Radio Button)으로 UX를 변경합니다.</li>
+                        <li>매도/매수 배치 처리 단계별(전일 예고, 당일 실패, 결과) 안내 메시지를 일괄 통합 발송하며, 내역조회 딥링크 버튼을 필수 표출합니다.</li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </>
           ) : activeScreen === 6 ? (
             /* Descriptions for Screen 6: 장내 채권 매매 */
             <>
