@@ -15832,7 +15832,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, false)}
+                  {renderScreen6ToBeMenu(true, false)}
                 </div>
               </div>
 
