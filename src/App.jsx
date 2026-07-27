@@ -13540,24 +13540,31 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 backgroundColor: '#ffffff',
                 padding: '14px 16px',
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 gap: '12px',
                 cursor: 'pointer',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
               }}>
-                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
                   <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
-                    <path d="M9 20C9 14.5 14 11 21 11C28 11 31 15 31 20C31 24.5 27 27 21 27C19.5 27 18.5 26.8 17.5 26.5L16 28.5H13.5L14.5 26C11 24.5 9 22.5 9 20Z" fill="#cbd5e1" />
-                    <path d="M8 18.5C7 18.5 6.5 19.5 6.5 20.5C6.5 21.5 7 22.5 8 22.5" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1" />
-                    <circle cx="13" cy="17" r="1.2" fill="#1e293b" />
-                    <rect x="18" y="9.5" width="5" height="1.8" rx="0.9" fill="#1e293b" />
+                    <rect x="8" y="8" width="20" height="24" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                    <path d="M8 11C8 9.3 9.3 8 11 8H25C26.7 8 28 9.3 28 11V14H8V11Z" fill="#0284c7" />
+                    <rect x="12" y="17" width="12" height="2" rx="1" fill="#94a3b8" />
+                    <rect x="12" y="21" width="8" height="2" rx="1" fill="#94a3b8" />
+                    <rect x="12" y="25" width="10" height="2" rx="1" fill="#cbd5e1" />
                     <circle cx="28" cy="27" r="7.5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
-                    <path d="M30 27H25.5M25.5 27L27.5 25M25.5 27L27.5 29" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="27" cy="26" r="3" stroke="#ffffff" strokeWidth="1.6" fill="none" />
+                    <path d="M29 28L31.5 30.5" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" />
                   </svg>
                 </div>
-                <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>매매내역 조회/취소</span>
-                  <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>매매내역 조회/취소</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    체결 및 미체결 매매 내역을 조회하고 미체결 주문을 취소
+                  </span>
                 </div>
               </div>
 
