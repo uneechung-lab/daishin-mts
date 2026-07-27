@@ -10939,25 +10939,25 @@ const renderScreen6Ratio = (mode) => {
 
             {/* Donut Chart & Legend Row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'space-between', marginBottom: '16px' }}>
-              {/* SVG Donut Chart with Path Sectors (Doubled thickness with outer radius 40, inner radius 20, starting from 12 o'clock) */}
+              {/* SVG Donut Chart with Path Sectors */}
               <div style={{ width: '130px', height: '130px', position: 'relative' }}>
                 <svg width="130" height="130" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', display: 'block' }}>
                   {mode === 'tobe' ? (
                     <>
                       {/* TO-BE: 현금 65% (0% to 65% -> 0 to 234 deg) */}
-                      {/* Outer R=40, Inner R=20. Starting point: (90, 50). End point for 234 deg: x=50+40*cos(234)=26.48, y=50+40*sin(234)=17.64 */}
                       <path d="M 90 50 A 40 40 0 1 1 26.48 17.64 L 38.24 33.82 A 20 20 0 1 0 70 50 Z" fill="#00b094" />
                       {/* TO-BE: 채권 23% (65% to 88% -> 234 to 316.8 deg) */}
-                      {/* End point for 316.8 deg: x=50+40*cos(316.8)=79.16, y=50+40*sin(316.8)=22.62 */}
                       <path d="M 26.48 17.64 A 40 40 0 0 1 79.16 22.62 L 64.58 36.31 A 20 20 0 0 0 38.24 33.82 Z" fill="#a3e635" />
                       {/* TO-BE: ETF 12% (88% to 100% -> 316.8 to 360 deg) */}
                       <path d="M 79.16 22.62 A 40 40 0 0 1 90 50 L 70 50 A 20 20 0 0 0 64.58 36.31 Z" fill="#ff6b00" />
                     </>
                   ) : (
                     <>
-                      {/* AS-IS: 현금 88% (0% to 88% -> 0 to 316.8 deg) */}
-                      <path d="M 90 50 A 40 40 0 1 1 79.16 22.62 L 64.58 36.31 A 20 20 0 1 0 70 50 Z" fill="#00b094" />
-                      {/* AS-IS: ETF 12% (88% to 100% -> 316.8 to 360/0 deg) */}
+                      {/* AS-IS: 현금 76.5% (0% to 76.5% -> 0 to 275.4 deg) */}
+                      <path d="M 90 50 A 40 40 0 1 1 53.77 10.18 L 51.88 30.09 A 20 20 0 1 0 70 50 Z" fill="#00b094" />
+                      {/* AS-IS: 장외채권 11.5% (76.5% to 88% -> 275.4 to 316.8 deg) */}
+                      <path d="M 53.77 10.18 A 40 40 0 0 1 79.16 22.62 L 64.58 36.31 A 20 20 0 0 0 51.88 30.09 Z" fill="#a3e635" />
+                      {/* AS-IS: ETF 12% (88% to 100% -> 316.8 to 360 deg) */}
                       <path d="M 79.16 22.62 A 40 40 0 0 1 90 50 L 70 50 A 20 20 0 0 0 64.58 36.31 Z" fill="#ff6b00" />
                     </>
                   )}
@@ -10967,10 +10967,10 @@ const renderScreen6Ratio = (mode) => {
               {/* Chart Legend */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.78rem', flex: 1 }}>
                 {[
-                  { label: '현금', color: '#00b094', val: mode === 'tobe' ? '65.00%' : '88.00%' },
+                  { label: '현금', color: '#00b094', val: mode === 'tobe' ? '65.00%' : '76.50%' },
                   { label: '펀드', color: '#f39c12', val: '0.00%' },
                   { label: 'ETF/ETN/리츠', color: '#ff6b00', val: '12.00%' },
-                  { label: mode === 'tobe' ? '채권' : '장외채권', color: '#a3e635', val: mode === 'tobe' ? '23.00%' : '0.00%' },
+                  { label: mode === 'tobe' ? '채권' : '장외채권', color: '#a3e635', val: mode === 'tobe' ? '23.00%' : '11.50%' },
                   { label: '원리금보장', color: '#00b094', val: '0.00%' },
                   { label: '디폴트옵션', color: '#facc15', val: '0.00%' }
                 ].map((leg, idx) => (
@@ -11019,37 +11019,34 @@ const renderScreen6Ratio = (mode) => {
               <button style={{ flex: 1, border: 'none', backgroundColor: '#ef4444', color: '#ffffff', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer' }}>추가매수</button>
             </div>
 
-            {/* TO-BE Mode Additional Bond Items */}
+            {/* Sample 1: 장외채권 (Available in both AS-IS and TO-BE) */}
+            <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '16px 0' }} />
+            <div style={{ display: 'flex', gap: '6px', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.65rem', backgroundColor: '#eff6ff', color: '#2563eb', padding: '2px 6px', borderRadius: '3px', fontWeight: '800' }}>장외채권</span>
+              <span style={{ fontSize: '0.65rem', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '2px 6px', borderRadius: '3px', fontWeight: '800' }}>저위험</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#222', lineHeight: '1.3', wordBreak: 'keep-all' }}>
+                  대우건설95-1
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#222' }}>10,120 원</span>
+                <span style={{ fontSize: '0.78rem', color: '#de201e', fontWeight: '700', marginTop: '2px' }}>+120</span>
+                <span style={{ fontSize: '0.72rem', color: '#de201e', fontWeight: '700' }}>(+1.20%)</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', border: '1px solid #cbd5e1', borderRadius: '4px', overflow: 'hidden', height: '36px', marginBottom: '24px' }}>
+              <button style={{ flex: 1, border: 'none', backgroundColor: '#ffffff', color: '#333', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer', borderRight: '1px solid #cbd5e1' }}>잔고현황</button>
+              <button style={{ flex: 1, border: 'none', backgroundColor: '#2563eb', color: '#ffffff', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer', borderRight: '1px solid #cbd5e1' }}>매도</button>
+              <button style={{ flex: 1, border: 'none', backgroundColor: '#ef4444', color: '#ffffff', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer' }}>추가매수</button>
+            </div>
+
+            {/* Sample 2: 장내채권 (TO-BE only) */}
             {mode === 'tobe' && (
               <>
                 <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '16px 0' }} />
-                
-                {/* Sample 1: 장외채권 */}
-                <div style={{ display: 'flex', gap: '6px', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.65rem', backgroundColor: '#eff6ff', color: '#2563eb', padding: '2px 6px', borderRadius: '3px', fontWeight: '800' }}>장외채권</span>
-                  <span style={{ fontSize: '0.65rem', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '2px 6px', borderRadius: '3px', fontWeight: '800' }}>저위험</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#222', lineHeight: '1.3', wordBreak: 'keep-all' }}>
-                      대우건설95-1
-                    </span>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#222' }}>10,120 원</span>
-                    <span style={{ fontSize: '0.78rem', color: '#de201e', fontWeight: '700', marginTop: '2px' }}>+120</span>
-                    <span style={{ fontSize: '0.72rem', color: '#de201e', fontWeight: '700' }}>(+1.20%)</span>
-                  </div>
-                </div>
-                <div style={{ display: 'flex', border: '1px solid #cbd5e1', borderRadius: '4px', overflow: 'hidden', height: '36px', marginBottom: '24px' }}>
-                  <button style={{ flex: 1, border: 'none', backgroundColor: '#ffffff', color: '#333', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer', borderRight: '1px solid #cbd5e1' }}>잔고현황</button>
-                  <button style={{ flex: 1, border: 'none', backgroundColor: '#2563eb', color: '#ffffff', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer', borderRight: '1px solid #cbd5e1' }}>매도</button>
-                  <button style={{ flex: 1, border: 'none', backgroundColor: '#ef4444', color: '#ffffff', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer' }}>추가매수</button>
-                </div>
-
-                <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '16px 0' }} />
-
-                {/* Sample 2: 장내채권 */}
                 <div style={{ display: 'flex', gap: '6px', marginBottom: '8px' }}>
                   <span style={{ fontSize: '0.65rem', backgroundColor: '#eff6ff', color: '#2563eb', padding: '2px 6px', borderRadius: '3px', fontWeight: '800' }}>장내채권</span>
                   <span style={{ fontSize: '0.65rem', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '2px 6px', borderRadius: '3px', fontWeight: '800' }}>저위험</span>
