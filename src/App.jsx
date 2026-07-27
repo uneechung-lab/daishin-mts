@@ -13381,83 +13381,152 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           {/* Investment Services Section */}
           <div>
             <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>금융상품 매매</h3>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              border: '1px solid #e2e8f0',
-              borderRadius: '8px',
-              padding: '4px 16px',
-              backgroundColor: '#ffffff'
-            }}>
-              {/* 일반 매매 */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', borderBottom: '1px solid #f1f3f5' }}>
-                <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111' }}>일반 매매</span>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <button style={{
-                    backgroundColor: '#de201e',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '4px',
-                    padding: '6px 16px',
-                    fontSize: '0.85rem',
-                    fontWeight: '700',
-                    cursor: 'pointer'
-                  }}>
-                    매수
-                  </button>
-                  <button style={{
-                    backgroundColor: '#2366ca',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '4px',
-                    padding: '6px 16px',
-                    fontSize: '0.85rem',
-                    fontWeight: '700',
-                    cursor: 'pointer'
-                  }}>
-                    매도
-                  </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              
+              {/* Card 1: 일반 매매 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2"><path d="M3 3v18h18" /><path d="M18 9l-5 5-4-4-3 3" /></svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>일반 매매</span>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button style={{
+                      backgroundColor: '#de201e',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      padding: '6px 14px',
+                      fontSize: '0.82rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}>
+                      매수
+                    </button>
+                    <button style={{
+                      backgroundColor: '#2366ca',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      padding: '6px 14px',
+                      fontSize: '0.82rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}>
+                      매도
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* 보유상품 매도 후 매수 */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', padding: '14px 0', borderBottom: '1px solid #f1f3f5', cursor: 'pointer' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111' }}>보유상품 매도 후 매수</span>
+              {/* Card 2: 보유상품 매도 후 매수 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#f3e8ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>보유상품 매도 후 매수</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    보유 상품을 매도하고 매도 결제일에 선택한 상품을 매수
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: 만기상품 예약 매매 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#fff7ed', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><path d="M12 14v3l2 1" /></svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>만기상품 예약 매매</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    만기상환이 예정된 상품을 선택하고 만기상환일에 선택한 상품을 매수
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: 적립식 투자 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2"><circle cx="12" cy="12" r="9" /><path d="M12 7v10M9 9.5h6" /></svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>적립식 투자</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    투자 기간과 금액 설정 만으로 자동 정기 적립식 투자
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 5: 매매내역 조회/취소 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#ecfeff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0891b2" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>매매내역 조회/취소</span>
                   <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
                 </div>
-                <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.3' }}>
-                  보유 상품을 매도하고 매도 결제일에 선택한 상품을 매수
-                </span>
               </div>
 
-              {/* 만기상품 예약 매매 */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', padding: '14px 0', borderBottom: '1px solid #f1f3f5', cursor: 'pointer' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111' }}>만기상품 예약 매매</span>
-                  <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
-                </div>
-                <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.3' }}>
-                  만기상환이 예정된 상품을 선택하고 만기상환일에 선택한 상품을 매수
-                </span>
-              </div>
-
-              {/* 적립식 투자 */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', padding: '14px 0', borderBottom: '1px solid #f1f3f5', cursor: 'pointer' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111' }}>적립식 투자</span>
-                  <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
-                </div>
-                <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.3' }}>
-                  투자 기간과 금액 설정 만으로 자동 정기 적립식 투자
-                </span>
-              </div>
-
-              {/* 매매내역 조회/취소 */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', cursor: 'pointer' }}>
-                <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111' }}>매매내역 조회/취소</span>
-                <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
-              </div>
             </div>
           </div>
         </div>
