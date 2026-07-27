@@ -13361,29 +13361,19 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#ffffff', padding: '16px 14px' }}>
           {/* Asset Summary Section */}
           <div style={{ marginBottom: '24px' }}>
-            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>내 금융상품</h3>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              fontSize: '0.85rem',
-              border: '1px solid #e2e8f0',
-              borderRadius: '8px',
-              padding: '14px 16px',
-              backgroundColor: '#f8fafc'
-            }}>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 16px 0', color: '#111' }}>내 금융상품</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.85rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#666' }}>총 평가 금액</span>
-                <span style={{ fontWeight: '700', color: '#111' }}>100,000,000 원</span>
+                <span style={{ color: '#666' }}>총 평가금액</span>
+                <span style={{ fontWeight: '700', color: '#111' }}>100,000,000</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#666' }}>보유 금융상품 평가금액</span>
-                <span style={{ fontWeight: '700', color: '#111' }}>7,000,000 원</span>
+                <span style={{ fontWeight: '700', color: '#111' }}>7,000,000</span>
               </div>
-              <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '2px 0' }} />
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#111', fontWeight: '700' }}>투자 가능금액 (퇴직/적립)</span>
-                <span style={{ fontWeight: '800', color: '#4750b3', fontSize: '1.05rem' }}>93,000,000 원</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#666' }}>투자 가능금액 (퇴직/적립)</span>
+                <span style={{ fontWeight: '700', color: '#111' }}>93,000,000</span>
               </div>
             </div>
           </div>
