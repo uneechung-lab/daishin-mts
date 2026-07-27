@@ -13394,12 +13394,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 gap: '12px',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
               }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                    <rect x="3" y="14" width="4" height="7" rx="1" fill="#de201e" />
-                    <rect x="10" y="8" width="4" height="13" rx="1" fill="#3b82f6" />
-                    <rect x="17" y="4" width="4" height="17" rx="1" fill="#3b82f6" />
-                    <path d="M4 11l6-5 5 4 5-6" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <path d="M12 14C12 12 15 10 20 10C25 10 28 12 28 14C28 15 27 16 26 16.5C29.5 19 31 23 30 28C29 33 25 35 20 35C15 35 11 33 10 28C9 23 10.5 19 14 16.5C13 16 12 15 12 14Z" fill="#3b82f6" />
+                    <path d="M14 16.5C17 17.5 23 17.5 26 16.5" stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round" />
+                    <text x="20" y="27" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
+                    <circle cx="29" cy="29" r="7" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M26.5 29L28.5 31L31.5 27.5" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
                 <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -13445,11 +13446,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
               }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#f3e8ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 17l4 4 4-4M8 21V9" stroke="#7c3aed" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M20 7l-4-4-4 4M16 3v12" stroke="#6366f1" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-                    <circle cx="16" cy="18" r="3" fill="#a855f7" />
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <rect x="6" y="11" width="22" height="15" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                    <text x="17" y="22" textAnchor="middle" fill="#3b82f6" fontSize="10" fontWeight="900" fontFamily="sans-serif">₩</text>
+                    <circle cx="28" cy="26" r="8" fill="#2563eb" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M25 24.5C25.5 23.5 27 23 28 23C29.5 23 30.5 24 30.8 25.5M30.8 25.5V23.5M30.8 25.5H29" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M31 27.5C30.5 28.5 29 29 28 29C26.5 29 25.5 28 25.2 26.5M25.2 26.5V28.5M25.2 26.5H27" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -13475,13 +13478,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
               }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#fff7ed', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                    <rect x="3" y="4" width="18" height="17" rx="3" fill="#ffedd5" stroke="#ea580c" strokeWidth="1.8" />
-                    <path d="M3 9h18" stroke="#ea580c" strokeWidth="1.8" />
-                    <path d="M8 2v4M16 2v4" stroke="#ea580c" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="15" cy="15" r="4.5" fill="#f97316" />
-                    <path d="M15 13v2.2l1.5 1" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <path d="M19 7.5L9 15.5V17H29V15.5L19 7.5Z" fill="#6b7280" />
+                    <rect x="10" y="16" width="18" height="15" rx="2" fill="#c084fc" />
+                    <rect x="10" y="22" width="18" height="4" fill="#a855f7" />
+                    <circle cx="19" cy="13" r="1.8" fill="#ffffff" />
+                    <circle cx="29" cy="27" r="7.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                    <text x="29" y="30" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
                   </svg>
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -13507,11 +13511,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
               }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="9" fill="#dcfce7" stroke="#16a34a" strokeWidth="1.8" />
-                    <path d="M12 7v10M8.5 9.5c0-1.5 1.5-2.5 3.5-2.5s3.5 1 3.5 2.5c0 3-7 2-7 5 0 1.5 1.5 2.5 3.5 2.5s3.5-1 3.5-2.5" stroke="#15803d" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M17 6l3-3m0 0h-3m3 0v3" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <path d="M11 20C11 15 15.5 12 21 12C26.5 12 30 15 30 20C30 22 31.5 22.5 32 21.5C32.5 20.5 32 19 31 18.5" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M9 20C9 14.5 14 11 21 11C28 11 31 15 31 20C31 24.5 27 27 21 27C19.5 27 18.5 26.8 17.5 26.5L16 28.5H13.5L14.5 26C11 24.5 9 22.5 9 20Z" fill="#93c5fd" />
+                    <path d="M8 18.5C7 18.5 6.5 19.5 6.5 20.5C6.5 21.5 7 22.5 8 22.5" fill="#93c5fd" stroke="#60a5fa" strokeWidth="1" />
+                    <circle cx="13" cy="17" r="1.2" fill="#1e3a8a" />
+                    <rect x="18" y="9.5" width="5" height="1.8" rx="0.9" fill="#1e3a8a" />
+                    <circle cx="28" cy="27" r="7.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M28 23.5V30.5M24.5 27H31.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -13537,13 +13545,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
               }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#ecfeff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                    <rect x="4" y="3" width="14" height="18" rx="2" fill="#cffafe" stroke="#0891b2" strokeWidth="1.8" />
-                    <line x1="8" y1="8" x2="14" y2="8" stroke="#0891b2" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="8" y1="12" x2="12" y2="12" stroke="#0891b2" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="16" cy="16" r="4" fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
-                    <line x1="19" y1="19" x2="22" y2="22" stroke="#06b6d4" strokeWidth="2.5" strokeLinecap="round" />
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <path d="M9 20C9 14.5 14 11 21 11C28 11 31 15 31 20C31 24.5 27 27 21 27C19.5 27 18.5 26.8 17.5 26.5L16 28.5H13.5L14.5 26C11 24.5 9 22.5 9 20Z" fill="#cbd5e1" />
+                    <path d="M8 18.5C7 18.5 6.5 19.5 6.5 20.5C6.5 21.5 7 22.5 8 22.5" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1" />
+                    <circle cx="13" cy="17" r="1.2" fill="#1e293b" />
+                    <rect x="18" y="9.5" width="5" height="1.8" rx="0.9" fill="#1e293b" />
+                    <circle cx="28" cy="27" r="7.5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M30 27H25.5M25.5 27L27.5 25M25.5 27L27.5 29" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
                 <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
