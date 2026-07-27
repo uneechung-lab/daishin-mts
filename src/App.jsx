@@ -13751,8 +13751,22 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.
               </p>
             </div>
-            {/* 3D Donut Chart Graphic (Image 1 Style) */}
+            {/* 3D Donut Chart Graphic / Custom Image */}
             <div style={{ width: '95px', height: '95px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '4px' }}>
+              <img 
+                src="/savings_hero.png" 
+                alt="적립식 투자 이미지"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const svgEl = e.currentTarget.parentElement?.querySelector('svg');
+                  if (svgEl) svgEl.style.display = 'block';
+                }}
+                onLoad={(e) => {
+                  const svgEl = e.currentTarget.parentElement?.querySelector('svg');
+                  if (svgEl) svgEl.style.display = 'none';
+                }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
               <svg width="88" height="88" viewBox="0 0 100 100" fill="none">
                 <path d="M50 15 C 70 15, 85 30, 85 50 C 85 60, 78 70, 70 78 L 58 64 C 62 59, 65 54, 65 48 C 65 38, 58 30, 50 30 Z" fill="#ec4899" />
                 <path d="M70 78 C 60 88, 40 88, 30 78 L 42 64 C 47 69, 53 69, 58 64 Z" fill="#06b6d4" />
