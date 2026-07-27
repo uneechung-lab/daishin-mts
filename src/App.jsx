@@ -13502,7 +13502,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
 
               {/* Card 4: 적립식 투자 */}
-              <div style={{
+              <div 
+                onClick={() => setScreen5ToBeSubScreen('savings')}
+                style={{
                 border: '1px solid #e2e8f0',
                 borderRadius: '10px',
                 backgroundColor: '#ffffff',
@@ -13620,6 +13622,263 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
           <button 
             onClick={() => setScreen5ToBeSubScreen('menu')}
+            style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderScreen5ToBeSavings = () => {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isFigmaExportMode ? 'auto' : '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 5:04</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              85
+            </div>
+          </div>
+        </div>
+
+        {/* Header Toolbar */}
+        <div style={{
+          height: '46px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 12px',
+          borderBottom: '1px solid #eee',
+          backgroundColor: '#ffffff',
+          position: 'relative'
+        }}>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('invest')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+          </button>
+          
+          <span style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1.05rem', 
+            fontWeight: '700', 
+            color: '#111111', 
+            letterSpacing: '-0.3px',
+            zIndex: 1
+          }}>
+            적립식 투자
+          </span>
+
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+            <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Contents Container */}
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
+          
+          {/* Sub Navigation Tabs (Content from Image 2) */}
+          <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
+            <div style={{
+              flex: 1,
+              textAlign: 'center',
+              padding: '13px 0',
+              fontSize: '0.94rem',
+              fontWeight: '700',
+              color: '#111111',
+              borderBottom: '2.5px solid #111111',
+              cursor: 'pointer'
+            }}>
+              적립투자 신청
+            </div>
+            <div style={{
+              flex: 1,
+              textAlign: 'center',
+              padding: '13px 0',
+              fontSize: '0.94rem',
+              fontWeight: '500',
+              color: '#888888',
+              borderBottom: '2.5px solid transparent',
+              cursor: 'pointer'
+            }}>
+              신청내역 조회
+            </div>
+          </div>
+
+          {/* Account Selector Bar (Image 1 & 2 Style) */}
+          <div style={{ padding: '14px 16px 10px 16px' }}>
+            <div style={{
+              border: '1px solid #cbd5e1',
+              borderRadius: '6px',
+              padding: '10px 14px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#ffffff',
+              cursor: 'pointer'
+            }}>
+              <span style={{ fontSize: '0.92rem', fontWeight: '600', color: '#1e293b' }}>782-100029(41) 김대진</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2.5"><polyline points="6 9 12 15 18 9" /></svg>
+            </div>
+          </div>
+
+          {/* Hero Banner Section (Style from Image 1 + Content from Image 2) */}
+          <div style={{ padding: '16px 16px 20px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
+            <div style={{ flex: 1, paddingRight: '10px' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 10px 0', color: '#0f172a', lineHeight: '1.3' }}>
+                적립식 투자란
+              </h2>
+              <p style={{ fontSize: '0.84rem', color: '#475569', margin: 0, lineHeight: '1.55', wordBreak: 'keep-all' }}>
+                보유하신 현금이나 상품을 재원으로<br />
+                고객님이 신경쓰지 않아도<br />
+                원하시는 날짜에 원하시는 상품을<br />
+                원하시는 기간동안<br />
+                자동으로 투자해 주는 서비스 입니다.
+              </p>
+            </div>
+            {/* 3D Donut Chart Graphic (Image 1 Style) */}
+            <div style={{ width: '95px', height: '95px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '4px' }}>
+              <svg width="88" height="88" viewBox="0 0 100 100" fill="none">
+                <path d="M50 15 C 70 15, 85 30, 85 50 C 85 60, 78 70, 70 78 L 58 64 C 62 59, 65 54, 65 48 C 65 38, 58 30, 50 30 Z" fill="#ec4899" />
+                <path d="M70 78 C 60 88, 40 88, 30 78 L 42 64 C 47 69, 53 69, 58 64 Z" fill="#06b6d4" />
+                <path d="M30 78 C 20 70, 15 55, 15 40 C 15 28, 25 18, 40 15 L 44 30 C 35 32, 30 38, 30 45 C 30 53, 34 60, 42 64 Z" fill="#6366f1" />
+                <circle cx="82" cy="28" r="9.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="2" />
+                <path d="M82 32V24M78.5 27.5L82 24L85.5 27.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="20" cy="72" r="8.5" fill="#f43f5e" stroke="#ffffff" strokeWidth="2" />
+                <path d="M20 68V76M17 73L20 76L23 73" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Agreement / Service Guide Card (Image 2 Content & Style) */}
+          <div style={{ padding: '20px 16px' }}>
+            <div style={{
+              backgroundColor: '#eef2ff',
+              borderRadius: '12px',
+              padding: '20px 18px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ width: '22px', height: '22px', backgroundColor: '#1e1b4b', borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                </div>
+                <span style={{ fontSize: '1.02rem', fontWeight: '800', color: '#1e1b4b' }}>
+                  서비스 이용 안내 및 동의
+                </span>
+              </div>
+              <p style={{ fontSize: '0.86rem', color: '#4338ca', margin: 0, lineHeight: '1.4' }}>
+                서비스 이용에 동의하셔야 신청이 가능합니다.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Black Action Button Bar (Image 1 & Image 2 Style) */}
+        <div style={{
+          backgroundColor: '#1c1c1e',
+          color: '#ffffff',
+          padding: '16px 0',
+          textAlign: 'center',
+          fontSize: '1.02rem',
+          fontWeight: '700',
+          cursor: 'pointer',
+          flexShrink: 0
+        }}>
+          적립 투자 신청하기
+        </div>
+
+        {/* Bottom Navigation Tab Bar (identical to Screen 6 & Screen 5) */}
+        <div style={{
+          height: '50px',
+          display: 'flex',
+          alignItems: 'stretch',
+          borderTop: '1px solid #e2e8f0',
+          backgroundColor: '#ffffff',
+          flexShrink: 0
+        }}>
+          <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          </button>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+            {[
+              { key: '보유상품 현황', label: `보유상품\n현황` },
+              { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+              { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+            ].map((tab) => {
+              const isActive = tab.key === '보유상품 현황';
+              return (
+                <button
+                  key={tab.key}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    background: 'none',
+                    borderRight: '1px solid #f1f5f9',
+                    fontSize: '0.62rem',
+                    fontWeight: isActive ? '800' : '500',
+                    color: isActive ? '#3b5bdb' : '#666666',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    whiteSpace: 'pre-line',
+                    lineHeight: '1.2',
+                    padding: '2px 2px'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('invest')}
             style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
@@ -15860,7 +16119,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
+                  {screen5ToBeSubScreen === 'savings' ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
                 </div>
               </div>
             </div>
