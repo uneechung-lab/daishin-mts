@@ -13463,15 +13463,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 {(isPage5 ? [
                   { name: '전체상품검색' },
                   { name: '금융상품 투자하기' },
-                  { name: '금융상품 매도' },
-                  { name: '만기 예약매매' },
-                  { name: '자동 분할매수' },
                   { name: '장외채권 매매' },
                   { name: '장내채권 매매', action: () => { setScreen6ToBeSubScreen('bondCurrentPrice'); setActiveScreen(6); } },
                   { name: '장내채권 미체결/체결', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('미체결'); setActiveScreen(6); } },
                   { name: '장내(외)채권 잔고', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('잔고'); setActiveScreen(6); } },
                   { name: '디폴트옵션 매매' },
-                  { name: '매매내역 조회/취소' },
                   { name: 'ELB 청약예약' }
                 ] : [
                   { name: '전체상품검색' },
