@@ -13742,7 +13742,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           {/* Hero Banner Section (Style from Image 1 + Content from Image 2) */}
           <div style={{ padding: '16px 16px 20px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
             <div style={{ flex: 1, paddingRight: '10px' }}>
-              <h2 style={{ fontSize: '1.18rem', fontWeight: '800', margin: '0 0 10px 0', color: '#0f172a', lineHeight: '1.35', wordBreak: 'keep-all' }}>
+              <h2 style={{ fontSize: '1.15rem', fontWeight: '600', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
                 원하는 날짜, 원하는 상품으로<br />
                 매월 알아서 투자해 주는<br />
                 자동 매수 서비스
