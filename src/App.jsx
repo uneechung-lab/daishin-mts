@@ -13718,34 +13718,6 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         {/* Contents Container */}
         <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
           
-          {/* Sub Navigation Tabs (Content from Image 2) */}
-          <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
-            <div style={{
-              flex: 1,
-              textAlign: 'center',
-              padding: '13px 0',
-              fontSize: '0.94rem',
-              fontWeight: '700',
-              color: '#111111',
-              borderBottom: '2.5px solid #111111',
-              cursor: 'pointer'
-            }}>
-              적립투자 신청
-            </div>
-            <div style={{
-              flex: 1,
-              textAlign: 'center',
-              padding: '13px 0',
-              fontSize: '0.94rem',
-              fontWeight: '500',
-              color: '#888888',
-              borderBottom: '2.5px solid transparent',
-              cursor: 'pointer'
-            }}>
-              신청내역 조회
-            </div>
-          </div>
-
           {/* Account Selector Bar (Image 1 & 2 Style) */}
           <div style={{ padding: '14px 16px 10px 16px' }}>
             <div style={{
@@ -13753,7 +13725,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               borderRadius: '6px',
               padding: '10px 14px',
               display: 'flex',
-              justifyContent: 'space-between',
+              justify: 'space-between',
               alignItems: 'center',
               backgroundColor: '#ffffff',
               cursor: 'pointer'
@@ -13788,6 +13760,34 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 <circle cx="20" cy="72" r="8.5" fill="#f43f5e" stroke="#ffffff" strokeWidth="2" />
                 <path d="M20 68V76M17 73L20 76L23 73" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
+            </div>
+          </div>
+
+          {/* Sub Navigation Tabs (Positioned in the Middle like Image 1) */}
+          <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
+            <div style={{
+              flex: 1,
+              textAlign: 'center',
+              padding: '13px 0',
+              fontSize: '0.94rem',
+              fontWeight: '700',
+              color: '#111111',
+              borderBottom: '2.5px solid #111111',
+              cursor: 'pointer'
+            }}>
+              적립투자 신청
+            </div>
+            <div style={{
+              flex: 1,
+              textAlign: 'center',
+              padding: '13px 0',
+              fontSize: '0.94rem',
+              fontWeight: '500',
+              color: '#888888',
+              borderBottom: '2.5px solid transparent',
+              cursor: 'pointer'
+            }}>
+              신청내역 조회
             </div>
           </div>
 
