@@ -13766,16 +13766,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Sub Navigation Tabs (Positioned in the Middle like Image 1) */}
+          {/* Sub Navigation Tabs (Compact height matching attached image) */}
           <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
             <div style={{
               flex: 1,
               textAlign: 'center',
-              padding: '13px 0',
-              fontSize: '0.94rem',
+              padding: '7px 0',
+              fontSize: '12px',
               fontWeight: '700',
               color: '#111111',
-              borderBottom: '2.5px solid #111111',
+              borderBottom: '2px solid #111111',
               cursor: 'pointer'
             }}>
               적립투자 신청
@@ -13783,11 +13783,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <div style={{
               flex: 1,
               textAlign: 'center',
-              padding: '13px 0',
-              fontSize: '0.94rem',
+              padding: '7px 0',
+              fontSize: '12px',
               fontWeight: '500',
               color: '#888888',
-              borderBottom: '2.5px solid transparent',
+              borderBottom: '2px solid transparent',
               cursor: 'pointer'
             }}>
               신청내역 조회
