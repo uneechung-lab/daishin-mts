@@ -13742,15 +13742,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           {/* Hero Banner Section (Style from Image 1 + Content from Image 2) */}
           <div style={{ padding: '16px 16px 20px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
             <div style={{ flex: 1, paddingRight: '10px' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 10px 0', color: '#0f172a', lineHeight: '1.3' }}>
-                적립식 투자란
+              <h2 style={{ fontSize: '1.18rem', fontWeight: '800', margin: '0 0 10px 0', color: '#0f172a', lineHeight: '1.35', wordBreak: 'keep-all' }}>
+                원하는 날짜, 원하는 상품으로<br />
+                매월 알아서 투자해 주는<br />
+                자동 매수 서비스
               </h2>
-              <p style={{ fontSize: '0.84rem', color: '#475569', margin: 0, lineHeight: '1.55', wordBreak: 'keep-all' }}>
-                보유하신 현금이나 상품을 재원으로<br />
-                고객님이 신경쓰지 않아도<br />
-                원하시는 날짜에 원하시는 상품을<br />
-                원하시는 기간동안<br />
-                자동으로 투자해 주는 서비스 입니다.
+              <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.
               </p>
             </div>
             {/* 3D Donut Chart Graphic (Image 1 Style) */}
