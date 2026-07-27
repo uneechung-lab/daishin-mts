@@ -13278,7 +13278,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       <div style={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
+        height: isFigmaExportMode ? 'auto' : '100%',
         backgroundColor: '#ffffff',
         color: '#111111',
         fontFamily: 'sans-serif'
@@ -13358,7 +13358,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Contents Container */}
-        <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#ffffff', padding: '16px 14px' }}>
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff', padding: '16px 14px' }}>
           {/* Asset Summary Section */}
           <div style={{ marginBottom: '24px' }}>
             <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 16px 0', color: '#111' }}>내 금융상품</h3>
@@ -14019,6 +14019,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     const asisSimParam = params.get('asisSimulationStep');
     if (asisSimParam) setAsisSimulationStep(asisSimParam);
 
+    const screen5subParam = params.get('screen5sub');
+    if (screen5subParam) setScreen5ToBeSubScreen(screen5subParam);
+
     // Restore order tabs
     const screen6AsIsOrderTabParam = params.get('screen6AsIsOrderTab');
     if (screen6AsIsOrderTabParam) setScreen6AsIsOrderTab(screen6AsIsOrderTabParam);
@@ -14084,6 +14087,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('tobeQuery', tobeSearchQuery);
     params.set('etfMallNavMode', etfMallNavMode);
     params.set('etfChip', etfMallSelectedChip);
+    params.set('screen5sub', screen5ToBeSubScreen);
     params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
     // Sync Pension Receipt Status states to URL params
@@ -14113,7 +14117,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -15826,7 +15830,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {renderScreen6ToBeMenu(true, false)}
+                  {screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, false)}
                 </div>
               </div>
 
