@@ -8971,7 +8971,9 @@ function App() {
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobe') || 'menu';
   });
-  const [screen5ToBeSubScreen, setScreen5ToBeSubScreen] = useState('menu');
+  const [screen5ToBeSubScreen, setScreen5ToBeSubScreen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen5sub') || 'menu';
+  });
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
