@@ -6469,11 +6469,15 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           </div>
 
           {/* Footer */}
-          <div style={footerStyle}>
+          <div style={{
+            backgroundColor: isDark ? '#111827' : '#ffffff',
+            borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
             {/* Checkbox agreement */}
-            <div style={{ position: 'relative' }}>
+            <div style={{ padding: '14px 16px 10px 16px', position: 'relative' }}>
               <label 
-                onClick={() => setShowNoticePopup(true)}
                 style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
               >
                 <input 
@@ -6482,15 +6486,18 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   onChange={(e) => setAgreed(e.target.checked)} 
                   style={{ marginTop: '3px', cursor: 'pointer' }} 
                 />
-                <span style={{ fontSize: '0.72rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
+                <span 
+                  onClick={() => setShowNoticePopup(true)}
+                  style={{ fontSize: '0.75rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '700', lineHeight: '1.4' }}
+                >
                   연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
                 </span>
               </label>
               {isToBe && isDrawerOpen && (
                 <span style={{
                   position: 'absolute',
-                  top: '-6px',
-                  right: '-4px',
+                  top: '8px',
+                  right: '12px',
                   width: '18px',
                   height: '18px',
                   borderRadius: '50%',
@@ -6507,23 +6514,24 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               )}
             </div>
 
-            {/* Submit button */}
+            {/* Submit button (Full screen width, disabled when not agreed) */}
             <button 
+              disabled={!agreed}
               onClick={() => {
-                if (isToBe) {
+                if (agreed && isToBe) {
                   setShowConfirmModal(true);
                 }
               }}
               style={{
                 width: '100%',
-                padding: '14px 0',
-                backgroundColor: '#1e293b',
-                color: '#ffffff',
+                height: '48px',
+                backgroundColor: agreed ? (isDark ? '#334155' : '#1e293b') : (isDark ? '#1e293b' : '#efefef'),
+                color: agreed ? '#ffffff' : (isDark ? '#64748b' : '#888888'),
                 border: 'none',
-                borderRadius: '4px',
+                borderRadius: '0',
                 fontSize: '0.95rem',
                 fontWeight: '700',
-                cursor: 'pointer'
+                cursor: agreed ? 'pointer' : 'not-allowed'
               }}
             >
               신청
