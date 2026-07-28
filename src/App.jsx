@@ -474,6 +474,26 @@ function PhoneEmulator({
         boxSizing: 'border-box',
         position: 'relative'
       }}>
+        {isToBe && isDrawerOpen && (
+          <div style={{
+            position: 'absolute',
+            top: '4px',
+            left: '4px',
+            width: '18px',
+            height: '18px',
+            borderRadius: '50%',
+            backgroundColor: '#00c3a5',
+            color: '#fff',
+            fontSize: '11px',
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10
+          }}>
+            1
+          </div>
+        )}
         {!isToBe ? (
           <>
             {/* Row 1: KRX Badge */}
@@ -940,6 +960,26 @@ function PhoneEmulator({
           overflow: 'hidden',
           position: 'relative'
         }}>
+          {isDrawerOpen && (
+            <div style={{
+              position: 'absolute',
+              top: '3px',
+              left: '4px',
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: '#00c3a5',
+              color: '#fff',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10
+            }}>
+              3
+            </div>
+          )}
           <div style={{ fontWeight: '700' }}>{selectedStock}</div>
           {marketMode === '통합' ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -996,6 +1036,26 @@ function PhoneEmulator({
               position: 'relative'
             }}
           >
+            {isDrawerOpen && (
+              <div style={{
+                position: 'absolute',
+                top: '-6px',
+                left: '-6px',
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                backgroundColor: '#00c3a5',
+                color: '#fff',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 10
+              }}>
+                2
+              </div>
+            )}
             <span>{marketMode}</span>
             <span style={{ fontSize: '9px' }}>☰</span>
           </div>
@@ -2514,6 +2574,25 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
                 return (
                   <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                    {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
+                      <div style={{
+                        position: 'absolute',
+                        left: '-24px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '17px',
+                        height: '17px',
+                        borderRadius: '50%',
+                        backgroundColor: '#00c3a5',
+                        color: '#fff',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        zIndex: 11
+                      }}>3</div>
+                    )}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
                       {/* 평가금액 */}
                       <span style={{
@@ -3564,6 +3643,44 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                       현재가
                     </button>
                   </div>
+                  {isDrawerOpen && activeMallTab === '보유' && (
+                    <>
+                      {/* 평가금 버튼용 배지 3 */}
+                      <div style={{
+                        position: 'absolute',
+                        left: '16px',
+                        top: '-10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '17px',
+                        height: '17px',
+                        borderRadius: '50%',
+                        backgroundColor: '#00c3a5',
+                        color: '#fff',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        zIndex: 11
+                      }}>3</div>
+                      {/* 현재가 버튼용 배지 4 */}
+                      <div style={{
+                        position: 'absolute',
+                        right: '16px',
+                        top: '-10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '17px',
+                        height: '17px',
+                        borderRadius: '50%',
+                        backgroundColor: '#00c3a5',
+                        color: '#fff',
+                        fontSize: '11px',
+                        fontWeight: 'bold',
+                        zIndex: 11
+                      }}>4</div>
+                    </>
+                  )}
                 </div>
               </div>
             )}
@@ -4502,6 +4619,25 @@ function ToBeTigerDetailView({ setToBeSubScreen, isDark, setToBePrevSubScreen, i
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center', color: isDark ? '#94a3b8' : '#333333' }}>
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            {isDrawerOpen && (
+              <div style={{
+                position: 'absolute',
+                top: '-7px',
+                left: '-8px',
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                backgroundColor: '#00c3a5',
+                color: '#ffffff',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                zIndex: 10
+              }}>2</div>
+            )}
             <div 
               onClick={() => {
                 setEtfMallNavMode('search');
@@ -6001,7 +6137,33 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
                 </div>
               )}
-              {/* 기산일자 */}
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-6px',
+                  right: '-6px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>1</span>
+              )}
+            </div>
+
+            {/* Section Title */}
+            <div style={{ ...titleStyle, borderBottom: 'none', paddingBottom: 0 }}>
+              연금수령 신청내역
+            </div>
+
+            {/* 기산일자 */}
             <div>
               <label style={labelStyle}>연금수령 기산일자</label>
               <input type="text" value="2032.02.23" readOnly style={{ ...inputStyle, borderBottom: 'none', backgroundColor: isDark ? '#1e293b' : '#f1f5f9', padding: '10px 12px', borderRadius: '4px' }} />
@@ -6023,6 +6185,25 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   >
                     {startDateStr}
                   </div>
+                  {isDrawerOpen && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '18px',
+                      right: '25px',
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#ffffff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                    }}>2</span>
+                  )}
                 </>
               ) : (
                 <div 
@@ -6191,6 +6372,25 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
                 <div style={{ position: 'relative', flex: 1 }}>
                   {renderStyledInput(directAccountNumber, setDirectAccountNumber, "계좌번호 직접입력", "account", true, false, { boxSizing: 'border-box' })}
+                  {isToBe && isDrawerOpen && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '12px',
+                      right: '28px',
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '50%',
+                      backgroundColor: '#00c3a5',
+                      color: '#ffffff',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                    }}>4</span>
+                  )}
                 </div>
                 {selectedBank && directAccountNumber ? (
                   <button style={{
@@ -6221,12 +6421,50 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   계좌가 확인되었습니다.
                 </span>
               )}
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '18px',
+                  right: '25px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>3</span>
+              )}
             </div>
 
             {/* 연락처 */}
             <div style={{ position: 'relative' }}>
               <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
               {renderStyledInput(phoneNumber, setPhoneNumber, "전화번호 입력", "phone", true)}
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '18px',
+                  right: '10px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>4</span>
+              )}
             </div>
 
             {/* 즉시 인출 금액 */}
@@ -6245,22 +6483,60 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           }}>
             {/* Checkbox agreement */}
             <div style={{ padding: '14px 16px 10px 16px', position: 'relative' }}>
-              <label 
+              <div 
                 style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
               >
-                <input 
-                  type="checkbox" 
-                  checked={agreed} 
-                  onChange={(e) => setAgreed(e.target.checked)} 
-                  style={{ marginTop: '3px', cursor: 'pointer' }} 
-                />
+                {/* Custom Checkbox UI with SVG checkmark for Figma Export */}
+                <div 
+                  onClick={() => setAgreed(!agreed)}
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    minWidth: '18px',
+                    minHeight: '18px',
+                    borderRadius: '3px',
+                    border: agreed ? '1px solid #2563eb' : (isDark ? '1px solid #64748b' : '1px solid #94a3b8'),
+                    backgroundColor: agreed ? '#2563eb' : (isDark ? '#1e293b' : '#ffffff'),
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: '1px',
+                    cursor: 'pointer',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  {agreed && (
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M2.5 6L5 8.5L9.5 3.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </div>
                 <span 
-                  onClick={() => setShowNoticePopup(true)}
+                  onClick={() => setAgreed(!agreed)}
                   style={{ fontSize: '0.75rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '700', lineHeight: '1.4' }}
                 >
                   연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
                 </span>
-              </label>
+              </div>
+              {isToBe && isDrawerOpen && (
+                <span style={{
+                  position: 'absolute',
+                  top: '8px',
+                  right: '12px',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: '#00c3a5',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                }}>5</span>
+              )}
             </div>
 
             {/* Submit button (Full screen width, disabled when not agreed) */}
@@ -17578,6 +17854,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </h3>
                   <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>투자 목적별 상단 탭 세분화</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17589,6 +17866,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </li>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>종목 리스트 UX 고도화</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17600,6 +17878,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </li>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>(트레이딩)현재가 화면 연동</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17627,6 +17906,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </h3>
                   <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>보유 주수 및 평균매입단가 표시</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17635,6 +17915,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </li>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>정렬기준 선택</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17643,6 +17924,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </li>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>평가금 선택 시 통합 UI 연동</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17651,6 +17933,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </li>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>현재가 선택 시 고유 레이아웃 복원</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17659,6 +17942,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </li>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>5</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>관심종목(별표) 등록 바텀시트 연동</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17686,11 +17970,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </h3>
                   <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>일반 트레이딩에서 사용하는 현재가 화면</strong>
                       </div>
                     </li>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>돋보기 버튼 선택 시 분기 처리</strong>
                         <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17773,6 +18059,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </h3>
                   <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                     <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                       <div>
                         <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>원스톱 연금 네비게이션:</strong> 연금수령 메뉴를 신규 배치하여 연금수령 신청, 신청 조회/취소, 연금수령 현황, 연금개시 시뮬레이션까지 모든 연금저축 및 퇴직연금 서비스를 뎁스(Depth) 최소화로 손쉽게 오갈 수 있습니다.
                       </div>
@@ -17848,26 +18135,31 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>계좌 선택:</strong> 계약점포 상태가 '정상'인 연금상품계좌만 필터링하여 선택 리스트에 노출함.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>날짜 입력:</strong> 수령 개시 일자 입력 필드 선택 시 모바일 네이티브 달력(Calendar) UI를 팝업함. 신청일 기준 미래 60일 이내의 일자만 활성화하며, 60일 초과 일자 선택 시 "60일 이내의 일자만 선택 가능합니다"라는 안내 팝업을 노출함.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>수령계좌 선택:</strong> 금융기관 선택 프로세스는 원뎁스(1-Depth) 바텀시트 또는 팝업으로 제공하여 이탈을 방지함.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연락처 및 계좌 입력:</strong> 연락처 입력 및 수령계좌 직접 입력 필드 선택 시, 문자가 아닌 '휴대폰 숫자 패드'가 자동으로 활성화되도록 인터랙션을 정의함.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>5</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>유의사항 확인:</strong> 체크박스 선택 시 연금저축계좌 개시/해지 및 중도인출 관련 안내 팝업을 확인해야 체크 가능함.
                     </div>
@@ -17944,6 +18236,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>통합 분기 메뉴 구축 및 진입 경로 단권화</strong>
                       <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17953,6 +18246,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>매수 재원 다변화 및 선택 제어</strong>
                       <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17962,6 +18256,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>신규 '펀드 모으기' 프로세스 및 자동 재투자 로직 구현</strong>
                       <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -17971,6 +18266,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>직원/WTS 관리 화면 및 알림 체계 고도화</strong>
                       <ul style={{ margin: '4px 0 0 0', paddingLeft: '16px', listStyleType: 'disc', fontSize: '15px', color: '#6b7280' }}>
@@ -18050,21 +18346,25 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>듀얼 진입 프로세스 구축:</strong> '장내채권 현재가' 화면에서 매수 시 연금계좌를 선택하거나, 처음부터 'MY연금 &gt; 채권매매' 경로에서 퇴직연금계좌를 선택하고 시작하는 듀얼 진입을 지원합니다.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>부담금 납입구분 셀렉터 및 실시간 계산:</strong> 화면 내 [고객납입금 / 퇴직납입금] 선택 탭(라디오 버튼)을 필수 제공하며, 사용자가 선택한 납입구분에 따라 '매수가능금액'과 잔고를 실시간으로 변동하여 바인딩합니다.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>연금 전용 필터링 및 유의문구 팝업:</strong> 연금상품관리(RK #23608)에 등록된 채권만 검색되도록 필터링하고, DC/IRP 계좌별로 근로자 소속회사의 자사 발행 회사채 매매 시도 시 주문 불가 안내 또는 유의문구 모달 팝업을 강제 노출합니다.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>장내·외 통합 잔고 화면 신설:</strong> 기존 장외채권 잔고와 신규 장내채권 잔고를 한눈에 볼 수 있는 독립된 통합 잔고 화면을 신설하고, 그리드에 주문가능수량, 매수단가, 만기일, 잔고구분(납입금구분)을 필수 표출합니다.
                     </div>
@@ -18140,16 +18440,19 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>실시간 이중 호가 비교:</strong> 통합 모드에서 KRX 시세(29,550원)와 NXT 시세(29,600원)를 한눈에 볼 수 있습니다.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>유연한 시장 전환:</strong> 최좌측 토글 탭을 클릭하여 <span style={{ fontFamily: 'var(--font-sans)', fontWeight: '800', color: '#00c3a5', backgroundColor: isDark ? 'rgba(0, 195, 165, 0.15)' : 'rgba(0, 195, 165, 0.08)', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', margin: '0 2px' }}>통합 ☰</span>, <span style={{ fontFamily: 'var(--font-sans)', fontWeight: '800', color: '#d97706', backgroundColor: isDark ? 'rgba(217, 119, 6, 0.15)' : 'rgba(217, 119, 6, 0.08)', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', margin: '0 2px' }}>NXT ☰</span>, <span style={{ fontFamily: 'var(--font-sans)', fontWeight: '800', color: '#00977d', backgroundColor: isDark ? 'rgba(0, 151, 125, 0.15)' : 'rgba(0, 151, 125, 0.08)', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', margin: '0 2px' }}>KRX ☰</span> 모드를 손쉽게 오갈 수 있습니다.
                     </div>
                   </li>
                   <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>시장 지표 배너 탑재:</strong> 두 시장 간 가격 차이 정보 및 점유율/거래량 비교 요약 배너를 상단에 구성했습니다.
                     </div>
