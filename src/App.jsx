@@ -13752,7 +13752,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </p>
             </div>
             {/* 3D Donut Chart Graphic / Custom Image */}
-            <div style={{ width: '95px', height: '95px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '4px' }}>
+            <div style={{ width: '95px', height: '95px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '22px' }}>
               <img 
                 src="/savings_hero.png" 
                 alt="적립식 투자 이미지"
@@ -13780,7 +13780,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
 
           {/* Sub Navigation Tabs (Compact height matching attached image) */}
-          <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
+          <div style={{ marginTop: '12px', display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
             <div style={{
               flex: 1,
               textAlign: 'center',
@@ -13788,7 +13788,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               fontSize: '12px',
               fontWeight: '700',
               color: '#111111',
-              borderBottom: '2px solid #111111',
+              borderBottom: '2.5px solid #111111',
               cursor: 'pointer'
             }}>
               적립투자 신청
@@ -13800,11 +13800,25 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               fontSize: '12px',
               fontWeight: '500',
               color: '#888888',
-              borderBottom: '2px solid transparent',
+              borderBottom: '2.5px solid transparent',
               cursor: 'pointer'
             }}>
               신청내역 조회
             </div>
+          </div>
+
+          {/* Tab Content Body Area (Empty State) */}
+          <div style={{
+            padding: '48px 20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#888888',
+            fontSize: '0.88rem',
+            fontWeight: '400',
+            backgroundColor: '#ffffff'
+          }}>
+            신청한 상품이 없습니다.
           </div>
 
         </div>
@@ -13835,15 +13849,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Bottom Black Action Button Bar */}
+          {/* Bottom Action Button Bar (Disabled until screen5Agreed is checked) */}
           <div style={{
-            backgroundColor: '#1c1c1e',
-            color: '#ffffff',
+            backgroundColor: screen5Agreed ? '#1c1c1e' : '#cbd5e1',
+            color: screen5Agreed ? '#ffffff' : '#94a3b8',
             padding: '14px 0',
             textAlign: 'center',
             fontSize: '1.02rem',
             fontWeight: '700',
-            cursor: 'pointer'
+            cursor: screen5Agreed ? 'pointer' : 'not-allowed',
+            transition: 'background-color 0.2s, color 0.2s'
           }}>
             적립 투자 신청하기
           </div>
@@ -14183,8 +14198,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   const [statusActiveTab, setStatusActiveTab] = useState('status');
   const [statusViewMode, setStatusViewMode] = useState('list');
   const [statusSelectedItem, setStatusSelectedItem] = useState(null);
-  const [asIsSelectedMenuCategory, setAsIsSelectedMenuCategory] = useState('IRP/퇴직연금');
-  const [toBeSelectedMenuCategory, setToBeSelectedMenuCategory] = useState('연금수령');
+  const [asIsSelectedMenuCategory, setAsIsSelectedMenuCategory] = useState('연금저축');
+  const [toBeSelectedMenuCategory, setToBeSelectedMenuCategory] = useState('연금저축');
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
   const [etfMallNavMode, setEtfMallNavMode] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -15550,7 +15565,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             })}
                           </div>
 
-                          {/* RIA Flag Banner Deleted */}
+                          {/* RIA 가입 Banner */}
+                          <div style={{
+                            margin: '0 8px',
+                            borderRadius: '6px',
+                            background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)',
+                            padding: '10px 8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                            cursor: 'pointer'
+                          }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>RIA</span>
+                              <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>가입</span>
+                            </div>
+                            <span style={{ fontSize: '1.5rem' }}>🇰🇷</span>
+                          </div>
                         </div>
 
                         {/* Right Main Menu Items */}
@@ -15610,12 +15642,45 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               </div>
                             </div>
                           ) : asIsSelectedMenuCategory === '연금저축' ? (
-                            <div>
-                              <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '12px' }}>연금저축</div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', opacity: 0.6 }}>
-                                <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금저축 가입</div>
-                                <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>타사 연금저축 가져오기</div>
-                                <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금저축 보유잔고</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                              {/* 1. 연금저축 */}
+                              <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '16px' }}>연금저축</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                                  {['연금저축 가입', '타사 연금저축 가져오기', '연금펀드 자동매수 신청'].map((name, idx) => (
+                                    <div key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{name}</div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* 2. MY 연금 */}
+                              <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '16px' }}>MY 연금</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                                  {['연금저축 보유잔고', '연금저축 한도/기간 설정', '연금저축 출금'].map((name, idx) => (
+                                    <div key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{name}</div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* 3. ETF/리츠 */}
+                              <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '16px' }}>ETF/리츠</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                                  {['ETF/리츠 잔고', 'ETF/리츠 주문', 'ETF/리츠 현재가'].map((name, idx) => (
+                                    <div key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{name}</div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* 4. 상품 매매 */}
+                              <div>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#3b5bdb', marginBottom: '16px' }}>상품 매매</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                                  {['연금저축 펀드검색', '펀드 주문', '펀드잔고/매매내역'].map((name, idx) => (
+                                    <div key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{name}</div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           ) : (
@@ -15845,13 +15910,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               return (
                                 <div
                                   key={idx}
+                                  onClick={() => setToBeSelectedMenuCategory(sub.name)}
                                   style={{
                                     padding: '18px 12px',
                                     fontSize: '0.96rem',
                                     fontWeight: '500',
                                     color: isSelected ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
                                     backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
-                                    cursor: 'default',
+                                    cursor: 'pointer',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'space-between',
@@ -15879,7 +15945,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             })}
                           </div>
 
-                          {/* RIA Flag Banner Deleted */}
+                          {/* RIA 가입 Banner */}
+                          <div style={{
+                            margin: '0 8px',
+                            borderRadius: '6px',
+                            background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)',
+                            padding: '10px 8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                            cursor: 'pointer'
+                          }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>RIA</span>
+                              <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>가입</span>
+                            </div>
+                            <span style={{ fontSize: '1.5rem' }}>🇰🇷</span>
+                          </div>
                         </div>
 
                         {/* Right Main Menu Items */}
@@ -15894,11 +15977,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           boxSizing: 'border-box'
                         }}>
                           {toBeSelectedMenuCategory === '연금저축' ? (
-                            <>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                               {/* 1. 연금저축 */}
-                              <div>
+                              <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
                                 <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>연금저축</div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
                                   {[
                                     { name: '연금저축 가입' },
                                     { name: '타사 연금저축 가져오기' },
@@ -15912,25 +15995,52 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               </div>
 
                               {/* 2. MY 연금 */}
-                              <div>
+                              <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
                                 <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 연금</div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
                                   {[
                                     { name: '연금저축 보유잔고' },
                                     { name: '연금저축 한도/기간 설정' },
-                                    { name: '연금저축 출금' }
+                                    { name: '연금저축 출금' },
+                                    { name: '연금수령 신청/변경', isNewHighlight: true, action: () => setScreen4SubScreen('requestForm') },
+                                    { name: '연금수령 신청 조회/취소', isNewHighlight: true, action: () => setScreen4SubScreen('status') },
+                                    { name: '연금수령현황', isNewHighlight: true, action: () => setScreen4SubScreen('status') }
                                   ].map((item, idx) => (
-                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                                      <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                    <div key={idx} onClick={item.action} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                      <span style={{ 
+                                        fontSize: '1.02rem', 
+                                        color: isDark ? '#cbd5e1' : '#222222', 
+                                        fontWeight: '500' 
+                                      }}>
+                                        {item.name}
+                                      </span>
+                                      {item.isNewHighlight && (
+                                        <span style={{
+                                          backgroundColor: '#ffebeb',
+                                          color: '#de201e',
+                                          fontSize: '0.68rem',
+                                          padding: '2px 8px',
+                                          borderRadius: '10px',
+                                          fontWeight: '900',
+                                          fontStyle: 'italic',
+                                          display: 'inline-flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          lineHeight: '1',
+                                          letterSpacing: '-0.2px'
+                                        }}>
+                                          NEW!
+                                        </span>
+                                      )}
                                     </div>
                                   ))}
                                 </div>
                               </div>
 
-                              {/* 4. ETF/리츠 */}
-                              <div>
+                              {/* 3. ETF/리츠 */}
+                              <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
                                 <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>ETF/리츠</div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
                                   {[
                                     { name: 'ETF/리츠 잔고' },
                                     { name: 'ETF/리츠 주문' },
@@ -15942,7 +16052,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                   ))}
                                 </div>
                               </div>
-                            </>
+
+                              {/* 4. 상품 매매 */}
+                              <div>
+                                <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                                  {[
+                                    { name: '연금저축 펀드검색' },
+                                    { name: '펀드 주문' },
+                                    { name: '펀드잔고/매매내역' }
+                                  ].map((item, idx) => (
+                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                      <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+
                           ) : toBeSelectedMenuCategory === '연금수령' ? (
                             <>
                               <div>
