@@ -5518,7 +5518,7 @@ function ToBeStockSearchView({ setToBeSubScreen, toBePrevSubScreen, isDark, ente
 }
 
 
-function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, isFigmaExportMode }) {
+function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, isFigmaExportMode, initialReceiptStatus = 'form' }) {
   const [selectedDay, setSelectedDay] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     const prefix = isToBe ? 'tobe' : 'asis';
@@ -5618,7 +5618,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   };
 
   // New interactive states for application/cancellation modal flows
-  const [receiptStatus, setReceiptStatus] = useState('form'); // 'form', 'inquiry'
+  const [receiptStatus, setReceiptStatus] = useState(initialReceiptStatus); // 'form', 'inquiry'
   const [showDateLimitPopup, setShowDateLimitPopup] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -6003,55 +6003,77 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           flexDirection: 'column',
           gap: '16px'
         }}>
-          {/* Dropdown 703-134065(41) 오정한_IRP */}
+          {/* Account Dropdown */}
           <div style={{ position: 'relative', marginTop: '4px' }}>
-            <div style={{
-              ...selectStyle,
-              backgroundColor: isDark ? '#1e293b' : '#ffffff',
-              border: isDark ? '1px solid #334155' : '1px solid #d2d6dc',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              cursor: 'pointer',
-              padding: '12px 14px',
-              marginTop: 0
-            }}>
-              <span>703-134065(41) 오정한_IRP</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ opacity: 0.7 }}><path stroke={isDark ? '#cbd5e1' : '#6b7280'} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m6 8 4 4 4-4"/></svg>
-            </div>
+            {isToBe ? (
+              <div 
+                onClick={() => setShowProductBottomSheet(true)}
+                style={{ 
+                  border: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+                  borderRadius: '4px',
+                  padding: '8px 12px',
+                  fontSize: '12px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                  cursor: 'pointer'
+                }}
+              >
+                <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>{currentAccount}</span>
+                <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
+              </div>
+            ) : (
+              <div 
+                style={{ 
+                  border: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+                  borderRadius: '4px',
+                  padding: '8px 12px',
+                  fontSize: '12px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                  cursor: 'pointer'
+                }}
+              >
+                <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>200-233354(41) 김대신</span>
+                <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
+              </div>
+            )}
           </div>
 
           {/* Details White Box */}
           <div style={{
             backgroundColor: isDark ? '#1e293b' : '#ffffff',
-            borderRadius: '12px',
-            padding: '24px 20px',
+            borderRadius: '10px',
+            padding: '16px 16px 20px 16px',
             border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+            gap: '10px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
               <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>신청일자</span>
               <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>2026.06.22</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
               <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>수령방법</span>
               <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>기간선택형</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
               <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>입금 계좌번호</span>
               <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>대신증권 145-109999-82</span>
             </div>
 
             {/* Divider line */}
-            <div style={{ height: '1px', backgroundColor: isDark ? '#334155' : '#f1f5f9', margin: '8px 0' }} />
+            <div style={{ height: '1px', backgroundColor: isDark ? '#334155' : '#f1f5f9', margin: '4px 0 2px 0' }} />
 
             {/* Button / Action text */}
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '6px 0' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0 6px 0' }}>
               {isCancelled ? (
-                <span style={{ color: '#de201e', fontWeight: '800', fontSize: '0.95rem' }}>
+                <span style={{ color: '#de201e', fontWeight: '800', fontSize: '0.9rem' }}>
                   취소 (고객확인)
                 </span>
               ) : (
@@ -6061,10 +6083,10 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                     background: 'none',
                     border: 'none',
                     color: '#2563eb',
-                    fontWeight: '800',
-                    fontSize: '0.95rem',
+                    fontWeight: '700',
+                    fontSize: '0.9rem',
                     cursor: 'pointer',
-                    padding: '4px 16px',
+                    padding: '2px 8px',
                     textDecoration: 'none'
                   }}
                 >
@@ -6077,32 +6099,49 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
       ) : (
         <>
           <div ref={contentRef} onScroll={handleScroll} style={contentStyle}>
-            {/* Account Dropdown */}
+            {/* Account Dropdown (Identical to Screen 6 보유상품 현황 style) */}
             <div style={{ position: 'relative' }}>
               {isToBe ? (
                 <div 
                   onClick={() => setShowProductBottomSheet(true)}
                   style={{ 
-                    ...selectStyle, 
-                    cursor: 'pointer', 
-                    display: 'flex', 
-                    alignItems: 'center', 
+                    border: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+                    borderRadius: '4px',
+                    padding: '8px 12px',
+                    fontSize: '12px',
+                    display: 'flex',
                     justifyContent: 'space-between',
-                    paddingRight: '35px'
+                    alignItems: 'center',
+                    backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                    cursor: 'pointer'
                   }}
                 >
-                  <span>{currentAccount}</span>
+                  <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>{currentAccount}</span>
+                  <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
                 </div>
               ) : (
-                <select style={selectStyle}>
-                  <option>200-233354(41) 김대신</option>
-                </select>
+                <div 
+                  style={{ 
+                    border: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+                    borderRadius: '4px',
+                    padding: '8px 12px',
+                    fontSize: '12px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>200-233354(41) 김대신</span>
+                  <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
+                </div>
               )}
               {isToBe && isDrawerOpen && (
                 <span style={{
                   position: 'absolute',
-                  top: '2px',
-                  right: isToBe ? '35px' : '25px',
+                  top: '-6px',
+                  right: '-6px',
                   width: '18px',
                   height: '18px',
                   borderRadius: '50%',
@@ -6563,19 +6602,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
             );
           })}
           
-          {/* Small up chevron Indicator */}
-          <div style={{
-            position: 'absolute',
-            bottom: '0px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            lineHeight: '1',
-            fontSize: '0.55rem',
-            color: isDark ? '#64748b' : '#94a3b8',
-            pointerEvents: 'none'
-          }}>
-            ▲
-          </div>
+
         </div>
 
         {/* Back button */}
@@ -15634,7 +15661,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                   >
                                     연금수령 신청
                                   </div>
-                                  <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금수령 신청 조회/취소</div>
+                                  <div 
+                                    onClick={() => setAsIsScreen4SubScreen('requestInquiry')}
+                                    style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}
+                                  >
+                                    연금수령 신청 조회/취소
+                                  </div>
                                   <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>연금수령 현황</div>
                                   <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>IRP 해지신청</div>
                                   <div style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>IRP 해지신청 조회/취소</div>
@@ -15726,6 +15758,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       isToBe={false} 
                       step={asisSimulationStep}
                       setStep={setAsisSimulationStep}
+                      onBackClick={() => setAsIsScreen4SubScreen('menu')} 
+                    />
+                  ) : asIsScreen4SubScreen === 'requestInquiry' ? (
+                    <PensionReceiptRequestView 
+                      isDark={isDark} 
+                      isToBe={false}
+                      isDrawerOpen={isDrawerOpen}
+                      isFigmaExportMode={isFigmaExportMode}
+                      initialReceiptStatus="inquiry"
                       onBackClick={() => setAsIsScreen4SubScreen('menu')} 
                     />
                   ) : (
@@ -16002,8 +16043,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                     { name: '연금저축 보유잔고' },
                                     { name: '연금저축 한도/기간 설정' },
                                     { name: '연금저축 출금' },
-                                    { name: '연금수령 신청/변경', isNewHighlight: true, action: () => setScreen4SubScreen('requestForm') },
-                                    { name: '연금수령 신청 조회/취소', isNewHighlight: true, action: () => setScreen4SubScreen('status') },
+                                    { name: '연금수령', isNewHighlight: true, action: () => setScreen4SubScreen('requestForm') },
+                                    { name: '연금수령 신청 조회/취소', isNewHighlight: true, action: () => setScreen4SubScreen('requestInquiry') },
                                     { name: '연금수령현황', isNewHighlight: true, action: () => setScreen4SubScreen('status') }
                                   ].map((item, idx) => (
                                     <div key={idx} onClick={item.action} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
@@ -16075,7 +16116,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               <div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
                               {[
-                                { name: '연금수령 신청' },
+                                { name: '연금수령' },
                                 { name: '연금수령 신청 조회/취소' },
                                 { name: '연금수령 현황' },
                                 { name: '연금개시 시뮬레이션' },
@@ -16083,9 +16124,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 <div 
                                   key={idx} 
                                   onClick={() => {
-                                    if (item.name === '연금수령 신청') {
+                                    if (item.name === '연금수령' || item.name === '연금수령 신청') {
                                       setScreen4SubScreen('requestForm');
-                                    } else if (item.name === '연금수령 현황') {
+                                    } else if (item.name === '연금수령 신청 조회/취소') {
+                                      setScreen4SubScreen('requestInquiry');
+                                    } else if (item.name === '연금수령 현황' || item.name === '연금수령현황') {
                                       setScreen4SubScreen('status');
                                     } else if (item.name === '연금개시 시뮬레이션') {
                                       setScreen4SubScreen('simulation');
@@ -16166,6 +16209,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       isToBe={true}
                       step={asisSimulationStep}
                       setStep={setAsisSimulationStep}
+                      onBackClick={() => setScreen4SubScreen('menu')} 
+                    />
+                  ) : screen4SubScreen === 'requestInquiry' ? (
+                    <PensionReceiptRequestView 
+                      isDark={isDark} 
+                      isToBe={true} 
+                      isDrawerOpen={isDrawerOpen}
+                      isFigmaExportMode={isFigmaExportMode}
+                      initialReceiptStatus="inquiry"
                       onBackClick={() => setScreen4SubScreen('menu')} 
                     />
                   ) : (
