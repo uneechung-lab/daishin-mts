@@ -14219,8 +14219,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   const [statusActiveTab, setStatusActiveTab] = useState('status');
   const [statusViewMode, setStatusViewMode] = useState('list');
   const [statusSelectedItem, setStatusSelectedItem] = useState(null);
-  const [asIsSelectedMenuCategory, setAsIsSelectedMenuCategory] = useState('연금저축');
-  const [toBeSelectedMenuCategory, setToBeSelectedMenuCategory] = useState('연금저축');
+  const [asIsSelectedMenuCategory, setAsIsSelectedMenuCategory] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('screen4AsIsCategory') || params.get('screen4asiscategory') || '연금저축';
+  });
+  const [toBeSelectedMenuCategory, setToBeSelectedMenuCategory] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('screen4ToBeCategory') || params.get('screen4tobecategory') || '연금저축';
+  });
   const [toBePrevSubScreen, setToBePrevSubScreen] = useState('etfMall');
   const [etfMallNavMode, setEtfMallNavMode] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -14294,6 +14300,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
     const asisScreen4SubParam = params.get('asisScreen4SubScreen');
     if (asisScreen4SubParam) setAsIsScreen4SubScreen(asisScreen4SubParam);
+
+    const screen4AsIsCatParam = params.get('screen4AsIsCategory') || params.get('screen4asiscategory');
+    if (screen4AsIsCatParam) setAsIsSelectedMenuCategory(screen4AsIsCatParam);
+
+    const screen4ToBeCatParam = params.get('screen4ToBeCategory') || params.get('screen4tobecategory');
+    if (screen4ToBeCatParam) setToBeSelectedMenuCategory(screen4ToBeCatParam);
 
     const mallTabParam = params.get('mallTab');
     if (mallTabParam) setActiveMallTab(mallTabParam);
@@ -14392,6 +14404,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen6account', screen6ActiveAccount);
     params.set('screen4SubScreen', screen4SubScreen);
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
+    params.set('screen4AsIsCategory', asIsSelectedMenuCategory);
+    params.set('screen4ToBeCategory', toBeSelectedMenuCategory);
     params.set('mallTab', activeMallTab);
     params.set('ownedDisplay', ownedDisplayOption);
     params.set('ownedSort', ownedSortOption);
@@ -14432,7 +14446,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
