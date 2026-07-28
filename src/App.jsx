@@ -5524,7 +5524,11 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     const prefix = isToBe ? 'tobe' : 'asis';
     return params.get(`${prefix}SelectedDay`) || '25일';
   });
-  const [agreed, setAgreed] = useState(false);
+  const [agreed, setAgreed] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const prefix = isToBe ? 'tobe' : 'asis';
+    return params.get(`${prefix}Agreed`) === 'true' || params.get('agreed') === 'true';
+  });
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showMethodPicker, setShowMethodPicker] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(() => {
@@ -5649,6 +5653,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     if (params.get(`${prefix}ShowCancelConfirmModal`) === 'true') setShowCancelConfirmModal(true);
     if (params.get(`${prefix}IsCancelled`) === 'true') setIsCancelled(true);
     if (params.get(`${prefix}ShowDateLimitPopup`) === 'true') setShowDateLimitPopup(true);
+    if (params.get(`${prefix}Agreed`) === 'true' || params.get('agreed') === 'true') setAgreed(true);
   }, [isToBe]);
 
   useEffect(() => {
@@ -5686,12 +5691,13 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     params.set(`${prefix}DirectAccountNumber`, directAccountNumber);
     params.set(`${prefix}CustomPeriod`, customPeriod);
     params.set(`${prefix}ImmediateAmount`, immediateAmount);
+    if (agreed) params.set(`${prefix}Agreed`, 'true'); else params.delete(`${prefix}Agreed`);
 
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     if (window.location.search !== (params.toString() ? `?${params.toString()}` : '')) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe, receiptStatus, showConfirmModal, showSuccessModal, showCancelConfirmModal, isCancelled, showDateLimitPopup, phoneNumber, directAccountNumber, customPeriod, immediateAmount]);
+  }, [showDatePicker, showMethodPicker, showPeriodPicker, showBankPicker, showProductBottomSheet, showAccountBottomSheet, showNoticePopup, showNumericKeypad, activeField, selectedDay, selectedMethod, selectedPeriod, selectedBank, customAmount, isToBe, receiptStatus, showConfirmModal, showSuccessModal, showCancelConfirmModal, isCancelled, showDateLimitPopup, phoneNumber, directAccountNumber, customPeriod, immediateAmount, agreed]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
