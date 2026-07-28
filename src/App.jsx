@@ -5966,26 +5966,20 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
 
       {/* Header */}
       <div style={headerStyle}>
-        {(onBackClick || receiptStatus === 'inquiry') ? (
-          <button 
-            onClick={() => {
-              if (receiptStatus === 'inquiry') {
-                setReceiptStatus('form');
-              } else if (onBackClick) {
-                onBackClick();
-              }
-            }}
-            style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-        ) : (
-          <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
-        )}
+        <button 
+          onClick={() => {
+            if (onBackClick) {
+              onBackClick();
+            }
+          }}
+          style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
         <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>
           {receiptStatus === 'inquiry' ? '연금수령 신청 조회/취소' : '연금수령 신청'}
         </span>
@@ -6074,7 +6068,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
             <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0 6px 0' }}>
               {isCancelled ? (
                 <span style={{ color: '#de201e', fontWeight: '800', fontSize: '0.9rem' }}>
-                  취소 (고객확인)
+                  취소(고객확인)
                 </span>
               ) : (
                 <button 
@@ -7602,7 +7596,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
         </div>
       )}
 
-      {/* 3. 취소 확인 모달 (Attachment 4) */}
+      {/* 3. 취소 확인 모달 (Attachment Popup) */}
       {showCancelConfirmModal && (
         <div style={{
           position: 'absolute',
@@ -7610,7 +7604,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
           zIndex: 3000,
           display: 'flex',
           alignItems: 'center',
@@ -7618,41 +7612,39 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           boxSizing: 'border-box'
         }}>
           <div style={{
-            width: '280px',
+            width: '270px',
             backgroundColor: '#ffffff',
-            borderRadius: '8px',
+            borderRadius: '12px',
             boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
             display: 'flex',
             flexDirection: 'column',
-            overflow: 'hidden',
-            border: '1px solid #e2e8f0'
+            overflow: 'hidden'
           }}>
             <div style={{
-              padding: '30px 20px',
+              padding: '32px 20px 28px 20px',
               textAlign: 'center',
-              fontSize: '0.95rem',
+              fontSize: '0.96rem',
               fontWeight: '500',
-              color: '#222222',
-              lineHeight: '1.4',
+              color: '#333333',
+              lineHeight: '1.45',
               backgroundColor: '#ffffff'
             }}>
               연금 수령 신청을
               <br />
               취소 하시겠습니까?
             </div>
-            <div style={{ display: 'flex', borderTop: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'flex', height: '48px' }}>
               <button 
                 onClick={() => setShowCancelConfirmModal(false)}
                 style={{
                   flex: 1,
-                  height: '48px',
+                  height: '100%',
                   border: 'none',
-                  backgroundColor: '#f1f5f9',
-                  color: '#475569',
+                  backgroundColor: '#f3f4f6',
+                  color: '#333333',
                   fontWeight: '700',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  borderRight: '1px solid #e2e8f0'
+                  fontSize: '0.92rem',
+                  cursor: 'pointer'
                 }}
               >
                 아니오
@@ -7664,12 +7656,12 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                 }}
                 style={{
                   flex: 1,
-                  height: '48px',
+                  height: '100%',
                   border: 'none',
-                  backgroundColor: '#1e293b',
+                  backgroundColor: '#222222',
                   color: '#ffffff',
                   fontWeight: '700',
-                  fontSize: '0.9rem',
+                  fontSize: '0.92rem',
                   cursor: 'pointer'
                 }}
               >
@@ -7925,8 +7917,10 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
           onClick={onBackClick}
           style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
           </svg>
         </button>
         <span style={{ fontSize: '0.95rem', fontWeight: '800' }}>연금수령 현황</span>
