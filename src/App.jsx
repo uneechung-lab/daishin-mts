@@ -16340,7 +16340,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           <button 
                             onClick={() => {
                               setShowInReceiptChangeModal(false);
-                              setScreen4SubScreen('requestInquiry');
+                              setScreen4SubScreen('requestForm');
                             }}
                             style={{
                               flex: 1,
