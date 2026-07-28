@@ -7930,7 +7930,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
       </div>
 
       <div style={contentStyle}>
-        {/* Dropdown 601-140641(41) 류억형 */}
+        {/* Dropdown 601-140641(41) 김대신 */}
         <div style={{ padding: '12px 16px 8px 16px', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
           <div style={{
             ...inputStyle,
@@ -7943,7 +7943,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
             padding: '10px 12px',
             marginTop: 0
           }}>
-            <span>601-140641(41) 류억형</span>
+            <span>601-140641(41) 김대신</span>
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style={{ opacity: 0.7 }}><path stroke={isDark ? '#cbd5e1' : '#6b7280'} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m6 8 4 4 4-4"/></svg>
           </div>
         </div>
@@ -8649,7 +8649,7 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
               marginBottom: '18px',
               fontFamily: 'sans-serif'
             }}>
-              김대진님의 {isToBe ? '연금' : '퇴직연금'}
+              김대신님의 {isToBe ? '연금' : '퇴직연금'}
             </div>
             <h2 style={{
               fontSize: '1.3rem',
@@ -13755,7 +13755,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer'
               }}
             >
-              <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-100029(41) 김대진</span>
+              <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-100029(41) 김대신</span>
               <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
             </div>
           </div>
