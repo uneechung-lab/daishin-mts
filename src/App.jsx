@@ -7614,7 +7614,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
           <div style={{
             width: '270px',
             backgroundColor: '#ffffff',
-            borderRadius: '12px',
+            borderRadius: '0',
             boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
             display: 'flex',
             flexDirection: 'column',
