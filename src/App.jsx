@@ -14215,6 +14215,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   const [asIsScreen4SubScreen, setAsIsScreen4SubScreen] = useState('menu'); // 'menu', 'requestForm'
   const [asisSimulationStep, setAsisSimulationStep] = useState('main'); // 'main', 'daishin_form', 'daishin_result', 'other_q1', 'other_result'
 
+  // Screen 4 TO BE interactive popup modal states
+  const [showAlreadyAppliedModal, setShowAlreadyAppliedModal] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('alreadyAppliedModal') === 'true';
+  });
+  const [showInReceiptChangeModal, setShowInReceiptChangeModal] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('inReceiptChangeModal') === 'true';
+  });
+
   // Lifted states for Pension Receipt Status (연금수령 현황) URL sync
   const [statusActiveTab, setStatusActiveTab] = useState('status');
   const [statusViewMode, setStatusViewMode] = useState('list');
@@ -14306,6 +14316,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
     const screen4ToBeCatParam = params.get('screen4ToBeCategory') || params.get('screen4tobecategory');
     if (screen4ToBeCatParam) setToBeSelectedMenuCategory(screen4ToBeCatParam);
+
+    const alreadyAppliedParam = params.get('alreadyAppliedModal');
+    if (alreadyAppliedParam) setShowAlreadyAppliedModal(alreadyAppliedParam === 'true');
+
+    const inReceiptChangeParam = params.get('inReceiptChangeModal');
+    if (inReceiptChangeParam) setShowInReceiptChangeModal(inReceiptChangeParam === 'true');
 
     const mallTabParam = params.get('mallTab');
     if (mallTabParam) setActiveMallTab(mallTabParam);
@@ -14406,6 +14422,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('asisScreen4SubScreen', asIsScreen4SubScreen);
     params.set('screen4AsIsCategory', asIsSelectedMenuCategory);
     params.set('screen4ToBeCategory', toBeSelectedMenuCategory);
+    if (showAlreadyAppliedModal) params.set('alreadyAppliedModal', 'true'); else params.delete('alreadyAppliedModal');
+    if (showInReceiptChangeModal) params.set('inReceiptChangeModal', 'true'); else params.delete('inReceiptChangeModal');
     params.set('mallTab', activeMallTab);
     params.set('ownedDisplay', ownedDisplayOption);
     params.set('ownedSort', ownedSortOption);
@@ -14446,7 +14464,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -16035,7 +16053,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                     { name: '연금저축 보유잔고' },
                                     { name: '연금저축 한도/기간 설정' },
                                     { name: '연금저축 출금' },
-                                    { name: '연금수령 신청/변경', isNewHighlight: true, action: () => setScreen4SubScreen('requestForm') },
+                                    { name: '연금수령 신청/변경', isNewHighlight: true, action: () => setShowAlreadyAppliedModal(true) },
                                     { name: '연금수령 신청 조회/취소', isNewHighlight: true, action: () => setScreen4SubScreen('requestInquiry') },
                                     { name: '연금수령현황', isNewHighlight: true, action: () => setScreen4SubScreen('status') }
                                   ].map((item, idx) => (
@@ -16220,6 +16238,144 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       isFigmaExportMode={isFigmaExportMode}
                       onBackClick={() => setScreen4SubScreen('menu')} 
                     />
+                  )}
+
+                  {/* 이미 연금 수령 신청 팝업 (Popup 1) */}
+                  {showAlreadyAppliedModal && (
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                      zIndex: 3000,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxSizing: 'border-box'
+                    }}>
+                      <div style={{
+                        width: '270px',
+                        backgroundColor: '#ffffff',
+                        borderRadius: '0',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        overflow: 'hidden'
+                      }}>
+                        <div style={{
+                          padding: '34px 20px 30px 20px',
+                          textAlign: 'center',
+                          fontSize: '0.98rem',
+                          fontWeight: '500',
+                          color: '#222222',
+                          lineHeight: '1.45',
+                          backgroundColor: '#ffffff'
+                        }}>
+                          이미 연금 수령
+                          <br />
+                          신청을 하셨습니다.
+                        </div>
+                        <button 
+                          onClick={() => {
+                            setShowAlreadyAppliedModal(false);
+                            setShowInReceiptChangeModal(true);
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '48px',
+                            border: 'none',
+                            backgroundColor: '#222222',
+                            color: '#ffffff',
+                            fontWeight: '700',
+                            fontSize: '0.9rem',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          연금수령 신청조회/취소
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 연금수령 개시중/수령방법 변경 팝업 (Popup 2) */}
+                  {showInReceiptChangeModal && (
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                      zIndex: 3000,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxSizing: 'border-box'
+                    }}>
+                      <div style={{
+                        width: '270px',
+                        backgroundColor: '#ffffff',
+                        borderRadius: '0',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        overflow: 'hidden'
+                      }}>
+                        <div style={{
+                          padding: '32px 16px 26px 16px',
+                          textAlign: 'center',
+                          fontSize: '0.98rem',
+                          fontWeight: '500',
+                          color: '#222222',
+                          lineHeight: '1.45',
+                          backgroundColor: '#ffffff'
+                        }}>
+                          연금수령 개시중입니다.
+                          <br />
+                          수령방법을 변경하시겠습니까?
+                        </div>
+                        <div style={{ display: 'flex', height: '48px' }}>
+                          <button 
+                            onClick={() => {
+                              setShowInReceiptChangeModal(false);
+                              setScreen4SubScreen('requestInquiry');
+                            }}
+                            style={{
+                              flex: 1,
+                              height: '100%',
+                              border: 'none',
+                              backgroundColor: '#f3f4f6',
+                              color: '#222222',
+                              fontWeight: '700',
+                              fontSize: '0.88rem',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            수령신청 조회
+                          </button>
+                          <button 
+                            onClick={() => {
+                              setShowInReceiptChangeModal(false);
+                              setScreen4SubScreen('requestForm');
+                            }}
+                            style={{
+                              flex: 1,
+                              height: '100%',
+                              border: 'none',
+                              backgroundColor: '#222222',
+                              color: '#ffffff',
+                              fontWeight: '700',
+                              fontSize: '0.88rem',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            수령방법 변경
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
