@@ -15938,7 +15938,6 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             {[
                               { name: 'IRP/퇴직연금' },
                               { name: '연금저축' },
-                              { name: '연금수령' },
                               { name: '공지사항' }
                             ].map((sub, idx) => {
                               const isSelected = sub.name === toBeSelectedMenuCategory;
@@ -15960,21 +15959,6 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                   }}
                                 >
                                   <span>{sub.name}</span>
-                                  {sub.name === '연금수령' && isDrawerOpen && (
-                                    <span style={{
-                                      display: 'inline-flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      width: '18px',
-                                      height: '18px',
-                                      borderRadius: '50%',
-                                      backgroundColor: '#00c3a5',
-                                      color: '#ffffff',
-                                      fontSize: '11px',
-                                      fontWeight: 'bold',
-                                      lineHeight: 1
-                                    }}>1</span>
-                                  )}
                                 </div>
                               );
                             })}
@@ -16037,7 +16021,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                     { name: '연금저축 보유잔고' },
                                     { name: '연금저축 한도/기간 설정' },
                                     { name: '연금저축 출금' },
-                                    { name: '연금수령', isNewHighlight: true, action: () => setScreen4SubScreen('requestForm') },
+                                    { name: '연금수령 신청/변경', isNewHighlight: true, action: () => setScreen4SubScreen('requestForm') },
                                     { name: '연금수령 신청 조회/취소', isNewHighlight: true, action: () => setScreen4SubScreen('requestInquiry') },
                                     { name: '연금수령현황', isNewHighlight: true, action: () => setScreen4SubScreen('status') }
                                   ].map((item, idx) => (
