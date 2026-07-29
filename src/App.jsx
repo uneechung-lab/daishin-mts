@@ -5564,7 +5564,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
   const [startDateStr, setStartDateStr] = useState(isToBe ? '2032.02.23' : '2032.02');
   const [showProductBottomSheet, setShowProductBottomSheet] = useState(false);
   const [showAccountBottomSheet, setShowAccountBottomSheet] = useState(false);
-  const [currentAccount, setCurrentAccount] = useState('200-233354(41) 김대신');
+  const [currentAccount, setCurrentAccount] = useState('200-233354(32) 김대신');
 
   // Keypad & Inputs Editable States
   const [showNumericKeypad, setShowNumericKeypad] = useState(false);
@@ -5619,10 +5619,11 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
     params.set(`${prefix}ScrollTop`, scrollTop);
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     window.history.replaceState({}, '', newUrl);
-  };
+  };  const [receiptStatus, setReceiptStatus] = useState(initialReceiptStatus); // 'form', 'inquiry'
+  useEffect(() => {
+    setReceiptStatus(initialReceiptStatus);
+  }, [initialReceiptStatus]);
 
-  // New interactive states for application/cancellation modal flows
-  const [receiptStatus, setReceiptStatus] = useState(initialReceiptStatus); // 'form', 'inquiry'
   const [showDateLimitPopup, setShowDateLimitPopup] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -6037,7 +6038,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   cursor: 'pointer'
                 }}
               >
-                <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>200-233354(41) 김대신</span>
+                <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>200-233354(32) 김대신</span>
                 <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
               </div>
             )}
@@ -6133,7 +6134,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                     cursor: 'pointer'
                   }}
                 >
-                  <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>200-233354(41) 김대신</span>
+                  <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>200-233354(32) 김대신</span>
                   <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
                 </div>
               )}
@@ -6467,11 +6468,6 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               )}
             </div>
 
-            {/* 즉시 인출 금액 */}
-            <div>
-              <label style={labelStyle}>즉시 인출 금액(선택)</label>
-              {renderStyledInput(immediateAmount, setImmediateAmount, "금액 입력", "immediateAmount", true)}
-            </div>
           </div>
 
           {/* Footer */}
@@ -7187,7 +7183,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                 cursor: 'pointer'
               }}
             >
-              <span style={{ fontSize: '1.02rem', fontWeight: '600' }}>(41) 개인형퇴직연금(IRP)</span>
+              <span style={{ fontSize: '1.02rem', fontWeight: '600' }}>(32) 연금저축</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
@@ -7238,7 +7234,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               {/* Account 1 */}
               <div 
                 onClick={() => {
-                  setCurrentAccount('200-233354(41) 김대신');
+                  setCurrentAccount('200-233354(32) 김대신');
                   setShowAccountBottomSheet(false);
                 }}
                 style={{
@@ -8156,12 +8152,12 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
                     textAlign: 'right',
                     borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
                   }}>
-                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: '#718096' }}>과세 제외 금액</span>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: isDark ? '#cbd5e1' : '#111827', fontWeight: '700' }}>과세 제외 금액</span>
                     <span style={{ paddingRight: '8px' }}>0</span>
                     <span style={{ paddingRight: '8px' }}>0</span>
                   </div>
 
-                  {/* Row 2: 연금 소득 (종합과세) */}
+                  {/* Row 2: 연금소득 */}
                   <div style={{
                     display: 'grid',
                     gridTemplateColumns: '1.2fr 1fr 1fr',
@@ -8170,29 +8166,9 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
                     textAlign: 'right',
                     borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
                   }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', paddingLeft: '8px' }}>
-                      <span style={{ fontWeight: '600' }}>연금소득</span>
-                      <span style={{ fontSize: '0.7rem', color: '#718096', marginLeft: '4px' }}>- 종합과세</span>
-                    </div>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: isDark ? '#cbd5e1' : '#111827', fontWeight: '700' }}>연금소득</span>
                     <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>75,766,083</span>
                     <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>4,167,130</span>
-                  </div>
-
-                  {/* Row 3: 연금 소득 (무조건분리과세) */}
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1.2fr 1fr 1fr',
-                    padding: '8px 4px',
-                    fontSize: '0.78rem',
-                    textAlign: 'right',
-                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
-                  }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', paddingLeft: '8px' }}>
-                      <span style={{ fontWeight: '600' }}>연금소득</span>
-                      <span style={{ fontSize: '0.7rem', color: '#718096', marginLeft: '4px' }}>- 무조건분리과세</span>
-                    </div>
-                    <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>9,233,984</span>
-                    <span style={{ paddingRight: '8px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>237,790</span>
                   </div>
 
                   {/* Row 4: 퇴직소득 */}
@@ -8204,7 +8180,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
                     textAlign: 'right',
                     borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
                   }}>
-                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: '#718096' }}>퇴직소득</span>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: isDark ? '#cbd5e1' : '#111827', fontWeight: '700' }}>퇴직소득</span>
                     <span style={{ paddingRight: '8px' }}>0</span>
                     <span style={{ paddingRight: '8px' }}>0</span>
                   </div>
@@ -8218,7 +8194,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
                     textAlign: 'right',
                     borderBottom: isDark ? '1px solid #1e293b' : '1px solid #edf2f7'
                   }}>
-                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: '#718096' }}>기타소득</span>
+                    <span style={{ textAlign: 'left', paddingLeft: '8px', color: isDark ? '#cbd5e1' : '#111827', fontWeight: '700' }}>기타소득</span>
                     <span style={{ paddingRight: '8px' }}>0</span>
                     <span style={{ paddingRight: '8px' }}>0</span>
                   </div>
@@ -16373,7 +16349,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           <button 
                             onClick={() => {
                               setShowInReceiptChangeModal(false);
-                              setScreen4SubScreen('requestForm');
+                              setScreen4SubScreen('status');
                             }}
                             style={{
                               flex: 1,
@@ -16386,7 +16362,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               cursor: 'pointer'
                             }}
                           >
-                            수령신청 조회
+                            수령현황 조회
                           </button>
                           <button 
                             onClick={() => {
