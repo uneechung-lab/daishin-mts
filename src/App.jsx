@@ -6044,7 +6044,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
             )}
           </div>
 
-          {/* Details White Box */}
+          {/* Details White Box 1 (신청취소) */}
           <div style={{
             backgroundColor: isDark ? '#1e293b' : '#ffffff',
             borderRadius: '10px',
@@ -6094,6 +6094,76 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   신청취소
                 </button>
               )}
+            </div>
+          </div>
+
+          {/* Details White Box 2 (접수완료) */}
+          <div style={{
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderRadius: '10px',
+            padding: '16px 16px 20px 16px',
+            border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>신청일자</span>
+              <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>1998.10.31</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>수령방법</span>
+              <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>기간선택형</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>입금 계좌번호</span>
+              <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>대신증권 161-119731-41</span>
+            </div>
+
+            {/* Divider line */}
+            <div style={{ height: '1px', backgroundColor: isDark ? '#334155' : '#f1f5f9', margin: '4px 0 2px 0' }} />
+
+            {/* Status text */}
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0 6px 0' }}>
+              <span style={{ color: isDark ? '#f8fafc' : '#111827', fontWeight: '800', fontSize: '0.95rem' }}>
+                접수완료
+              </span>
+            </div>
+          </div>
+
+          {/* Details White Box 3 (취소 (고객확인)) */}
+          <div style={{
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderRadius: '10px',
+            padding: '16px 16px 20px 16px',
+            border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>신청일자</span>
+              <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>1998.10.31</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>수령방법</span>
+              <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>기간선택형</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+              <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>입금 계좌번호</span>
+              <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>대신증권 161-119731-41</span>
+            </div>
+
+            {/* Divider line */}
+            <div style={{ height: '1px', backgroundColor: isDark ? '#334155' : '#f1f5f9', margin: '4px 0 2px 0' }} />
+
+            {/* Status text */}
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0 6px 0' }}>
+              <span style={{ color: '#de201e', fontWeight: '800', fontSize: '0.95rem' }}>
+                취소 (고객확인)
+              </span>
             </div>
           </div>
         </div>
