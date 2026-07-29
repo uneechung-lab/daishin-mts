@@ -6375,8 +6375,20 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
             <div style={{ position: 'relative' }}>
               <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
               {renderStyledInput(phoneNumber, setPhoneNumber, "전화번호 입력", "phone", true)}
-
             </div>
+
+            {/* AS-IS 전용 항목 */}
+            {!isToBe && (
+              <>
+                <div style={{ marginTop: '16px' }}>
+                  <label style={labelStyle}>즉시 인출 금액(선택)</label>
+                  {renderStyledInput(immediateAmount, setImmediateAmount, "금액 입력", "immediateAmount", true)}
+                </div>
+                <div style={{ marginTop: '20px', fontSize: '0.78rem', color: isDark ? '#94a3b8' : '#666666', lineHeight: '1.4' }}>
+                  ※ 연금 수령 신청 취소는 당일만 가능합니다.
+                </div>
+              </>
+            )}
 
           </div>
 
