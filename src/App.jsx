@@ -6383,9 +6383,9 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                 <div style={{ marginTop: '16px' }}>
                   <label style={labelStyle}>즉시 인출 금액(선택)</label>
                   {renderStyledInput(immediateAmount, setImmediateAmount, "금액 입력", "immediateAmount", true)}
-                </div>
-                <div style={{ marginTop: '20px', fontSize: '0.78rem', color: isDark ? '#94a3b8' : '#666666', lineHeight: '1.4' }}>
-                  ※ 연금 수령 신청 취소는 당일만 가능합니다.
+                  <div style={{ marginTop: '8px', fontSize: '0.78rem', color: isDark ? '#94a3b8' : '#666666', lineHeight: '1.4' }}>
+                    ※ 연금 수령 신청 취소는 당일만 가능합니다.
+                  </div>
                 </div>
               </>
             )}
