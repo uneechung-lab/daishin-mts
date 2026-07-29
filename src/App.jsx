@@ -6138,25 +6138,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   <span style={{ fontSize: '8px', color: isDark ? '#94a3b8' : '#888888' }}>▼</span>
                 </div>
               )}
-              {isToBe && isDrawerOpen && (
-                <span style={{
-                  position: 'absolute',
-                  top: '-6px',
-                  right: '-6px',
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10,
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                }}>1</span>
-              )}
+
             </div>
 
             {/* Section Title */}
@@ -6186,25 +6168,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   >
                     {startDateStr}
                   </div>
-                  {isDrawerOpen && (
-                    <span style={{
-                      position: 'absolute',
-                      top: '18px',
-                      right: '25px',
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#ffffff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      zIndex: 10,
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                    }}>2</span>
-                  )}
+
                 </>
               ) : (
                 <div 
@@ -6373,25 +6337,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
               <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
                 <div style={{ position: 'relative', flex: 1 }}>
                   {renderStyledInput(directAccountNumber, setDirectAccountNumber, "계좌번호 직접입력", "account", true, false, { boxSizing: 'border-box' })}
-                  {isToBe && isDrawerOpen && (
-                    <span style={{
-                      position: 'absolute',
-                      top: '12px',
-                      right: '28px',
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#ffffff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      zIndex: 10,
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                    }}>4</span>
-                  )}
+
                 </div>
                 {selectedBank && directAccountNumber ? (
                   <button style={{
@@ -6422,50 +6368,14 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   계좌가 확인되었습니다.
                 </span>
               )}
-              {isToBe && isDrawerOpen && (
-                <span style={{
-                  position: 'absolute',
-                  top: '18px',
-                  right: '25px',
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10,
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                }}>3</span>
-              )}
+
             </div>
 
             {/* 연락처 */}
             <div style={{ position: 'relative' }}>
               <label style={labelStyle}>수령 개시 신청 내역 확인 시 연락처</label>
               {renderStyledInput(phoneNumber, setPhoneNumber, "전화번호 입력", "phone", true)}
-              {isToBe && isDrawerOpen && (
-                <span style={{
-                  position: 'absolute',
-                  top: '18px',
-                  right: '10px',
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10,
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                }}>4</span>
-              )}
+
             </div>
 
           </div>
@@ -6514,25 +6424,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
                   연금수령 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
                 </span>
               </div>
-              {isToBe && isDrawerOpen && (
-                <span style={{
-                  position: 'absolute',
-                  top: '8px',
-                  right: '12px',
-                  width: '18px',
-                  height: '18px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10,
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
-                }}>5</span>
-              )}
+
             </div>
 
             {/* Submit button (Full screen width, disabled when not agreed) */}
