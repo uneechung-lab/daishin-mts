@@ -14053,7 +14053,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             onClick={() => setScreen5ToBeSubScreen('savings')}
             style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
           </button>
           
           <span style={{ 
@@ -14072,7 +14072,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
             <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="none" stroke="#222" strokeWidth="1.5" /></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
             </button>
           </div>
         </div>
@@ -14092,7 +14092,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               cursor: 'pointer'
             }}
           >
-            <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>200-233354(41) 정윤희</span>
+            <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>200-231234(41) 김대신</span>
             <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
           </div>
         </div>
@@ -14130,15 +14130,71 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               <span style={{ fontSize: '1rem', color: '#333333' }}>좌</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
-              <div>
+            <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
                 <span>가능수량</span>
-                <span style={{ marginLeft: '16px', fontWeight: '600', color: '#333333' }}>85,632</span>
+                <span style={{ fontWeight: '600', color: '#333333' }}>85,632</span>
               </div>
               <span style={{ color: '#cbd5e1' }}>|</span>
-              <div>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '12px' }}>
                 <span>예상금액</span>
-                <span style={{ marginLeft: '16px', fontWeight: '600', color: '#333333' }}>30,000</span>
+                <span style={{ fontWeight: '600', color: '#333333' }}>30,000</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Card Item 2: 미래에셋클린테크 증권자투자신탁(주식) C-P2e */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #f1f3f5' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: '700', color: '#a16207' }}>다소높은위험</span>
+            
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '10px' }}>
+              {/* Radio + Title Column */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', flex: 1 }}>
+                <div style={{
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  border: '1.5px solid #cbd5e1',
+                  backgroundColor: '#ffffff',
+                  flexShrink: 0,
+                  marginTop: '3px'
+                }}></div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <span style={{ fontSize: '0.96rem', fontWeight: '800', color: '#111111', lineHeight: '1.3' }}>
+                    미래에셋클린테크
+                  </span>
+                  <span style={{ fontSize: '0.96rem', fontWeight: '800', color: '#111111', lineHeight: '1.3' }}>
+                    증권자투자신탁(주식)
+                  </span>
+                  <span style={{ fontSize: '0.96rem', fontWeight: '800', color: '#111111', marginTop: '2px' }}>
+                    C-P2e
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Side Info Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+                <span style={{ fontSize: '0.92rem', color: '#111111' }}>770 좌</span>
+                <span style={{ fontSize: '0.9rem', fontWeight: '700', color: '#de201e' }}>+300,000 원</span>
+                <span style={{ fontSize: '0.82rem', fontWeight: '700', color: '#de201e' }}>(+30.00%)</span>
+              </div>
+            </div>
+
+            {/* 수량설정 Input Placeholder */}
+            <div style={{ marginTop: '12px', borderBottom: '1px solid #eee', paddingBottom: '6px' }}>
+              <span style={{ fontSize: '0.9rem', color: '#cbd5e1' }}>수량설정</span>
+            </div>
+
+            {/* Sub Info Row: 보유수량 770 | 예상금액 0 */}
+            <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
+                <span style={{ fontWeight: '800', color: '#111111' }}>보유수량</span>
+                <span style={{ fontWeight: '600', color: '#333333' }}>770</span>
+              </div>
+              <span style={{ color: '#cbd5e1' }}>|</span>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '12px' }}>
+                <span>예상금액</span>
+                <span style={{ fontWeight: '600', color: '#333333' }}>0</span>
               </div>
             </div>
           </div>
