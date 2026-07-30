@@ -14098,9 +14098,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Subheader Notice Bar */}
-        <div style={{ backgroundColor: '#f4f4f6', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem' }}>
-          <span style={{ color: '#2563eb', fontWeight: '600' }}>정기 매도대상 상품</span>
-          <span style={{ color: '#666666' }}>을 선택해주세요.</span>
+        <div style={{ backgroundColor: '#f4f4f6', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', lineHeight: '1.45' }}>
+          <div style={{ color: '#666666' }}>정기 매수를 위해 보유상품 중</div>
+          <div>
+            <span style={{ color: '#2563eb', fontWeight: '600' }}>정기 매도대상 상품</span>
+            <span style={{ color: '#666666' }}>을 선택해주세요.</span>
+          </div>
         </div>
 
         {/* Main Content Area */}
