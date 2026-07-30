@@ -9042,13 +9042,7 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen5agreed') === 'true';
   });
   const [savingsStep2HasProducts, setSavingsStep2HasProducts] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    const hasProd = params.get('screen5hasproducts');
-    if (hasProd === 'true') return true;
-    if (hasProd === 'false') return false;
-    const sub = params.get('screen5sub') || params.get('screen5tobe');
-    if (sub === 'savings_apply_step2') return true;
-    return false;
+    return new URLSearchParams(window.location.search).get('screen5hasproducts') === 'true';
   });
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
@@ -15141,12 +15135,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     const screen5agreedParam = params.get('screen5agreed');
     if (screen5agreedParam) setScreen5Agreed(screen5agreedParam === 'true');
     const screen5hasproductsParam = params.get('screen5hasproducts');
-    if (screen5hasproductsParam === 'true') {
-      setSavingsStep2HasProducts(true);
-    } else if (screen5hasproductsParam === 'false') {
-      setSavingsStep2HasProducts(false);
-    } else if (screen5subParam === 'savings_apply_step2') {
-      setSavingsStep2HasProducts(true);
+    if (screen5hasproductsParam !== null) {
+      setSavingsStep2HasProducts(screen5hasproductsParam === 'true');
     }
 
     // Restore order tabs
