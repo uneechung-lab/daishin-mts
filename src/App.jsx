@@ -13803,7 +13803,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
 
           {/* Hero Banner Section (Style from Image 1 + Content from Image 2) */}
-          <div style={{ padding: '16px 16px 20px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
+          <div style={{ padding: '24px 16px 32px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
             <div style={{ flex: 1, paddingRight: '10px' }}>
               <h2 style={{ fontSize: '1.15rem', fontWeight: '600', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
                 원하는 날짜, 원하는 상품으로<br />
@@ -13815,7 +13815,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </p>
             </div>
             {/* 3D Donut Chart Graphic / Custom Image */}
-            <div style={{ width: '95px', height: '95px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '22px' }}>
+            <div style={{ width: '95px', height: '95px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '78px' }}>
               <img 
                 src="/savings_hero.png" 
                 alt="적립식 투자 이미지"
@@ -13914,8 +13914,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
           {/* Bottom Action Button Bar (Disabled until screen5Agreed is checked) */}
           <div style={{
-            backgroundColor: screen5Agreed ? '#1c1c1e' : '#cbd5e1',
-            color: screen5Agreed ? '#ffffff' : '#94a3b8',
+            backgroundColor: screen5Agreed ? '#1c1c1e' : '#f2f2f2',
+            color: screen5Agreed ? '#ffffff' : '#999999',
+            borderTop: screen5Agreed ? 'none' : '1px solid #e8e8e8',
             padding: '14px 0',
             textAlign: 'center',
             fontSize: '1.02rem',
@@ -13923,7 +13924,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             cursor: screen5Agreed ? 'pointer' : 'not-allowed',
             transition: 'background-color 0.2s, color 0.2s'
           }}>
-            적립 투자 신청하기
+            적립식 투자 신청하기
           </div>
         </div>
 
