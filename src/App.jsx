@@ -14122,17 +14122,17 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               }}>
                 <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
               </div>
-              <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#111111' }}>현금성자산</span>
+              <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#111111' }}>현금</span>
             </div>
 
             <div style={{ marginTop: '16px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
               <span style={{ fontSize: '1.35rem', fontWeight: '600', color: '#111111', marginRight: '6px' }}>30,000</span>
-              <span style={{ fontSize: '0.95rem', color: '#333333' }}>좌</span>
+              <span style={{ fontSize: '0.95rem', color: '#333333' }}>원</span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
-                <span>가능수량</span>
+                <span>보유현금</span>
                 <span style={{ fontWeight: '500', color: '#333333' }}>85,632</span>
               </div>
               <span style={{ color: '#cbd5e1' }}>|</span>
@@ -14188,7 +14188,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             {/* Sub Info Row: 보유수량 770 | 예상금액 0 */}
             <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
-                <span style={{ fontWeight: '600', color: '#111111' }}>보유수량</span>
+                <span>보유수량</span>
                 <span style={{ fontWeight: '500', color: '#333333' }}>770</span>
               </div>
               <span style={{ color: '#cbd5e1' }}>|</span>
@@ -14203,7 +14203,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         {/* Bottom Total & Action Bar */}
         <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
           <div style={{ flex: 1, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '16px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#666666' }}>합계</span>
+            <span style={{ fontSize: '0.75rem', color: '#666666' }}>예상 금액</span>
             <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#2563eb' }}>30,000 원</span>
           </div>
           <div 
