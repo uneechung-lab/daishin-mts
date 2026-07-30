@@ -6568,7 +6568,7 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
         {/* Middle text tabs */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', position: 'relative' }}>
           {[
-            { key: '보유상품 현황', label: `보유상품\n현황` },
+            { key: isToBe ? '연금저축 보유잔고' : '보유상품 현황', label: isToBe ? `연금저축\n보유잔고` : `보유상품\n현황` },
             { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
             { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
             { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
@@ -8341,6 +8341,65 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
       }}>
         <span style={{ fontWeight: '600' }}>KOSDAQ</span>
         <span style={{ color: '#de201e', fontWeight: '700' }}>1,009.92 ▲ 10.59 (1.06%)</span>
+      </div>
+
+      {/* Navigation Footer */}
+      <div style={{
+        height: '44px',
+        display: 'flex',
+        alignItems: 'stretch',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+        backgroundColor: isDark ? '#121826' : '#ffffff',
+        position: 'relative',
+        color: isDark ? '#cbd5e1' : '#333333'
+      }}>
+        {/* Home button */}
+        <button style={{ width: '48px', border: 'none', background: 'none', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: isDark ? '#cbd5e1' : '#333333' }}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+        </button>
+
+        {/* Middle text tabs */}
+        <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', position: 'relative' }}>
+          {[
+            { key: isToBe ? '연금저축 보유잔고' : '보유상품 현황', label: isToBe ? `연금저축\n보유잔고` : `보유상품\n현황` },
+            { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+            { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+            { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+          ].map((tab, idx) => {
+            return (
+              <button
+                key={tab.key}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  background: 'none',
+                  borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.72rem',
+                  fontWeight: '600',
+                  color: isDark ? '#cbd5e1' : '#333333',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  whiteSpace: 'pre-line',
+                  lineHeight: '1.2',
+                  padding: '2px 4px'
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Back button */}
+        <button 
+          onClick={onBackClick}
+          style={{ width: '48px', border: 'none', background: 'none', borderLeft: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: isDark ? '#cbd5e1' : '#333333' }}><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+        </button>
       </div>
     </div>
   );
