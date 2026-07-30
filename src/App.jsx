@@ -9037,7 +9037,9 @@ function App() {
   const [screen5ToBeSubScreen, setScreen5ToBeSubScreen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5sub') || 'menu';
   });
-  const [screen5Agreed, setScreen5Agreed] = useState(false);
+  const [screen5Agreed, setScreen5Agreed] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen5agreed') === 'true';
+  });
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -14636,6 +14638,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
     const screen5subParam = params.get('screen5sub');
     if (screen5subParam) setScreen5ToBeSubScreen(screen5subParam);
+    const screen5agreedParam = params.get('screen5agreed');
+    if (screen5agreedParam) setScreen5Agreed(screen5agreedParam === 'true');
 
     // Restore order tabs
     const screen6AsIsOrderTabParam = params.get('screen6AsIsOrderTab');
@@ -14707,6 +14711,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('etfMallNavMode', etfMallNavMode);
     params.set('etfChip', etfMallSelectedChip);
     params.set('screen5sub', screen5ToBeSubScreen);
+    params.set('screen5agreed', screen5Agreed ? 'true' : 'false');
     params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
     // Sync Pension Receipt Status states to URL params
@@ -14736,7 +14741,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5Agreed, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
