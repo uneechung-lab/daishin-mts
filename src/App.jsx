@@ -13989,6 +13989,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
           </button>
         </div>
+      </div>
+    );
+  };
+
   const renderScreen5ToBeSavingsApply = () => {
     return (
       <div style={{
