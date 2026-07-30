@@ -13913,7 +13913,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
 
           {/* Bottom Action Button Bar (Disabled until screen5Agreed is checked) */}
-          <div style={{
+          <div 
+            onClick={() => {
+              if (screen5Agreed) {
+                setScreen5ToBeSubScreen('savings_apply');
+              }
+            }}
+            style={{
             backgroundColor: screen5Agreed ? '#1c1c1e' : '#f2f2f2',
             color: screen5Agreed ? '#ffffff' : '#999999',
             borderTop: screen5Agreed ? 'none' : '1px solid #e8e8e8',
@@ -13979,6 +13985,229 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+          </button>
+        </div>
+  const renderScreen5ToBeSavingsApply = () => {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isFigmaExportMode ? 'auto' : '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 4:28</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              83
+            </div>
+          </div>
+        </div>
+
+        {/* MTS Toolbar Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: '44px',
+          padding: '0 12px',
+          borderBottom: '1px solid #eee',
+          backgroundColor: '#fff',
+          position: 'relative'
+        }}>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('savings')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+          </button>
+          
+          <span style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1.05rem', 
+            fontWeight: '700', 
+            color: '#111111', 
+            letterSpacing: '-0.3px',
+            zIndex: 1
+          }}>
+            적립식 투자
+          </span>
+
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+            <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="none" stroke="#222" strokeWidth="1.5" /></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Account Selector Bar */}
+        <div style={{ padding: '8px 12px' }}>
+          <div 
+            onClick={() => setScreen6ToBeBsheetState('account')}
+            style={{
+              border: '1px solid #e2e8f0',
+              borderRadius: '6px',
+              padding: '8px 12px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#ffffff',
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>200-233354(41) 정윤희</span>
+            <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
+          </div>
+        </div>
+
+        {/* Subheader Notice Bar */}
+        <div style={{ backgroundColor: '#f4f4f6', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem' }}>
+          <span style={{ color: '#2563eb', fontWeight: '700' }}>정기 매도대상 상품</span>
+          <span style={{ color: '#666666' }}>을 선택해주세요.</span>
+        </div>
+
+        {/* Main Content Area */}
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff', padding: '16px' }}>
+          {/* Card Item */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: '700', color: '#0284c7' }}>매우낮은위험</span>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                border: '2px solid #222222',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
+              </div>
+              <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#111111' }}>현금성자산</span>
+            </div>
+
+            <div style={{ marginTop: '16px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+              <span style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111111', marginRight: '6px' }}>30,000</span>
+              <span style={{ fontSize: '1rem', color: '#333333' }}>좌</span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
+              <div>
+                <span>가능수량</span>
+                <span style={{ marginLeft: '16px', fontWeight: '600', color: '#333333' }}>85,632</span>
+              </div>
+              <span style={{ color: '#cbd5e1' }}>|</span>
+              <div>
+                <span>예상금액</span>
+                <span style={{ marginLeft: '16px', fontWeight: '600', color: '#333333' }}>30,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Total & Action Bar */}
+        <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
+          <div style={{ flex: 1, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '16px' }}>
+            <span style={{ fontSize: '0.75rem', color: '#666666' }}>합계</span>
+            <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#2563eb' }}>30,000 원</span>
+          </div>
+          <div 
+            onClick={() => setScreen5ToBeSubScreen('savings')}
+            style={{ flex: 1, backgroundColor: '#1c1c1e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.05rem', fontWeight: '700', cursor: 'pointer' }}
+          >
+            다음
+          </div>
+        </div>
+
+        {/* Ticker Bar */}
+        <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
+          <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
+          <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
+        </div>
+
+        {/* Phone Footer Navigation */}
+        <div style={{
+          height: '44px',
+          display: 'flex',
+          alignItems: 'stretch',
+          borderTop: '1px solid #e2e8f0',
+          backgroundColor: '#ffffff',
+          flexShrink: 0
+        }}>
+          <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          </button>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+            {[
+              { key: '보유상품 현황', label: `보유상품\n현황` },
+              { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+              { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+            ].map((tab, idx) => {
+              return (
+                <button
+                  key={tab.key}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    backgroundColor: '#ffffff',
+                    borderRight: idx === 3 ? 'none' : '1px solid #f1f5f9',
+                    fontSize: '0.66rem',
+                    fontWeight: '700',
+                    color: '#64748b',
+                    whiteSpace: 'pre-line',
+                    lineHeight: '1.15',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    padding: '0 2px'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('savings')}
+            style={{ width: '44px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11" /></svg>
           </button>
         </div>
       </div>
@@ -16507,7 +16736,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings' ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
+                  {screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : screen5ToBeSubScreen === 'savings' ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
                 </div>
               </div>
             </div>
