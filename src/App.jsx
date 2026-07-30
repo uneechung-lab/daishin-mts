@@ -7933,7 +7933,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
       </div>
 
       <div style={contentStyle}>
-        {/* Dropdown 601-140641(41) 김대신 */}
+        {/* Dropdown 계좌 정보 */}
         <div style={{ padding: '12px 16px 8px 16px', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
           <div style={{
             ...inputStyle,
@@ -7946,7 +7946,7 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
             padding: '10px 12px',
             marginTop: 0
           }}>
-            <span>601-140641(41) 김대신</span>
+            <span>{isToBe ? '200-233354(32) 김대신' : '601-140641(41) 김대신'}</span>
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style={{ opacity: 0.7 }}><path stroke={isDark ? '#cbd5e1' : '#6b7280'} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m6 8 4 4 4-4"/></svg>
           </div>
         </div>
