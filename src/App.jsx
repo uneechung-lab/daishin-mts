@@ -14210,7 +14210,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#2563eb' }}>30,000 원</span>
           </div>
           <div 
-            onClick={() => setScreen5ToBeSubScreen('savings')}
+            onClick={() => setScreen5ToBeSubScreen('savings_apply_step2')}
             style={{ flex: 1, backgroundColor: '#1c1c1e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '600', cursor: 'pointer' }}
           >
             다음
