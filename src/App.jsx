@@ -9035,13 +9035,20 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen6tobe') || 'menu';
   });
   const [screen5ToBeSubScreen, setScreen5ToBeSubScreen] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen5sub') || 'menu';
+    const params = new URLSearchParams(window.location.search);
+    return params.get('screen5sub') || params.get('screen5tobe') || 'menu';
   });
   const [screen5Agreed, setScreen5Agreed] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5agreed') === 'true';
   });
   const [savingsStep2HasProducts, setSavingsStep2HasProducts] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen5hasproducts') === 'true';
+    const params = new URLSearchParams(window.location.search);
+    const hasProd = params.get('screen5hasproducts');
+    if (hasProd === 'true') return true;
+    if (hasProd === 'false') return false;
+    const sub = params.get('screen5sub') || params.get('screen5tobe');
+    if (sub === 'savings_apply_step2') return true;
+    return false;
   });
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
@@ -15129,10 +15136,18 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     const asisSimParam = params.get('asisSimulationStep');
     if (asisSimParam) setAsisSimulationStep(asisSimParam);
 
-    const screen5subParam = params.get('screen5sub');
+    const screen5subParam = params.get('screen5sub') || params.get('screen5tobe');
     if (screen5subParam) setScreen5ToBeSubScreen(screen5subParam);
     const screen5agreedParam = params.get('screen5agreed');
     if (screen5agreedParam) setScreen5Agreed(screen5agreedParam === 'true');
+    const screen5hasproductsParam = params.get('screen5hasproducts');
+    if (screen5hasproductsParam === 'true') {
+      setSavingsStep2HasProducts(true);
+    } else if (screen5hasproductsParam === 'false') {
+      setSavingsStep2HasProducts(false);
+    } else if (screen5subParam === 'savings_apply_step2') {
+      setSavingsStep2HasProducts(true);
+    }
 
     // Restore order tabs
     const screen6AsIsOrderTabParam = params.get('screen6AsIsOrderTab');
@@ -15204,7 +15219,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('etfMallNavMode', etfMallNavMode);
     params.set('etfChip', etfMallSelectedChip);
     params.set('screen5sub', screen5ToBeSubScreen);
+    params.set('screen5tobe', screen5ToBeSubScreen);
     params.set('screen5agreed', screen5Agreed ? 'true' : 'false');
+    params.set('screen5hasproducts', savingsStep2HasProducts ? 'true' : 'false');
     params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
     // Sync Pension Receipt Status states to URL params
