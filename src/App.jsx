@@ -14061,8 +14061,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             left: '50%',
             top: '50%',
             transform: 'translate(-50%, -50%)',
-            fontSize: '1.05rem', 
-            fontWeight: '700', 
+            fontSize: '1.02rem', 
+            fontWeight: '600', 
             color: '#111111', 
             letterSpacing: '-0.3px',
             zIndex: 1
@@ -14099,7 +14099,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Subheader Notice Bar */}
         <div style={{ backgroundColor: '#f4f4f6', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem' }}>
-          <span style={{ color: '#2563eb', fontWeight: '700' }}>정기 매도대상 상품</span>
+          <span style={{ color: '#2563eb', fontWeight: '600' }}>정기 매도대상 상품</span>
           <span style={{ color: '#666666' }}>을 선택해주세요.</span>
         </div>
 
@@ -14107,7 +14107,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff', padding: '16px' }}>
           {/* Card Item */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: '700', color: '#0284c7' }}>매우낮은위험</span>
+            <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#0284c7' }}>매우낮은위험</span>
             
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div style={{
@@ -14122,30 +14122,30 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               }}>
                 <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
               </div>
-              <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#111111' }}>현금성자산</span>
+              <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#111111' }}>현금성자산</span>
             </div>
 
             <div style={{ marginTop: '16px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
-              <span style={{ fontSize: '1.4rem', fontWeight: '800', color: '#111111', marginRight: '6px' }}>30,000</span>
-              <span style={{ fontSize: '1rem', color: '#333333' }}>좌</span>
+              <span style={{ fontSize: '1.35rem', fontWeight: '600', color: '#111111', marginRight: '6px' }}>30,000</span>
+              <span style={{ fontSize: '0.95rem', color: '#333333' }}>좌</span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
                 <span>가능수량</span>
-                <span style={{ fontWeight: '600', color: '#333333' }}>85,632</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>85,632</span>
               </div>
               <span style={{ color: '#cbd5e1' }}>|</span>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '12px' }}>
                 <span>예상금액</span>
-                <span style={{ fontWeight: '600', color: '#333333' }}>30,000</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>30,000</span>
               </div>
             </div>
           </div>
 
           {/* Card Item 2: 미래에셋클린테크 증권자투자신탁(주식) C-P2e */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #f1f3f5' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: '700', color: '#a16207' }}>다소높은위험</span>
+            <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#a16207' }}>다소높은위험</span>
             
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '10px' }}>
               {/* Radio + Title Column */}
@@ -14160,13 +14160,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   marginTop: '3px'
                 }}></div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <span style={{ fontSize: '0.96rem', fontWeight: '800', color: '#111111', lineHeight: '1.3' }}>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '600', color: '#111111', lineHeight: '1.3' }}>
                     미래에셋클린테크
                   </span>
-                  <span style={{ fontSize: '0.96rem', fontWeight: '800', color: '#111111', lineHeight: '1.3' }}>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '600', color: '#111111', lineHeight: '1.3' }}>
                     증권자투자신탁(주식)
                   </span>
-                  <span style={{ fontSize: '0.96rem', fontWeight: '800', color: '#111111', marginTop: '2px' }}>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '600', color: '#111111', marginTop: '2px' }}>
                     C-P2e
                   </span>
                 </div>
@@ -14174,27 +14174,27 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
               {/* Right Side Info Column */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
-                <span style={{ fontSize: '0.92rem', color: '#111111' }}>770 좌</span>
-                <span style={{ fontSize: '0.9rem', fontWeight: '700', color: '#de201e' }}>+300,000 원</span>
-                <span style={{ fontSize: '0.82rem', fontWeight: '700', color: '#de201e' }}>(+30.00%)</span>
+                <span style={{ fontSize: '0.9rem', color: '#111111' }}>770 좌</span>
+                <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#de201e' }}>+300,000 원</span>
+                <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#de201e' }}>(+30.00%)</span>
               </div>
             </div>
 
             {/* 수량설정 Input Placeholder */}
             <div style={{ marginTop: '12px', borderBottom: '1px solid #eee', paddingBottom: '6px' }}>
-              <span style={{ fontSize: '0.9rem', color: '#cbd5e1' }}>수량설정</span>
+              <span style={{ fontSize: '0.88rem', color: '#cbd5e1' }}>수량설정</span>
             </div>
 
             {/* Sub Info Row: 보유수량 770 | 예상금액 0 */}
             <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
-                <span style={{ fontWeight: '800', color: '#111111' }}>보유수량</span>
-                <span style={{ fontWeight: '600', color: '#333333' }}>770</span>
+                <span style={{ fontWeight: '600', color: '#111111' }}>보유수량</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>770</span>
               </div>
               <span style={{ color: '#cbd5e1' }}>|</span>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '12px' }}>
                 <span>예상금액</span>
-                <span style={{ fontWeight: '600', color: '#333333' }}>0</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>0</span>
               </div>
             </div>
           </div>
@@ -14204,11 +14204,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
           <div style={{ flex: 1, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '16px' }}>
             <span style={{ fontSize: '0.75rem', color: '#666666' }}>합계</span>
-            <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#2563eb' }}>30,000 원</span>
+            <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#2563eb' }}>30,000 원</span>
           </div>
           <div 
             onClick={() => setScreen5ToBeSubScreen('savings')}
-            style={{ flex: 1, backgroundColor: '#1c1c1e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.05rem', fontWeight: '700', cursor: 'pointer' }}
+            style={{ flex: 1, backgroundColor: '#1c1c1e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '600', cursor: 'pointer' }}
           >
             다음
           </div>
