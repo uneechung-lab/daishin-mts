@@ -14534,24 +14534,18 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
 
                   {/* Inputs & Expected Amount Row */}
-                  <div style={{
-                    display: 'flex',
-                    justify: 'space-between',
-                    alignItems: 'flex-end',
-                    marginTop: '16px',
-                    paddingBottom: '8px',
-                    borderBottom: '1px solid #eee'
-                  }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                      <span style={{ fontSize: '0.78rem', color: '#666666' }}>비율</span>
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
-                        <span style={{ fontSize: '1.3rem', fontWeight: '600', color: '#111111' }}>50</span>
-                        <span style={{ fontSize: '1.0rem', fontWeight: '500', color: '#333333' }}>%</span>
-                      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', marginTop: '14px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+                    {/* Top Row: "비율" on left, "예상금액: 5,000 원" on right */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.8rem', color: '#666666' }}>비율</span>
+                      <span style={{ fontSize: '0.82rem', color: '#666666' }}>
+                        예상금액: <span style={{ fontWeight: '600', color: '#111111' }}>5,000</span> 원
+                      </span>
                     </div>
-
-                    <div style={{ fontSize: '0.82rem', color: '#666666' }}>
-                      예상금액: <span style={{ fontWeight: '600', color: '#111111' }}>5,000</span> 원
+                    {/* Bottom Row: "50 %" */}
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', marginTop: '4px' }}>
+                      <span style={{ fontSize: '1.25rem', fontWeight: '600', color: '#111111' }}>50</span>
+                      <span style={{ fontSize: '1.0rem', fontWeight: '500', color: '#333333' }}>%</span>
                     </div>
                   </div>
                 </div>
@@ -14598,27 +14592,26 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
 
                   {/* Inputs & Expected Amount Row */}
-                  <div style={{
-                    display: 'flex',
-                    justify: 'space-between',
-                    alignItems: 'flex-end',
-                    marginTop: '16px',
-                    paddingBottom: '8px',
-                    borderBottom: '1px solid #eee'
-                  }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                      <span style={{ fontSize: '0.78rem', color: '#666666' }}>비율</span>
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
-                        <span style={{ fontSize: '1.3rem', fontWeight: '600', color: '#111111' }}>50</span>
-                        <span style={{ fontSize: '1.0rem', fontWeight: '500', color: '#333333' }}>%</span>
-                      </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', marginTop: '14px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+                    {/* Top Row: "비율" on left, "예상금액: 5,000 원" on right */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.8rem', color: '#666666' }}>비율</span>
+                      <span style={{ fontSize: '0.82rem', color: '#666666' }}>
+                        예상금액: <span style={{ fontWeight: '600', color: '#111111' }}>5,000</span> 원
+                      </span>
                     </div>
-
-                    <div style={{ fontSize: '0.82rem', color: '#666666' }}>
-                      예상금액: <span style={{ fontWeight: '600', color: '#111111' }}>5,000</span> 원
+                    {/* Bottom Row: "50 %" */}
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', marginTop: '4px' }}>
+                      <span style={{ fontSize: '1.25rem', fontWeight: '600', color: '#111111' }}>50</span>
+                      <span style={{ fontSize: '1.0rem', fontWeight: '500', color: '#333333' }}>%</span>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* List Footer Notice */}
+              <div style={{ padding: '16px', fontSize: '0.8rem', color: '#666666', lineHeight: '1.4' }}>
+                ※ <span style={{ color: '#2563eb', fontWeight: '600' }}>위험자산은 70%</span>까지 설정할 수 있습니다.
               </div>
             </div>
           )}
