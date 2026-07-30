@@ -9040,6 +9040,9 @@ function App() {
   const [screen5Agreed, setScreen5Agreed] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5agreed') === 'true';
   });
+  const [savingsStep2HasProducts, setSavingsStep2HasProducts] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen5hasproducts') === 'true';
+  });
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -14398,17 +14401,20 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             }}>
               투자비율 가져오기
             </button>
-            <button style={{
-              flex: 1,
-              padding: '10px 0',
-              backgroundColor: '#de201e',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '0.88rem',
-              fontWeight: '600',
-              color: '#ffffff',
-              cursor: 'pointer'
-            }}>
+            <button 
+              onClick={() => setSavingsStep2HasProducts(true)}
+              style={{
+                flex: 1,
+                padding: '10px 0',
+                backgroundColor: '#de201e',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '0.88rem',
+                fontWeight: '600',
+                color: '#ffffff',
+                cursor: 'pointer'
+              }}
+            >
               매수상품 추가하기
             </button>
           </div>
@@ -14435,44 +14441,215 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           <span style={{ color: '#666666' }}>을 선택해주세요.</span>
         </div>
 
-        {/* Main Content Area (Empty state) */}
+        {/* Main Content Area */}
         <div style={{
           flex: isFigmaExportMode ? 'none' : 1,
           overflowY: isFigmaExportMode ? 'visible' : 'auto',
           backgroundColor: '#ffffff',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '40px 16px',
-          minHeight: '220px'
+          flexDirection: 'column'
         }}>
-          <div style={{ fontSize: '0.92rem', color: '#888888', textAlign: 'center', lineHeight: '1.4' }}>
-            보유하신 상품이 없습니다.<br />
-            상품을 추가해주세요.
-          </div>
-          <button style={{
-            marginTop: '16px',
-            border: '1px solid #cbd5e1',
-            borderRadius: '6px',
-            backgroundColor: '#ffffff',
-            padding: '8px 24px',
-            fontSize: '0.88rem',
-            fontWeight: '600',
-            color: '#333333',
-            cursor: 'pointer'
-          }}>
-            상품 추가하기
-          </button>
+          {!savingsStep2HasProducts ? (
+            /* Empty state (Attachment 1) */
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '40px 16px',
+              minHeight: '220px'
+            }}>
+              <div style={{ fontSize: '0.92rem', color: '#888888', textAlign: 'center', lineHeight: '1.4' }}>
+                보유하신 상품이 없습니다.<br />
+                상품을 추가해주세요.
+              </div>
+              <button 
+                onClick={() => setSavingsStep2HasProducts(true)}
+                style={{
+                  marginTop: '16px',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '6px',
+                  backgroundColor: '#ffffff',
+                  padding: '8px 24px',
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  color: '#333333',
+                  cursor: 'pointer'
+                }}
+              >
+                상품 추가하기
+              </button>
+            </div>
+          ) : (
+            /* Populated state (Attachment 2) */
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {/* Item 1 */}
+              <div style={{ display: 'flex', borderBottom: '1px solid #f1f3f5' }}>
+                {/* Delete button column */}
+                <div 
+                  onClick={() => setSavingsStep2HasProducts(false)}
+                  style={{
+                    width: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRight: '1px solid #f1f5f9',
+                    color: '#94a3b8',
+                    fontSize: '1.1rem',
+                    cursor: 'pointer',
+                    flexShrink: 0
+                  }}
+                >
+                  ✕
+                </div>
+
+                {/* Content column */}
+                <div style={{ flex: 1, padding: '16px 16px 16px 16px', display: 'flex', flexDirection: 'column' }}>
+                  {/* Risk Badge Row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{
+                      backgroundColor: '#fef2f2',
+                      color: '#dc2626',
+                      fontSize: '0.72rem',
+                      fontWeight: '600',
+                      padding: '2px 8px',
+                      borderRadius: '12px'
+                    }}>
+                      위험자산
+                    </span>
+                    <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#d97706' }}>
+                      높은위험
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <div style={{
+                    fontSize: '0.94rem',
+                    fontWeight: '600',
+                    color: '#111111',
+                    lineHeight: '1.35',
+                    marginTop: '8px'
+                  }}>
+                    미래에셋차이나H인덱스증권자투자신탁1호(주식)C-P2e
+                  </div>
+
+                  {/* Inputs & Expected Amount Row */}
+                  <div style={{
+                    display: 'flex',
+                    justify: 'space-between',
+                    alignItems: 'flex-end',
+                    marginTop: '16px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #eee'
+                  }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#666666' }}>비율</span>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
+                        <span style={{ fontSize: '1.3rem', fontWeight: '600', color: '#111111' }}>50</span>
+                        <span style={{ fontSize: '1.0rem', fontWeight: '500', color: '#333333' }}>%</span>
+                      </div>
+                    </div>
+
+                    <div style={{ fontSize: '0.82rem', color: '#666666' }}>
+                      예상금액: <span style={{ fontWeight: '600', color: '#111111' }}>5,000</span> 원
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Item 2 */}
+              <div style={{ display: 'flex', borderBottom: '1px solid #f1f3f5' }}>
+                {/* Delete button column */}
+                <div 
+                  onClick={() => setSavingsStep2HasProducts(false)}
+                  style={{
+                    width: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRight: '1px solid #f1f5f9',
+                    color: '#94a3b8',
+                    fontSize: '1.1rem',
+                    cursor: 'pointer',
+                    flexShrink: 0
+                  }}
+                >
+                  ✕
+                </div>
+
+                {/* Content column */}
+                <div style={{ flex: 1, padding: '16px 16px 16px 16px', display: 'flex', flexDirection: 'column' }}>
+                  {/* Risk Badge Row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#0284c7' }}>
+                      매우낮은위험
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <div style={{
+                    fontSize: '0.94rem',
+                    fontWeight: '600',
+                    color: '#111111',
+                    lineHeight: '1.35',
+                    marginTop: '8px'
+                  }}>
+                    교보악사내일환매초단기우량채증권투자신탁[채권]C-Re
+                  </div>
+
+                  {/* Inputs & Expected Amount Row */}
+                  <div style={{
+                    display: 'flex',
+                    justify: 'space-between',
+                    alignItems: 'flex-end',
+                    marginTop: '16px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #eee'
+                  }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#666666' }}>비율</span>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
+                        <span style={{ fontSize: '1.3rem', fontWeight: '600', color: '#111111' }}>50</span>
+                        <span style={{ fontSize: '1.0rem', fontWeight: '500', color: '#333333' }}>%</span>
+                      </div>
+                    </div>
+
+                    <div style={{ fontSize: '0.82rem', color: '#666666' }}>
+                      예상금액: <span style={{ fontWeight: '600', color: '#111111' }}>5,000</span> 원
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bottom Total & Action Bar */}
         <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
           <div style={{ flex: 1, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '16px' }}>
             <span style={{ fontSize: '0.75rem', color: '#666666' }}>합계</span>
-            <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#2563eb' }}>0 원</span>
+            <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#2563eb' }}>
+              {savingsStep2HasProducts ? '10,000 원' : '0 원'}
+            </span>
           </div>
-          <div style={{ flex: 1, backgroundColor: '#f1f5f9', color: '#a1a1aa', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '600', cursor: 'not-allowed' }}>
+          <div 
+            onClick={() => {
+              if (!savingsStep2HasProducts) {
+                setSavingsStep2HasProducts(true);
+              }
+            }}
+            style={{
+              flex: 1,
+              backgroundColor: savingsStep2HasProducts ? '#1c1c1e' : '#f1f5f9',
+              color: savingsStep2HasProducts ? '#ffffff' : '#a1a1aa',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.02rem',
+              fontWeight: '600',
+              cursor: 'pointer'
+            }}
+          >
             다음
           </div>
         </div>
