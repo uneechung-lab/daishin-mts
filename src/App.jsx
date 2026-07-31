@@ -14004,7 +14004,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       flex: 1,
                       display: 'flex',
                       alignItems: 'center',
-                      justify: 'space-between',
+                      justifyContent: 'space-between',
                       border: '1px solid #d1d5db',
                       borderRadius: '2px',
                       padding: '8px 12px',
@@ -14012,12 +14012,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       cursor: 'pointer'
                     }}>
                       <span style={{ fontSize: '0.88rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
                         <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
 
-                    <span style={{ color: '#9ca3af', fontSize: '0.9rem', fontWeight: '400' }}>-</span>
+                    <span style={{ color: '#9ca3af', fontSize: '0.9rem', fontWeight: '400', flexShrink: 0 }}>-</span>
 
                     {/* End Date Box */}
                     <div style={{
@@ -14032,7 +14032,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       cursor: 'pointer'
                     }}>
                       <span style={{ fontSize: '0.88rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
                         <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
