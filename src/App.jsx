@@ -14064,25 +14064,25 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </thead>
                   <tbody>
                     {(historyPeriod === '1개월' ? [
-                      { round: '0회차', status: '중지가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
-                      { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
-                      { round: '5회차', status: '완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false }
+                      { round: '0회차', status: '적립중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
+                      { round: '10회차', status: '적립중지', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
+                      { round: '5회차', status: '적립중', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: true }
                     ] : historyPeriod === '3개월' ? [
-                      { round: '0회차', status: '중지가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
-                      { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
-                      { round: '5회차', status: '완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { round: '4회차', status: '완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)', isCancelable: false },
-                      { round: '3회차', status: '완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)', isCancelable: false },
-                      { round: '2회차', status: '완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: false }
+                      { round: '0회차', status: '적립중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
+                      { round: '10회차', status: '적립중지', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
+                      { round: '5회차', status: '적립중', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: true },
+                      { round: '4회차', status: '적립중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)', isCancelable: true },
+                      { round: '3회차', status: '적립중지', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)', isCancelable: false },
+                      { round: '2회차', status: '적립중', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: true }
                     ] : [
-                      { round: '0회차', status: '중지가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
-                      { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
-                      { round: '5회차', status: '완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { round: '4회차', status: '완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)', isCancelable: false },
-                      { round: '3회차', status: '완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)', isCancelable: false },
-                      { round: '2회차', status: '완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: false },
-                      { round: '1회차', status: '완료', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7좌)', isCancelable: false },
-                      { round: '0회차', status: '중지가능', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: true }
+                      { round: '0회차', status: '적립중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
+                      { round: '10회차', status: '적립중지', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
+                      { round: '5회차', status: '적립중', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: true },
+                      { round: '4회차', status: '적립중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)', isCancelable: true },
+                      { round: '3회차', status: '적립중지', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)', isCancelable: false },
+                      { round: '2회차', status: '적립중', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: true },
+                      { round: '1회차', status: '적립중', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7좌)', isCancelable: true },
+                      { round: '0회차', status: '적립중지', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false }
                     ]).map((row, idx) => (
                       <React.Fragment key={idx}>
                         <tr>
@@ -14100,7 +14100,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               <span style={{ fontSize: '0.78rem', color: '#6b7280', fontWeight: '400' }}>
                                 {row.round}
                               </span>
-                              {row.isCancelable ? (
+                              {row.status === '적립중' ? (
                                 <span 
                                   onClick={() => setShowCancelConfirmModal(true)}
                                   style={{ color: '#2563eb', textDecoration: 'underline', cursor: 'pointer', fontWeight: '500', fontSize: '0.84rem' }}
@@ -14108,7 +14108,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                   {row.status}
                                 </span>
                               ) : (
-                                <span style={{ color: row.status === '중지됨' ? '#ef4444' : '#4b5563', fontWeight: '400', fontSize: '0.84rem' }}>
+                                <span style={{ color: '#6b7280', fontWeight: '400', fontSize: '0.84rem' }}>
                                   {row.status}
                                 </span>
                               )}
