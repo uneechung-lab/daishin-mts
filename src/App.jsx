@@ -14317,7 +14317,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   {/* Card Bottom Text Action Button */}
                   <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                     <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
-                      다시 적립하기
+                      다시적립
                     </span>
                   </div>
                 </div>
@@ -14386,7 +14386,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   {/* Card Bottom Text Action Button */}
                   <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                     <span onClick={() => setShowCancelConfirmModal(true)} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#ef4444', cursor: 'pointer' }}>
-                      중지하기
+                      적립중지
                     </span>
                   </div>
                 </div>
@@ -14455,7 +14455,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   {/* Card Bottom Text Action Button */}
                   <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                     <span onClick={() => setShowCancelConfirmModal(true)} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#ef4444', cursor: 'pointer' }}>
-                      중지하기
+                      적립중지
                     </span>
                   </div>
                 </div>
@@ -14527,7 +14527,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     {/* Card Bottom Text Action Button */}
                     <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                       <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
-                        다시 적립하기
+                        다시적립
                       </span>
                     </div>
                   </div>
@@ -14595,7 +14595,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     {/* Card Bottom Text Action Button */}
                     <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                       <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
-                        다시 적립하기
+                        다시적립
                       </span>
                     </div>
                   </div>
@@ -14663,7 +14663,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     {/* Card Bottom Text Action Button */}
                     <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                       <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
-                        다시 적립하기
+                        다시적립
                       </span>
                     </div>
                   </div>
@@ -14736,7 +14736,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     {/* Card Bottom Text Action Button */}
                     <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                       <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
-                        다시 적립하기
+                        다시적립
                       </span>
                     </div>
                   </div>
@@ -14804,7 +14804,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     {/* Card Bottom Text Action Button */}
                     <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
                       <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
-                        다시 적립하기
+                        다시적립
                       </span>
                     </div>
                   </div>
