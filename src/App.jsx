@@ -9051,6 +9051,7 @@ function App() {
   const [historyPeriod, setHistoryPeriod] = useState('기간설정');
   const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
   const [appliedStatusFilter, setAppliedStatusFilter] = useState('진행중');
+  const [historyStatusFilter, setHistoryStatusFilter] = useState('진행중');
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -13956,210 +13957,251 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
             ) : (
               /* Execution History Table View (Matching Attached Image Specification) */
-              <div style={{ backgroundColor: '#ffffff', minHeight: '400px' }}>
-                {/* Sticky Top Header & Filter Controls Area (Sticks below tab bar at top: 32px) */}
-                <div style={{
-                  position: 'sticky',
-                  top: '32px',
-                  zIndex: 9,
-                  backgroundColor: '#ffffff',
-                  paddingTop: '12px'
-                }}>
-                  {/* 4-Segmented Period Filter Bar */}
-                  <div style={{
-                    display: 'flex',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '2px',
-                    backgroundColor: '#ffffff',
-                    margin: '0 12px 8px 12px',
-                    overflow: 'hidden'
-                  }}>
-                    {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
-                      const isActive = historyPeriod === period;
-                      return (
-                        <button
-                          key={period}
-                          onClick={() => setHistoryPeriod(period)}
-                          style={{
-                            flex: 1,
-                            padding: '7.5px 0',
-                            fontSize: '0.84rem',
-                            fontWeight: isActive ? '700' : '400',
-                            color: isActive ? '#111827' : '#6b7280',
-                            backgroundColor: '#ffffff',
-                            border: 'none',
-                            borderRight: idx < 3 ? '1px solid #e5e7eb' : 'none',
-                            outline: isActive ? '1.5px solid #111827' : 'none',
-                            outlineOffset: '-1.5px',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          {period}
-                        </button>
-                      );
-                    })}
-                  </div>
+              (() => {
+                const rawHistoryList = historyPeriod === '1개월' ? [
+                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
+                  { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
+                  { round: '5회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' }
+                ] : historyPeriod === '3개월' ? [
+                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
+                  { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
+                  { round: '5회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)' },
+                  { round: '3회차', status: '중지됨', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)' },
+                  { round: '2회차', status: '완료됨', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원' }
+                ] : [
+                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
+                  { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
+                  { round: '5회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)' },
+                  { round: '3회차', status: '중지됨', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)' },
+                  { round: '2회차', status: '완료됨', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원' },
+                  { round: '1회차', status: '진행중', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7좌)' },
+                  { round: '0회차', status: '중지됨', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원' }
+                ];
 
-                  {/* Date Range Selector (Shown when '기간설정' is selected) */}
-                  {historyPeriod === '기간설정' && (
+                const countRunning = rawHistoryList.filter(item => item.status === '진행중').length;
+                const countStopped = rawHistoryList.filter(item => item.status === '중지됨').length;
+                const countCompleted = rawHistoryList.filter(item => item.status === '완료됨').length;
+                const filteredHistoryList = rawHistoryList.filter(item => item.status === historyStatusFilter);
+
+                return (
+                  <div style={{ backgroundColor: '#ffffff', minHeight: '400px' }}>
+                    {/* Sticky Top Header & Filter Controls Area (Sticks below tab bar at top: 32px) */}
                     <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      margin: '0 12px 8px 12px'
+                      position: 'sticky',
+                      top: '32px',
+                      zIndex: 9,
+                      backgroundColor: '#ffffff',
+                      paddingTop: '12px'
                     }}>
-                      {/* Start Date Box */}
+                      {/* 4-Segmented Period Filter Bar */}
                       <div style={{
-                        flex: 1,
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
                         border: '1px solid #d1d5db',
                         borderRadius: '2px',
-                        padding: '6.5px 10px',
                         backgroundColor: '#ffffff',
-                        cursor: 'pointer'
+                        margin: '0 12px 8px 12px',
+                        overflow: 'hidden'
                       }}>
-                        <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
-                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
-                          <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                        {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
+                          const isActive = historyPeriod === period;
+                          return (
+                            <button
+                              key={period}
+                              onClick={() => setHistoryPeriod(period)}
+                              style={{
+                                flex: 1,
+                                padding: '7.5px 0',
+                                fontSize: '0.84rem',
+                                fontWeight: isActive ? '700' : '400',
+                                color: isActive ? '#111827' : '#6b7280',
+                                backgroundColor: '#ffffff',
+                                border: 'none',
+                                borderRight: idx < 3 ? '1px solid #e5e7eb' : 'none',
+                                outline: isActive ? '1.5px solid #111827' : 'none',
+                                outlineOffset: '-1.5px',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {period}
+                            </button>
+                          );
+                        })}
                       </div>
 
-                      <span style={{ color: '#9ca3af', fontSize: '0.86rem', fontWeight: '400', flexShrink: 0 }}>-</span>
+                      {/* Date Range Selector (Shown when '기간설정' is selected) */}
+                      {historyPeriod === '기간설정' && (
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          margin: '0 12px 8px 12px'
+                        }}>
+                          {/* Start Date Box */}
+                          <div style={{
+                            flex: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '2px',
+                            padding: '6.5px 10px',
+                            backgroundColor: '#ffffff',
+                            cursor: 'pointer'
+                          }}>
+                            <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
+                              <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </div>
 
-                      {/* End Date Box */}
-                      <div style={{
-                        flex: 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '2px',
-                        padding: '6.5px 10px',
-                        backgroundColor: '#ffffff',
-                        cursor: 'pointer'
-                      }}>
-                        <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
-                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
-                          <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                          <span style={{ color: '#9ca3af', fontSize: '0.86rem', fontWeight: '400', flexShrink: 0 }}>-</span>
+
+                          {/* End Date Box */}
+                          <div style={{
+                            flex: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '2px',
+                            padding: '6.5px 10px',
+                            backgroundColor: '#ffffff',
+                            cursor: 'pointer'
+                          }}>
+                            <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
+                              <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Status Chip Filter Bar (진행중, 중지됨, 완료됨) */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 12px 10px 12px' }}>
+                        {[
+                          { id: '진행중', label: `진행중(${countRunning})` },
+                          { id: '중지됨', label: `중지됨(${countStopped})` },
+                          { id: '완료됨', label: `완료됨(${countCompleted})` }
+                        ].map((chip) => {
+                          const isSelected = historyStatusFilter === chip.id;
+                          return (
+                            <button
+                              key={chip.id}
+                              onClick={() => setHistoryStatusFilter(chip.id)}
+                              style={{
+                                padding: '6px 14px',
+                                borderRadius: '9999px',
+                                fontSize: '0.82rem',
+                                fontWeight: isSelected ? '600' : '400',
+                                color: isSelected ? '#111827' : '#6b7280',
+                                backgroundColor: isSelected ? '#e2e8f0' : '#f1f5f9',
+                                border: 'none',
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease'
+                              }}
+                            >
+                              {chip.label}
+                            </button>
+                          );
+                        })}
                       </div>
+
+                      {/* History Table Header (Sticky) */}
+                      <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0, tableLayout: 'fixed' }}>
+                        <colgroup>
+                          <col style={{ width: '20%' }} />
+                          <col style={{ width: '32%' }} />
+                          <col style={{ width: '48%' }} />
+                        </colgroup>
+                        <thead>
+                          <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #d1d5db' }}>
+                            <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', verticalAlign: 'middle', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #d1d5db' }}>
+                              상태
+                            </th>
+                            <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+                              신청일자
+                            </th>
+                            <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderBottom: '1px solid #e2e8f0' }}>
+                              매도상품명
+                            </th>
+                          </tr>
+                          <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1px solid #d1d5db' }}>
+                            <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
+                              정기매수일
+                            </th>
+                            <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
+                              금액(좌수)
+                            </th>
+                          </tr>
+                        </thead>
+                      </table>
                     </div>
-                  )}
 
-                  {/* History Table Header (Sticky) */}
-                  <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0, tableLayout: 'fixed' }}>
-                    <colgroup>
-                      <col style={{ width: '20%' }} />
-                      <col style={{ width: '32%' }} />
-                      <col style={{ width: '48%' }} />
-                    </colgroup>
-                    <thead>
-                      <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #d1d5db' }}>
-                        <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', verticalAlign: 'middle', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #d1d5db' }}>
-                          상태
-                        </th>
-                        <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
-                          신청일자
-                        </th>
-                        <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderBottom: '1px solid #e2e8f0' }}>
-                          매도상품명
-                        </th>
-                      </tr>
-                      <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1px solid #d1d5db' }}>
-                        <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
-                          정기매수일
-                        </th>
-                        <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
-                          금액(좌수)
-                        </th>
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
-
-                {/* History Table Body (Scrollable List Rows) */}
-                <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0, tableLayout: 'fixed' }}>
-                  <colgroup>
-                    <col style={{ width: '20%' }} />
-                    <col style={{ width: '32%' }} />
-                    <col style={{ width: '48%' }} />
-                  </colgroup>
-                  <tbody>
-                    {(historyPeriod === '1개월' ? [
-                      { round: '0회차', status: '적립중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
-                      { round: '10회차', status: '적립중지', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
-                      { round: '5회차', status: '적립완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' }
-                    ] : historyPeriod === '3개월' ? [
-                      { round: '0회차', status: '적립중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
-                      { round: '10회차', status: '적립중지', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
-                      { round: '5회차', status: '적립완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' },
-                      { round: '4회차', status: '적립중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)' },
-                      { round: '3회차', status: '적립중지', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)' },
-                      { round: '2회차', status: '적립완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원' }
-                    ] : [
-                      { round: '0회차', status: '적립중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
-                      { round: '10회차', status: '적립중지', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
-                      { round: '5회차', status: '적립완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' },
-                      { round: '4회차', status: '적립중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)' },
-                      { round: '3회차', status: '적립중지', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)' },
-                      { round: '2회차', status: '적립완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원' },
-                      { round: '1회차', status: '적립중', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7좌)' },
-                      { round: '0회차', status: '적립중지', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원' }
-                    ]).map((row, idx) => (
-                      <React.Fragment key={idx}>
-                        <tr>
-                          <td 
-                            rowSpan={2} 
-                            style={{ 
-                              padding: '8px 4px', 
-                              textAlign: 'center', 
-                              verticalAlign: 'middle', 
-                              borderRight: '1px solid #e5e7eb',
-                              borderBottom: '1px solid #e5e7eb' 
-                            }}
-                          >
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                              <span style={{ fontSize: '0.78rem', color: '#6b7280', fontWeight: '400' }}>
-                                {row.round}
-                              </span>
-                              <span 
-                                onClick={() => row.status === '적립중' && setShowCancelConfirmModal(true)}
+                    {/* History Table Body (Scrollable List Rows) */}
+                    <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0, tableLayout: 'fixed' }}>
+                      <colgroup>
+                        <col style={{ width: '20%' }} />
+                        <col style={{ width: '32%' }} />
+                        <col style={{ width: '48%' }} />
+                      </colgroup>
+                      <tbody>
+                        {filteredHistoryList.map((row, idx) => (
+                          <React.Fragment key={idx}>
+                            <tr>
+                              <td 
+                                rowSpan={2} 
                                 style={{ 
-                                  color: row.status === '적립중' ? '#2563eb' : row.status === '적립중지' ? '#ef4444' : '#4b5563', 
-                                  textDecoration: 'underline', 
-                                  cursor: row.status === '적립중' ? 'pointer' : 'default', 
-                                  fontWeight: '500', 
-                                  fontSize: '0.84rem' 
+                                  padding: '8px 4px', 
+                                  textAlign: 'center', 
+                                  verticalAlign: 'middle', 
+                                  borderRight: '1px solid #e5e7eb',
+                                  borderBottom: '1px solid #e5e7eb' 
                                 }}
                               >
-                                {row.status}
-                              </span>
-                            </div>
-                          </td>
-                          {/* Top Row: 신청일자 & 매도상품명 (흐리게: color #6b7280, fontSize 0.82rem) */}
-                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #f3f4f6' }}>
-                            {row.date}
-                          </td>
-                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
-                            {row.sellProduct}
-                          </td>
-                        </tr>
-                        <tr>
-                          {/* Bottom Row: 정기매수일 & 금액(좌수) (진하게: color #111827, fontWeight 600, fontSize 0.86rem) */}
-                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
-                            {row.buyDate}
-                          </td>
-                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
-                            {row.amount}
-                          </td>
-                        </tr>
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                                  <span style={{ fontSize: '0.78rem', color: '#6b7280', fontWeight: '400' }}>
+                                    {row.round}
+                                  </span>
+                                  <span 
+                                    onClick={() => row.status === '진행중' && setShowCancelConfirmModal(true)}
+                                    style={{ 
+                                      color: row.status === '진행중' ? '#2563eb' : row.status === '중지됨' ? '#ef4444' : '#4b5563', 
+                                      textDecoration: 'underline', 
+                                      cursor: row.status === '진행중' ? 'pointer' : 'default', 
+                                      fontWeight: '500', 
+                                      fontSize: '0.84rem' 
+                                    }}
+                                  >
+                                    {row.status}
+                                  </span>
+                                </div>
+                              </td>
+                              {/* Top Row: 신청일자 & 매도상품명 (흐리게: color #6b7280, fontSize 0.82rem) */}
+                              <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #f3f4f6' }}>
+                                {row.date}
+                              </td>
+                              <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
+                                {row.sellProduct}
+                              </td>
+                            </tr>
+                            <tr>
+                              {/* Bottom Row: 정기매수일 & 금액(좌수) (진하게: color #111827, fontWeight 600, fontSize 0.86rem) */}
+                              <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
+                                {row.buyDate}
+                              </td>
+                              <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
+                                {row.amount}
+                              </td>
+                            </tr>
+                          </React.Fragment>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              })()
             )
           ) : !screen5HasAppliedProducts ? (
             /* Empty State */
