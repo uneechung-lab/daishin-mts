@@ -13863,20 +13863,19 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Two Buttons Footer: 확인 / 다시신청 */}
-          <div style={{ display: 'flex', backgroundColor: '#1c1c1e' }}>
+          {/* Two Buttons Footer: 확인 / 다시신청 (Match Image Style & Proportions) */}
+          <div style={{ display: 'flex', width: '100%' }}>
             <button
               onClick={() => setScreen5SelectedCardDetail(null)}
               style={{
-                flex: 1,
+                flex: '0.38',
                 height: '56px',
-                backgroundColor: '#334155',
-                color: '#ffffff',
+                backgroundColor: '#f3f6f9',
+                color: '#334155',
                 border: 'none',
-                borderRight: '1px solid #475569',
                 borderRadius: '0',
-                fontSize: '1rem',
-                fontWeight: '600',
+                fontSize: '1.02rem',
+                fontWeight: '700',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -13891,14 +13890,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 setScreen5ToBeSubScreen('savings_apply');
               }}
               style={{
-                flex: 1,
+                flex: '0.62',
                 height: '56px',
-                backgroundColor: '#2563eb',
+                backgroundColor: '#212b36',
                 color: '#ffffff',
                 border: 'none',
                 borderRadius: '0',
-                fontSize: '1rem',
-                fontWeight: '600',
+                fontSize: '1.02rem',
+                fontWeight: '700',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
