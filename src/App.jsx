@@ -14827,8 +14827,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
               { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
               { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
-            ].map((tab) => {
-              const isActive = tab.key === '보유상품 현황';
+            ].map((tab, idx) => {
               return (
                 <button
                   key={tab.key}
@@ -14836,10 +14835,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     flex: 1,
                     border: 'none',
                     background: 'none',
-                    borderRight: '1px solid #f1f5f9',
+                    borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
                     fontSize: '0.62rem',
-                    fontWeight: isActive ? '800' : '500',
-                    color: isActive ? '#3b5bdb' : '#666666',
+                    fontWeight: '500',
+                    color: '#666666',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
