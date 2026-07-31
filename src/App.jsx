@@ -7839,14 +7839,14 @@ function PensionReceiptStatusView({ isDark, isToBe, activeTab, setActiveTab, vie
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '10px' }}>
             {[
-              { label: '총 지급금액', value: `${selectedItem.total} 원` },
+              { label: '총 지급금액', value: `${selectedItem?.total || '0'} 원` },
               { label: '퇴직소득세', value: '0 원' },
               { label: '퇴직지방소득세', value: '0 원' },
               { label: '기타소득세', value: '0 원' },
               { label: '기타지방소득세', value: '0 원' },
-              { label: '연금소득세', value: `${selectedItem.pensionTax} 원` },
-              { label: '연금지방소득세', value: `${selectedItem.localTax} 원` },
-              { label: '세금 합계', value: `${(parseInt(selectedItem.pensionTax.replace(/,/g, '')) + parseInt(selectedItem.localTax.replace(/,/g, ''))).toLocaleString()} 원` }
+              { label: '연금소득세', value: `${selectedItem?.pensionTax || '0'} 원` },
+              { label: '연금지방소득세', value: `${selectedItem?.localTax || '0'} 원` },
+              { label: '세금 합계', value: `${(parseInt(String(selectedItem?.pensionTax || '0').replace(/,/g, '')) + parseInt(String(selectedItem?.localTax || '0').replace(/,/g, ''))).toLocaleString()} 원` }
             ].map((row, idx) => (
               <div 
                 key={idx} 
@@ -16409,8 +16409,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     // Sync Pension Receipt Status states to URL params
     params.set('statusActiveTab', statusActiveTab);
     params.set('statusViewMode', statusViewMode);
-    if (statusSelectedItem) {
-      params.set('statusSelectedItem', statusSelectedItem.actual.replace(/,/g, ''));
+    if (statusSelectedItem && statusSelectedItem.actual) {
+      params.set('statusSelectedItem', String(statusSelectedItem.actual).replace(/,/g, ''));
     } else {
       params.delete('statusSelectedItem');
     }
