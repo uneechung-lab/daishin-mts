@@ -9048,6 +9048,7 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
   });
   const [screen5ActiveTab, setScreen5ActiveTab] = useState('apply');
+  const [historyPeriod, setHistoryPeriod] = useState('1개월');
   const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
@@ -13953,221 +13954,99 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 적립투자 내역이 없습니다.
               </div>
             ) : (
-              /* Execution History List (Product Exists) */
-              <div style={{ padding: '16px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                {/* Summary / Filter Bar */}
+              /* Execution History Table View (Matching Attached Image Specification) */
+              <div style={{ padding: '16px 12px', backgroundColor: '#ffffff', minHeight: '400px' }}>
+                {/* 4-Segmented Period Filter Bar */}
                 <div style={{
                   display: 'flex',
-                  justify: 'space-between',
-                  alignItems: 'center',
-                  padding: '4px 2px 2px 2px'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontSize: '0.82rem', fontWeight: '700', color: '#1e293b' }}>최근 3개월</span>
-                    <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: '500' }}>(2026.05.01 ~ 2026.07.31)</span>
-                  </div>
-                  <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#2563eb' }}>총 5건</span>
-                </div>
-
-                {/* History Item 1: 2026.07.10 */}
-                <div style={{
+                  border: '1px solid #d1d5db',
+                  borderRadius: '2px',
                   backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                  marginBottom: '16px',
+                  overflow: 'hidden'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>2026.07.10</span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#059669', backgroundColor: '#ecfdf5', padding: '2px 8px', borderRadius: '10px' }}>매수 완료</span>
-                  </div>
-
-                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#2563eb', backgroundColor: '#eff6ff', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
-                      </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#0f172a' }}>500,000원</span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 5v14M19 12l-7 7-7-7" />
-                      </svg>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#dc2626', backgroundColor: '#fef2f2', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매수</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          KODEX 200 TR
-                        </span>
-                      </div>
-                      <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b', flexShrink: 0 }}>24주 체결</span>
-                    </div>
-                  </div>
+                  {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
+                    const isActive = historyPeriod === period;
+                    return (
+                      <button
+                        key={period}
+                        onClick={() => setHistoryPeriod(period)}
+                        style={{
+                          flex: 1,
+                          padding: '8.5px 0',
+                          fontSize: '0.84rem',
+                          fontWeight: isActive ? '700' : '400',
+                          color: isActive ? '#111827' : '#6b7280',
+                          backgroundColor: '#ffffff',
+                          border: 'none',
+                          borderRight: idx < 3 ? '1px solid #e5e7eb' : 'none',
+                          outline: isActive ? '1.5px solid #111827' : 'none',
+                          outlineOffset: '-1.5px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {period}
+                      </button>
+                    );
+                  })}
                 </div>
 
-                {/* History Item 2: 2026.07.05 */}
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>2026.07.05</span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#059669', backgroundColor: '#ecfdf5', padding: '2px 8px', borderRadius: '10px' }}>매수 완료</span>
-                  </div>
-
-                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#2563eb', backgroundColor: '#eff6ff', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
-                      </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#0f172a' }}>1,000,000원</span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 5v14M19 12l-7 7-7-7" />
-                      </svg>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#dc2626', backgroundColor: '#fef2f2', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매수</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          미래에셋클린테크... 외 2종목
-                        </span>
-                      </div>
-                      <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b', flexShrink: 0 }}>일괄 체결</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* History Item 3: 2026.06.10 */}
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>2026.06.10</span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#059669', backgroundColor: '#ecfdf5', padding: '2px 8px', borderRadius: '10px' }}>매수 완료</span>
-                  </div>
-
-                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#2563eb', backgroundColor: '#eff6ff', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
-                      </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#0f172a' }}>500,000원</span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 5v14M19 12l-7 7-7-7" />
-                      </svg>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#dc2626', backgroundColor: '#fef2f2', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매수</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          KODEX 200 TR
-                        </span>
-                      </div>
-                      <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b', flexShrink: 0 }}>25주 체결</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* History Item 4: 2026.06.05 */}
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>2026.06.05</span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#059669', backgroundColor: '#ecfdf5', padding: '2px 8px', borderRadius: '10px' }}>매수 완료</span>
-                  </div>
-
-                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#2563eb', backgroundColor: '#eff6ff', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
-                      </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#0f172a' }}>1,000,000원</span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 5v14M19 12l-7 7-7-7" />
-                      </svg>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#dc2626', backgroundColor: '#fef2f2', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매수</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          미래에셋클린테크... 외 2종목
-                        </span>
-                      </div>
-                      <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b', flexShrink: 0 }}>일괄 체결</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* History Item 5: 2026.05.10 */}
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>2026.05.10</span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#059669', backgroundColor: '#ecfdf5', padding: '2px 8px', borderRadius: '10px' }}>매수 완료</span>
-                  </div>
-
-                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#2563eb', backgroundColor: '#eff6ff', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
-                      </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#0f172a' }}>500,000원</span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 5v14M19 12l-7 7-7-7" />
-                      </svg>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#dc2626', backgroundColor: '#fef2f2', padding: '3px 8px', borderRadius: '4px', flexShrink: 0 }}>매수</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          KODEX 200 TR
-                        </span>
-                      </div>
-                      <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b', flexShrink: 0 }}>26주 체결</span>
-                    </div>
-                  </div>
-                </div>
+                {/* History Table */}
+                <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#f8fafc', borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb' }}>
+                      <th style={{ padding: '10px 4px', fontSize: '0.82rem', fontWeight: '600', color: '#4b5563', textAlign: 'center', width: '28%' }}>상태</th>
+                      <th style={{ padding: '10px 4px', fontSize: '0.82rem', fontWeight: '600', color: '#4b5563', textAlign: 'center', width: '36%' }}>신청일자</th>
+                      <th style={{ padding: '10px 4px', fontSize: '0.82rem', fontWeight: '600', color: '#4b5563', textAlign: 'center', width: '36%' }}>매도상품명</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(historyPeriod === '1개월' ? [
+                      { status: '취소가능', date: '2026.07.30', isCancelable: true, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.07.10', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.07.05', isCancelable: false, sellProduct: '현금성자산' }
+                    ] : historyPeriod === '3개월' ? [
+                      { status: '취소가능', date: '2026.07.30', isCancelable: true, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.07.10', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.07.05', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.06.10', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.06.05', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.05.10', isCancelable: false, sellProduct: '현금성자산' }
+                    ] : [
+                      { status: '취소가능', date: '2026.07.30', isCancelable: true, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.07.10', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.07.05', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.06.10', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.06.05', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.05.10', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.04.10', isCancelable: false, sellProduct: '현금성자산' },
+                      { status: '매수완료', date: '2026.03.10', isCancelable: false, sellProduct: '현금성자산' }
+                    ]).map((row, idx) => (
+                      <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '12px 4px', fontSize: '0.85rem', textAlign: 'center' }}>
+                          {row.isCancelable ? (
+                            <span 
+                              onClick={() => setShowCancelConfirmModal(true)}
+                              style={{ color: '#2563eb', textDecoration: 'underline', cursor: 'pointer', fontWeight: '500' }}
+                            >
+                              {row.status}
+                            </span>
+                          ) : (
+                            <span style={{ color: '#4b5563', fontWeight: '400' }}>
+                              {row.status}
+                            </span>
+                          )}
+                        </td>
+                        <td style={{ padding: '12px 4px', fontSize: '0.85rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                          {row.date}
+                        </td>
+                        <td style={{ padding: '12px 4px', fontSize: '0.85rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                          {row.sellProduct}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )
           ) : !screen5HasAppliedProducts ? (
