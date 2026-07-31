@@ -14043,35 +14043,37 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
                   <thead>
                     <tr style={{ backgroundColor: '#f1f5f9', border: 'none' }}>
-                      <th style={{ padding: '6px 4px', fontSize: '0.84rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '28%' }}>상태</th>
-                      <th style={{ padding: '6px 4px', fontSize: '0.84rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '36%' }}>신청일자</th>
-                      <th style={{ padding: '6px 4px', fontSize: '0.84rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '36%' }}>매도상품명</th>
+                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '15%' }}>상태</th>
+                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '22%' }}>신청일자</th>
+                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '19%' }}>정기매수일</th>
+                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '22%' }}>매도상품명</th>
+                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '22%' }}>금액(좌수)</th>
                     </tr>
                   </thead>
                   <tbody>
                     {(historyPeriod === '1개월' ? [
-                      { status: '취소가능', date: '2026.07.30', isCancelable: true, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.07.10', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.07.05', isCancelable: false, sellProduct: '현금성자산' }
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false }
                     ] : historyPeriod === '3개월' ? [
-                      { status: '취소가능', date: '2026.07.30', isCancelable: true, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.07.10', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.07.05', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.06.10', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.06.05', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.05.10', isCancelable: false, sellProduct: '현금성자산' }
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false }
                     ] : [
-                      { status: '취소가능', date: '2026.07.30', isCancelable: true, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.07.10', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.07.05', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.06.10', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.06.05', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.05.10', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.04.10', isCancelable: false, sellProduct: '현금성자산' },
-                      { status: '매수완료', date: '2026.03.10', isCancelable: false, sellProduct: '현금성자산' }
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false }
                     ]).map((row, idx) => (
                       <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                        <td style={{ padding: '12px 4px', fontSize: '0.85rem', textAlign: 'center' }}>
+                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', textAlign: 'center' }}>
                           {row.isCancelable ? (
                             <span 
                               onClick={() => setShowCancelConfirmModal(true)}
@@ -14085,11 +14087,17 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             </span>
                           )}
                         </td>
-                        <td style={{ padding: '12px 4px', fontSize: '0.85rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
                           {row.date}
                         </td>
-                        <td style={{ padding: '12px 4px', fontSize: '0.85rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                          {row.buyDate}
+                        </td>
+                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
                           {row.sellProduct}
+                        </td>
+                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                          {row.amount}
                         </td>
                       </tr>
                     ))}
