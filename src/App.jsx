@@ -14064,24 +14064,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </thead>
                   <tbody>
                     {(historyPeriod === '1개월' ? [
-                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38주)', isCancelable: true },
-                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15주)', isCancelable: false },
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
                       { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false }
                     ] : historyPeriod === '3개월' ? [
-                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38주)', isCancelable: true },
-                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15주)', isCancelable: false },
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
                       { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22주)', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85주)', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)', isCancelable: false },
                       { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: false }
                     ] : [
-                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38주)', isCancelable: true },
-                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15주)', isCancelable: false },
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)', isCancelable: false },
                       { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22주)', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85주)', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)', isCancelable: false },
                       { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7주)', isCancelable: false },
+                      { status: '매수완료', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7좌)', isCancelable: false },
                       { status: '매수완료', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false }
                     ]).map((row, idx) => (
                       <React.Fragment key={idx}>
