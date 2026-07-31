@@ -9048,6 +9048,7 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
   });
   const [screen5ActiveTab, setScreen5ActiveTab] = useState('apply');
+  const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -13964,6 +13965,19 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           ) : (
             /* Applied Products List (Card Layout) */
             <div style={{ padding: '16px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {/* Checkbox: 중지된 투자 보기 */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '2px 4px 4px 4px' }}>
+                <label style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.84rem', color: '#475569', cursor: 'pointer', userSelect: 'none', fontWeight: '500' }}>
+                  <input 
+                    type="checkbox" 
+                    checked={showStoppedInvestments} 
+                    onChange={(e) => setShowStoppedInvestments(e.target.checked)} 
+                    style={{ accentColor: '#2563eb', cursor: 'pointer', width: '15px', height: '15px' }}
+                  />
+                  <span>중지된 투자 보기</span>
+                </label>
+              </div>
+
               {/* Card 1: 매월 5일 */}
               <div style={{
                 backgroundColor: '#ffffff',
@@ -13986,8 +14000,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <span style={{
                         fontSize: '0.72rem',
                         fontWeight: '700',
-                        color: '#dc2626',
-                        backgroundColor: '#fef2f2',
+                        color: '#2563eb',
+                        backgroundColor: '#eff6ff',
                         padding: '3px 8px',
                         borderRadius: '4px',
                         flexShrink: 0
@@ -14010,8 +14024,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <span style={{
                         fontSize: '0.72rem',
                         fontWeight: '700',
-                        color: '#2563eb',
-                        backgroundColor: '#eff6ff',
+                        color: '#dc2626',
+                        backgroundColor: '#fef2f2',
                         padding: '3px 8px',
                         borderRadius: '4px',
                         flexShrink: 0
@@ -14046,8 +14060,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <span style={{
                         fontSize: '0.72rem',
                         fontWeight: '700',
-                        color: '#dc2626',
-                        backgroundColor: '#fef2f2',
+                        color: '#2563eb',
+                        backgroundColor: '#eff6ff',
                         padding: '3px 8px',
                         borderRadius: '4px',
                         flexShrink: 0
@@ -14070,8 +14084,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <span style={{
                         fontSize: '0.72rem',
                         fontWeight: '700',
-                        color: '#2563eb',
-                        backgroundColor: '#eff6ff',
+                        color: '#dc2626',
+                        backgroundColor: '#fef2f2',
                         padding: '3px 8px',
                         borderRadius: '4px',
                         flexShrink: 0
@@ -14083,6 +14097,69 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
                 </div>
               </div>
+
+              {/* Card 3: 중지된 투자 건 (showStoppedInvestments가 true일 때 표기) */}
+              {showStoppedInvestments && (
+                <div style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  padding: '16px',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                  opacity: 0.85
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 25일</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 중지됨</span>
+                  </div>
+
+                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {/* Row 1: 매도 */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          color: '#2563eb',
+                          backgroundColor: '#eff6ff',
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          flexShrink: 0
+                        }}>매도</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b' }}>현금성 자산</span>
+                      </div>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569' }}>300,000원</span>
+                    </div>
+
+                    {/* Down Arrow */}
+                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#cbd5e1' }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M12 5v14M19 12l-7 7-7-7" />
+                      </svg>
+                    </div>
+
+                    {/* Row 2: 매수 */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          color: '#dc2626',
+                          backgroundColor: '#fef2f2',
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          flexShrink: 0
+                        }}>매수</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          TIGER 미국S&P500
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
