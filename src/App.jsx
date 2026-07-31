@@ -13824,13 +13824,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <div style={{ flex: 1, paddingRight: '10px' }}>
               {screen5HasAppliedProducts ? (
                 <>
-                  <h2 style={{ fontSize: '1.15rem', fontWeight: '700', margin: '0 0 8px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
-                    매월 4개의<br />
-                    금융상품에 적립식 투자하고 있어요.
-                  </h2>
-                  <p style={{ fontSize: '0.86rem', color: '#2563eb', fontWeight: '600', margin: '0 0 14px 0', lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                    매월 5일, 10일에 매수하고 있어요.
-                  </p>
+                  <div style={{ fontSize: '1.15rem', fontWeight: '700', margin: '0 0 8px 0', color: '#1e293b', lineHeight: '1.35', letterSpacing: '-0.3px' }}>
+                    <div style={{ whiteSpace: 'nowrap' }}>매월 4개의</div>
+                    <div style={{ whiteSpace: 'nowrap' }}>금융상품에 적립식 투자하고 있어요.</div>
+                  </div>
+                  <div style={{ fontSize: '0.86rem', color: '#2563eb', fontWeight: '600', margin: '0 0 14px 0', lineHeight: '1.5' }}>
+                    <div style={{ whiteSpace: 'nowrap' }}>매월 5일, 10일에 매수하고 있어요.</div>
+                  </div>
                   {/* [적립상품 추가하기] 버튼 */}
                   <button
                     onClick={() => setScreen5HasAppliedProducts(false)}
@@ -13853,14 +13853,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </>
               ) : (
                 <>
-                  <h2 style={{ fontSize: '1.08rem', fontWeight: '600', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
-                    <span style={{ whiteSpace: 'nowrap' }}>원하는 날짜, 원하는 상품으로</span><br />
-                    매월 알아서 투자해 주는<br />
-                    자동 매수 서비스
-                  </h2>
-                  <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                    보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.
-                  </p>
+                  <div style={{ fontSize: '1.08rem', fontWeight: '600', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.35', letterSpacing: '-0.4px' }}>
+                    <div style={{ whiteSpace: 'nowrap' }}>원하는 날짜, 원하는 상품으로</div>
+                    <div style={{ whiteSpace: 'nowrap' }}>매월 알아서 투자해 주는</div>
+                    <div style={{ whiteSpace: 'nowrap' }}>자동 매수 서비스</div>
+                  </div>
+                  <div style={{ fontSize: '0.82rem', color: '#64748b', margin: 0, lineHeight: '1.5' }}>
+                    <div style={{ whiteSpace: 'nowrap' }}>보유하신 현금이나 상품을 재원으로</div>
+                    <div style={{ whiteSpace: 'nowrap' }}>원하는 기간 동안 자동으로 투자가 진행됩니다.</div>
+                  </div>
                 </>
               )}
             </div>
