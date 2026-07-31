@@ -14039,22 +14039,22 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
                 )}
 
-                {/* History Table (Full Width Edge to Edge, 2-Row Per Item Structure with Grid Borders) */}
+                {/* History Table (Full Width Edge to Edge, 2-Row Per Item Structure with Compact 1st & 2nd Columns) */}
                 <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
                   <thead>
                     <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #d1d5db' }}>
-                      <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '25%', verticalAlign: 'middle', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #d1d5db' }}>
+                      <th rowSpan={2} style={{ padding: '6px 2px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '18%', verticalAlign: 'middle', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #d1d5db' }}>
                         상태
                       </th>
-                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+                      <th style={{ padding: '5px 2px 2px 2px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '27%', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
                         신청일자
                       </th>
-                      <th style={{ padding: '5px 12px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'right', width: '37.5%', borderBottom: '1px solid #e2e8f0' }}>
+                      <th style={{ padding: '5px 12px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'right', width: '55%', borderBottom: '1px solid #e2e8f0' }}>
                         매도상품명
                       </th>
                     </tr>
                     <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1px solid #d1d5db' }}>
-                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
+                      <th style={{ padding: '2px 2px 5px 2px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
                         정기매수일
                       </th>
                       <th style={{ padding: '2px 12px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'right' }}>
