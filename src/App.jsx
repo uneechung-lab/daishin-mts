@@ -16069,6 +16069,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (screen5hasappliedParam !== null) {
       setScreen5HasAppliedProducts(screen5hasappliedParam === 'true');
     }
+    const screen5activetabParam = params.get('screen5activetab') || params.get('screen5tab') || params.get('tab');
+    if (screen5activetabParam) {
+      setScreen5ActiveTab(screen5activetabParam);
+    }
 
     // Restore order tabs
     const screen6AsIsOrderTabParam = params.get('screen6AsIsOrderTab');
@@ -16145,6 +16149,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen5hasproducts', savingsStep2HasProducts ? 'true' : 'false');
     params.set('screen5hasapplied', screen5HasAppliedProducts ? 'true' : 'false');
     params.set('screen5activetab', screen5ActiveTab);
+    params.set('screen5tab', screen5ActiveTab);
+    params.set('tab', screen5ActiveTab);
     params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
     // Sync Pension Receipt Status states to URL params
