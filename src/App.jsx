@@ -13809,7 +13809,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '6px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563', paddingBottom: '12px', borderBottom: '1px solid #f1f5f9' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
                 <span style={{ color: '#64748b', fontWeight: '500' }}>상태</span>
                 <span style={{ fontWeight: '600', color: screen5SelectedCardDetail.cancelStatus?.includes('취소') ? '#ef4444' : screen5SelectedCardDetail.cancelStatus?.includes('중지') ? '#f59e0b' : '#2563eb' }}>
                   {screen5SelectedCardDetail.cancelStatus || '-'}
