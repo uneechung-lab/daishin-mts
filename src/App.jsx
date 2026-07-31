@@ -13962,7 +13962,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   border: '1px solid #d1d5db',
                   borderRadius: '2px',
                   backgroundColor: '#ffffff',
-                  marginBottom: '16px',
+                  marginBottom: '8px',
                   overflow: 'hidden'
                 }}>
                   {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
@@ -13973,7 +13973,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         onClick={() => setHistoryPeriod(period)}
                         style={{
                           flex: 1,
-                          padding: '8.5px 0',
+                          padding: '7.5px 0',
                           fontSize: '0.84rem',
                           fontWeight: isActive ? '700' : '400',
                           color: isActive ? '#111827' : '#6b7280',
@@ -13996,8 +13996,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px',
-                    marginBottom: '16px'
+                    gap: '6px',
+                    marginBottom: '8px'
                   }}>
                     {/* Start Date Box */}
                     <div style={{
@@ -14007,31 +14007,31 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       justifyContent: 'space-between',
                       border: '1px solid #d1d5db',
                       borderRadius: '2px',
-                      padding: '8px 12px',
+                      padding: '6.5px 10px',
                       backgroundColor: '#ffffff',
                       cursor: 'pointer'
                     }}>
-                      <span style={{ fontSize: '0.88rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
+                      <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
                       <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
                         <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
 
-                    <span style={{ color: '#9ca3af', fontSize: '0.9rem', fontWeight: '400', flexShrink: 0 }}>-</span>
+                    <span style={{ color: '#9ca3af', fontSize: '0.86rem', fontWeight: '400', flexShrink: 0 }}>-</span>
 
                     {/* End Date Box */}
                     <div style={{
                       flex: 1,
                       display: 'flex',
                       alignItems: 'center',
-                      justify: 'space-between',
+                      justifyContent: 'space-between',
                       border: '1px solid #d1d5db',
                       borderRadius: '2px',
-                      padding: '8px 12px',
+                      padding: '6.5px 10px',
                       backgroundColor: '#ffffff',
                       cursor: 'pointer'
                     }}>
-                      <span style={{ fontSize: '0.88rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
+                      <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
                       <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
                         <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
