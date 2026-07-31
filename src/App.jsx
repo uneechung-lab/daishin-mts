@@ -9051,6 +9051,27 @@ function App() {
     const p = new URLSearchParams(window.location.search);
     return p.get('screen5activetab') || p.get('screen5tab') || p.get('tab') || 'apply';
   });
+  const [screen5SelectedCardDetail, setScreen5SelectedCardDetail] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    const detailParam = p.get('screen5detail') || p.get('detail');
+    if (detailParam === 'true' || detailParam === '1') {
+      return {
+        applyDate: '2026.06.19',
+        buyCycle: '매월 5일',
+        sellProduct: 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
+        amount: '1,000,000좌',
+        startDate: '2026.06.19',
+        endDate: '2026.06.19',
+        buyProducts: [
+          { name: '미래에셋클린테크증권자투자신탁', ratio: '60%' },
+          { name: '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
+        ],
+        totalRatio: '100%',
+        cancelStatus: '취소 (2026.06.22)'
+      };
+    }
+    return null;
+  });
   const [historyPeriod, setHistoryPeriod] = useState('기간설정');
   const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
   const [appliedStatusFilter, setAppliedStatusFilter] = useState('진행중');
@@ -13713,6 +13734,161 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   };
 
   const renderScreen5ToBeSavings = () => {
+    if (screen5SelectedCardDetail) {
+      return (
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: isFigmaExportMode ? 'auto' : '100%',
+          backgroundColor: '#ffffff',
+          color: '#111111',
+          fontFamily: 'sans-serif'
+        }}>
+          {/* Status Bar */}
+          <div style={{
+            ...styles.phoneHeaderBar,
+            backgroundColor: '#ffffff',
+            color: '#333333',
+            borderBottom: 'none'
+          }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 5:04</span>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+                <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+                <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+                <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+              </div>
+              <div style={{
+                border: '1px solid #333',
+                borderRadius: '3px',
+                padding: '0px 3px',
+                fontSize: '0.62rem',
+                fontWeight: '900',
+                height: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#333',
+                color: '#fff',
+                lineHeight: 1
+              }}>
+                85
+              </div>
+            </div>
+          </div>
+
+          {/* Top Header Bar */}
+          <div style={{
+            height: '46px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 12px',
+            borderBottom: '1px solid #eee',
+            backgroundColor: '#ffffff'
+          }}>
+            <button
+              onClick={() => setScreen5SelectedCardDetail(null)}
+              style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0 }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Detailed Screen Body (Image 1 format & Image 2 fields) */}
+          <div style={{ flex: 1, padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: '28px', backgroundColor: '#ffffff', overflowY: 'auto' }}>
+            <div>
+              <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: '0 0 8px 0', color: '#111827' }}>상세 신청내역입니다.</h2>
+              <p style={{ fontSize: '1.02rem', color: '#4b5563', margin: 0 }}>
+                정기매매금액은 <span style={{ color: '#2563eb', fontWeight: '700' }}>{screen5SelectedCardDetail.amount}</span> 입니다
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '6px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>신청일자</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.applyDate}</span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>정기매매일</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.buyCycle}</span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500', flexShrink: 0 }}>매도상품</span>
+                <span style={{ fontWeight: '600', color: '#111827', textAlign: 'right', wordBreak: 'keep-all', maxWidth: '210px' }}>
+                  {screen5SelectedCardDetail.sellProduct}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>금액(좌수)</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.amount}</span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>시작일자</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.startDate}</span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>종료일자</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.endDate}</span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                  <span style={{ color: '#64748b', fontWeight: '500' }}>매수상품</span>
+                  <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.totalRatio || '100%'}</span>
+                </div>
+                {screen5SelectedCardDetail.buyProducts && screen5SelectedCardDetail.buyProducts.map((prod, pIdx) => (
+                  <div key={pIdx} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', fontSize: '0.88rem', color: '#334155', paddingLeft: '8px' }}>
+                    <span style={{ color: '#475569', wordBreak: 'keep-all' }}>・ {prod.name}</span>
+                    <span style={{ fontWeight: '600', color: '#1e293b', flexShrink: 0 }}>{prod.ratio}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563', paddingTop: '12px', marginTop: '4px', borderTop: '1px solid #f1f5f9' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>취소구분</span>
+                <span style={{ fontWeight: '600', color: screen5SelectedCardDetail.cancelStatus?.includes('취소') ? '#ef4444' : '#111827' }}>
+                  {screen5SelectedCardDetail.cancelStatus || '-'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Confirm Button Footer */}
+          <div style={{ backgroundColor: '#1c1c1e' }}>
+            <button
+              onClick={() => setScreen5SelectedCardDetail(null)}
+              style={{
+                width: '100%',
+                height: '56px',
+                backgroundColor: '#1c1c1e',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '0',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div style={{
         display: 'flex',
@@ -14258,14 +14434,30 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
               {/* Card 1 [매월 1일]: 중지 건 */}
               {appliedStatusFilter === '중지된' && (
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-                  opacity: 0.85
-                }}>
+                <div 
+                  onClick={() => setScreen5SelectedCardDetail({
+                    applyDate: '2026.05.01',
+                    buyCycle: '매월 1일',
+                    sellProduct: '현금성 자산',
+                    amount: '400,000원',
+                    startDate: '2026.05.01',
+                    endDate: '2027.05.01',
+                    buyProducts: [
+                      { name: 'KODEX 미국나스닥100TR', ratio: '100%' }
+                    ],
+                    totalRatio: '100%',
+                    cancelStatus: '중지 (2026.07.01)'
+                  })}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    padding: '16px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                    opacity: 0.85,
+                    cursor: 'pointer'
+                  }}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 1일</span>
@@ -14319,22 +14511,39 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
                   {/* Card Bottom Text Action Button */}
                   <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
-                    <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                    <span onClick={(e) => { e.stopPropagation(); setScreen5ToBeSubScreen('savings_apply'); }} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
                       다시신청
                     </span>
                   </div>
                 </div>
               )}
 
-              {/* Card 2 [매월 5일]: 진행중 건 */}
+              {/* Card 2 [매월 5일]: 진행중 건 (이미지 2 데이터 대응) */}
               {appliedStatusFilter === '진행중' && (
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
+                <div 
+                  onClick={() => setScreen5SelectedCardDetail({
+                    applyDate: '2026.06.19',
+                    buyCycle: '매월 5일',
+                    sellProduct: 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
+                    amount: '1,000,000좌',
+                    startDate: '2026.06.19',
+                    endDate: '2026.06.19',
+                    buyProducts: [
+                      { name: '미래에셋클린테크증권자투자신탁', ratio: '60%' },
+                      { name: '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
+                    ],
+                    totalRatio: '100%',
+                    cancelStatus: '취소 (2026.06.22)'
+                  })}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    padding: '16px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                    cursor: 'pointer'
+                  }}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 5일</span>
@@ -14355,9 +14564,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           borderRadius: '4px',
                           flexShrink: 0
                         }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>DB차이나바이오...</span>
                       </div>
-                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>1,000,000원</span>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>1,000,000좌</span>
                     </div>
 
                     {/* Down Arrow */}
@@ -14380,7 +14589,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           flexShrink: 0
                         }}>매수</span>
                         <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          미래에셋클린테크... 외 2종목
+                          미래에셋클린테크... 외 1종목
                         </span>
                       </div>
                     </div>
@@ -14388,7 +14597,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
                   {/* Card Bottom Text Action Button */}
                   <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
-                    <span onClick={() => setShowCancelConfirmModal(true)} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                    <span onClick={(e) => { e.stopPropagation(); setShowCancelConfirmModal(true); }} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
                       신청취소
                     </span>
                   </div>
@@ -14397,13 +14606,29 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
               {/* Card 3 [매월 10일]: 진행중 건 */}
               {appliedStatusFilter === '진행중' && (
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
-                  padding: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
+                <div 
+                  onClick={() => setScreen5SelectedCardDetail({
+                    applyDate: '2026.07.10',
+                    buyCycle: '매월 10일',
+                    sellProduct: '현금성 자산',
+                    amount: '500,000원',
+                    startDate: '2026.07.10',
+                    endDate: '2029.07.10',
+                    buyProducts: [
+                      { name: 'KODEX 200 TR', ratio: '100%' }
+                    ],
+                    totalRatio: '100%',
+                    cancelStatus: '-'
+                  })}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    padding: '16px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                    cursor: 'pointer'
+                  }}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 10일</span>
@@ -14457,7 +14682,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
                   {/* Card Bottom Text Action Button */}
                   <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'center' }}>
-                    <span onClick={() => setShowCancelConfirmModal(true)} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                    <span onClick={(e) => { e.stopPropagation(); setShowCancelConfirmModal(true); }} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
                       신청취소
                     </span>
                   </div>
@@ -16151,6 +16376,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen5activetab', screen5ActiveTab);
     params.set('screen5tab', screen5ActiveTab);
     params.set('tab', screen5ActiveTab);
+    if (screen5SelectedCardDetail) {
+      params.set('screen5detail', 'true');
+    } else {
+      params.delete('screen5detail');
+    }
     params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
     // Sync Pension Receipt Status states to URL params
@@ -16180,7 +16410,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5Agreed, savingsStep2HasProducts, screen5HasAppliedProducts, screen5ActiveTab, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5Agreed, savingsStep2HasProducts, screen5HasAppliedProducts, screen5ActiveTab, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
