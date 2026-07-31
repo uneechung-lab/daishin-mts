@@ -14039,22 +14039,22 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
                 )}
 
-                {/* History Table (Full Width Edge to Edge, 2-Row Per Item Structure) */}
+                {/* History Table (Full Width Edge to Edge, 2-Row Per Item Structure with Grid Borders) */}
                 <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
                   <thead>
-                    <tr style={{ backgroundColor: '#f1f5f9', border: 'none' }}>
-                      <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '25%', verticalAlign: 'middle' }}>
+                    <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #d1d5db' }}>
+                      <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '25%', verticalAlign: 'middle', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #d1d5db' }}>
                         상태
                       </th>
-                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%' }}>
+                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
                         신청일자
                       </th>
-                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%' }}>
+                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%', borderBottom: '1px solid #e2e8f0' }}>
                         매도상품명
                       </th>
                     </tr>
-                    <tr style={{ backgroundColor: '#f1f5f9', border: 'none' }}>
-                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
+                    <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1px solid #d1d5db' }}>
+                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
                         정기매수일
                       </th>
                       <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
@@ -14093,6 +14093,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               fontSize: '0.84rem', 
                               textAlign: 'center', 
                               verticalAlign: 'middle', 
+                              borderRight: '1px solid #e5e7eb',
                               borderBottom: '1px solid #e5e7eb' 
                             }}
                           >
@@ -14109,18 +14110,18 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               </span>
                             )}
                           </td>
-                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #f3f4f6' }}>
                             {row.date}
                           </td>
-                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
                             {row.sellProduct}
                           </td>
                         </tr>
-                        <tr style={{ borderBottom: '1px solid #e5e7eb' }}>
-                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400' }}>
+                        <tr>
+                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
                             {row.buyDate}
                           </td>
-                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400' }}>
+                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #e5e7eb' }}>
                             {row.amount}
                           </td>
                         </tr>
