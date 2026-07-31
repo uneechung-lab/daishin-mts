@@ -13863,14 +13863,37 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Confirm Button Footer */}
-          <div style={{ backgroundColor: '#1c1c1e' }}>
+          {/* Two Buttons Footer: 확인 / 다시신청 */}
+          <div style={{ display: 'flex', backgroundColor: '#1c1c1e' }}>
             <button
               onClick={() => setScreen5SelectedCardDetail(null)}
               style={{
-                width: '100%',
+                flex: 1,
                 height: '56px',
-                backgroundColor: '#1c1c1e',
+                backgroundColor: '#334155',
+                color: '#ffffff',
+                border: 'none',
+                borderRight: '1px solid #475569',
+                borderRadius: '0',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              확인
+            </button>
+            <button
+              onClick={() => {
+                setScreen5SelectedCardDetail(null);
+                setScreen5ToBeSubScreen('savings_apply');
+              }}
+              style={{
+                flex: 1,
+                height: '56px',
+                backgroundColor: '#2563eb',
                 color: '#ffffff',
                 border: 'none',
                 borderRadius: '0',
@@ -13882,7 +13905,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 justifyContent: 'center'
               }}
             >
-              확인
+              다시신청
             </button>
           </div>
         </div>
