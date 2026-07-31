@@ -14105,9 +14105,69 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
 
-              {/* 중지된 투자 건 목록 (showStoppedInvestments가 true일 때 3건 표기) */}
+              {/* 중지된 투자 건 목록 (showStoppedInvestments가 true일 때 표기) */}
               {showStoppedInvestments && (
                 <>
+                  {/* Card 3: 매월 1일 */}
+                  <div style={{
+                    backgroundColor: '#ffffff',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    padding: '16px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                    opacity: 0.85
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 1일</span>
+                      </div>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 중지됨</span>
+                    </div>
+
+                    <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {/* Row 1: 매도 */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{
+                            fontSize: '0.72rem',
+                            fontWeight: '700',
+                            color: '#2563eb',
+                            backgroundColor: '#eff6ff',
+                            padding: '3px 8px',
+                            borderRadius: '4px',
+                            flexShrink: 0
+                          }}>매도</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b' }}>현금성 자산</span>
+                        </div>
+                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569' }}>400,000원</span>
+                      </div>
+
+                      {/* Down Arrow */}
+                      <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#cbd5e1' }}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M12 5v14M19 12l-7 7-7-7" />
+                        </svg>
+                      </div>
+
+                      {/* Row 2: 매수 */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
+                          <span style={{
+                            fontSize: '0.72rem',
+                            fontWeight: '700',
+                            color: '#dc2626',
+                            backgroundColor: '#fef2f2',
+                            padding: '3px 8px',
+                            borderRadius: '4px',
+                            flexShrink: 0
+                          }}>매수</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            KODEX 미국나스닥100TR
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   {/* Card 3: 매월 15일 */}
                   <div style={{
                     backgroundColor: '#ffffff',
