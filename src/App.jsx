@@ -14313,6 +14313,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Card Bottom Text Action Button */}
+                  <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                    <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                      다시 적립하기
+                    </span>
+                  </div>
                 </div>
               )}
 
@@ -14375,6 +14382,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Card Bottom Text Action Button */}
+                  <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                    <span onClick={() => setShowCancelConfirmModal(true)} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#ef4444', cursor: 'pointer' }}>
+                      중지하기
+                    </span>
+                  </div>
                 </div>
               )}
 
@@ -14436,6 +14450,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         </span>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Card Bottom Text Action Button */}
+                  <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                    <span onClick={() => setShowCancelConfirmModal(true)} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#ef4444', cursor: 'pointer' }}>
+                      중지하기
+                    </span>
                   </div>
                 </div>
               )}
@@ -14502,6 +14523,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Card Bottom Text Action Button */}
+                    <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                      <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                        다시 적립하기
+                      </span>
+                    </div>
                   </div>
 
                   {/* Card 5: 매월 25일 */}
@@ -14563,6 +14591,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Card Bottom Text Action Button */}
+                    <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                      <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                        다시 적립하기
+                      </span>
+                    </div>
                   </div>
 
                   {/* Card 6: 매월 28일 */}
@@ -14623,6 +14658,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           </span>
                         </div>
                       </div>
+                    </div>
+
+                    {/* Card Bottom Text Action Button */}
+                    <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                      <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                        다시 적립하기
+                      </span>
                     </div>
                   </div>
                 </>
@@ -14690,6 +14732,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Card Bottom Text Action Button */}
+                    <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                      <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                        다시 적립하기
+                      </span>
+                    </div>
                   </div>
 
                   {/* Card 8: 매월 30일 */}
@@ -14750,6 +14799,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           </span>
                         </div>
                       </div>
+                    </div>
+
+                    {/* Card Bottom Text Action Button */}
+                    <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid #f1f3f5', display: 'flex', justifyContent: 'flex-end' }}>
+                      <span onClick={() => setScreen5ToBeSubScreen('savings_apply')} style={{ fontSize: '0.84rem', fontWeight: '600', color: '#2563eb', cursor: 'pointer' }}>
+                        다시 적립하기
+                      </span>
                     </div>
                   </div>
                 </>
