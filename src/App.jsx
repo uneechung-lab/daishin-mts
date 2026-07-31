@@ -14462,7 +14462,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 1일</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 중지됨</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>1회차 취소됨</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14548,7 +14548,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 5일</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>0회차 진행중</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14633,7 +14633,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 10일</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>1회차 진행중</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14705,7 +14705,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 15일</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 중지됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>0회차 취소됨</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14773,7 +14773,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 25일</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 중지됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>0회차 취소됨</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14841,7 +14841,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 28일</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 중지됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>0회차 취소됨</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14914,7 +14914,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#475569' }}>매월 20일</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 완료됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>12회차 완료됨</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14982,7 +14982,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#475569' }}>매월 30일</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>자동매수 완료됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>12회차 완료됨</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
