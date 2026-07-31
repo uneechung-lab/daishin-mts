@@ -13897,7 +13897,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
 
           {/* Sub Navigation Tabs (directly under hero section / button) */}
-          <div style={{ marginTop: '12px', display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
+          <div style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 10,
+            display: 'flex',
+            borderBottom: '1px solid #e2e8f0',
+            backgroundColor: '#ffffff'
+          }}>
             <div 
               onClick={() => setScreen5ActiveTab('apply')}
               style={{
