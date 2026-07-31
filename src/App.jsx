@@ -13955,113 +13955,136 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
             ) : (
               /* Execution History Table View (Matching Attached Image Specification) */
-              <div style={{ paddingTop: '12px', backgroundColor: '#ffffff', minHeight: '400px' }}>
-                {/* 4-Segmented Period Filter Bar */}
+              <div style={{ backgroundColor: '#ffffff', minHeight: '400px' }}>
+                {/* Sticky Top Header & Filter Controls Area (Sticks below tab bar at top: 32px) */}
                 <div style={{
-                  display: 'flex',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '2px',
+                  position: 'sticky',
+                  top: '32px',
+                  zIndex: 9,
                   backgroundColor: '#ffffff',
-                  margin: '0 12px 8px 12px',
-                  overflow: 'hidden'
+                  paddingTop: '12px'
                 }}>
-                  {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
-                    const isActive = historyPeriod === period;
-                    return (
-                      <button
-                        key={period}
-                        onClick={() => setHistoryPeriod(period)}
-                        style={{
-                          flex: 1,
-                          padding: '7.5px 0',
-                          fontSize: '0.84rem',
-                          fontWeight: isActive ? '700' : '400',
-                          color: isActive ? '#111827' : '#6b7280',
-                          backgroundColor: '#ffffff',
-                          border: 'none',
-                          borderRight: idx < 3 ? '1px solid #e5e7eb' : 'none',
-                          outline: isActive ? '1.5px solid #111827' : 'none',
-                          outlineOffset: '-1.5px',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        {period}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Date Range Selector (Shown when '기간설정' is selected) */}
-                {historyPeriod === '기간설정' && (
+                  {/* 4-Segmented Period Filter Bar */}
                   <div style={{
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    margin: '0 12px 8px 12px'
+                    border: '1px solid #d1d5db',
+                    borderRadius: '2px',
+                    backgroundColor: '#ffffff',
+                    margin: '0 12px 8px 12px',
+                    overflow: 'hidden'
                   }}>
-                    {/* Start Date Box */}
-                    <div style={{
-                      flex: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '2px',
-                      padding: '6.5px 10px',
-                      backgroundColor: '#ffffff',
-                      cursor: 'pointer'
-                    }}>
-                      <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
-                        <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-
-                    <span style={{ color: '#9ca3af', fontSize: '0.86rem', fontWeight: '400', flexShrink: 0 }}>-</span>
-
-                    {/* End Date Box */}
-                    <div style={{
-                      flex: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '2px',
-                      padding: '6.5px 10px',
-                      backgroundColor: '#ffffff',
-                      cursor: 'pointer'
-                    }}>
-                      <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
-                        <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
+                    {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
+                      const isActive = historyPeriod === period;
+                      return (
+                        <button
+                          key={period}
+                          onClick={() => setHistoryPeriod(period)}
+                          style={{
+                            flex: 1,
+                            padding: '7.5px 0',
+                            fontSize: '0.84rem',
+                            fontWeight: isActive ? '700' : '400',
+                            color: isActive ? '#111827' : '#6b7280',
+                            backgroundColor: '#ffffff',
+                            border: 'none',
+                            borderRight: idx < 3 ? '1px solid #e5e7eb' : 'none',
+                            outline: isActive ? '1.5px solid #111827' : 'none',
+                            outlineOffset: '-1.5px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {period}
+                        </button>
+                      );
+                    })}
                   </div>
-                )}
 
-                {/* History Table (Full Width Edge to Edge, 2-Row Per Item Structure with Balanced Widths & Center Alignment) */}
-                <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
-                  <thead>
-                    <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #d1d5db' }}>
-                      <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '20%', verticalAlign: 'middle', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #d1d5db' }}>
-                        상태
-                      </th>
-                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '32%', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
-                        신청일자
-                      </th>
-                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '48%', borderBottom: '1px solid #e2e8f0' }}>
-                        매도상품명
-                      </th>
-                    </tr>
-                    <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1px solid #d1d5db' }}>
-                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
-                        정기매수일
-                      </th>
-                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
-                        금액(좌수)
-                      </th>
-                    </tr>
-                  </thead>
+                  {/* Date Range Selector (Shown when '기간설정' is selected) */}
+                  {historyPeriod === '기간설정' && (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      margin: '0 12px 8px 12px'
+                    }}>
+                      {/* Start Date Box */}
+                      <div style={{
+                        flex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        border: '1px solid #d1d5db',
+                        borderRadius: '2px',
+                        padding: '6.5px 10px',
+                        backgroundColor: '#ffffff',
+                        cursor: 'pointer'
+                      }}>
+                        <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
+                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
+                          <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+
+                      <span style={{ color: '#9ca3af', fontSize: '0.86rem', fontWeight: '400', flexShrink: 0 }}>-</span>
+
+                      {/* End Date Box */}
+                      <div style={{
+                        flex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        border: '1px solid #d1d5db',
+                        borderRadius: '2px',
+                        padding: '6.5px 10px',
+                        backgroundColor: '#ffffff',
+                        cursor: 'pointer'
+                      }}>
+                        <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
+                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
+                          <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* History Table Header (Sticky) */}
+                  <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0, tableLayout: 'fixed' }}>
+                    <colgroup>
+                      <col style={{ width: '20%' }} />
+                      <col style={{ width: '32%' }} />
+                      <col style={{ width: '48%' }} />
+                    </colgroup>
+                    <thead>
+                      <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #d1d5db' }}>
+                        <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', verticalAlign: 'middle', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #d1d5db' }}>
+                          상태
+                        </th>
+                        <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+                          신청일자
+                        </th>
+                        <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderBottom: '1px solid #e2e8f0' }}>
+                          매도상품명
+                        </th>
+                      </tr>
+                      <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1px solid #d1d5db' }}>
+                        <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
+                          정기매수일
+                        </th>
+                        <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
+                          금액(좌수)
+                        </th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+
+                {/* History Table Body (Scrollable List Rows) */}
+                <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0, tableLayout: 'fixed' }}>
+                  <colgroup>
+                    <col style={{ width: '20%' }} />
+                    <col style={{ width: '32%' }} />
+                    <col style={{ width: '48%' }} />
+                  </colgroup>
                   <tbody>
                     {(historyPeriod === '1개월' ? [
                       { round: '0회차', status: '적립중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
