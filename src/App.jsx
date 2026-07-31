@@ -13804,7 +13804,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <div>
               <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: '0 0 8px 0', color: '#111827' }}>상세 신청내역입니다.</h2>
               <p style={{ fontSize: '1.02rem', color: '#4b5563', margin: 0 }}>
-                정기매매금액은 <span style={{ color: '#2563eb', fontWeight: '700' }}>{screen5SelectedCardDetail.amount}</span> 입니다
+                <span style={{ color: '#2563eb', fontWeight: '700' }}>{screen5SelectedCardDetail.buyCount || '10회차'}</span> 매수 되었습니다.
               </p>
             </div>
 
