@@ -9050,6 +9050,7 @@ function App() {
   const [screen5ActiveTab, setScreen5ActiveTab] = useState('apply');
   const [historyPeriod, setHistoryPeriod] = useState('기간설정');
   const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
+  const [appliedStatusFilter, setAppliedStatusFilter] = useState('전체');
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -14181,21 +14182,38 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           ) : (
             /* Applied Products List (Card Layout) */
             <div style={{ padding: '16px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {/* Checkbox: 중지된 투자 보기 */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '2px 4px 4px 4px' }}>
-                <label style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.84rem', color: '#475569', cursor: 'pointer', userSelect: 'none', fontWeight: '500' }}>
-                  <input 
-                    type="checkbox" 
-                    checked={showStoppedInvestments} 
-                    onChange={(e) => setShowStoppedInvestments(e.target.checked)} 
-                    style={{ accentColor: '#2563eb', cursor: 'pointer', width: '15px', height: '15px' }}
-                  />
-                  <span>중지된 투자 보기</span>
-                </label>
+              {/* Chip Filter Bar (Replacing '중지된 투자 보기' Checkbox) */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '2px 4px 4px 4px' }}>
+                {[
+                  { id: '전체', label: '전체(6)' },
+                  { id: '진행중', label: '진행중(2)' },
+                  { id: '중지된', label: '중지된(4)' }
+                ].map((chip) => {
+                  const isSelected = appliedStatusFilter === chip.id;
+                  return (
+                    <button
+                      key={chip.id}
+                      onClick={() => setAppliedStatusFilter(chip.id)}
+                      style={{
+                        padding: '6px 14px',
+                        borderRadius: '9999px',
+                        fontSize: '0.82rem',
+                        fontWeight: isSelected ? '600' : '400',
+                        color: isSelected ? '#111827' : '#6b7280',
+                        backgroundColor: isSelected ? '#e2e8f0' : '#f1f5f9',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      {chip.label}
+                    </button>
+                  );
+                })}
               </div>
 
-              {/* Card [1일]: 중지 건 (showStoppedInvestments가 true일 때 표기) */}
-              {showStoppedInvestments && (
+              {/* Card 1 [매월 1일]: 중지 건 */}
+              {(appliedStatusFilter === '전체' || appliedStatusFilter === '중지된') && (
                 <div style={{
                   backgroundColor: '#ffffff',
                   borderRadius: '12px',
@@ -14257,130 +14275,134 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               )}
 
-              {/* Card [5일]: 진행중 건 */}
-              <div style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                border: '1px solid #e2e8f0',
-                padding: '16px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 5일</span>
-                  </div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
-                </div>
-
-                <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {/* Row 1: 매도 */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: '700',
-                        color: '#2563eb',
-                        backgroundColor: '#eff6ff',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        flexShrink: 0
-                      }}>매도</span>
-                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+              {/* Card 2 [매월 5일]: 진행중 건 */}
+              {(appliedStatusFilter === '전체' || appliedStatusFilter === '진행중') && (
+                <div style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  padding: '16px',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 5일</span>
                     </div>
-                    <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>1,000,000원</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
                   </div>
 
-                  {/* Down Arrow */}
-                  <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M12 5v14M19 12l-7 7-7-7" />
-                    </svg>
-                  </div>
-
-                  {/* Row 2: 매수 */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: '700',
-                        color: '#dc2626',
-                        backgroundColor: '#fef2f2',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        flexShrink: 0
-                      }}>매수</span>
-                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        미래에셋클린테크... 외 2종목
-                      </span>
+                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {/* Row 1: 매도 */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          color: '#2563eb',
+                          backgroundColor: '#eff6ff',
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          flexShrink: 0
+                        }}>매도</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+                      </div>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>1,000,000원</span>
                     </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Card [10일]: 진행중 건 */}
-              <div style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                border: '1px solid #e2e8f0',
-                padding: '16px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 10일</span>
-                  </div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
-                </div>
-
-                <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {/* Row 1: 매도 */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: '700',
-                        color: '#2563eb',
-                        backgroundColor: '#eff6ff',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        flexShrink: 0
-                      }}>매도</span>
-                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+                    {/* Down Arrow */}
+                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M12 5v14M19 12l-7 7-7-7" />
+                      </svg>
                     </div>
-                    <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>500,000원</span>
-                  </div>
 
-                  {/* Down Arrow */}
-                  <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M12 5v14M19 12l-7 7-7-7" />
-                    </svg>
-                  </div>
-
-                  {/* Row 2: 매수 */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: '700',
-                        color: '#dc2626',
-                        backgroundColor: '#fef2f2',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        flexShrink: 0
-                      }}>매수</span>
-                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        KODEX 200 TR
-                      </span>
+                    {/* Row 2: 매수 */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          color: '#dc2626',
+                          backgroundColor: '#fef2f2',
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          flexShrink: 0
+                        }}>매수</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          미래에셋클린테크... 외 2종목
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
-              {/* Card [15일, 25일, 28일]: 중지 건 (showStoppedInvestments가 true일 때 표기) */}
-              {showStoppedInvestments && (
+              {/* Card 3 [매월 10일]: 진행중 건 */}
+              {(appliedStatusFilter === '전체' || appliedStatusFilter === '진행중') && (
+                <div style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  padding: '16px',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 10일</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
+                  </div>
+
+                  <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {/* Row 1: 매도 */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          color: '#2563eb',
+                          backgroundColor: '#eff6ff',
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          flexShrink: 0
+                        }}>매도</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+                      </div>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>500,000원</span>
+                    </div>
+
+                    {/* Down Arrow */}
+                    <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M12 5v14M19 12l-7 7-7-7" />
+                      </svg>
+                    </div>
+
+                    {/* Row 2: 매수 */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          color: '#dc2626',
+                          backgroundColor: '#fef2f2',
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          flexShrink: 0
+                        }}>매수</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          KODEX 200 TR
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Cards [매월 15일, 25일, 28일]: 중지 건 */}
+              {(appliedStatusFilter === '전체' || appliedStatusFilter === '중지된') && (
                 <>
-                  {/* Card 3: 매월 15일 */}
+                  {/* Card 4: 매월 15일 */}
                   <div style={{
                     backgroundColor: '#ffffff',
                     borderRadius: '12px',
@@ -14441,7 +14463,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     </div>
                   </div>
 
-                  {/* Card 4: 매월 25일 */}
+                  {/* Card 5: 매월 25일 */}
                   <div style={{
                     backgroundColor: '#ffffff',
                     borderRadius: '12px',
@@ -14502,7 +14524,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     </div>
                   </div>
 
-                  {/* Card 5: 매월 28일 */}
+                  {/* Card 6: 매월 28일 */}
                   <div style={{
                     backgroundColor: '#ffffff',
                     borderRadius: '12px',
