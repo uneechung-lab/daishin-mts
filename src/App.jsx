@@ -14049,7 +14049,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
                         신청일자
                       </th>
-                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%', borderBottom: '1px solid #e2e8f0' }}>
+                      <th style={{ padding: '5px 12px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'right', width: '37.5%', borderBottom: '1px solid #e2e8f0' }}>
                         매도상품명
                       </th>
                     </tr>
@@ -14057,7 +14057,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
                         정기매수일
                       </th>
-                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
+                      <th style={{ padding: '2px 12px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'right' }}>
                         금액(좌수)
                       </th>
                     </tr>
@@ -14114,7 +14114,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #f3f4f6' }}>
                             {row.date}
                           </td>
-                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
+                          <td style={{ padding: '8px 12px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'right', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
                             {row.sellProduct}
                           </td>
                         </tr>
@@ -14123,7 +14123,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
                             {row.buyDate}
                           </td>
-                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
+                          <td style={{ padding: '2px 12px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'right', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
                             {row.amount}
                           </td>
                         </tr>
