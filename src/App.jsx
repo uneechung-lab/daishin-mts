@@ -13955,14 +13955,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
             ) : (
               /* Execution History Table View (Matching Attached Image Specification) */
-              <div style={{ padding: '16px 12px', backgroundColor: '#ffffff', minHeight: '400px' }}>
+              <div style={{ paddingTop: '12px', backgroundColor: '#ffffff', minHeight: '400px' }}>
                 {/* 4-Segmented Period Filter Bar */}
                 <div style={{
                   display: 'flex',
                   border: '1px solid #d1d5db',
                   borderRadius: '2px',
                   backgroundColor: '#ffffff',
-                  marginBottom: '8px',
+                  margin: '0 12px 8px 12px',
                   overflow: 'hidden'
                 }}>
                   {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
@@ -13997,7 +13997,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    marginBottom: '8px'
+                    margin: '0 12px 8px 12px'
                   }}>
                     {/* Start Date Box */}
                     <div style={{
@@ -14039,13 +14039,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
                 )}
 
-                {/* History Table */}
+                {/* History Table (Full Width Edge to Edge) */}
                 <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
                   <thead>
-                    <tr style={{ backgroundColor: '#f8fafc', borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb' }}>
-                      <th style={{ padding: '10px 4px', fontSize: '0.82rem', fontWeight: '600', color: '#4b5563', textAlign: 'center', width: '28%' }}>상태</th>
-                      <th style={{ padding: '10px 4px', fontSize: '0.82rem', fontWeight: '600', color: '#4b5563', textAlign: 'center', width: '36%' }}>신청일자</th>
-                      <th style={{ padding: '10px 4px', fontSize: '0.82rem', fontWeight: '600', color: '#4b5563', textAlign: 'center', width: '36%' }}>매도상품명</th>
+                    <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+                      <th style={{ padding: '10px 4px', fontSize: '0.84rem', fontWeight: '600', color: '#374151', textAlign: 'center', width: '28%' }}>상태</th>
+                      <th style={{ padding: '10px 4px', fontSize: '0.84rem', fontWeight: '600', color: '#374151', textAlign: 'center', width: '36%' }}>신청일자</th>
+                      <th style={{ padding: '10px 4px', fontSize: '0.84rem', fontWeight: '600', color: '#374151', textAlign: 'center', width: '36%' }}>매도상품명</th>
                     </tr>
                   </thead>
                   <tbody>
