@@ -13959,25 +13959,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               /* Execution History Table View (Matching Attached Image Specification) */
               (() => {
                 const rawHistoryList = historyPeriod === '1개월' ? [
-                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
-                  { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
-                  { round: '5회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' }
+                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' }
                 ] : historyPeriod === '3개월' ? [
-                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
-                  { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
-                  { round: '5회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' },
-                  { round: '4회차', status: '진행중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)' },
-                  { round: '3회차', status: '중지됨', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)' },
-                  { round: '2회차', status: '완료됨', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원' }
+                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
+                  { round: '3회차', status: '중지됨', date: '2026.06.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '200,000원(15좌)' },
+                  { round: '10회차', status: '중지됨', date: '2026.05.25', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '300,000원(22좌)' }
                 ] : [
-                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38좌)' },
-                  { round: '10회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15좌)' },
-                  { round: '5회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원' },
-                  { round: '4회차', status: '진행중', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22좌)' },
-                  { round: '3회차', status: '중지됨', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85좌)' },
-                  { round: '2회차', status: '완료됨', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원' },
-                  { round: '1회차', status: '진행중', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7좌)' },
-                  { round: '0회차', status: '중지됨', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원' }
+                  { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
+                  { round: '3회차', status: '중지됨', date: '2026.06.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '200,000원(15좌)' },
+                  { round: '10회차', status: '중지됨', date: '2026.05.25', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '300,000원(22좌)' },
+                  { round: '2회차', status: '중지됨', date: '2026.04.28', buyDate: '매월 28일', sellProduct: '현금성 자산', amount: '150,000원(11좌)' },
+                  { round: '12회차', status: '완료됨', date: '2026.03.20', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '24회차', status: '완료됨', date: '2026.01.30', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' }
                 ];
 
                 const countRunning = rawHistoryList.filter(item => item.status === '진행중').length;
