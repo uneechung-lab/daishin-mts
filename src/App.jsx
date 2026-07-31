@@ -14039,15 +14039,27 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
                 )}
 
-                {/* History Table (Full Width Edge to Edge) */}
+                {/* History Table (Full Width Edge to Edge, 2-Row Per Item Structure) */}
                 <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
                   <thead>
                     <tr style={{ backgroundColor: '#f1f5f9', border: 'none' }}>
-                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '15%' }}>상태</th>
-                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '22%' }}>신청일자</th>
-                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '19%' }}>정기매수일</th>
-                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '22%' }}>매도상품명</th>
-                      <th style={{ padding: '6px 2px', fontSize: '0.8rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '22%' }}>금액(좌수)</th>
+                      <th rowSpan={2} style={{ padding: '6px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '25%', verticalAlign: 'middle' }}>
+                        상태
+                      </th>
+                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%' }}>
+                        신청일자
+                      </th>
+                      <th style={{ padding: '5px 4px 2px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '37.5%' }}>
+                        매도상품명
+                      </th>
+                    </tr>
+                    <tr style={{ backgroundColor: '#f1f5f9', border: 'none' }}>
+                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
+                        정기매수일
+                      </th>
+                      <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
+                        금액(좌수)
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -14072,34 +14084,47 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       { status: '매수완료', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
                       { status: '매수완료', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false }
                     ]).map((row, idx) => (
-                      <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', textAlign: 'center' }}>
-                          {row.isCancelable ? (
-                            <span 
-                              onClick={() => setShowCancelConfirmModal(true)}
-                              style={{ color: '#2563eb', textDecoration: 'underline', cursor: 'pointer', fontWeight: '500' }}
-                            >
-                              {row.status}
-                            </span>
-                          ) : (
-                            <span style={{ color: '#4b5563', fontWeight: '400' }}>
-                              {row.status}
-                            </span>
-                          )}
-                        </td>
-                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
-                          {row.date}
-                        </td>
-                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
-                          {row.buyDate}
-                        </td>
-                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
-                          {row.sellProduct}
-                        </td>
-                        <td style={{ padding: '10px 2px', fontSize: '0.8rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
-                          {row.amount}
-                        </td>
-                      </tr>
+                      <React.Fragment key={idx}>
+                        <tr>
+                          <td 
+                            rowSpan={2} 
+                            style={{ 
+                              padding: '8px 4px', 
+                              fontSize: '0.84rem', 
+                              textAlign: 'center', 
+                              verticalAlign: 'middle', 
+                              borderBottom: '1px solid #e5e7eb' 
+                            }}
+                          >
+                            {row.isCancelable ? (
+                              <span 
+                                onClick={() => setShowCancelConfirmModal(true)}
+                                style={{ color: '#2563eb', textDecoration: 'underline', cursor: 'pointer', fontWeight: '500' }}
+                              >
+                                {row.status}
+                              </span>
+                            ) : (
+                              <span style={{ color: '#4b5563', fontWeight: '400' }}>
+                                {row.status}
+                              </span>
+                            )}
+                          </td>
+                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                            {row.date}
+                          </td>
+                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400' }}>
+                            {row.sellProduct}
+                          </td>
+                        </tr>
+                        <tr style={{ borderBottom: '1px solid #e5e7eb' }}>
+                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400' }}>
+                            {row.buyDate}
+                          </td>
+                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400' }}>
+                            {row.amount}
+                          </td>
+                        </tr>
+                      </React.Fragment>
                     ))}
                   </tbody>
                 </table>
