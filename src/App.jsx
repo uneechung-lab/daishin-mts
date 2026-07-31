@@ -14042,10 +14042,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 {/* History Table (Full Width Edge to Edge) */}
                 <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
                   <thead>
-                    <tr style={{ backgroundColor: '#f1f5f9', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
-                      <th style={{ padding: '10px 4px', fontSize: '0.84rem', fontWeight: '600', color: '#374151', textAlign: 'center', width: '28%' }}>상태</th>
-                      <th style={{ padding: '10px 4px', fontSize: '0.84rem', fontWeight: '600', color: '#374151', textAlign: 'center', width: '36%' }}>신청일자</th>
-                      <th style={{ padding: '10px 4px', fontSize: '0.84rem', fontWeight: '600', color: '#374151', textAlign: 'center', width: '36%' }}>매도상품명</th>
+                    <tr style={{ backgroundColor: '#f1f5f9', border: 'none' }}>
+                      <th style={{ padding: '6px 4px', fontSize: '0.84rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '28%' }}>상태</th>
+                      <th style={{ padding: '6px 4px', fontSize: '0.84rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '36%' }}>신청일자</th>
+                      <th style={{ padding: '6px 4px', fontSize: '0.84rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', width: '36%' }}>매도상품명</th>
                     </tr>
                   </thead>
                   <tbody>
