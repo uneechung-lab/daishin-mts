@@ -14064,24 +14064,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </thead>
                   <tbody>
                     {(historyPeriod === '1개월' ? [
-                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: true },
-                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38주)', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15주)', isCancelable: false },
                       { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false }
                     ] : historyPeriod === '3개월' ? [
-                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: true },
-                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38주)', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15주)', isCancelable: false },
                       { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false }
+                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22주)', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85주)', isCancelable: false },
+                      { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: false }
                     ] : [
-                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: true },
-                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '취소가능', date: '2026.07.30', buyDate: '매월 10일', sellProduct: 'TIGER 미국S&P500', amount: '500,000원(38주)', isCancelable: true },
+                      { status: '매수완료', date: '2026.07.10', buyDate: '매월 10일', sellProduct: 'KODEX 200', amount: '500,000원(15주)', isCancelable: false },
                       { status: '매수완료', date: '2026.07.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: '현금성자산', amount: '1,000,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
-                      { status: '매수완료', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.10', buyDate: '매월 10일', sellProduct: 'ACE 미국나스닥100', amount: '500,000원(22주)', isCancelable: false },
+                      { status: '매수완료', date: '2026.06.05', buyDate: '매월 05일', sellProduct: 'SOL 미국배당다우존스', amount: '1,000,000원(85주)', isCancelable: false },
+                      { status: '매수완료', date: '2026.05.10', buyDate: '매월 10일', sellProduct: 'MMF (머니마켓)', amount: '500,000원', isCancelable: false },
+                      { status: '매수완료', date: '2026.04.10', buyDate: '매월 10일', sellProduct: '삼성전자', amount: '500,000원(7주)', isCancelable: false },
                       { status: '매수완료', date: '2026.03.10', buyDate: '매월 10일', sellProduct: '현금성자산', amount: '500,000원', isCancelable: false }
                     ]).map((row, idx) => (
                       <React.Fragment key={idx}>
@@ -14110,18 +14110,20 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               </span>
                             )}
                           </td>
-                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #f3f4f6' }}>
+                          {/* Top Row: 신청일자 & 매도상품명 (흐리게: color #6b7280, fontSize 0.82rem) */}
+                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #f3f4f6' }}>
                             {row.date}
                           </td>
-                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.84rem', color: '#111827', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
+                          <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
                             {row.sellProduct}
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
+                          {/* Bottom Row: 정기매수일 & 금액(좌수) (진하게: color #111827, fontWeight 600, fontSize 0.86rem) */}
+                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
                             {row.buyDate}
                           </td>
-                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #e5e7eb' }}>
+                          <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
                             {row.amount}
                           </td>
                         </tr>
