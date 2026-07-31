@@ -9050,7 +9050,7 @@ function App() {
   const [screen5ActiveTab, setScreen5ActiveTab] = useState('apply');
   const [historyPeriod, setHistoryPeriod] = useState('기간설정');
   const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
-  const [appliedStatusFilter, setAppliedStatusFilter] = useState('전체');
+  const [appliedStatusFilter, setAppliedStatusFilter] = useState('진행중');
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -14182,10 +14182,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           ) : (
             /* Applied Products List (Card Layout) */
             <div style={{ padding: '16px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {/* Chip Filter Bar (Replacing '중지된 투자 보기' Checkbox) */}
+              {/* Chip Filter Bar (Options: 진행중, 중지된) */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '2px 4px 4px 4px' }}>
                 {[
-                  { id: '전체', label: '전체(6)' },
                   { id: '진행중', label: '진행중(2)' },
                   { id: '중지된', label: '중지된(4)' }
                 ].map((chip) => {
@@ -14213,7 +14212,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
 
               {/* Card 1 [매월 1일]: 중지 건 */}
-              {(appliedStatusFilter === '전체' || appliedStatusFilter === '중지된') && (
+              {appliedStatusFilter === '중지된' && (
                 <div style={{
                   backgroundColor: '#ffffff',
                   borderRadius: '12px',
@@ -14276,7 +14275,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               )}
 
               {/* Card 2 [매월 5일]: 진행중 건 */}
-              {(appliedStatusFilter === '전체' || appliedStatusFilter === '진행중') && (
+              {appliedStatusFilter === '진행중' && (
                 <div style={{
                   backgroundColor: '#ffffff',
                   borderRadius: '12px',
@@ -14338,7 +14337,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               )}
 
               {/* Card 3 [매월 10일]: 진행중 건 */}
-              {(appliedStatusFilter === '전체' || appliedStatusFilter === '진행중') && (
+              {appliedStatusFilter === '진행중' && (
                 <div style={{
                   backgroundColor: '#ffffff',
                   borderRadius: '12px',
@@ -14400,7 +14399,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               )}
 
               {/* Cards [매월 15일, 25일, 28일]: 중지 건 */}
-              {(appliedStatusFilter === '전체' || appliedStatusFilter === '중지된') && (
+              {appliedStatusFilter === '중지된' && (
                 <>
                   {/* Card 4: 매월 15일 */}
                   <div style={{
