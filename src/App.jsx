@@ -14685,7 +14685,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             flexShrink: 0
                           }}>매수</span>
                           <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            현금성자산
+                            미래에셋 코리아그로스 펀드
                           </span>
                         </div>
                       </div>
