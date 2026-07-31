@@ -14103,7 +14103,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               <span 
                                 onClick={() => row.status === '적립중' && setShowCancelConfirmModal(true)}
                                 style={{ 
-                                  color: row.status === '적립중' ? '#2563eb' : row.status === '적립중지' ? '#6b7280' : '#4b5563', 
+                                  color: row.status === '적립중' ? '#2563eb' : row.status === '적립중지' ? '#ef4444' : '#4b5563', 
                                   textDecoration: 'underline', 
                                   cursor: row.status === '적립중' ? 'pointer' : 'default', 
                                   fontWeight: '500', 
