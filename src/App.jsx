@@ -13821,7 +13821,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', fontSize: '0.92rem', color: '#4b5563' }}>
                 <span style={{ color: '#64748b', fontWeight: '500', flexShrink: 0 }}>매도상품</span>
-                <span style={{ fontWeight: '600', color: '#111827', textAlign: 'right', wordBreak: 'keep-all', maxWidth: '210px' }}>
+                <span style={{ fontWeight: '600', color: '#111827', textAlign: 'right', wordBreak: 'break-all', flex: 1, paddingLeft: '16px' }}>
                   {screen5SelectedCardDetail.sellProduct}
                 </span>
               </div>
@@ -13848,7 +13848,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
                 {screen5SelectedCardDetail.buyProducts && screen5SelectedCardDetail.buyProducts.map((prod, pIdx) => (
                   <div key={pIdx} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', fontSize: '0.88rem', color: '#334155', paddingLeft: '8px' }}>
-                    <span style={{ color: '#475569', wordBreak: 'keep-all' }}>・ {prod.name}</span>
+                    <span style={{ color: '#475569', wordBreak: 'break-all', flex: 1 }}>・ {prod.name}</span>
                     <span style={{ fontWeight: '600', color: '#1e293b', flexShrink: 0 }}>{prod.ratio}</span>
                   </div>
                 ))}
