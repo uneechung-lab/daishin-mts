@@ -9044,6 +9044,10 @@ function App() {
   const [savingsStep2HasProducts, setSavingsStep2HasProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5hasproducts') === 'true';
   });
+  const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
+  });
+  const [screen5ActiveTab, setScreen5ActiveTab] = useState('apply');
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -13808,137 +13812,331 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Hero Banner Section (Style from Image 1 + Content from Image 2) */}
-          <div style={{ padding: '24px 16px 32px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
+          {/* Hero Banner Section */}
+          <div style={{ padding: '24px 16px 20px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
             <div style={{ flex: 1, paddingRight: '10px' }}>
-              <h2 style={{ fontSize: '1.15rem', fontWeight: '600', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
-                원하는 날짜, 원하는 상품으로<br />
-                매월 알아서 투자해 주는<br />
-                자동 매수 서비스
-              </h2>
-              <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.
-              </p>
+              {screen5HasAppliedProducts ? (
+                <>
+                  <h2 style={{ fontSize: '1.15rem', fontWeight: '700', margin: '0 0 8px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
+                    매월 4개의<br />
+                    금융상품에 적립식 투자하고 있어요.
+                  </h2>
+                  <p style={{ fontSize: '0.86rem', color: '#2563eb', fontWeight: '600', margin: '0 0 14px 0', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                    매월 5일, 10일에 매수하고 있어요.
+                  </p>
+                  {/* [적립상품 추가하기] 버튼 */}
+                  <button
+                    onClick={() => setScreen5HasAppliedProducts(false)}
+                    style={{
+                      backgroundColor: '#111827',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '5px',
+                      padding: '10.5px 16px',
+                      fontSize: '0.84rem',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    적립상품 추가하기
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h2 style={{ fontSize: '1.08rem', fontWeight: '600', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
+                    <span style={{ whiteSpace: 'nowrap' }}>원하는 날짜, 원하는 상품으로</span><br />
+                    매월 알아서 투자해 주는<br />
+                    자동 매수 서비스
+                  </h2>
+                  <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                    보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.
+                  </p>
+                </>
+              )}
             </div>
-            {/* 3D Donut Chart Graphic / Custom Image */}
-            <div style={{ width: '95px', height: '95px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '78px' }}>
-              <img 
-                src="/savings_hero.png" 
-                alt="적립식 투자 이미지"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  const svgEl = e.currentTarget.parentElement?.querySelector('svg');
-                  if (svgEl) svgEl.style.display = 'block';
-                }}
-                onLoad={(e) => {
-                  const svgEl = e.currentTarget.parentElement?.querySelector('svg');
-                  if (svgEl) svgEl.style.display = 'none';
-                }}
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-              />
-              <svg width="88" height="88" viewBox="0 0 100 100" fill="none">
-                <path d="M50 15 C 70 15, 85 30, 85 50 C 85 60, 78 70, 70 78 L 58 64 C 62 59, 65 54, 65 48 C 65 38, 58 30, 50 30 Z" fill="#ec4899" />
-                <path d="M70 78 C 60 88, 40 88, 30 78 L 42 64 C 47 69, 53 69, 58 64 Z" fill="#06b6d4" />
-                <path d="M30 78 C 20 70, 15 55, 15 40 C 15 28, 25 18, 40 15 L 44 30 C 35 32, 30 38, 30 45 C 30 53, 34 60, 42 64 Z" fill="#6366f1" />
-                <circle cx="82" cy="28" r="9.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="2" />
-                <path d="M82 32V24M78.5 27.5L82 24L85.5 27.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="20" cy="72" r="8.5" fill="#f43f5e" stroke="#ffffff" strokeWidth="2" />
-                <path d="M20 68V76M17 73L20 76L23 73" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
+            {/* Hero Image Section */}
+            {screen5HasAppliedProducts ? (
+              <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '60px', transform: 'translateX(-5px)' }}>
+                <img 
+                  src="/savings_hero2.png" 
+                  alt="적립식 투자 보유 현황 이미지"
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
+            ) : (
+              <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '68px', transform: 'translateX(-5px)' }}>
+                <img 
+                  src="/savings_hero.png" 
+                  alt="적립식 투자 이미지"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const svgEl = e.currentTarget.parentElement?.querySelector('svg');
+                    if (svgEl) svgEl.style.display = 'block';
+                  }}
+                  onLoad={(e) => {
+                    const svgEl = e.currentTarget.parentElement?.querySelector('svg');
+                    if (svgEl) svgEl.style.display = 'none';
+                  }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+                <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                  <path d="M50 15 C 70 15, 85 30, 85 50 C 85 60, 78 70, 70 78 L 58 64 C 62 59, 65 54, 65 48 C 65 38, 58 30, 50 30 Z" fill="#ec4899" />
+                  <path d="M70 78 C 60 88, 40 88, 30 78 L 42 64 C 47 69, 53 69, 58 64 Z" fill="#06b6d4" />
+                  <path d="M30 78 C 20 70, 15 55, 15 40 C 15 28, 25 18, 40 15 L 44 30 C 35 32, 30 38, 30 45 C 30 53, 34 60, 42 64 Z" fill="#6366f1" />
+                  <circle cx="82" cy="28" r="9.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="2" />
+                  <path d="M82 32V24M78.5 27.5L82 24L85.5 27.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <circle cx="20" cy="72" r="8.5" fill="#f43f5e" stroke="#ffffff" strokeWidth="2" />
+                  <path d="M20 68V76M17 73L20 76L23 73" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            )}
           </div>
 
-          {/* Sub Navigation Tabs (Compact height matching attached image) */}
+          {/* Sub Navigation Tabs (directly under hero section / button) */}
           <div style={{ marginTop: '12px', display: 'flex', borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
-            <div style={{
-              flex: 1,
-              textAlign: 'center',
-              padding: '7px 0',
-              fontSize: '12px',
-              fontWeight: '700',
-              color: '#111111',
-              borderBottom: '2.5px solid #111111',
-              cursor: 'pointer'
-            }}>
-              적립투자 신청
+            <div 
+              onClick={() => setScreen5ActiveTab('apply')}
+              style={{
+                flex: 1,
+                textAlign: 'center',
+                padding: '7px 0',
+                fontSize: '12px',
+                fontWeight: screen5ActiveTab === 'apply' ? '700' : '500',
+                color: screen5ActiveTab === 'apply' ? '#111111' : '#888888',
+                borderBottom: screen5ActiveTab === 'apply' ? '2.5px solid #111111' : '2.5px solid transparent',
+                cursor: 'pointer'
+              }}
+            >
+              적립투자 현황
             </div>
-            <div style={{
-              flex: 1,
-              textAlign: 'center',
-              padding: '7px 0',
-              fontSize: '12px',
-              fontWeight: '500',
-              color: '#888888',
-              borderBottom: '2.5px solid transparent',
-              cursor: 'pointer'
-            }}>
+            <div 
+              onClick={() => setScreen5ActiveTab('history')}
+              style={{
+                flex: 1,
+                textAlign: 'center',
+                padding: '7px 0',
+                fontSize: '12px',
+                fontWeight: screen5ActiveTab === 'history' ? '700' : '500',
+                color: screen5ActiveTab === 'history' ? '#111111' : '#888888',
+                borderBottom: screen5ActiveTab === 'history' ? '2.5px solid #111111' : '2.5px solid transparent',
+                cursor: 'pointer'
+              }}
+            >
               신청내역 조회
             </div>
           </div>
 
-          {/* Tab Content Body Area (Empty State) */}
-          <div style={{
-            padding: '48px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#888888',
-            fontSize: '0.88rem',
-            fontWeight: '400',
-            backgroundColor: '#ffffff'
-          }}>
-            신청한 상품이 없습니다.
-          </div>
+          {/* Tab Content Body Area */}
+          {screen5ActiveTab === 'history' ? (
+            <div style={{
+              padding: '48px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#888888',
+              fontSize: '0.88rem',
+              fontWeight: '400',
+              backgroundColor: '#ffffff'
+            }}>
+              {screen5HasAppliedProducts ? '최근 3개월 간 4건의 정기 매수 내역이 있습니다.' : '신청 내역이 없습니다.'}
+            </div>
+          ) : !screen5HasAppliedProducts ? (
+            /* Empty State */
+            <div 
+              onClick={() => setScreen5HasAppliedProducts(true)}
+              style={{
+                padding: '48px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#888888',
+                fontSize: '0.88rem',
+                fontWeight: '400',
+                backgroundColor: '#ffffff',
+                cursor: 'pointer'
+              }}
+            >
+              신청한 상품이 없습니다.
+            </div>
+          ) : (
+            /* Applied Products List (Card Layout) */
+            <div style={{ padding: '16px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {/* Card 1: 매월 5일 */}
+              <div style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '12px',
+                border: '1px solid #e2e8f0',
+                padding: '16px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 5일</span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
+                </div>
+
+                <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {/* Row 1: 매도 */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        color: '#dc2626',
+                        backgroundColor: '#fef2f2',
+                        padding: '3px 8px',
+                        borderRadius: '4px',
+                        flexShrink: 0
+                      }}>매도</span>
+                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+                    </div>
+                    <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>1,000,000원</span>
+                  </div>
+
+                  {/* Down Arrow */}
+                  <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M12 5v14M19 12l-7 7-7-7" />
+                    </svg>
+                  </div>
+
+                  {/* Row 2: 매수 */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        color: '#2563eb',
+                        backgroundColor: '#eff6ff',
+                        padding: '3px 8px',
+                        borderRadius: '4px',
+                        flexShrink: 0
+                      }}>매수</span>
+                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        미래에셋클린테크... 외 2종목
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: 매월 10일 */}
+              <div style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '12px',
+                border: '1px solid #e2e8f0',
+                padding: '16px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 10일</span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>자동매수 진행중</span>
+                </div>
+
+                <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {/* Row 1: 매도 */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        color: '#dc2626',
+                        backgroundColor: '#fef2f2',
+                        padding: '3px 8px',
+                        borderRadius: '4px',
+                        flexShrink: 0
+                      }}>매도</span>
+                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+                    </div>
+                    <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>500,000원</span>
+                  </div>
+
+                  {/* Down Arrow */}
+                  <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '8px', color: '#94a3b8' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M12 5v14M19 12l-7 7-7-7" />
+                    </svg>
+                  </div>
+
+                  {/* Row 2: 매수 */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', paddingRight: '8px' }}>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        color: '#2563eb',
+                        backgroundColor: '#eff6ff',
+                        padding: '3px 8px',
+                        borderRadius: '4px',
+                        flexShrink: 0
+                      }}>매수</span>
+                      <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        KODEX 200 TR
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
         </div>
 
-        {/* Floating Bottom Action Area (Agreement + Action Button) */}
-        <div style={{
-          flexShrink: 0,
-          backgroundColor: '#ffffff',
-          borderTop: '1px solid #e2e8f0',
-          boxShadow: '0 -2px 10px rgba(0,0,0,0.04)'
-        }}>
-          {/* Checkbox Agreement */}
-          <div style={{ padding: '12px 16px', backgroundColor: '#ffffff' }}>
-            <div style={{ position: 'relative' }}>
-              <label 
-                style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
-              >
-                <input 
-                  type="checkbox" 
-                  checked={screen5Agreed} 
-                  onChange={(e) => setScreen5Agreed(e.target.checked)} 
-                  style={{ marginTop: '3px', cursor: 'pointer' }} 
-                />
-                <span style={{ fontSize: '0.78rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
-                  적립식 투자 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
-                </span>
-              </label>
+        {/* Floating Bottom Action Area (Agreement + Action Button) - ONLY WHEN NO PRODUCTS APPLIED */}
+        {!screen5HasAppliedProducts && (
+          <div style={{
+            flexShrink: 0,
+            backgroundColor: '#ffffff',
+            borderTop: '1px solid #e2e8f0',
+            boxShadow: '0 -2px 10px rgba(0,0,0,0.04)'
+          }}>
+            {/* Checkbox Agreement */}
+            <div style={{ padding: '12px 16px', backgroundColor: '#ffffff' }}>
+              <div style={{ position: 'relative' }}>
+                <label 
+                  style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', cursor: 'pointer', userSelect: 'none' }}
+                >
+                  <input 
+                    type="checkbox" 
+                    checked={screen5Agreed} 
+                    onChange={(e) => setScreen5Agreed(e.target.checked)} 
+                    style={{ marginTop: '3px', cursor: 'pointer' }} 
+                  />
+                  <span style={{ fontSize: '0.78rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
+                    적립식 투자 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Bottom Action Button Bar */}
+            <div 
+              onClick={() => {
+                if (screen5Agreed) {
+                  setScreen5ToBeSubScreen('savings_apply');
+                }
+              }}
+              style={{
+              backgroundColor: screen5Agreed ? '#1c1c1e' : '#f2f2f2',
+              color: screen5Agreed ? '#ffffff' : '#999999',
+              borderTop: screen5Agreed ? 'none' : '1px solid #e8e8e8',
+              padding: '14px 0',
+              textAlign: 'center',
+              fontSize: '1.02rem',
+              fontWeight: '700',
+              cursor: screen5Agreed ? 'pointer' : 'not-allowed',
+              transition: 'background-color 0.2s, color 0.2s'
+            }}>
+              적립식 투자 신청하기
             </div>
           </div>
-
-          {/* Bottom Action Button Bar (Disabled until screen5Agreed is checked) */}
-          <div 
-            onClick={() => {
-              if (screen5Agreed) {
-                setScreen5ToBeSubScreen('savings_apply');
-              }
-            }}
-            style={{
-            backgroundColor: screen5Agreed ? '#1c1c1e' : '#f2f2f2',
-            color: screen5Agreed ? '#ffffff' : '#999999',
-            borderTop: screen5Agreed ? 'none' : '1px solid #e8e8e8',
-            padding: '14px 0',
-            textAlign: 'center',
-            fontSize: '1.02rem',
-            fontWeight: '700',
-            cursor: screen5Agreed ? 'pointer' : 'not-allowed',
-            transition: 'background-color 0.2s, color 0.2s'
-          }}>
-            적립식 투자 신청하기
-          </div>
-        </div>
+        )}
 
         {/* Bottom Navigation Tab Bar (identical to Screen 6 & Screen 5) */}
         <div style={{
@@ -15138,6 +15336,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (screen5hasproductsParam !== null) {
       setSavingsStep2HasProducts(screen5hasproductsParam === 'true');
     }
+    const screen5hasappliedParam = params.get('screen5hasapplied');
+    if (screen5hasappliedParam !== null) {
+      setScreen5HasAppliedProducts(screen5hasappliedParam === 'true');
+    }
 
     // Restore order tabs
     const screen6AsIsOrderTabParam = params.get('screen6AsIsOrderTab');
@@ -15212,6 +15414,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen5tobe', screen5ToBeSubScreen);
     params.set('screen5agreed', screen5Agreed ? 'true' : 'false');
     params.set('screen5hasproducts', savingsStep2HasProducts ? 'true' : 'false');
+    params.set('screen5hasapplied', screen5HasAppliedProducts ? 'true' : 'false');
     params.set('figmaExport', isFigmaExportMode ? 'true' : 'false');
     
     // Sync Pension Receipt Status states to URL params
@@ -15241,7 +15444,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5Agreed, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5Agreed, savingsStep2HasProducts, screen5HasAppliedProducts, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
