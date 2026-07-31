@@ -9048,7 +9048,7 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
   });
   const [screen5ActiveTab, setScreen5ActiveTab] = useState('apply');
-  const [historyPeriod, setHistoryPeriod] = useState('1개월');
+  const [historyPeriod, setHistoryPeriod] = useState('기간설정');
   const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
@@ -13990,6 +13990,54 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     );
                   })}
                 </div>
+
+                {/* Date Range Selector (Shown when '기간설정' is selected) */}
+                {historyPeriod === '기간설정' && (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '16px'
+                  }}>
+                    {/* Start Date Box */}
+                    <div style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justify: 'space-between',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '2px',
+                      padding: '8px 12px',
+                      backgroundColor: '#ffffff',
+                      cursor: 'pointer'
+                    }}>
+                      <span style={{ fontSize: '0.88rem', color: '#111827', fontWeight: '400' }}>2026.07.01</span>
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                        <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+
+                    <span style={{ color: '#9ca3af', fontSize: '0.9rem', fontWeight: '400' }}>-</span>
+
+                    {/* End Date Box */}
+                    <div style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justify: 'space-between',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '2px',
+                      padding: '8px 12px',
+                      backgroundColor: '#ffffff',
+                      cursor: 'pointer'
+                    }}>
+                      <span style={{ fontSize: '0.88rem', color: '#111827', fontWeight: '400' }}>2026.07.31</span>
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                        <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                )}
 
                 {/* History Table */}
                 <table style={{ width: '100%', borderCollapse: 'collapse', borderSpacing: 0 }}>
