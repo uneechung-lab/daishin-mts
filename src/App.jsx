@@ -13829,7 +13829,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500' }}>{isMaturity ? '만기일' : '정기매매일'}</span>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>{isMaturity ? '만기일자' : '정기매매일'}</span>
                 <span style={{ fontWeight: '600', color: '#111827' }}>{isMaturity ? (screen5SelectedCardDetail.maturityDate || '2026.07.01') : screen5SelectedCardDetail.buyCycle}</span>
               </div>
 
