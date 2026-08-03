@@ -14419,7 +14419,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             <tr>
                               {/* Bottom Row: 정기매수일 & 금액(좌수) (진하게: color #111827, fontWeight 600, fontSize 0.86rem) */}
                               <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
-                                {isMaturity ? row.maturityBuyDate : row.buyDate}
+                                {isMaturity ? (row.maturityDate || row.date) : row.buyDate}
                               </td>
                               <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
                                 {isMaturity ? row.amount?.replace(/\([^)]*\)/g, '') : row.amount}
