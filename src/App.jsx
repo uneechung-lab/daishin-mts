@@ -14451,8 +14451,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               {/* Chip Filter Bar (Options: 진행중, 중지된, 완료됨) */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '2px 4px 4px 4px' }}>
                 {[
-                  { id: '진행중', label: '진행중(2)' },
-                  { id: '중지된', label: '중지된(4)' },
+                  { id: '진행중', label: isMaturity ? '예약된(2)' : '진행중(2)' },
+                  { id: '중지된', label: isMaturity ? '취소된(4)' : '중지된(4)' },
                   { id: '완료됨', label: '완료됨(2)' }
                 ].map((chip) => {
                   const isSelected = appliedStatusFilter === chip.id;
@@ -14492,7 +14492,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       { name: 'KODEX 미국나스닥100TR', ratio: '100%' }
                     ],
                     totalRatio: '100%',
-                    cancelStatus: '중지 (2026.07.01)'
+                    cancelStatus: isMaturity ? '취소 (2026.07.01)' : '중지 (2026.07.01)'
                   })}
                   style={{
                     backgroundColor: '#ffffff',
@@ -14508,7 +14508,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 1일</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>1회차 취소됨</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '1회차 취소됨' : '1회차 중지됨'}</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14594,7 +14594,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 5일</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>0회차 진행중</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '0회차 예약된' : '0회차 진행중'}</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14679,7 +14679,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 10일</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>1회차 진행중</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '1회차 예약된' : '1회차 진행중'}</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -14751,7 +14751,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 15일</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>0회차 취소됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '0회차 취소됨' : '0회차 중지됨'}</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
