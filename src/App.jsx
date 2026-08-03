@@ -14029,7 +14029,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 <>
                   <h2 style={{ fontSize: '1.05rem', fontWeight: '700', margin: isMaturity ? '0 0 14px 0' : '0 0 8px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
                     {isMaturity ? (
-                      '2건의 만기 예정 상품이 만기일에 4개의 금융상품으로 자동매수예약되어 있습니다.'
+                      '2건의 만기 예정 상품이 만기일에 4개의 금융상품으로 자동매수 예약되어 있습니다.'
                     ) : (
                       <>
                         매월 4개의<br />
