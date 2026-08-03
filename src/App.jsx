@@ -14045,7 +14045,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </p>
                   {/* [적립/만기상품 추가하기] 버튼 */}
                   <button
-                    onClick={() => setScreen5ToBeSubScreen(isMaturity ? 'maturity_apply' : 'savings_apply')}
+                    onClick={() => setScreen5HasAppliedProducts(false)}
                     style={{
                       backgroundColor: '#111827',
                       color: '#ffffff',
