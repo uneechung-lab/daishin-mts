@@ -13571,7 +13571,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
 
               {/* Card 3: 만기상품 예약 매매 */}
-              <div style={{
+              <div 
+                onClick={() => setScreen5ToBeSubScreen('maturity')}
+                style={{
                 border: '1px solid #e2e8f0',
                 borderRadius: '10px',
                 backgroundColor: '#ffffff',
@@ -13734,6 +13736,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   };
 
   const renderScreen5ToBeSavings = () => {
+    const isMaturity = screen5ToBeSubScreen === 'maturity';
     if (screen5SelectedCardDetail) {
       return (
         <div style={{
@@ -13984,7 +13987,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
-            적립식 투자
+            {isMaturity ? '만기상품 예약 매매' : '적립식 투자'}
           </span>
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
@@ -14051,13 +14054,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </>
               ) : (
                 <>
-                  <h2 style={{ fontSize: '1.08rem', fontWeight: '600', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
-                    <span style={{ whiteSpace: 'nowrap' }}>원하는 날짜, 원하는 상품으로</span><br />
-                    매월 알아서 투자해 주는<br />
-                    자동 매수 서비스
+                  <h2 style={{ fontSize: '1.02rem', fontWeight: '700', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
+                    {isMaturity ? (
+                      <>
+                        만기 다가오는 상품,<br />
+                        원하는 신규 상품으로<br />
+                        만기 시 알아서 재투자해 주는<br />
+                        자동 예약 매매 서비스
+                      </>
+                    ) : (
+                      <>
+                        원하는 날짜, 원하는 상품으로<br />
+                        매월 알아서 투자해 주는<br />
+                        자동 매수 서비스
+                      </>
+                    )}
                   </h2>
-                  <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                    보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.
+                  <p style={{ fontSize: '0.8rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                    {isMaturity ? '보유하신 상품의 만기 상환금을 재원으로 신경 쓸 필요 없이 자동으로 투자가 진행됩니다.' : '보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.'}
                   </p>
                 </>
               )}
@@ -14066,16 +14080,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             {screen5HasAppliedProducts ? (
               <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '60px', transform: 'translateX(-5px)' }}>
                 <img 
-                  src="/savings_hero2.png" 
-                  alt="적립식 투자 보유 현황 이미지"
+                  src={isMaturity ? "/savings_hero3.png" : "/savings_hero2.png"} 
+                  alt={isMaturity ? "만기상품 예약 매매 보유 현황 이미지" : "적립식 투자 보유 현황 이미지"}
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
               </div>
             ) : (
-              <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '68px', transform: 'translateX(-5px)' }}>
+              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginLeft: '4px' }}>
                 <img 
-                  src="/savings_hero.png" 
-                  alt="적립식 투자 이미지"
+                  src={isMaturity ? "/savings_hero3.png" : "/savings_hero.png"} 
+                  alt={isMaturity ? "만기상품 예약 매매 이미지" : "적립식 투자 이미지"}
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     const svgEl = e.currentTarget.parentElement?.querySelector('svg');
@@ -14087,7 +14101,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   }}
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
-                <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                <svg width="85" height="85" viewBox="0 0 100 100" fill="none">
                   <path d="M50 15 C 70 15, 85 30, 85 50 C 85 60, 78 70, 70 78 L 58 64 C 62 59, 65 54, 65 48 C 65 38, 58 30, 50 30 Z" fill="#ec4899" />
                   <path d="M70 78 C 60 88, 40 88, 30 78 L 42 64 C 47 69, 53 69, 58 64 Z" fill="#06b6d4" />
                   <path d="M30 78 C 20 70, 15 55, 15 40 C 15 28, 25 18, 40 15 L 44 30 C 35 32, 30 38, 30 45 C 30 53, 34 60, 42 64 Z" fill="#6366f1" />
@@ -14122,7 +14136,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer'
               }}
             >
-              적립투자 현황
+              {isMaturity ? '만기예약매매 현황' : '적립투자 현황'}
             </div>
             <div 
               onClick={() => setScreen5ActiveTab('history')}
@@ -14137,7 +14151,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer'
               }}
             >
-              적립투자 내역
+              {isMaturity ? '신청내역' : '적립투자 내역'}
             </div>
           </div>
 
@@ -14154,7 +14168,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 fontWeight: '400',
                 backgroundColor: '#ffffff'
               }}>
-                적립투자 내역이 없습니다.
+                {isMaturity ? '신청내역이 없습니다.' : '적립투자 내역이 없습니다.'}
               </div>
             ) : (
               /* Execution History Table View (Matching Attached Image Specification) */
@@ -15086,7 +15100,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     style={{ marginTop: '3px', cursor: 'pointer' }} 
                   />
                   <span style={{ fontSize: '0.78rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
-                    적립식 투자 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.
+                    {isMaturity
+                      ? '만기상품 예약 매매 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.'
+                      : '적립식 투자 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.'}
                   </span>
                 </label>
               </div>
@@ -15110,7 +15126,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               cursor: screen5Agreed ? 'pointer' : 'not-allowed',
               transition: 'background-color 0.2s, color 0.2s'
             }}>
-              적립식 투자 신청하기
+              {isMaturity ? '만기상품 예약 매매 신청하기' : '적립식 투자 신청하기'}
             </div>
           </div>
         )}
@@ -18432,7 +18448,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : screen5ToBeSubScreen === 'savings' ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
+                  {screen5ToBeSubScreen === 'savings_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
                 </div>
               </div>
             </div>
