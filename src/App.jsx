@@ -13808,9 +13808,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           <div style={{ flex: 1, padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: '28px', backgroundColor: '#ffffff', overflowY: 'auto' }}>
             <div>
               <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: '0 0 8px 0', color: '#111827' }}>상세 신청내역입니다.</h2>
-              <p style={{ fontSize: '1.02rem', color: '#4b5563', margin: 0 }}>
-                <span style={{ color: '#2563eb', fontWeight: '700' }}>{screen5SelectedCardDetail.buyCount || '0회차'}</span> 매수 되었습니다.
-              </p>
+              {!isMaturity && (
+                <p style={{ fontSize: '1.02rem', color: '#4b5563', margin: 0 }}>
+                  <span style={{ color: '#2563eb', fontWeight: '700' }}>{screen5SelectedCardDetail.buyCount || '0회차'}</span> 매수 되었습니다.
+                </p>
+              )}
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '6px' }}>
@@ -13827,31 +13829,35 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500' }}>정기매매일</span>
-                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.buyCycle}</span>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>{isMaturity ? '만기일' : '정기매매일'}</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{isMaturity ? (screen5SelectedCardDetail.maturityDate || '2026.07.01') : screen5SelectedCardDetail.buyCycle}</span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500', flexShrink: 0 }}>매도상품</span>
+                <span style={{ color: '#64748b', fontWeight: '500', flexShrink: 0 }}>{isMaturity ? '만기상품' : '매도상품'}</span>
                 <span style={{ fontWeight: '600', color: '#111827', textAlign: 'right', wordBreak: 'break-all', flex: 1, paddingLeft: '16px' }}>
-                  {screen5SelectedCardDetail.sellProduct}
+                  {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : screen5SelectedCardDetail.sellProduct}
                 </span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500' }}>금액(좌수)</span>
-                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.amount}</span>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>{isMaturity ? '만기금액' : '금액(좌수)'}</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{isMaturity ? (screen5SelectedCardDetail.amount ? screen5SelectedCardDetail.amount.replace('좌', '원') : '1,000,000원') : screen5SelectedCardDetail.amount}</span>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500' }}>시작일자</span>
-                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.startDate}</span>
-              </div>
+              {!isMaturity && (
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                    <span style={{ color: '#64748b', fontWeight: '500' }}>시작일자</span>
+                    <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.startDate}</span>
+                  </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500' }}>종료일자</span>
-                <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.endDate}</span>
-              </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                    <span style={{ color: '#64748b', fontWeight: '500' }}>종료일자</span>
+                    <span style={{ fontWeight: '600', color: '#111827' }}>{screen5SelectedCardDetail.endDate}</span>
+                  </div>
+                </>
+              )}
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
@@ -14032,8 +14038,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       '2건의 만기 예정 상품이 만기일에 4개의 금융상품으로 자동매수 예약되어 있습니다.'
                     ) : (
                       <>
-                        매월 4개의<br />
-                        금융상품에 적립식 투자하고 있어요.
+                        매월 4개의 금융상품에<br />
+                        적립식 투자하고 있어요.
                       </>
                     )}
                   </h2>
@@ -14087,19 +14093,19 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               )}
             </div>
             {/* Hero Image Section */}
-            {screen5HasAppliedProducts && !isMaturity ? (
-              <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '60px', transform: 'translateX(-5px)' }}>
+            {!isMaturity ? (
+              <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', transform: 'translateX(-5px)' }}>
                 <img 
                   src="/savings_hero2.png" 
-                  alt="적립식 투자 보유 현황 이미지"
+                  alt="적립식 투자 돼지 이미지"
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
               </div>
             ) : (
-              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: screen5HasAppliedProducts ? '44px' : '64px', marginLeft: '4px' }}>
+              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: '44px', marginLeft: '4px' }}>
                 <img 
-                  src={isMaturity ? "/savings_hero3.png" : "/savings_hero.png"} 
-                  alt={isMaturity ? "만기상품 예약 매매 이미지" : "적립식 투자 이미지"}
+                  src="/savings_hero3.png" 
+                  alt="만기상품 예약 매매 이미지"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     const svgEl = e.currentTarget.parentElement?.querySelector('svg');
@@ -14305,8 +14311,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       {/* Status Chip Filter Bar (진행중, 중지됨, 완료됨) */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 12px 10px 12px' }}>
                         {[
-                          { id: '진행중', label: `진행중(${countRunning})` },
-                          { id: '중지됨', label: `중지됨(${countStopped})` },
+                          { id: '진행중', label: isMaturity ? `예약된(${countRunning})` : `진행중(${countRunning})` },
+                          { id: '중지됨', label: isMaturity ? `취소된(${countStopped})` : `중지됨(${countStopped})` },
                           { id: '완료됨', label: `완료됨(${countCompleted})` }
                         ].map((chip) => {
                           const isSelected = historyStatusFilter === chip.id;
@@ -14353,10 +14359,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           </tr>
                           <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1px solid #d1d5db' }}>
                             <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center', borderRight: '1px solid #e2e8f0' }}>
-                              정기매수일
+                              {isMaturity ? '만기일' : '정기매수일'}
                             </th>
                             <th style={{ padding: '2px 4px 5px 4px', fontSize: '0.82rem', fontWeight: '500', color: '#4b5563', textAlign: 'center' }}>
-                              금액(좌수)
+                              {isMaturity ? '금액' : '금액(좌수)'}
                             </th>
                           </tr>
                         </thead>
@@ -14386,7 +14392,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                               >
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
                                   <span style={{ fontSize: '0.78rem', color: '#6b7280', fontWeight: '400' }}>
-                                    {row.round}
+                                    {isMaturity ? '-' : row.round}
                                   </span>
                                   <span 
                                     onClick={() => row.status === '진행중' && setShowCancelConfirmModal(true)}
@@ -14398,7 +14404,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                       fontSize: '0.84rem' 
                                     }}
                                   >
-                                    {row.status}
+                                    {isMaturity ? (row.status === '진행중' ? '매매예약' : row.status === '중지됨' ? '예약취소' : '매매완료') : row.status}
                                   </span>
                                 </div>
                               </td>
@@ -14407,13 +14413,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 {row.date}
                               </td>
                               <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
-                                {row.sellProduct}
+                                {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : row.sellProduct}
                               </td>
                             </tr>
                             <tr>
                               {/* Bottom Row: 정기매수일 & 금액(좌수) (진하게: color #111827, fontWeight 600, fontSize 0.86rem) */}
                               <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
-                                {row.buyDate}
+                                {isMaturity ? row.maturityBuyDate : row.buyDate}
                               </td>
                               <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
                                 {row.amount}
@@ -14506,15 +14512,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 1일</span>
+                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>{isMaturity ? '2026.06.01' : '매월 1일'}</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '1회차 취소됨' : '1회차 중지됨'}</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '예약취소' : '1회차 중지됨'}</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {/* Row 1: 매도 */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                         <span style={{
                           fontSize: '0.72rem',
                           fontWeight: '700',
@@ -14523,10 +14529,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           padding: '3px 8px',
                           borderRadius: '4px',
                           flexShrink: 0
-                        }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b' }}>현금성 자산</span>
+                        }}>{isMaturity ? '만기' : '매도'}</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}
+                        </span>
                       </div>
-                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569' }}>400,000원</span>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>400,000원</span>
                     </div>
 
                     {/* Down Arrow */}
@@ -14592,15 +14600,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 5일</span>
+                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>{isMaturity ? '2026.07.05' : '매월 5일'}</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '0회차 예약된' : '0회차 진행중'}</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '매매예약' : '0회차 진행중'}</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {/* Row 1: 매도 */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                         <span style={{
                           fontSize: '0.72rem',
                           fontWeight: '700',
@@ -14609,10 +14617,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           padding: '3px 8px',
                           borderRadius: '4px',
                           flexShrink: 0
-                        }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>DB차이나바이오...</span>
+                        }}>{isMaturity ? '만기' : '매도'}</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : 'DB차이나바이오...'}
+                        </span>
                       </div>
-                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>1,000,000좌</span>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a', whiteSpace: 'nowrap', flexShrink: 0 }}>{isMaturity ? '1,000,000원' : '1,000,000좌'}</span>
                     </div>
 
                     {/* Down Arrow */}
@@ -14677,15 +14687,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>매월 10일</span>
+                      <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#1e293b' }}>{isMaturity ? '2026.07.10' : '매월 10일'}</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '1회차 예약된' : '1회차 진행중'}</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '매매예약' : '1회차 진행중'}</span>
                   </div>
 
                   <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {/* Row 1: 매도 */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                         <span style={{
                           fontSize: '0.72rem',
                           fontWeight: '700',
@@ -14694,10 +14704,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           padding: '3px 8px',
                           borderRadius: '4px',
                           flexShrink: 0
-                        }}>매도</span>
-                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155' }}>현금성 자산</span>
+                        }}>{isMaturity ? '만기' : '매도'}</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}
+                        </span>
                       </div>
-                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a' }}>500,000원</span>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a', whiteSpace: 'nowrap', flexShrink: 0 }}>500,000원</span>
                     </div>
 
                     {/* Down Arrow */}
@@ -14749,15 +14761,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 15일</span>
+                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>{isMaturity ? '2026.06.15' : '매월 15일'}</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '0회차 취소됨' : '0회차 중지됨'}</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '예약취소' : '0회차 중지됨'}</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {/* Row 1: 매도 */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                           <span style={{
                             fontSize: '0.72rem',
                             fontWeight: '700',
@@ -14766,10 +14778,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             padding: '3px 8px',
                             borderRadius: '4px',
                             flexShrink: 0
-                          }}>매도</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b' }}>현금성 자산</span>
+                          }}>{isMaturity ? '만기' : '매도'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
                         </div>
-                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569' }}>200,000원</span>
+                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>200,000원</span>
                       </div>
 
                       {/* Down Arrow */}
@@ -14817,15 +14829,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 25일</span>
+                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>{isMaturity ? '2026.06.25' : '매월 25일'}</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>0회차 취소됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '예약취소' : '0회차 취소됨'}</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {/* Row 1: 매도 */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                           <span style={{
                             fontSize: '0.72rem',
                             fontWeight: '700',
@@ -14834,10 +14846,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             padding: '3px 8px',
                             borderRadius: '4px',
                             flexShrink: 0
-                          }}>매도</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b' }}>현금성 자산</span>
+                          }}>{isMaturity ? '만기' : '매도'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
                         </div>
-                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569' }}>300,000원</span>
+                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>300,000원</span>
                       </div>
 
                       {/* Down Arrow */}
@@ -14885,15 +14897,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>매월 28일</span>
+                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#64748b' }}>{isMaturity ? '2026.06.28' : '매월 28일'}</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>0회차 취소됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '예약취소' : '0회차 취소됨'}</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {/* Row 1: 매도 */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                           <span style={{
                             fontSize: '0.72rem',
                             fontWeight: '700',
@@ -14902,10 +14914,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             padding: '3px 8px',
                             borderRadius: '4px',
                             flexShrink: 0
-                          }}>매도</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b' }}>현금성 자산</span>
+                          }}>{isMaturity ? '만기' : '매도'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
                         </div>
-                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569' }}>150,000원</span>
+                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>150,000원</span>
                       </div>
 
                       {/* Down Arrow */}
@@ -14958,15 +14970,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#475569' }}>매월 20일</span>
+                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#475569' }}>{isMaturity ? '2026.05.20' : '매월 20일'}</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>12회차 완료됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '매매완료' : '12회차 완료됨'}</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {/* Row 1: 매도 */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                           <span style={{
                             fontSize: '0.72rem',
                             fontWeight: '700',
@@ -14975,10 +14987,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             padding: '3px 8px',
                             borderRadius: '4px',
                             flexShrink: 0
-                          }}>매도</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569' }}>현금성 자산</span>
+                          }}>{isMaturity ? '만기' : '매도'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
                         </div>
-                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155' }}>1,000,000원</span>
+                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155', whiteSpace: 'nowrap', flexShrink: 0 }}>1,000,000원</span>
                       </div>
 
                       {/* Down Arrow */}
@@ -15026,15 +15038,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid #f1f3f5' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#475569' }}>매월 30일</span>
+                        <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#475569' }}>{isMaturity ? '2026.05.30' : '매월 30일'}</span>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>12회차 완료됨</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '600', color: '#475569', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '10px' }}>{isMaturity ? '매매완료' : '12회차 완료됨'}</span>
                     </div>
 
                     <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {/* Row 1: 매도 */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', flex: 1, minWidth: 0 }}>
                           <span style={{
                             fontSize: '0.72rem',
                             fontWeight: '700',
@@ -15043,10 +15055,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             padding: '3px 8px',
                             borderRadius: '4px',
                             flexShrink: 0
-                          }}>매도</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569' }}>현금성 자산</span>
+                          }}>{isMaturity ? '만기' : '매도'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
                         </div>
-                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155' }}>500,000원</span>
+                        <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155', whiteSpace: 'nowrap', flexShrink: 0 }}>500,000원</span>
                       </div>
 
                       {/* Down Arrow */}
@@ -15661,9 +15673,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Subheader Notice Bar */}
         <div style={{ backgroundColor: '#f4f4f6', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', lineHeight: '1.45' }}>
-          <div style={{ color: '#666666' }}>정기 매수를 위해 보유상품 중</div>
+          <div style={{ color: '#666666' }}>{isMaturity ? '예약 매매를 위해 보유상품 중' : '정기 매수를 위해 보유상품 중'}</div>
           <div>
-            <span style={{ color: '#2563eb', fontWeight: '600' }}>정기 매도대상 상품</span>
+            <span style={{ color: '#2563eb', fontWeight: '600' }}>{isMaturity ? '만기 매도대상 상품' : '정기 매도대상 상품'}</span>
             <span style={{ color: '#666666' }}>을 선택해주세요.</span>
           </div>
         </div>
@@ -15687,7 +15699,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               }}>
                 <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
               </div>
-              <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#111111' }}>현금</span>
+              <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#111111' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금'}</span>
             </div>
 
             <div style={{ marginTop: '16px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
