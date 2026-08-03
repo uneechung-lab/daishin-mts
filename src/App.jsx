@@ -14096,7 +14096,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 />
               </div>
             ) : (
-              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: screen5HasAppliedProducts ? '24px' : '44px', marginLeft: '4px' }}>
+              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: screen5HasAppliedProducts ? '44px' : '64px', marginLeft: '4px' }}>
                 <img 
                   src={isMaturity ? "/savings_hero3.png" : "/savings_hero.png"} 
                   alt={isMaturity ? "만기상품 예약 매매 이미지" : "적립식 투자 이미지"}
