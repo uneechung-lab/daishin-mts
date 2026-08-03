@@ -9047,6 +9047,8 @@ function App() {
   const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
   });
+  const [maturityPeriodFilter, setMaturityPeriodFilter] = useState('1개월');
+  const [selectedMaturityProducts, setSelectedMaturityProducts] = useState([0]);
   const [screen5ActiveTab, setScreen5ActiveTab] = useState(() => {
     const p = new URLSearchParams(window.location.search);
     return p.get('screen5activetab') || p.get('screen5tab') || p.get('tab') || 'apply';
@@ -15112,7 +15114,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <div 
               onClick={() => {
                 if (screen5Agreed) {
-                  setScreen5ToBeSubScreen('savings_apply');
+                  setScreen5ToBeSubScreen(isMaturity ? 'maturity_apply' : 'savings_apply');
                 }
               }}
               style={{
@@ -15169,6 +15171,364 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     whiteSpace: 'pre-line',
                     lineHeight: '1.2',
                     padding: '2px 2px'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('invest')}
+            style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderScreen5ToBeMaturityApply = () => {
+    const rawMaturityProducts = [
+      {
+        id: 0,
+        maturityDate: '2023.06.14',
+        name: '한국퇴직연금증권투자신탁1(국공채)',
+        type: '국공채 · 채권형',
+        code: '100284',
+        amount: '5,005,000원',
+        rate: '연 3.24%',
+        period: '1개월'
+      },
+      {
+        id: 1,
+        maturityDate: '2026.07.20',
+        name: '(IRP) 다올저축은행/정기예금/1년',
+        type: '저축은행 정기예금',
+        code: '500129',
+        amount: '10,000,000원',
+        rate: '연 4.15%',
+        period: '3개월'
+      },
+      {
+        id: 2,
+        maturityDate: '2026.08.31',
+        name: '미래에셋클린테크증권자투자신탁',
+        type: '주식형 펀드',
+        code: '300582',
+        amount: '3,500,000원',
+        rate: '연 3.80%',
+        period: '6개월'
+      }
+    ];
+
+    const isNextEnabled = selectedMaturityProducts.length > 0;
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isFigmaExportMode ? 'auto' : '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 5:04</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              85
+            </div>
+          </div>
+        </div>
+
+        {/* Top Header Bar */}
+        <div style={{
+          height: '46px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 12px',
+          borderBottom: '1px solid #eee',
+          backgroundColor: '#ffffff',
+          position: 'relative'
+        }}>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('maturity')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+          </button>
+          
+          <span style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1.05rem', 
+            fontWeight: '700', 
+            color: '#111111', 
+            letterSpacing: '-0.3px',
+            zIndex: 1
+          }}>
+            만기상품 예약 매매
+          </span>
+
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+            <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Account Selector Bar */}
+        <div style={{ padding: '8px 12px', backgroundColor: '#ffffff' }}>
+          <div 
+            onClick={() => setScreen6ToBeBsheetState('account')}
+            style={{
+              border: '1px solid #e2e8f0',
+              borderRadius: '6px',
+              padding: '8px 12px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#f8fafc',
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-100029(41) 김대신</span>
+            <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
+          </div>
+        </div>
+
+        {/* 5-Segmented Period Selector Bar (With Left & Right Padding) */}
+        <div style={{ padding: '6px 12px 10px 12px', backgroundColor: '#ffffff' }}>
+          <div style={{
+            display: 'flex',
+            border: '1px solid #d1d5db',
+            borderRadius: '4px',
+            backgroundColor: '#ffffff',
+            overflow: 'hidden'
+          }}>
+            {['1개월', '3개월', '6개월', '1년', '기간설정'].map((period, idx) => {
+              const isActive = maturityPeriodFilter === period;
+              return (
+                <button
+                  key={period}
+                  onClick={() => setMaturityPeriodFilter(period)}
+                  style={{
+                    flex: 1,
+                    padding: '8px 0',
+                    fontSize: '0.82rem',
+                    fontWeight: isActive ? '700' : '400',
+                    color: isActive ? '#111827' : '#71717a',
+                    backgroundColor: '#ffffff',
+                    border: 'none',
+                    borderRight: idx < 4 ? '1px solid #e5e7eb' : 'none',
+                    outline: isActive ? '1.5px solid #111827' : 'none',
+                    outlineOffset: '-1.5px',
+                    cursor: 'pointer',
+                    transition: 'all 0.1s ease'
+                  }}
+                >
+                  {period}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Message Banner Area */}
+        <div style={{
+          backgroundColor: '#f4f4f6',
+          padding: '10px 12px',
+          textAlign: 'center',
+          fontSize: '0.86rem',
+          color: '#333333',
+          borderBottom: '1px solid #e5e7eb'
+        }}>
+          <span style={{ color: '#0066cc', fontWeight: '700' }}>만기대상 상품</span> 을 선택해주세요.
+        </div>
+
+        {/* Product List Container (Page 1 ETF 몰 보유/평가금 style) */}
+        <div style={{
+          flex: isFigmaExportMode ? 'none' : 1,
+          overflowY: isFigmaExportMode ? 'visible' : 'auto',
+          backgroundColor: '#ffffff',
+          padding: '0 14px'
+        }}>
+          {rawMaturityProducts.map((prod, idx) => {
+            const isChecked = selectedMaturityProducts.includes(prod.id);
+            return (
+              <div 
+                key={prod.id}
+                onClick={() => {
+                  if (isChecked) {
+                    setSelectedMaturityProducts(selectedMaturityProducts.filter(id => id !== prod.id));
+                  } else {
+                    setSelectedMaturityProducts([...selectedMaturityProducts, prod.id]);
+                  }
+                }}
+                style={{
+                  padding: '14px 2px',
+                  borderBottom: idx < rawMaturityProducts.length - 1 ? '1px solid #f1f5f9' : '1px solid #e2e8f0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  cursor: 'pointer',
+                  position: 'relative'
+                }}
+              >
+                {/* Square Checkbox matching Page 1 list item */}
+                <div style={{
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '4px',
+                  border: isChecked ? '1.5px solid #2563eb' : '1.5px solid #cbd5e1',
+                  backgroundColor: isChecked ? '#2563eb' : 'transparent',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  transition: 'all 0.15s ease'
+                }}>
+                  {isChecked && (
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+
+                {/* Left Column: 종목명 + 만기일 */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
+                  <span style={{
+                    fontSize: prod.name.length > 12 ? '0.80rem' : '0.88rem',
+                    fontWeight: '500',
+                    color: '#111111',
+                    letterSpacing: '-0.2px',
+                    wordBreak: 'break-all',
+                    whiteSpace: 'normal',
+                    lineHeight: '1.25'
+                  }}>
+                    {prod.name}
+                  </span>
+                  <span style={{ fontSize: '0.68rem', fontWeight: '600', color: '#2563eb', letterSpacing: '-0.2px', lineHeight: '1.2' }}>
+                    만기일 {prod.maturityDate}
+                  </span>
+                </div>
+
+                {/* Right Column: Amount & Rate */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', gap: '1px', flexShrink: 0 }}>
+                  <span style={{
+                    fontSize: '0.92rem',
+                    fontWeight: '600',
+                    color: '#111111',
+                    letterSpacing: '-0.3px',
+                    lineHeight: '1.2'
+                  }}>
+                    {prod.amount}
+                  </span>
+                  <span style={{
+                    fontSize: '0.74rem',
+                    fontWeight: '500',
+                    color: '#de201e',
+                    letterSpacing: '-0.1px',
+                    lineHeight: '1.2'
+                  }}>
+                    {prod.rate}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* CTA (다음) Button */}
+        <div 
+          onClick={() => {
+            if (isNextEnabled) {
+              setScreen5ToBeSubScreen('savings_apply_step2');
+            }
+          }}
+          style={{
+            height: '52px',
+            backgroundColor: isNextEnabled ? '#1c1c1e' : '#f2f2f2',
+            color: isNextEnabled ? '#ffffff' : '#999999',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1.02rem',
+            fontWeight: '700',
+            cursor: isNextEnabled ? 'pointer' : 'not-allowed',
+            borderTop: isNextEnabled ? 'none' : '1px solid #e8e8e8',
+            transition: 'background-color 0.2s, color 0.2s',
+            flexShrink: 0
+          }}
+        >
+          다음
+        </div>
+
+        {/* Bottom Navigation Tab Bar */}
+        <div style={{
+          height: '50px',
+          display: 'flex',
+          alignItems: 'stretch',
+          borderTop: '1px solid #e2e8f0',
+          backgroundColor: '#ffffff',
+          flexShrink: 0
+        }}>
+          <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          </button>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+            {[
+              { key: '보유상품 현황', label: `보유상품\n현황` },
+              { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+              { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+            ].map((tab, idx) => {
+              return (
+                <button
+                  key={tab.key}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    backgroundColor: '#ffffff',
+                    borderRight: idx === 3 ? 'none' : '1px solid #f1f5f9',
+                    fontSize: '0.66rem',
+                    fontWeight: '700',
+                    color: '#64748b',
+                    whiteSpace: 'pre-line',
+                    lineHeight: '1.2',
+                    padding: '2px 2px',
+                    cursor: 'pointer'
                   }}
                 >
                   {tab.label}
@@ -18448,7 +18808,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
+                  {screen5ToBeSubScreen === 'savings_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
                 </div>
               </div>
             </div>
