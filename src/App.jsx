@@ -9038,6 +9038,10 @@ function App() {
     const params = new URLSearchParams(window.location.search);
     return params.get('screen5sub') || params.get('screen5tobe') || 'menu';
   });
+  const [screen5SelectedCategory, setScreen5SelectedCategory] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('screen5category') || params.get('screen5Category') || '연금저축';
+  });
   const [screen5Agreed, setScreen5Agreed] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5agreed') === 'true';
   });
@@ -13453,7 +13457,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
-            금융상품 투자하기
+            연금펀드 투자하기
           </span>
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
@@ -13467,7 +13471,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff', padding: '16px 14px' }}>
           {/* Asset Summary Section */}
           <div style={{ marginBottom: '24px' }}>
-            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 16px 0', color: '#111' }}>내 금융상품</h3>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 16px 0', color: '#111' }}>내 연금저축</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.85rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#666' }}>총 평가금액</span>
@@ -13478,7 +13482,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 <span style={{ fontWeight: '700', color: '#111' }}>7,000,000</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#666' }}>투자 가능금액 (퇴직/적립)</span>
+                <span style={{ color: '#666' }}>투자 가능금액</span>
                 <span style={{ fontWeight: '700', color: '#111' }}>93,000,000</span>
               </div>
             </div>
@@ -13486,10 +13490,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
           {/* Investment Services Section */}
           <div>
-            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>금융상품 매매</h3>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>연금펀드 매매</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               
-              {/* Card 1: 일반 매매 */}
+              {/* Card 1: 펀드 매매 */}
               <div style={{
                 border: '1px solid #e2e8f0',
                 borderRadius: '10px',
@@ -13510,7 +13514,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </svg>
                 </div>
                 <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>일반 매매</span>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드 매매</span>
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <button style={{
                       backgroundColor: '#de201e',
@@ -13540,8 +13544,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
 
-              {/* Card 2: 보유상품 매도 후 매수 */}
-              <div style={{
+              {/* Card 2: 월정기입금 자동매수 */}
+              <div 
+                onClick={() => setScreen5ToBeSubScreen('savings')}
+                style={{
                 border: '1px solid #e2e8f0',
                 borderRadius: '10px',
                 backgroundColor: '#ffffff',
@@ -13563,16 +13569,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>보유상품 매도 후 매수</span>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>월정기입금 자동매수</span>
                     <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
                   </div>
                   <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
-                    보유 상품을 매도하고 매도 결제일에 선택한 상품을 매수
+                    매월 정기 입금한 금액으로 원하는 펀드를 자동 매수
                   </span>
                 </div>
               </div>
 
-              {/* Card 3: 만기상품 예약 매매 */}
+              {/* Card 3: 펀드 모으기 */}
               <div 
                 onClick={() => setScreen5ToBeSubScreen('maturity')}
                 style={{
@@ -13598,52 +13604,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>만기상품 예약 매매</span>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드 모으기</span>
                     <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
                   </div>
                   <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
-                    만기상환이 예정된 상품을 선택하고 만기상환일에 선택한 상품을 매수
+                    투자기간과 매수금액 설정 만으로 자동 정기 적립식 투자
                   </span>
                 </div>
               </div>
 
-              {/* Card 4: 적립식 투자 */}
-              <div 
-                onClick={() => setScreen5ToBeSubScreen('savings')}
-                style={{
-                border: '1px solid #e2e8f0',
-                borderRadius: '10px',
-                backgroundColor: '#ffffff',
-                padding: '14px 16px',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '12px',
-                cursor: 'pointer',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-              }}>
-                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
-                    <path d="M11 20C11 15 15.5 12 21 12C26.5 12 30 15 30 20C30 22 31.5 22.5 32 21.5C32.5 20.5 32 19 31 18.5" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M9 20C9 14.5 14 11 21 11C28 11 31 15 31 20C31 24.5 27 27 21 27C19.5 27 18.5 26.8 17.5 26.5L16 28.5H13.5L14.5 26C11 24.5 9 22.5 9 20Z" fill="#93c5fd" />
-                    <path d="M8 18.5C7 18.5 6.5 19.5 6.5 20.5C6.5 21.5 7 22.5 8 22.5" fill="#93c5fd" stroke="#60a5fa" strokeWidth="1" />
-                    <circle cx="13" cy="17" r="1.2" fill="#1e3a8a" />
-                    <rect x="18" y="9.5" width="5" height="1.8" rx="0.9" fill="#1e3a8a" />
-                    <circle cx="28" cy="27" r="7.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
-                    <path d="M28 23.5V30.5M24.5 27H31.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>적립식 투자</span>
-                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
-                  </div>
-                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
-                    투자 기간과 금액 설정 만으로 자동 정기 적립식 투자
-                  </span>
-                </div>
-              </div>
-
-              {/* Card 5: 매매내역 조회/취소 */}
+              {/* Card 4: 펀드잔고/매매내역 */}
               <div style={{
                 border: '1px solid #e2e8f0',
                 borderRadius: '10px',
@@ -13669,11 +13639,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>매매내역 조회/취소</span>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드잔고/매매내역</span>
                     <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
                   </div>
                   <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
-                    체결 및 미체결 매매 내역을 조회하고 미체결 주문을 취소
+                    보유 펀드 잔고 및 매수·매도 내역을 조회하고, 처리 중인 신청을 취소
                   </span>
                 </div>
               </div>
@@ -13995,7 +13965,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
-            {isMaturity ? '만기상품 예약 매매' : '적립식 투자'}
+            {isMaturity ? '펀드 모으기' : '월정기입금 자동매수'}
           </span>
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
@@ -16279,6 +16249,297 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </button>
         </div>
       </div>
+    );
+  };
+
+  const renderScreen5Menu = (isToBe = true) => {
+    return (
+      <>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#4750b3',
+          color: '#ffffff',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:45</span>
+          <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>12:30</span>
+        </div>
+
+        {/* Top user bar */}
+        <div style={{
+          backgroundColor: '#4750b3',
+          padding: '16px 15px 12px 15px',
+          color: '#ffffff',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대신님</span>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                fontSize: '0.82rem', 
+                opacity: 0.9, 
+                color: '#ffffff',
+                cursor: 'pointer'
+              }}>
+                내 정보
+                <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+                <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#00c3a5', width: '5px', height: '5px', borderRadius: '50%' }}></span>
+              </div>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+            </div>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: '#ffffff',
+            borderRadius: '4px',
+            padding: '8px 12px',
+            gap: '8px'
+          }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            <input type="text" placeholder="메뉴를 검색하세요." disabled style={{ border: 'none', background: 'none', outline: 'none', width: '100%', fontSize: '0.82rem', fontWeight: '600' }} />
+          </div>
+        </div>
+
+        {/* Main Category Tabs */}
+        <div style={{
+          display: 'flex',
+          borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+          backgroundColor: isDark ? '#121826' : '#ffffff'
+        }}>
+          {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
+            const isSelected = tab === '연금';
+            return (
+              <div
+                key={tab}
+                style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  padding: '13px 0',
+                  fontSize: '0.96rem',
+                  fontWeight: '500',
+                  color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
+                  borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent',
+                }}
+              >
+                {tab}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Split Content Area */}
+        <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+          {/* Left Submenu Navigation */}
+          <div style={{
+            width: '115px',
+            backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
+            borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            paddingBottom: '12px',
+            boxSizing: 'border-box'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {['IRP/퇴직연금', '연금저축', '공지사항'].map((catName, idx) => {
+                const isSelected = catName === screen5SelectedCategory;
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => setScreen5SelectedCategory(catName)}
+                    style={{
+                      padding: '18px 12px',
+                      fontSize: '0.96rem',
+                      fontWeight: isSelected ? '800' : '500',
+                      color: isSelected ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
+                      backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {catName}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* RIA 가입 Banner */}
+            <div style={{
+              margin: '0 8px',
+              borderRadius: '6px',
+              background: 'linear-gradient(135deg, #a7f3d0 0%, #34d399 100%)',
+              padding: '10px 8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+              cursor: 'pointer'
+            }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>RIA</span>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#065f46' }}>가입</span>
+              </div>
+              <span style={{ fontSize: '1.5rem' }}>🇰🇷</span>
+            </div>
+          </div>
+
+          {/* Right menu content */}
+          <div style={{
+            flex: 1,
+            padding: '18px 16px',
+            overflowY: 'auto',
+            backgroundColor: isDark ? '#121826' : '#ffffff',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+            boxSizing: 'border-box'
+          }}>
+            {screen5SelectedCategory === '연금저축' ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                {/* 1. MY 연금 */}
+                <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                  <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 연금</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                    {[
+                      { name: '연금저축 보유잔고' },
+                      { name: '연금저축 한도/기간 설정' },
+                      { name: '연금저축 출금' }
+                    ].map((item, idx) => (
+                      <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                        <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 2. ETF/리츠 */}
+                <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                  <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>ETF/리츠</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                    {[
+                      { name: 'ETF/리츠 잔고' },
+                      { name: 'ETF/리츠 주문' },
+                      { name: 'ETF/리츠 현재가' }
+                    ].map((item, idx) => (
+                      <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                        <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. 상품 매매 */}
+                <div>
+                  <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                    {[
+                      { name: '연금저축 펀드검색' },
+                      { name: '연금펀드 투자하기', action: isToBe ? () => setScreen5ToBeSubScreen('invest') : null }
+                    ].map((item, idx) => (
+                      <div key={idx} onClick={item.action} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                        <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : screen5SelectedCategory === 'IRP/퇴직연금' ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '20px' }}>
+                  {[
+                    '전체자산 현황',
+                    '보유상품 현황',
+                    '투자비율 현황',
+                    '디폴트옵션 현황',
+                    '만기예정',
+                    '통합 거래내역',
+                    '연간납입한도 설정',
+                    '가입확인서 발급',
+                    '실물이전 사전조회'
+                  ].map((item, idx) => (
+                    <span key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {[
+                    { name: '전체상품검색' },
+                    { name: '금융상품 투자하기', action: isToBe ? () => setScreen5ToBeSubScreen('invest') : null },
+                    { name: '장외채권 매매' },
+                    { name: '장내채권 매매' },
+                    { name: '장내채권 미체결/체결' },
+                    { name: '장내(외)채권 잔고' },
+                    { name: '디폴트옵션 매매' },
+                    { name: 'ELB 청약예약' }
+                  ].map((item, idx) => (
+                    <span key={idx} onClick={item.action} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                      {item.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>공지사항</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {[
+                    '[안내] 연금저축 펀드분할매수 서비스 개편 안내',
+                    '[안내] 퇴직연금 실물이전 서비스 이용 안내',
+                    '[안내] 연금저축 펀드 투자 유의사항'
+                  ].map((item, idx) => (
+                    <div key={idx} style={{ fontSize: '0.98rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer Bar */}
+        <div style={{
+          height: '48px',
+          backgroundColor: '#000000',
+          color: '#ffffff',
+          display: 'flex',
+          fontSize: '0.78rem',
+          fontWeight: '800',
+          borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+        }}>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+              <line x1="12" y1="2" x2="12" y2="12" />
+            </svg>
+            <span>고객지원</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+            <span>이벤트</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+            <span>업무/거래신청</span>
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
+            <span>인증/OTP</span>
+          </div>
+        </div>
+      </>
     );
   };
 
@@ -18762,7 +19023,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
         ) : activeScreen === 5 ? (
-          /* Screen 5: 장내 채권 매매 시스템 메뉴 (AS IS, TO BE 모두 6페이지 TO BE 메뉴화면) */
+          /* Screen 5: 연금저축 펀드분할매수 시스템 */
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -18802,7 +19063,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {renderScreen6ToBeMenu(true, false)}
+                  {renderScreen5Menu(false)}
                 </div>
               </div>
 
@@ -18830,7 +19091,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen6ToBeMenu(true, true)}
+                  {screen5ToBeSubScreen === 'savings_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
                 </div>
               </div>
             </div>
