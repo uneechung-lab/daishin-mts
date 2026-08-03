@@ -14028,15 +14028,24 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               {screen5HasAppliedProducts ? (
                 <>
                   <h2 style={{ fontSize: '1.15rem', fontWeight: '700', margin: '0 0 8px 0', color: '#1e293b', lineHeight: '1.35', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
-                    매월 4개의<br />
-                    금융상품에 적립식 투자하고 있어요.
+                    {isMaturity ? (
+                      <>
+                        매월 4개의<br />
+                        금융상품에 만기예약매매하고 있어요.
+                      </>
+                    ) : (
+                      <>
+                        매월 4개의<br />
+                        금융상품에 적립식 투자하고 있어요.
+                      </>
+                    )}
                   </h2>
                   <p style={{ fontSize: '0.86rem', color: '#2563eb', fontWeight: '600', margin: '0 0 14px 0', lineHeight: '1.5', wordBreak: 'keep-all' }}>
                     매월 5일, 10일에 매수하고 있어요.
                   </p>
-                  {/* [적립상품 추가하기] 버튼 */}
+                  {/* [적립/만기상품 추가하기] 버튼 */}
                   <button
-                    onClick={() => setScreen5HasAppliedProducts(false)}
+                    onClick={() => setScreen5ToBeSubScreen(isMaturity ? 'maturity_apply' : 'savings_apply')}
                     style={{
                       backgroundColor: '#111827',
                       color: '#ffffff',
@@ -14051,7 +14060,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       gap: '4px'
                     }}
                   >
-                    적립상품 추가하기
+                    {isMaturity ? '만기예약상품 추가하기' : '적립상품 추가하기'}
                   </button>
                 </>
               ) : (
