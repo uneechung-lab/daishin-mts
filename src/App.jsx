@@ -14087,11 +14087,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               )}
             </div>
             {/* Hero Image Section */}
-            {screen5HasAppliedProducts ? (
+            {screen5HasAppliedProducts && !isMaturity ? (
               <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '60px', transform: 'translateX(-5px)' }}>
                 <img 
-                  src={isMaturity ? "/savings_hero3.png" : "/savings_hero2.png"} 
-                  alt={isMaturity ? "만기상품 예약 매매 보유 현황 이미지" : "적립식 투자 보유 현황 이미지"}
+                  src="/savings_hero2.png" 
+                  alt="적립식 투자 보유 현황 이미지"
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
               </div>
