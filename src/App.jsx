@@ -13842,7 +13842,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
                 <span style={{ color: '#64748b', fontWeight: '500' }}>{isMaturity ? '만기금액' : '금액(좌수)'}</span>
-                <span style={{ fontWeight: '600', color: '#111827' }}>{isMaturity ? (screen5SelectedCardDetail.amount ? screen5SelectedCardDetail.amount.replace('좌', '원') : '1,000,000원') : screen5SelectedCardDetail.amount}</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>{isMaturity ? (screen5SelectedCardDetail.amount ? screen5SelectedCardDetail.amount.replace(/\([^)]*\)/g, '').replace('좌', '원') : '1,000,000원') : screen5SelectedCardDetail.amount}</span>
               </div>
 
               {!isMaturity && (
@@ -14422,7 +14422,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 {isMaturity ? row.maturityBuyDate : row.buyDate}
                               </td>
                               <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
-                                {row.amount}
+                                {isMaturity ? row.amount?.replace(/\([^)]*\)/g, '') : row.amount}
                               </td>
                             </tr>
                           </React.Fragment>
