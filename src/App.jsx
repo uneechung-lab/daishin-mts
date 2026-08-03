@@ -14391,9 +14391,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 }}
                               >
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                                  <span style={{ fontSize: '0.78rem', color: '#6b7280', fontWeight: '400' }}>
-                                    {isMaturity ? '-' : row.round}
-                                  </span>
+                                  {!isMaturity && (
+                                    <span style={{ fontSize: '0.78rem', color: '#6b7280', fontWeight: '400' }}>
+                                      {row.round}
+                                    </span>
+                                  )}
                                   <span 
                                     onClick={() => row.status === '진행중' && setShowCancelConfirmModal(true)}
                                     style={{ 
