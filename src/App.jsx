@@ -14027,7 +14027,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <div style={{ flex: 1, paddingRight: '10px' }}>
               {screen5HasAppliedProducts ? (
                 <>
-                  <h2 style={{ fontSize: '1.05rem', fontWeight: '700', margin: isMaturity ? '0 0 14px 0' : '0 0 8px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.3px' }}>
+                  <h2 style={{ fontSize: '1.02rem', fontWeight: '700', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
                     {isMaturity ? (
                       '2건의 만기 예정 상품이 만기일에 4개의 금융상품으로 자동매수 예약되어 있습니다.'
                     ) : (
