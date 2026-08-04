@@ -14233,7 +14233,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   cursor: 'pointer'
                 }}
               >
-                <span style={{ fontSize: '0.9rem', fontWeight: '600', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
+                <span style={{ fontSize: '0.9rem', fontWeight: screen5FundAccumulationHasProducts ? '600' : '400', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
                   {screen5FundAccumulationHasProducts ? screen5BuyDate : '선택'}
                 </span>
               </div>
@@ -14252,7 +14252,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   cursor: 'pointer'
                 }}
               >
-                <span style={{ fontSize: '0.9rem', fontWeight: '600', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
+                <span style={{ fontSize: '0.9rem', fontWeight: screen5FundAccumulationHasProducts ? '600' : '400', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
                   {screen5FundAccumulationHasProducts ? screen5BuyPeriod : '선택'}
                 </span>
               </div>
