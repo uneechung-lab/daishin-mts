@@ -14226,15 +14226,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   flex: 1,
                   marginLeft: '16px',
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  justifyContent: 'flex-end',
                   alignItems: 'center',
+                  gap: '6px',
                   paddingBottom: '3px',
                   borderBottom: '1px solid #e2e8f0',
                   cursor: 'pointer'
                 }}
               >
                 <span style={{ fontSize: '0.9rem', fontWeight: '600', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
-                  {screen5FundAccumulationHasProducts ? screen5BuyDate : '-'}
+                  {screen5FundAccumulationHasProducts ? screen5BuyDate : '선택'}
                 </span>
                 <span style={{ fontSize: '0.55rem', color: '#111827' }}>▼</span>
               </div>
@@ -14246,15 +14247,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   flex: 1,
                   marginLeft: '16px',
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  justifyContent: 'flex-end',
                   alignItems: 'center',
+                  gap: '6px',
                   paddingBottom: '3px',
                   borderBottom: '1px solid #e2e8f0',
                   cursor: 'pointer'
                 }}
               >
                 <span style={{ fontSize: '0.9rem', fontWeight: '600', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
-                  {screen5FundAccumulationHasProducts ? screen5BuyPeriod : '-'}
+                  {screen5FundAccumulationHasProducts ? screen5BuyPeriod : '선택'}
                 </span>
                 <span style={{ fontSize: '0.55rem', color: '#111827' }}>▼</span>
               </div>
