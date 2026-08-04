@@ -9076,13 +9076,13 @@ function App() {
       return {
         applyDate: '2026.06.19',
         buyCycle: '매월 5일',
-        sellProduct: 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
+        sellProduct: (p.get('screen5tobe') === 'fund_accumulation') ? '예수금' : 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
         amount: '1,000,000좌',
         startDate: '2026.06.19',
         endDate: '2026.06.19',
         buyProducts: [
-          { name: '미래에셋클린테크증권자투자신탁', ratio: '60%' },
-          { name: '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
+          { name: '미래에셋클린테크증권자투자신탁(주식)', ratio: '60%' },
+          { name: (p.get('screen5tobe') === 'fund_accumulation') ? '대신 코리아 증권자투자신탁(주식)' : '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
         ],
         totalRatio: '100%',
         cancelStatus: '취소 (2026.06.22)'
@@ -15079,7 +15079,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', fontSize: '0.92rem', color: '#4b5563' }}>
                 <span style={{ color: '#64748b', fontWeight: '500', flexShrink: 0 }}>{isMaturity ? '만기상품' : '매도상품'}</span>
                 <span style={{ fontWeight: '600', color: '#111827', textAlign: 'right', wordBreak: 'break-all', flex: 1, paddingLeft: '16px' }}>
-                  {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : screen5SelectedCardDetail.sellProduct}
+                  {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : (isFundAccumulation && (screen5SelectedCardDetail.sellProduct === 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E' || screen5SelectedCardDetail.sellProduct === 'DB차이나바이오...')) ? '예수금' : screen5SelectedCardDetail.sellProduct}
                 </span>
               </div>
 
@@ -15844,7 +15844,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   onClick={() => setScreen5SelectedCardDetail({
                     applyDate: '2026.06.19',
                     buyCycle: '매월 5일',
-                    sellProduct: 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
+                    sellProduct: isFundAccumulation ? '예수금' : 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
                     amount: '1,000,000좌',
                     startDate: '2026.06.19',
                     endDate: '2026.06.19',
@@ -15885,7 +15885,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           flexShrink: 0
                         }}>{isMaturity ? '만기' : '매도'}</span>
                         <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : 'DB차이나바이오...'}
+                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : 'DB차이나바이오...'}
                         </span>
                       </div>
                       <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a', whiteSpace: 'nowrap', flexShrink: 0 }}>{isMaturity ? '1,000,000원' : '1,000,000좌'}</span>
