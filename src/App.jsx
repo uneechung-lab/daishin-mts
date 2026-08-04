@@ -14346,7 +14346,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
                 <div>
                   • 전체 <span style={{ color: '#2563eb', fontWeight: '500' }}>투자비율 합계는 100%가 되도록 설정</span>하셔야 합니다.
-                  <div style={{ paddingLeft: '10px', color: '#9ca3af', marginTop: '3px' }}>
+                  <div style={{ paddingLeft: '10px', color: '#9ca3af', marginTop: '1px' }}>
                     (비중은 10% 단위로만 입력 가능합니다.)
                   </div>
                 </div>
@@ -14411,7 +14411,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   <div>
                     • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '500' }}>등록된 펀드로 일괄 처리</span>됩니다.
                   </div>
-                  <div style={{ paddingLeft: '10px', marginTop: '1px' }}>
+                  <div style={{ paddingLeft: '10px', marginTop: '0px' }}>
                     개별펀드 재투자 동의는 영업점으로 문의 바랍니다.
                   </div>
                 </div>
