@@ -14088,9 +14088,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           color: '#333333',
           borderBottom: 'none'
         }}>
-          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 5:05</span>
+          <span style={{ fontSize: '0.75rem', fontWeight: '600' }}>SKT 5:05</span>
           <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+            <span style={{ fontSize: '0.65rem', fontWeight: '700' }}>5G</span>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
               <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
               <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
@@ -14102,7 +14102,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               borderRadius: '3px',
               padding: '0px 3px',
               fontSize: '0.62rem',
-              fontWeight: '900',
+              fontWeight: '700',
               height: '14px',
               display: 'flex',
               alignItems: 'center',
@@ -14173,7 +14173,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer'
               }}
             >
-              <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#111827' }}>200-231234(41) 김대신</span>
+              <span style={{ fontSize: '0.88rem', fontWeight: '500', color: '#111827' }}>200-231234(41) 김대신</span>
               <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>▼</span>
             </div>
           </div>
@@ -14188,7 +14188,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               backgroundColor: '#ffffff',
               color: '#374151',
               fontSize: '0.9rem',
-              fontWeight: '700',
+              fontWeight: '600',
               cursor: 'pointer'
             }}>
               투자 금액 선택하기
@@ -14203,7 +14203,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 backgroundColor: '#d92528',
                 color: '#ffffff',
                 fontSize: '0.9rem',
-                fontWeight: '700',
+                fontWeight: '600',
                 cursor: 'pointer'
               }}
             >
@@ -14215,15 +14215,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           <div style={{ padding: '0 14px 14px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>투자 금액</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '1,000,000' : '0'}</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '1,000,000' : '0'}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 일자</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '매월 10일' : '-'}</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '매월 10일' : '-'}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 기간</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '12개월' : '-'}</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '12개월' : '-'}</span>
             </div>
           </div>
 
@@ -14231,7 +14231,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <>
               {/* Alert Subheader Bar */}
               <div style={{ backgroundColor: '#f8fafc', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>
-                <span style={{ color: '#dc2626', fontWeight: '700' }}>모을 펀드 상품</span>
+                <span style={{ color: '#dc2626', fontWeight: '600' }}>모을 펀드 상품</span>
                 <span style={{ color: '#4b5563' }}>을 선택해주세요.</span>
               </div>
 
@@ -14261,7 +14261,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             /* Product List Table View (Matching Attachment 2) */
             <div>
               {/* Table Header */}
-              <div style={{ display: 'flex', backgroundColor: '#f4f4f6', borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb', fontSize: '0.8rem', color: '#555555', padding: '6px 0', textAlign: 'center', fontWeight: '600', alignItems: 'center' }}>
+              <div style={{ display: 'flex', backgroundColor: '#f4f4f6', borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb', fontSize: '0.8rem', color: '#555555', padding: '6px 0', textAlign: 'center', fontWeight: '500', alignItems: 'center' }}>
                 <div style={{ width: '44px' }}>삭제</div>
                 <div style={{ flex: 1, textAlign: 'center' }}>펀드명</div>
                 <div style={{ width: '90px' }}>비율(%)</div>
@@ -14277,11 +14277,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   >
                     ✕
                   </div>
-                  <div style={{ flex: 1, paddingRight: '12px', color: '#111827', fontWeight: '600', lineHeight: '1.35', wordBreak: 'break-all' }}>
+                  <div style={{ flex: 1, paddingRight: '12px', color: '#111827', fontWeight: '500', lineHeight: '1.35', wordBreak: 'break-all' }}>
                     한국투자다시성장코리아증권자투자신탁 1(주식)(C-Pe)
                   </div>
                   <div style={{ width: '90px', display: 'flex', justifyContent: 'center', paddingRight: '8px' }}>
-                    <div style={{ borderBottom: '1px solid #d1d5db', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '700', color: '#111827', fontSize: '0.92rem' }}>
+                    <div style={{ borderBottom: '1px solid #d1d5db', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '600', color: '#111827', fontSize: '0.92rem' }}>
                       50
                     </div>
                   </div>
@@ -14295,11 +14295,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   >
                     ✕
                   </div>
-                  <div style={{ flex: 1, paddingRight: '12px', color: '#111827', fontWeight: '600', lineHeight: '1.35', wordBreak: 'break-all' }}>
+                  <div style={{ flex: 1, paddingRight: '12px', color: '#111827', fontWeight: '500', lineHeight: '1.35', wordBreak: 'break-all' }}>
                     하나파이팅코리아증권투자신탁[주식]ClassC-PE
                   </div>
                   <div style={{ width: '90px', display: 'flex', justifyContent: 'center', paddingRight: '8px' }}>
-                    <div style={{ borderBottom: '1px solid #d1d5db', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '700', color: '#111827', fontSize: '0.92rem' }}>
+                    <div style={{ borderBottom: '1px solid #d1d5db', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '600', color: '#111827', fontSize: '0.92rem' }}>
                       50
                     </div>
                   </div>
@@ -14310,10 +14310,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               {/* Bullet Notes (Attachment 2) */}
               <div style={{ padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.78rem', color: '#6b7280', lineHeight: '1.45' }}>
                 <div>
-                  • 최대 <span style={{ color: '#2563eb', fontWeight: '600' }}>10개까지 등록 가능</span>합니다.
+                  • 최대 <span style={{ color: '#2563eb', fontWeight: '500' }}>10개까지 등록 가능</span>합니다.
                 </div>
                 <div>
-                  • 전체 <span style={{ color: '#2563eb', fontWeight: '600' }}>투자비율 합계는 100%가 되도록 설정</span>하셔야 합니다.
+                  • 전체 <span style={{ color: '#2563eb', fontWeight: '500' }}>투자비율 합계는 100%가 되도록 설정</span>하셔야 합니다.
                 </div>
                 <div style={{ paddingLeft: '8px', color: '#9ca3af' }}>
                   (비중은 10% 단위로만 입력 가능합니다.)
@@ -14323,7 +14323,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               {/* 재투자 동의 여부 선택 영역 */}
               <div style={{ marginTop: '4px', borderTop: '1px solid #e5e7eb' }}>
                 {/* Header Bar */}
-                <div style={{ backgroundColor: '#f4f4f6', padding: '6px 16px', fontSize: '0.8rem', fontWeight: '600', color: '#555555', display: 'flex', alignItems: 'center' }}>
+                <div style={{ backgroundColor: '#f4f4f6', padding: '6px 16px', fontSize: '0.8rem', fontWeight: '500', color: '#555555', display: 'flex', alignItems: 'center' }}>
                   재투자 동의 여부
                 </div>
 
@@ -14379,7 +14379,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   {/* Notice Lines Below Radio Buttons */}
                   <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.78rem', color: '#6b7280', lineHeight: '1.45' }}>
                     <div>
-                      • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '600' }}>등록된 펀드로 일괄 처리</span>됩니다.
+                      • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '500' }}>등록된 펀드로 일괄 처리</span>됩니다.
                     </div>
                     <div>
                       • 개별펀드 재투자 동의는 영업점으로 문의 바랍니다.
