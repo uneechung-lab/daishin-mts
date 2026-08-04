@@ -14375,6 +14375,16 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       <span style={{ fontSize: '0.92rem', fontWeight: '600', color: screen5AutoTransferOption === '미동의' ? '#111111' : '#6b7280' }}>미동의</span>
                     </label>
                   </div>
+
+                  {/* Notice Lines Below Radio Buttons */}
+                  <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.78rem', color: '#6b7280', lineHeight: '1.45' }}>
+                    <div>
+                      • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '600' }}>등록된 펀드로 일괄 처리</span>됩니다.
+                    </div>
+                    <div>
+                      • 개별펀드 재투자 동의는 영업점으로 문의 바랍니다.
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
