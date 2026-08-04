@@ -9051,7 +9051,7 @@ function App() {
   const [screen5FundAccumulationHasProducts, setScreen5FundAccumulationHasProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5fundhasproducts') === 'true';
   });
-  const [screen5AutoTransferOption, setScreen5AutoTransferOption] = useState('미신청');
+  const [screen5AutoTransferOption, setScreen5AutoTransferOption] = useState('동의');
   const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
   });
@@ -14320,63 +14320,59 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
 
-              {/* 자동이체 안내 및 선택 영역 (Attached Image Specification) */}
+              {/* 재투자 동의 여부 선택 영역 */}
               <div style={{ marginTop: '4px', borderTop: '1px solid #e5e7eb' }}>
                 {/* Header Bar */}
                 <div style={{ backgroundColor: '#f4f4f6', padding: '6px 16px', fontSize: '0.8rem', fontWeight: '600', color: '#555555', display: 'flex', alignItems: 'center' }}>
-                  자동이체
+                  재투자 동의 여부
                 </div>
 
                 {/* Content Box */}
-                <div style={{ padding: '16px 16px 20px 16px', display: 'flex', flexDirection: 'column', gap: '18px', backgroundColor: '#ffffff' }}>
-                  <div style={{ fontSize: '0.9rem', fontWeight: '600', color: '#111111', lineHeight: '1.45', wordBreak: 'keep-all' }}>
-                    고객님이 지정한 일정 기간동안 이체일에 해당 펀드를 이체금액만큼 자동매수주문 신청하는 서비스입니다.
-                  </div>
-
+                <div style={{ padding: '16px', backgroundColor: '#ffffff' }}>
                   {/* Radio Buttons */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '48px', marginTop: '2px' }}>
-                    {/* 미신청 */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
+                    {/* 동의 */}
                     <label 
-                      onClick={() => setScreen5AutoTransferOption('미신청')}
+                      onClick={() => setScreen5AutoTransferOption('동의')}
                       style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', userSelect: 'none' }}
                     >
                       <div style={{
                         width: '20px',
                         height: '20px',
                         borderRadius: '50%',
-                        border: '2px solid #222222',
+                        border: screen5AutoTransferOption === '동의' ? '2px solid #222222' : '2px solid #9ca3af',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor: '#ffffff'
                       }}>
-                        {screen5AutoTransferOption === '미신청' && (
+                        {screen5AutoTransferOption === '동의' && (
                           <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
                         )}
                       </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '600', color: '#111111' }}>미신청</span>
+                      <span style={{ fontSize: '0.92rem', fontWeight: '600', color: screen5AutoTransferOption === '동의' ? '#111111' : '#6b7280' }}>동의</span>
                     </label>
 
-                    {/* 신청 */}
+                    {/* 미동의 */}
                     <label 
-                      onClick={() => setScreen5AutoTransferOption('신청')}
+                      onClick={() => setScreen5AutoTransferOption('미동의')}
                       style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', userSelect: 'none' }}
                     >
                       <div style={{
                         width: '20px',
                         height: '20px',
                         borderRadius: '50%',
-                        border: screen5AutoTransferOption === '신청' ? '2px solid #222222' : '2px solid #9ca3af',
+                        border: screen5AutoTransferOption === '미동의' ? '2px solid #222222' : '2px solid #9ca3af',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor: '#ffffff'
                       }}>
-                        {screen5AutoTransferOption === '신청' && (
+                        {screen5AutoTransferOption === '미동의' && (
                           <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
                         )}
                       </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '600', color: screen5AutoTransferOption === '신청' ? '#111111' : '#6b7280' }}>신청</span>
+                      <span style={{ fontSize: '0.92rem', fontWeight: '600', color: screen5AutoTransferOption === '미동의' ? '#111111' : '#6b7280' }}>미동의</span>
                     </label>
                   </div>
                 </div>
