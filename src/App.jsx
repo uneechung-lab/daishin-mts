@@ -14352,70 +14352,67 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
 
-              {/* 재투자 동의 여부 선택 영역 */}
-              <div style={{ marginTop: '4px', borderTop: '1px solid #e5e7eb' }}>
-                {/* Header Bar */}
-                <div style={{ backgroundColor: '#f4f4f6', padding: '6px 16px', fontSize: '0.8rem', fontWeight: '500', color: '#555555', display: 'flex', alignItems: 'center' }}>
+              {/* 재투자 동의 여부 선택 영역 (Attached Image Specification) */}
+              <div style={{ marginTop: '8px', padding: '16px 14px 20px 14px', backgroundColor: '#ffffff', borderTop: '1px solid #e5e7eb' }}>
+                {/* Title */}
+                <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#111111', marginBottom: '14px' }}>
                   재투자 동의 여부
                 </div>
 
-                {/* Content Box */}
-                <div style={{ padding: '16px', backgroundColor: '#ffffff' }}>
-                  {/* Radio Buttons */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
-                    {/* 동의 */}
-                    <label 
-                      onClick={() => setScreen5AutoTransferOption('동의')}
-                      style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', userSelect: 'none' }}
-                    >
-                      <div style={{
-                        width: '20px',
-                        height: '20px',
-                        borderRadius: '50%',
-                        border: screen5AutoTransferOption === '동의' ? '2px solid #222222' : '2px solid #9ca3af',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: '#ffffff'
-                      }}>
-                        {screen5AutoTransferOption === '동의' && (
-                          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
-                        )}
-                      </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '600', color: screen5AutoTransferOption === '동의' ? '#111111' : '#6b7280' }}>동의</span>
-                    </label>
+                {/* Radio Buttons */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '48px', marginBottom: '16px' }}>
+                  {/* 동의 */}
+                  <label 
+                    onClick={() => setScreen5AutoTransferOption('동의')}
+                    style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', userSelect: 'none' }}
+                  >
+                    <div style={{
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      border: screen5AutoTransferOption === '동의' ? '2px solid #222222' : '2px solid #9ca3af',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#ffffff'
+                    }}>
+                      {screen5AutoTransferOption === '동의' && (
+                        <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
+                      )}
+                    </div>
+                    <span style={{ fontSize: '0.92rem', fontWeight: '500', color: screen5AutoTransferOption === '동의' ? '#111111' : '#6b7280' }}>동의</span>
+                  </label>
 
-                    {/* 미동의 */}
-                    <label 
-                      onClick={() => setScreen5AutoTransferOption('미동의')}
-                      style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', userSelect: 'none' }}
-                    >
-                      <div style={{
-                        width: '20px',
-                        height: '20px',
-                        borderRadius: '50%',
-                        border: screen5AutoTransferOption === '미동의' ? '2px solid #222222' : '2px solid #9ca3af',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: '#ffffff'
-                      }}>
-                        {screen5AutoTransferOption === '미동의' && (
-                          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
-                        )}
-                      </div>
-                      <span style={{ fontSize: '0.92rem', fontWeight: '600', color: screen5AutoTransferOption === '미동의' ? '#111111' : '#6b7280' }}>미동의</span>
-                    </label>
+                  {/* 미동의 */}
+                  <label 
+                    onClick={() => setScreen5AutoTransferOption('미동의')}
+                    style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', userSelect: 'none' }}
+                  >
+                    <div style={{
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      border: screen5AutoTransferOption === '미동의' ? '2px solid #222222' : '2px solid #9ca3af',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#ffffff'
+                    }}>
+                      {screen5AutoTransferOption === '미동의' && (
+                        <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
+                      )}
+                    </div>
+                    <span style={{ fontSize: '0.92rem', fontWeight: '500', color: screen5AutoTransferOption === '미동의' ? '#111111' : '#6b7280' }}>미동의</span>
+                  </label>
+                </div>
+
+                {/* Notice Lines Below Radio Buttons */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.76rem', color: '#6b7280', lineHeight: '1.4' }}>
+                  <div>
+                    • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '500' }}>등록된 펀드로 일괄 처리</span>됩니다.
                   </div>
-
-                  {/* Notice Lines Below Radio Buttons */}
-                  <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.76rem', color: '#6b7280', lineHeight: '1.4' }}>
-                    <div>
-                      • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '500' }}>등록된 펀드로 일괄 처리</span>됩니다.
-                    </div>
-                    <div style={{ paddingLeft: '10px', marginTop: '1px' }}>
-                      개별펀드 재투자 동의는 영업점으로 문의 바랍니다.
-                    </div>
+                  <div style={{ paddingLeft: '10px', marginTop: '1px' }}>
+                    개별펀드 재투자 동의는 영업점으로 문의 바랍니다.
                   </div>
                 </div>
               </div>
