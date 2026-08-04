@@ -14220,10 +14220,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '1,000,000' : '0'}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 일자</span>
+              <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 일자</span>
               <div 
                 style={{
-                  width: '110px',
+                  flex: 1,
+                  marginLeft: '16px',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -14239,10 +14240,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 기간</span>
+              <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 기간</span>
               <div 
                 style={{
-                  width: '110px',
+                  flex: 1,
+                  marginLeft: '16px',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
