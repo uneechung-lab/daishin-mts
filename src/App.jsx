@@ -9052,6 +9052,8 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen5fundhasproducts') === 'true';
   });
   const [screen5AutoTransferOption, setScreen5AutoTransferOption] = useState('동의');
+  const [screen5BuyDate, setScreen5BuyDate] = useState('매월 10일');
+  const [screen5BuyPeriod, setScreen5BuyPeriod] = useState('12개월');
   const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
   });
@@ -14219,11 +14221,49 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 일자</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '매월 10일' : '-'}</span>
+              <input 
+                type="text"
+                value={screen5FundAccumulationHasProducts ? screen5BuyDate : ''}
+                placeholder={screen5FundAccumulationHasProducts ? '' : '-'}
+                onChange={(e) => setScreen5BuyDate(e.target.value)}
+                disabled={!screen5FundAccumulationHasProducts}
+                style={{
+                  width: '100px',
+                  height: '30px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '4px',
+                  padding: '0 8px',
+                  textAlign: 'right',
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  backgroundColor: screen5FundAccumulationHasProducts ? '#ffffff' : '#f9fafb',
+                  boxSizing: 'border-box'
+                }}
+              />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 기간</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '12개월' : '-'}</span>
+              <input 
+                type="text"
+                value={screen5FundAccumulationHasProducts ? screen5BuyPeriod : ''}
+                placeholder={screen5FundAccumulationHasProducts ? '' : '-'}
+                onChange={(e) => setScreen5BuyPeriod(e.target.value)}
+                disabled={!screen5FundAccumulationHasProducts}
+                style={{
+                  width: '100px',
+                  height: '30px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '4px',
+                  padding: '0 8px',
+                  textAlign: 'right',
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  backgroundColor: screen5FundAccumulationHasProducts ? '#ffffff' : '#f9fafb',
+                  boxSizing: 'border-box'
+                }}
+              />
             </div>
           </div>
 
