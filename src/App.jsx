@@ -14297,11 +14297,6 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
 
-              {/* Total Ratio Summary Row (Attachment 2) */}
-              <div style={{ backgroundColor: '#f9fafb', padding: '10px 16px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px', borderBottom: '1px solid #f3f4f6' }}>
-                <span style={{ fontSize: '0.88rem', color: '#374151', fontWeight: '600' }}>비율합계</span>
-                <span style={{ fontSize: '1.02rem', fontWeight: '800', color: '#111827' }}>100%</span>
-              </div>
 
               {/* Bullet Notes (Attachment 2) */}
               <div style={{ padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.78rem', color: '#6b7280', lineHeight: '1.45' }}>
@@ -14346,7 +14341,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               cursor: screen5FundAccumulationHasProducts ? 'pointer' : 'not-allowed' 
             }}
           >
-            투자비율 적용
+            다음
           </div>
         </div>
 
