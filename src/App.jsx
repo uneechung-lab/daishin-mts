@@ -13457,6 +13457,366 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
+            금융상품 투자하기
+          </span>
+
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+            <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Contents Container */}
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff', padding: '16px 14px' }}>
+          {/* Asset Summary Section */}
+          <div style={{ marginBottom: '24px' }}>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 16px 0', color: '#111' }}>내 금융상품</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.85rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#666' }}>총 평가금액</span>
+                <span style={{ fontWeight: '700', color: '#111' }}>100,000,000</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#666' }}>보유 금융상품 평가금액</span>
+                <span style={{ fontWeight: '700', color: '#111' }}>7,000,000</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#666' }}>투자 가능금액 (퇴직/적립)</span>
+                <span style={{ fontWeight: '700', color: '#111' }}>93,000,000</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Investment Services Section */}
+          <div>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>금융상품 매매</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              
+              {/* Card 1: 일반 매매 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <path d="M12 14C12 12 15 10 20 10C25 10 28 12 28 14C28 15 27 16 26 16.5C29.5 19 31 23 30 28C29 33 25 35 20 35C15 35 11 33 10 28C9 23 10.5 19 14 16.5C13 16 12 15 12 14Z" fill="#3b82f6" />
+                    <path d="M14 16.5C17 17.5 23 17.5 26 16.5" stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round" />
+                    <text x="20" y="27" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
+                    <circle cx="29" cy="29" r="7" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M26.5 29L28.5 31L31.5 27.5" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>일반 매매</span>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button style={{
+                      backgroundColor: '#de201e',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      padding: '6px 14px',
+                      fontSize: '0.82rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}>
+                      매수
+                    </button>
+                    <button style={{
+                      backgroundColor: '#2366ca',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      padding: '6px 14px',
+                      fontSize: '0.82rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}>
+                      매도
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: 보유상품 매도 후 매수 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <rect x="6" y="11" width="22" height="15" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                    <text x="17" y="22" textAnchor="middle" fill="#3b82f6" fontSize="10" fontWeight="900" fontFamily="sans-serif">₩</text>
+                    <circle cx="28" cy="26" r="8" fill="#2563eb" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M25 24.5C25.5 23.5 27 23 28 23C29.5 23 30.5 24 30.8 25.5M30.8 25.5V23.5M30.8 25.5H29" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M31 27.5C30.5 28.5 29 29 28 29C26.5 29 25.5 28 25.2 26.5M25.2 26.5V28.5M25.2 26.5H27" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>보유상품 매도 후 매수</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    보유 상품을 매도하고 매도 결제일에 선택한 상품을 매수
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: 만기상품 예약 매매 */}
+              <div 
+                onClick={() => setScreen5ToBeSubScreen('maturity')}
+                style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <path d="M19 7.5L9 15.5V17H29V15.5L19 7.5Z" fill="#6b7280" />
+                    <rect x="10" y="16" width="18" height="15" rx="2" fill="#c084fc" />
+                    <rect x="10" y="22" width="18" height="4" fill="#a855f7" />
+                    <circle cx="19" cy="13" r="1.8" fill="#ffffff" />
+                    <circle cx="29" cy="27" r="7.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                    <text x="29" y="30" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
+                  </svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>만기상품 예약 매매</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    만기상환이 예정된 상품을 선택하고 만기상환일에 선택한 상품을 매수
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: 적립식 투자 */}
+              <div 
+                onClick={() => setScreen5ToBeSubScreen('savings')}
+                style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <path d="M11 20C11 15 15.5 12 21 12C26.5 12 30 15 30 20C30 22 31.5 22.5 32 21.5C32.5 20.5 32 19 31 18.5" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M9 20C9 14.5 14 11 21 11C28 11 31 15 31 20C31 24.5 27 27 21 27C19.5 27 18.5 26.8 17.5 26.5L16 28.5H13.5L14.5 26C11 24.5 9 22.5 9 20Z" fill="#93c5fd" />
+                    <path d="M8 18.5C7 18.5 6.5 19.5 6.5 20.5C6.5 21.5 7 22.5 8 22.5" fill="#93c5fd" stroke="#60a5fa" strokeWidth="1" />
+                    <circle cx="13" cy="17" r="1.2" fill="#1e3a8a" />
+                    <rect x="18" y="9.5" width="5" height="1.8" rx="0.9" fill="#1e3a8a" />
+                    <circle cx="28" cy="27" r="7.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M28 23.5V30.5M24.5 27H31.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>적립식 투자</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    투자 기간과 금액 설정 만으로 자동 정기 적립식 투자
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 5: 매매내역 조회/취소 */}
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                backgroundColor: '#ffffff',
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                  <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                    <rect x="8" y="8" width="20" height="24" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                    <path d="M8 11C8 9.3 9.3 8 11 8H25C26.7 8 28 9.3 28 11V14H8V11Z" fill="#0284c7" />
+                    <rect x="12" y="17" width="12" height="2" rx="1" fill="#94a3b8" />
+                    <rect x="12" y="21" width="8" height="2" rx="1" fill="#94a3b8" />
+                    <rect x="12" y="25" width="10" height="2" rx="1" fill="#cbd5e1" />
+                    <circle cx="28" cy="27" r="7.5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+                    <circle cx="27" cy="26" r="3" stroke="#ffffff" strokeWidth="1.6" fill="none" />
+                    <path d="M29 28L31.5 30.5" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>매매내역 조회/취소</span>
+                    <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                    체결 및 미체결 매매 내역을 조회하고 미체결 주문을 취소
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Navigation Tab Bar (identical to Screen 6) */}
+        <div style={{
+          height: '50px',
+          display: 'flex',
+          alignItems: 'stretch',
+          borderTop: '1px solid #e2e8f0',
+          backgroundColor: '#ffffff'
+        }}>
+          <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          </button>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+            {[
+              { key: '보유상품 현황', label: `보유상품\n현황` },
+              { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+              { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+            ].map((tab, idx) => {
+              return (
+                <button
+                  key={tab.key}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    background: 'none',
+                    borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
+                    cursor: 'pointer',
+                    fontSize: '0.73rem',
+                    fontWeight: '500',
+                    color: '#666',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    whiteSpace: 'pre-line',
+                    lineHeight: '1.2',
+                    padding: '2px 2px'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('menu')}
+            style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  
+
+  const renderScreen5ToBePensionInvest = () => {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isFigmaExportMode ? 'auto' : '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:28</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              52
+            </div>
+          </div>
+        </div>
+
+        {/* MTS Toolbar Header */}
+        <div style={{
+          display: 'flex',
+          justify: 'space-between',
+          alignItems: 'center',
+          height: '44px',
+          padding: '0 12px',
+          borderBottom: '1px solid #eee',
+          backgroundColor: '#fff',
+          position: 'relative'
+        }}>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('menu')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+          </button>
+          
+          <span style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1.02rem', 
+            fontWeight: '700', 
+            color: '#222222', 
+            letterSpacing: '-0.3px',
+            zIndex: 1
+          }}>
             연금펀드 투자하기
           </span>
 
@@ -13569,7 +13929,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>월정기입금 자동매수</span>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>적립식 투자</span>
                     <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
                   </div>
                   <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
@@ -13965,7 +14325,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
-            {isMaturity ? '펀드 모으기' : '월정기입금 자동매수'}
+            {isMaturity ? '만기상품 예약 매매' : '적립식 투자'}
           </span>
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
@@ -15540,6 +15900,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   };
 
   const renderScreen5ToBeSavingsApply = () => {
+    const isMaturity = screen5ToBeSubScreen === 'maturity_apply';
     return (
       <div style={{
         display: 'flex',
@@ -16446,7 +16807,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
                     {[
                       { name: '연금저축 펀드검색' },
-                      { name: '연금펀드 투자하기', action: isToBe ? () => setScreen5ToBeSubScreen('invest') : null }
+                      { name: '연금펀드 투자하기', action: isToBe ? () => setScreen5ToBeSubScreen('invest_pension') : null }
                     ].map((item, idx) => (
                       <div key={idx} onClick={item.action} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                         <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
@@ -19091,7 +19452,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
+                  {screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
                 </div>
               </div>
             </div>
