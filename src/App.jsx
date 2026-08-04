@@ -14340,15 +14340,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
 
               {/* Bullet Notes (Attachment 2) */}
-              <div style={{ padding: '14px 14px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.72rem', color: '#6b7280', lineHeight: '1.45' }}>
+              <div style={{ padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.76rem', color: '#6b7280', lineHeight: '1.4' }}>
                 <div>
                   • 최대 <span style={{ color: '#2563eb', fontWeight: '500' }}>10개까지 등록 가능</span>합니다.
                 </div>
                 <div>
                   • 전체 <span style={{ color: '#2563eb', fontWeight: '500' }}>투자비율 합계는 100%가 되도록 설정</span>하셔야 합니다.
-                </div>
-                <div style={{ paddingLeft: '8px', color: '#9ca3af' }}>
-                  (비중은 10% 단위로만 입력 가능합니다.)
+                  <div style={{ paddingLeft: '10px', color: '#9ca3af', marginTop: '3px' }}>
+                    (비중은 10% 단위로만 입력 가능합니다.)
+                  </div>
                 </div>
               </div>
 
@@ -14409,12 +14409,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
 
                   {/* Notice Lines Below Radio Buttons */}
-                  <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.72rem', color: '#6b7280', lineHeight: '1.45' }}>
+                  <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.76rem', color: '#6b7280', lineHeight: '1.4' }}>
                     <div>
                       • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '500' }}>등록된 펀드로 일괄 처리</span>됩니다.
                     </div>
-                    <div>
-                      • 개별펀드 재투자 동의는 영업점으로 문의 바랍니다.
+                    <div style={{ paddingLeft: '10px', marginTop: '1px' }}>
+                      개별펀드 재투자 동의는 영업점으로 문의 바랍니다.
                     </div>
                   </div>
                 </div>
