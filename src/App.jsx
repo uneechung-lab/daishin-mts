@@ -17882,6 +17882,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen5tobe', screen5ToBeSubScreen);
     params.set('screen5agreed', screen5Agreed ? 'true' : 'false');
     params.set('screen5hasproducts', savingsStep2HasProducts ? 'true' : 'false');
+    params.set('screen5fundhasproducts', screen5FundAccumulationHasProducts ? 'true' : 'false');
     params.set('screen5hasapplied', screen5HasAppliedProducts ? 'true' : 'false');
     params.set('screen5activetab', screen5ActiveTab);
     params.set('screen5tab', screen5ActiveTab);
