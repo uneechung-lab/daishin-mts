@@ -15281,8 +15281,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       '2건의 만기 예정 상품이 만기일에 4개의 금융상품으로 자동매수 예약되어 있습니다.'
                     ) : (
                       <>
-                        매월 4개의 금융상품에<br />
-                        {isFundAccumulation ? '펀드 모으기 이용 중입니다.' : isMaturity ? '만기상품 예약 매매 이용 중입니다.' : '적립식 투자하고 있어요.'}
+                        {!isFundAccumulation && <>매월 4개의 금융상품에<br /></>}
+                        {isFundAccumulation ? (
+                          <>2건의 펀드모으기로<br />총 2,000,000원이 재투자 됩니다.</>
+                        ) : isMaturity ? (
+                          '만기상품 예약 매매 이용 중입니다.'
+                        ) : (
+                          '적립식 투자하고 있어요.'
+                        )}
                       </>
                     )}
                   </h2>
