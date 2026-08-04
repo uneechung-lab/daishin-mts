@@ -14308,7 +14308,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
 
               {/* Bullet Notes (Attachment 2) */}
-              <div style={{ padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.78rem', color: '#6b7280', lineHeight: '1.45' }}>
+              <div style={{ padding: '14px 14px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.72rem', color: '#6b7280', lineHeight: '1.45' }}>
                 <div>
                   • 최대 <span style={{ color: '#2563eb', fontWeight: '500' }}>10개까지 등록 가능</span>합니다.
                 </div>
@@ -14377,7 +14377,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   </div>
 
                   {/* Notice Lines Below Radio Buttons */}
-                  <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.78rem', color: '#6b7280', lineHeight: '1.45' }}>
+                  <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.72rem', color: '#6b7280', lineHeight: '1.45' }}>
                     <div>
                       • 재투자 동의는 <span style={{ color: '#2563eb', fontWeight: '500' }}>등록된 펀드로 일괄 처리</span>됩니다.
                     </div>
