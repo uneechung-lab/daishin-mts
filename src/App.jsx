@@ -9077,7 +9077,7 @@ function App() {
         applyDate: '2026.06.19',
         buyCycle: '매월 5일',
         sellProduct: (p.get('screen5tobe') === 'fund_accumulation') ? '예수금' : 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
-        amount: '1,000,000좌',
+        amount: (p.get('screen5tobe') === 'fund_accumulation') ? '1,000,000원' : '1,000,000좌',
         startDate: '2026.06.19',
         endDate: '2026.06.19',
         buyProducts: [
@@ -15084,8 +15084,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500' }}>{isMaturity ? '만기금액' : '금액(좌수)'}</span>
-                <span style={{ fontWeight: '600', color: '#111827' }}>{isMaturity ? (screen5SelectedCardDetail.amount ? screen5SelectedCardDetail.amount.replace(/\([^)]*\)/g, '').replace('좌', '원') : '1,000,000원') : screen5SelectedCardDetail.amount}</span>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>{isMaturity ? '만기금액' : isFundAccumulation ? '투자금액' : '금액(좌수)'}</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>
+                  {isMaturity 
+                    ? (screen5SelectedCardDetail.amount ? screen5SelectedCardDetail.amount.replace(/\([^)]*\)/g, '').replace('좌', '원') : '1,000,000원') 
+                    : isFundAccumulation 
+                    ? (screen5SelectedCardDetail.amount ? screen5SelectedCardDetail.amount.replace('좌', '원') : '1,000,000원') 
+                    : screen5SelectedCardDetail.amount}
+                </span>
               </div>
 
               {!isMaturity && (
@@ -15845,7 +15851,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     applyDate: '2026.06.19',
                     buyCycle: '매월 5일',
                     sellProduct: isFundAccumulation ? '예수금' : 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
-                    amount: '1,000,000좌',
+                    amount: isFundAccumulation ? '1,000,000원' : '1,000,000좌',
                     startDate: '2026.06.19',
                     endDate: '2026.06.19',
                     buyProducts: [
@@ -15888,7 +15894,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : 'DB차이나바이오...'}
                         </span>
                       </div>
-                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a', whiteSpace: 'nowrap', flexShrink: 0 }}>{isMaturity ? '1,000,000원' : '1,000,000좌'}</span>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a', whiteSpace: 'nowrap', flexShrink: 0 }}>{isMaturity ? '1,000,000원' : isFundAccumulation ? '1,000,000원' : '1,000,000좌'}</span>
                     </div>
 
                     {/* Down Arrow */}
