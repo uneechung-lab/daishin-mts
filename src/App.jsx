@@ -14221,49 +14221,41 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 일자</span>
-              <input 
-                type="text"
-                value={screen5FundAccumulationHasProducts ? screen5BuyDate : ''}
-                placeholder={screen5FundAccumulationHasProducts ? '' : '-'}
-                onChange={(e) => setScreen5BuyDate(e.target.value)}
-                disabled={!screen5FundAccumulationHasProducts}
+              <div 
                 style={{
-                  width: '100px',
-                  height: '30px',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '4px',
-                  padding: '0 8px',
-                  textAlign: 'right',
-                  fontSize: '0.88rem',
-                  fontWeight: '600',
-                  color: '#111827',
-                  backgroundColor: screen5FundAccumulationHasProducts ? '#ffffff' : '#f9fafb',
-                  boxSizing: 'border-box'
+                  width: '110px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingBottom: '3px',
+                  borderBottom: '1px solid #e2e8f0',
+                  cursor: 'pointer'
                 }}
-              />
+              >
+                <span style={{ fontSize: '0.9rem', fontWeight: '600', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
+                  {screen5FundAccumulationHasProducts ? screen5BuyDate : '-'}
+                </span>
+                <span style={{ fontSize: '0.55rem', color: '#111827' }}>▼</span>
+              </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 기간</span>
-              <input 
-                type="text"
-                value={screen5FundAccumulationHasProducts ? screen5BuyPeriod : ''}
-                placeholder={screen5FundAccumulationHasProducts ? '' : '-'}
-                onChange={(e) => setScreen5BuyPeriod(e.target.value)}
-                disabled={!screen5FundAccumulationHasProducts}
+              <div 
                 style={{
-                  width: '100px',
-                  height: '30px',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '4px',
-                  padding: '0 8px',
-                  textAlign: 'right',
-                  fontSize: '0.88rem',
-                  fontWeight: '600',
-                  color: '#111827',
-                  backgroundColor: screen5FundAccumulationHasProducts ? '#ffffff' : '#f9fafb',
-                  boxSizing: 'border-box'
+                  width: '110px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingBottom: '3px',
+                  borderBottom: '1px solid #e2e8f0',
+                  cursor: 'pointer'
                 }}
-              />
+              >
+                <span style={{ fontSize: '0.9rem', fontWeight: '600', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
+                  {screen5FundAccumulationHasProducts ? screen5BuyPeriod : '-'}
+                </span>
+                <span style={{ fontSize: '0.55rem', color: '#111827' }}>▼</span>
+              </div>
             </div>
           </div>
 
