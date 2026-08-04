@@ -14067,7 +14067,262 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     );
   };
 
-  const renderScreen5ToBeSavings = () => {
+    const renderScreen5ToBeFundAccumulationApply = () => {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isFigmaExportMode ? 'auto' : '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 5:05</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              76
+            </div>
+          </div>
+        </div>
+
+        {/* MTS Toolbar Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: '44px',
+          padding: '0 12px',
+          borderBottom: '1px solid #eee',
+          backgroundColor: '#fff',
+          position: 'relative'
+        }}>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('fund_accumulation')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+          </button>
+          
+          <span style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1.02rem', 
+            fontWeight: '600', 
+            color: '#111111', 
+            letterSpacing: '-0.3px',
+            zIndex: 1
+          }}>
+            펀드 모으기
+          </span>
+
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+            <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable Main Content Area */}
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
+          
+          {/* Account Selector Bar */}
+          <div style={{ padding: '12px 14px 8px 14px' }}>
+            <div 
+              onClick={() => setScreen6ToBeBsheetState('account')}
+              style={{
+                border: '1px solid #d1d5db',
+                borderRadius: '6px',
+                padding: '10px 14px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#ffffff',
+                cursor: 'pointer'
+              }}
+            >
+              <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#111827' }}>200-231234(41) 김대신</span>
+              <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>▼</span>
+            </div>
+          </div>
+
+          {/* Action Buttons Row: 투자비율 가져오기 | 매수상품 추가하기 */}
+          <div style={{ display: 'flex', gap: '8px', padding: '0 14px 14px 14px' }}>
+            <button style={{
+              flex: 1,
+              height: '42px',
+              border: '1px solid #d1d5db',
+              borderRadius: '4px',
+              backgroundColor: '#ffffff',
+              color: '#374151',
+              fontSize: '0.9rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}>
+              투자비율 가져오기
+            </button>
+            <button style={{
+              flex: 1,
+              height: '42px',
+              border: 'none',
+              borderRadius: '4px',
+              backgroundColor: '#d92528',
+              color: '#ffffff',
+              fontSize: '0.9rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}>
+              매수상품 추가하기
+            </button>
+          </div>
+
+          {/* Amount Information Block */}
+          <div style={{ padding: '0 14px 14px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 가능 금액</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>10,000</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>위험자산 매수 가능 금액</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>57,337</span>
+            </div>
+            <div style={{ fontSize: '0.76rem', color: '#6b7280', marginTop: '2px', lineHeight: '1.4' }}>
+              ※ 투자성향은 <span style={{ color: '#1d4ed8', fontWeight: '700' }}>공격투자형</span>으로 <span style={{ color: '#1d4ed8', fontWeight: '700' }}>매우높은위험 상품</span>까지 적합합니다.
+            </div>
+          </div>
+
+          {/* Alert Subheader Bar */}
+          <div style={{ backgroundColor: '#f8fafc', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>
+            <span style={{ color: '#dc2626', fontWeight: '700' }}>매수대상 상품</span>
+            <span style={{ color: '#4b5563' }}>을 선택해주세요.</span>
+          </div>
+
+          {/* Empty Product State */}
+          <div style={{ padding: '56px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: '16px' }}>
+            <div style={{ color: '#6b7280', fontSize: '0.92rem', lineHeight: '1.6' }}>
+              보유하신 상품이 없습니다.<br />
+              상품을 추가해주세요.
+            </div>
+            <button style={{
+              padding: '8px 24px',
+              border: '1px solid #cbd5e1',
+              borderRadius: '4px',
+              backgroundColor: '#ffffff',
+              color: '#1e293b',
+              fontSize: '0.88rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}>
+              상품 추가하기
+            </button>
+          </div>
+
+        </div>
+
+        {/* Bottom Total & Next Action Bar */}
+        <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
+          <div style={{ flex: 1, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '16px' }}>
+            <span style={{ fontSize: '0.73rem', color: '#6b7280' }}>합계</span>
+            <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#1d4ed8' }}>0 원</span>
+          </div>
+          <div 
+            style={{ flex: 1, backgroundColor: '#e2e8f0', color: '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '700', cursor: 'not-allowed' }}
+          >
+            다음
+          </div>
+        </div>
+
+        {/* Ticker Bar */}
+        <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
+          <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
+          <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
+        </div>
+
+        {/* Bottom Phone Navigation */}
+        <div style={{
+          height: '44px',
+          display: 'flex',
+          alignItems: 'stretch',
+          borderTop: '1px solid #e2e8f0',
+          backgroundColor: '#ffffff',
+          flexShrink: 0
+        }}>
+          <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          </button>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+            {[
+              { key: '보유상품 현황', label: `보유상품\n현황` },
+              { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+              { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+            ].map((tab, idx) => {
+              return (
+                <button
+                  key={tab.key}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    backgroundColor: '#ffffff',
+                    borderRight: idx === 3 ? 'none' : '1px solid #f1f5f9',
+                    fontSize: '0.66rem',
+                    fontWeight: '700',
+                    color: '#64748b',
+                    whiteSpace: 'pre-line',
+                    lineHeight: '1.15',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    padding: '0 2px'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('fund_accumulation')}
+            style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+const renderScreen5ToBeSavings = () => {
     const isMaturity = screen5ToBeSubScreen === 'maturity';
     const isFundAccumulation = screen5ToBeSubScreen === 'fund_accumulation';
     if (screen5SelectedCardDetail) {
@@ -19474,7 +19729,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity' || screen5ToBeSubScreen === 'fund_accumulation') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
+                  {screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'fund_accumulation_apply' ? renderScreen5ToBeFundAccumulationApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity' || screen5ToBeSubScreen === 'fund_accumulation') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
                 </div>
               </div>
             </div>
