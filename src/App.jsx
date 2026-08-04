@@ -14519,7 +14519,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
 
               {/* Day buttons grid 1 ~ 31 */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', maxHeight: '300px', overflowY: 'auto', paddingRight: '2px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px' }}>
                 {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => {
                   const dayText = `매월 ${day}일`;
                   const isSelected = screen5BuyDate === dayText || screen5BuyDate === `${day}일`;
@@ -14531,13 +14531,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         setIsBuyDateBsheetOpen(false);
                       }}
                       style={{
-                        height: '42px',
-                        borderRadius: '8px',
+                        height: '36px',
+                        borderRadius: '6px',
                         border: isSelected ? '2px solid #111111' : '1px solid #e2e8f0',
                         backgroundColor: '#ffffff',
                         color: isSelected ? '#111111' : '#4b5563',
                         fontWeight: isSelected ? '700' : '400',
-                        fontSize: '0.88rem',
+                        fontSize: '0.84rem',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
