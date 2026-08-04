@@ -14193,7 +14193,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               투자 금액 선택하기
             </button>
             <button 
-              onClick={() => setScreen5FundAccumulationHasProducts(true)}
+              onClick={() => setScreen5FundAccumulationHasProducts(prev => !prev)}
               style={{
                 flex: 1,
                 height: '42px',
@@ -14214,7 +14214,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           <div style={{ padding: '0 14px 14px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>투자 금액</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>0</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '1,000,000' : '0'}</span>
             </div>
           </div>
 
