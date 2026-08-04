@@ -14069,6 +14069,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
   const renderScreen5ToBeSavings = () => {
     const isMaturity = screen5ToBeSubScreen === 'maturity';
+    const isFundAccumulation = screen5ToBeSubScreen === 'fund_accumulation';
     if (screen5SelectedCardDetail) {
       return (
         <div style={{
@@ -15450,7 +15451,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   <input 
                     type="checkbox" 
                     checked={screen5Agreed} 
-                    onChange={(e) => setScreen5Agreed(e.target.checked)} 
+                    onChange={(e) => { 
+                      const isMaturity = screen5ToBeSubScreen === 'maturity';
+                      const isFundAccumulation = screen5ToBeSubScreen === 'fund_accumulation'; 
+                      setScreen5Agreed(e.target.checked); 
+                    }} 
                     style={{ marginTop: '3px', cursor: 'pointer' }} 
                   />
                   <span style={{ fontSize: '0.78rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
