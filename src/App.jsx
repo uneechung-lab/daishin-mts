@@ -14370,7 +14370,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     ) : (
                       <>
                         매월 4개의 금융상품에<br />
-                        적립식 투자하고 있어요.
+                        {isFundAccumulation ? '펀드 모으기 이용 중입니다.' : isMaturity ? '만기상품 예약 매매 이용 중입니다.' : '적립식 투자하고 있어요.'}
                       </>
                     )}
                   </h2>
@@ -14396,7 +14396,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       gap: '4px'
                     }}
                   >
-                    {isMaturity ? '만기예약상품 추가하기' : '적립상품 추가하기'}
+                    {isFundAccumulation ? '펀드 모으기 추가하기' : isMaturity ? '만기예약상품 추가하기' : '적립상품 추가하기'}
                   </button>
                 </>
               ) : (
@@ -14513,7 +14513,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer'
               }}
             >
-              {isMaturity ? '신청내역' : '적립투자 내역'}
+              {isFundAccumulation ? '펀드 모으기 내역' : isMaturity ? '신청내역' : '적립투자 내역'}
             </div>
           </div>
 
@@ -14530,7 +14530,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 fontWeight: '400',
                 backgroundColor: '#ffffff'
               }}>
-                {isMaturity ? '신청내역이 없습니다.' : '적립투자 내역이 없습니다.'}
+                {isFundAccumulation ? '펀드 모으기 내역이 없습니다.' : isMaturity ? '신청내역이 없습니다.' : '적립투자 내역이 없습니다.'}
               </div>
             ) : (
               /* Execution History Table View (Matching Attached Image Specification) */
@@ -15474,7 +15474,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     style={{ marginTop: '3px', cursor: 'pointer' }} 
                   />
                   <span style={{ fontSize: '0.78rem', color: isDark ? '#f8fafc' : '#2563eb', fontWeight: '800', lineHeight: '1.4' }}>
-                    {isMaturity
+                    {isFundAccumulation
+                      ? '펀드 모으기 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.'
+                      : isMaturity
                       ? '만기상품 예약 매매 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.'
                       : '적립식 투자 서비스 이용 관련 유의사항을 제공 받았고, 그 주요 내용을 읽고 동의합니다.'}
                   </span>
