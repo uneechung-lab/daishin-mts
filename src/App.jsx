@@ -14402,7 +14402,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               ) : (
                 <>
                   <h2 style={{ fontSize: '1.02rem', fontWeight: '700', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
-                    {isMaturity ? (
+                    {isFundAccumulation ? (
+                      <>
+                        선택하신 펀드 상품과<br />
+                        매수일, 투자기간만 설정하시면<br />
+                        신경 쓸 필요 없이 알아서 투자되는<br />
+                        자동 매수 서비스
+                      </>
+                    ) : isMaturity ? (
                       <>
                         만기 다가오는 상품,<br />
                         원하는 신규 상품으로<br />
@@ -14424,7 +14431,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               )}
             </div>
             {/* Hero Image Section */}
-            {!isMaturity ? (
+            {isFundAccumulation ? (
+              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: '44px', marginLeft: '4px' }}>
+                <img 
+                  src="/savings_hero4.png" 
+                  alt="펀드 모으기 이미지"
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
+            ) : !isMaturity ? (
               <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', transform: 'translateX(-5px)' }}>
                 <img 
                   src="/savings_hero2.png" 
