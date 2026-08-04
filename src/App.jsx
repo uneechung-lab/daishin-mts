@@ -15685,7 +15685,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 {row.date}
                               </td>
                               <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
-                                {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : row.sellProduct}
+                                {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : (isFundAccumulation && (row.sellProduct === '현금성 자산' || row.sellProduct === 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E')) ? '예수금' : row.sellProduct}
                               </td>
                             </tr>
                             <tr>
@@ -15762,7 +15762,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   onClick={() => setScreen5SelectedCardDetail({
                     applyDate: '2026.05.01',
                     buyCycle: '매월 1일',
-                    sellProduct: '현금성 자산',
+                    sellProduct: isFundAccumulation ? '예수금' : '현금성 자산',
                     amount: '400,000원',
                     startDate: '2026.05.01',
                     endDate: '2027.05.01',
@@ -15803,7 +15803,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           flexShrink: 0
                         }}>{isMaturity ? '만기' : '매도'}</span>
                         <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}
+                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : '현금성 자산'}
                         </span>
                       </div>
                       <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>400,000원</span>
@@ -15938,7 +15938,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   onClick={() => setScreen5SelectedCardDetail({
                     applyDate: '2026.07.10',
                     buyCycle: '매월 10일',
-                    sellProduct: '현금성 자산',
+                    sellProduct: isFundAccumulation ? '예수금' : '현금성 자산',
                     amount: '500,000원',
                     startDate: '2026.07.10',
                     endDate: '2029.07.10',
@@ -15978,7 +15978,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           flexShrink: 0
                         }}>{isMaturity ? '만기' : '매도'}</span>
                         <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}
+                          {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : '현금성 자산'}
                         </span>
                       </div>
                       <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a', whiteSpace: 'nowrap', flexShrink: 0 }}>500,000원</span>
@@ -16051,7 +16051,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             borderRadius: '4px',
                             flexShrink: 0
                           }}>{isMaturity ? '만기' : '매도'}</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : '현금성 자산'}</span>
                         </div>
                         <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>200,000원</span>
                       </div>
@@ -16119,7 +16119,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             borderRadius: '4px',
                             flexShrink: 0
                           }}>{isMaturity ? '만기' : '매도'}</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : '현금성 자산'}</span>
                         </div>
                         <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>300,000원</span>
                       </div>
@@ -16187,7 +16187,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             borderRadius: '4px',
                             flexShrink: 0
                           }}>{isMaturity ? '만기' : '매도'}</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : '현금성 자산'}</span>
                         </div>
                         <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>150,000원</span>
                       </div>
@@ -16260,7 +16260,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             borderRadius: '4px',
                             flexShrink: 0
                           }}>{isMaturity ? '만기' : '매도'}</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : '현금성 자산'}</span>
                         </div>
                         <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155', whiteSpace: 'nowrap', flexShrink: 0 }}>1,000,000원</span>
                       </div>
@@ -16328,7 +16328,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             borderRadius: '4px',
                             flexShrink: 0
                           }}>{isMaturity ? '만기' : '매도'}</span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : '현금성 자산'}</span>
+                          <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{isMaturity ? '(IRP)대신저축은행/정기예금/3년' : isFundAccumulation ? '예수금' : '현금성 자산'}</span>
                         </div>
                         <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155', whiteSpace: 'nowrap', flexShrink: 0 }}>500,000원</span>
                       </div>
