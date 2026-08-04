@@ -14216,6 +14216,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>투자 금액</span>
               <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '1,000,000' : '0'}</span>
             </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 일자</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '매월 10일' : '-'}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 기간</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '12개월' : '-'}</span>
+            </div>
           </div>
 
           {!screen5FundAccumulationHasProducts ? (
