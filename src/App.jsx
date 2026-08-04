@@ -14502,20 +14502,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 }
               `}</style>
               <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
                 marginBottom: '18px'
               }}>
                 <div style={{ fontSize: '1.05rem', fontWeight: '700', color: '#111111', letterSpacing: '-0.3px' }}>
                   매수 일자 선택
                 </div>
-                <button 
-                  onClick={() => setIsBuyDateBsheetOpen(false)}
-                  style={{ border: 'none', background: 'none', cursor: 'pointer', padding: '4px', fontSize: '1.1rem', color: '#6b7280' }}
-                >
-                  ✕
-                </button>
               </div>
 
               {/* Day buttons grid 1 ~ 31 */}
@@ -14591,20 +14582,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 }
               `}</style>
               <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
                 marginBottom: '16px'
               }}>
                 <div style={{ fontSize: '1.05rem', fontWeight: '700', color: '#111111', letterSpacing: '-0.3px' }}>
                   매수 기간 선택
                 </div>
-                <button 
-                  onClick={() => setIsBuyPeriodBsheetOpen(false)}
-                  style={{ border: 'none', background: 'none', cursor: 'pointer', padding: '4px', fontSize: '1.1rem', color: '#6b7280' }}
-                >
-                  ✕
-                </button>
               </div>
 
               {/* Period option list */}
