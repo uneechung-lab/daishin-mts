@@ -13940,7 +13940,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
               {/* Card 3: 펀드 모으기 */}
               <div 
-                onClick={() => setScreen5ToBeSubScreen('maturity')}
+                onClick={() => setScreen5ToBeSubScreen('fund_accumulation')}
                 style={{
                 border: '1px solid #e2e8f0',
                 borderRadius: '10px',
@@ -14308,7 +14308,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           position: 'relative'
         }}>
           <button 
-            onClick={() => setScreen5ToBeSubScreen('invest')}
+            onClick={() => setScreen5ToBeSubScreen(isFundAccumulation ? 'invest_pension' : 'invest')}
             style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
@@ -14325,7 +14325,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
-            {isMaturity ? '만기상품 예약 매매' : '월정기입금 자동매수'}
+            {isFundAccumulation ? '펀드 모으기' : isMaturity ? '만기상품 예약 매매' : '월정기입금 자동매수'}
           </span>
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
@@ -14417,7 +14417,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     )}
                   </h2>
                   <p style={{ fontSize: '0.8rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                    {isMaturity ? '보유하신 상품의 만기 상환금을 재원으로 신경 쓸 필요 없이 자동으로 투자가 진행됩니다.' : '보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.'}
+                    {isFundAccumulation ? '보유하신 예수금을 재원으로, 지정하신 조건에 맞춰 자동으로 투자가 진행됩니다.' : isMaturity ? '보유하신 상품의 만기 상환금을 재원으로 신경 쓸 필요 없이 자동으로 투자가 진행됩니다.' : '보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.'}
                   </p>
                 </>
               )}
@@ -14482,7 +14482,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer'
               }}
             >
-              {isMaturity ? '만기예약매매 현황' : '적립투자 현황'}
+              {isFundAccumulation ? '펀드 모으기 현황' : isMaturity ? '만기예약매매 현황' : '적립투자 현황'}
             </div>
             <div 
               onClick={() => setScreen5ActiveTab('history')}
@@ -15466,7 +15466,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <div 
               onClick={() => {
                 if (screen5Agreed) {
-                  setScreen5ToBeSubScreen(isMaturity ? 'maturity_apply' : 'savings_apply');
+                  setScreen5ToBeSubScreen(isFundAccumulation ? 'fund_accumulation_apply' : isMaturity ? 'maturity_apply' : 'savings_apply');
                 }
               }}
               style={{
@@ -15480,7 +15480,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               cursor: screen5Agreed ? 'pointer' : 'not-allowed',
               transition: 'background-color 0.2s, color 0.2s'
             }}>
-              {isMaturity ? '만기상품 예약 매매 신청하기' : '적립식 투자 신청하기'}
+              {isFundAccumulation ? '펀드 모으기 신청하기' : isMaturity ? '만기상품 예약 매매 신청하기' : '적립식 투자 신청하기'}
             </div>
           </div>
         )}
@@ -19452,7 +19452,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
+                  {screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity' || screen5ToBeSubScreen === 'fund_accumulation') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
                 </div>
               </div>
             </div>
