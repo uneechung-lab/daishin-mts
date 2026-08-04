@@ -14188,7 +14188,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
           {/* Action Buttons Row: 투자 금액 선택하기 | 모을 펀드 추가하기 */}
           <div style={{ display: 'flex', gap: '8px', padding: '0 14px 14px 14px' }}>
-            <button style={{
+            <button 
+              onClick={() => setScreen5ToBeSubScreen('fund_accumulation_select_amount')}
+              style={{
               flex: 1,
               height: '42px',
               border: '1px solid #d1d5db',
@@ -14680,6 +14682,294 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
           <button 
             onClick={() => setScreen5ToBeSubScreen('fund_accumulation')}
+            style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderScreen5ToBeFundAccumulationSelectAmount = () => {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isFigmaExportMode ? 'auto' : '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 4:28</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+            </div>
+            <div style={{
+              border: '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+              color: '#fff',
+              lineHeight: 1
+            }}>
+              83
+            </div>
+          </div>
+        </div>
+
+        {/* MTS Toolbar Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: '44px',
+          padding: '0 12px',
+          borderBottom: '1px solid #eee',
+          backgroundColor: '#fff',
+          position: 'relative'
+        }}>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('fund_accumulation_apply')}
+            style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+          </button>
+          
+          <span style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1.02rem', 
+            fontWeight: '600', 
+            color: '#111111', 
+            letterSpacing: '-0.3px',
+            zIndex: 1
+          }}>
+            펀드 모으기
+          </span>
+
+          <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+            <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Account Selector Bar */}
+        <div style={{ padding: '8px 12px' }}>
+          <div 
+            onClick={() => setScreen6ToBeBsheetState('account')}
+            style={{
+              border: '1px solid #e2e8f0',
+              borderRadius: '6px',
+              padding: '8px 12px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#ffffff',
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>200-231234(41) 김대신</span>
+            <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
+          </div>
+        </div>
+
+        {/* Subheader Notice Bar */}
+        <div style={{ backgroundColor: '#f4f4f6', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', lineHeight: '1.45' }}>
+          <div style={{ color: '#666666' }}>정기 매수를 위해 보유상품 중</div>
+          <div>
+            <span style={{ color: '#2563eb', fontWeight: '600' }}>정기 매도대상 상품</span>
+            <span style={{ color: '#666666' }}>을 선택해주세요.</span>
+          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff', padding: '16px' }}>
+          {/* Card Item 1: 매우낮은위험 / 현금 */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#0284c7' }}>매우낮은위험</span>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                border: '2px solid #222222',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#222222' }}></div>
+              </div>
+              <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#111111' }}>현금</span>
+            </div>
+
+            <div style={{ marginTop: '16px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+              <span style={{ fontSize: '1.35rem', fontWeight: '600', color: '#111111', marginRight: '6px' }}>30,000</span>
+              <span style={{ fontSize: '0.95rem', color: '#333333' }}>원</span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
+                <span>보유현금</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>85,632</span>
+              </div>
+              <span style={{ color: '#cbd5e1' }}>|</span>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '12px' }}>
+                <span>예상금액</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>30,000</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Card Item 2: 미래에셋클린테크 증권자투자신탁(주식) C-P2e */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #f1f3f5' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#a16207' }}>다소높은위험</span>
+            
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '10px' }}>
+              {/* Radio + Title Column */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', flex: 1 }}>
+                <div style={{
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  border: '1.5px solid #cbd5e1',
+                  backgroundColor: '#ffffff',
+                  flexShrink: 0,
+                  marginTop: '3px'
+                }}></div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '600', color: '#111111', lineHeight: '1.3' }}>
+                    미래에셋클린테크
+                  </span>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '600', color: '#111111', lineHeight: '1.3' }}>
+                    증권자투자신탁(주식)
+                  </span>
+                  <span style={{ fontSize: '0.94rem', fontWeight: '600', color: '#111111', marginTop: '2px' }}>
+                    C-P2e
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Side Info Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+                <span style={{ fontSize: '0.9rem', color: '#111111' }}>770 좌</span>
+                <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#de201e' }}>+300,000 원</span>
+                <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#de201e' }}>(+30.00%)</span>
+              </div>
+            </div>
+
+            {/* 수량설정 Input Placeholder */}
+            <div style={{ marginTop: '12px', borderBottom: '1px solid #eee', paddingBottom: '6px' }}>
+              <span style={{ fontSize: '0.88rem', color: '#cbd5e1' }}>수량설정</span>
+            </div>
+
+            {/* Sub Info Row: 보유수량 770 | 예상금액 0 */}
+            <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.78rem', color: '#666666', marginTop: '4px' }}>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '12px' }}>
+                <span>보유수량</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>770</span>
+              </div>
+              <span style={{ color: '#cbd5e1' }}>|</span>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '12px' }}>
+                <span>예상금액</span>
+                <span style={{ fontWeight: '500', color: '#333333' }}>0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Total & Action Bar */}
+        <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
+          <div style={{ flex: 1, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '16px' }}>
+            <span style={{ fontSize: '0.75rem', color: '#666666' }}>예상 금액</span>
+            <span style={{ fontSize: '1.02rem', fontWeight: '600', color: '#2563eb' }}>30,000 원</span>
+          </div>
+          <div 
+            onClick={() => {
+              setScreen5ToBeSubScreen('fund_accumulation_apply');
+            }}
+            style={{ flex: 1, backgroundColor: '#1c1c1e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '600', cursor: 'pointer' }}
+          >
+            다음
+          </div>
+        </div>
+
+        {/* Ticker Bar */}
+        <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
+          <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
+          <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
+        </div>
+
+        {/* Phone Footer Navigation */}
+        <div style={{
+          height: '44px',
+          display: 'flex',
+          alignItems: 'stretch',
+          borderTop: '1px solid #e2e8f0',
+          backgroundColor: '#ffffff',
+          flexShrink: 0
+        }}>
+          <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          </button>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+            {[
+              { key: '보유상품 현황', label: `보유상품\n현황` },
+              { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+              { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+            ].map((tab, idx) => {
+              return (
+                <button
+                  key={tab.key}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    backgroundColor: '#ffffff',
+                    borderRight: idx === 3 ? 'none' : '1px solid #f1f5f9',
+                    fontSize: '0.66rem',
+                    fontWeight: '700',
+                    color: '#64748b',
+                    whiteSpace: 'pre-line',
+                    lineHeight: '1.15',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    padding: '0 2px'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+          <button 
+            onClick={() => setScreen5ToBeSubScreen('fund_accumulation_apply')}
             style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
@@ -20107,7 +20397,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'fund_accumulation_apply' ? renderScreen5ToBeFundAccumulationApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity' || screen5ToBeSubScreen === 'fund_accumulation') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
+                  {screen5ToBeSubScreen === 'fund_accumulation_select_amount' ? renderScreen5ToBeFundAccumulationSelectAmount() : screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'fund_accumulation_apply' ? renderScreen5ToBeFundAccumulationApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity' || screen5ToBeSubScreen === 'fund_accumulation') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
                 </div>
               </div>
             </div>
