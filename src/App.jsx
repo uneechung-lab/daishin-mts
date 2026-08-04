@@ -14443,11 +14443,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               alignItems: 'center', 
               justifyContent: 'center', 
               fontSize: '1.02rem', 
-              fontWeight: '700', 
+              fontWeight: '600', 
               cursor: screen5FundAccumulationHasProducts ? 'pointer' : 'not-allowed' 
             }}
           >
-            다음
+            등록
           </div>
         </div>
 
