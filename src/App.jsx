@@ -14187,7 +14187,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               fontWeight: '700',
               cursor: 'pointer'
             }}>
-              투자비율 가져오기
+              투자 금액 선택하기
             </button>
             <button style={{
               flex: 1,
@@ -14200,35 +14200,27 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               fontWeight: '700',
               cursor: 'pointer'
             }}>
-              매수상품 추가하기
+              모을 펀드 추가하기
             </button>
           </div>
 
           {/* Amount Information Block */}
           <div style={{ padding: '0 14px 14px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>매수 가능 금액</span>
+              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>투자 금액</span>
               <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>10,000</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>위험자산 매수 가능 금액</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>57,337</span>
-            </div>
-            <div style={{ fontSize: '0.76rem', color: '#6b7280', marginTop: '2px', lineHeight: '1.4' }}>
-              ※ 투자성향은 <span style={{ color: '#1d4ed8', fontWeight: '700' }}>공격투자형</span>으로 <span style={{ color: '#1d4ed8', fontWeight: '700' }}>매우높은위험 상품</span>까지 적합합니다.
             </div>
           </div>
 
           {/* Alert Subheader Bar */}
           <div style={{ backgroundColor: '#f8fafc', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>
-            <span style={{ color: '#dc2626', fontWeight: '700' }}>매수대상 상품</span>
+            <span style={{ color: '#dc2626', fontWeight: '700' }}>모을 펀드 상품</span>
             <span style={{ color: '#4b5563' }}>을 선택해주세요.</span>
           </div>
 
           {/* Empty Product State */}
           <div style={{ padding: '56px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: '16px' }}>
             <div style={{ color: '#6b7280', fontSize: '0.92rem', lineHeight: '1.6' }}>
-              보유하신 상품이 없습니다.<br />
               상품을 추가해주세요.
             </div>
             <button style={{
