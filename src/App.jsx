@@ -17973,6 +17973,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
       if (asisScreen4SubParam) setAsIsScreen4SubScreen(asisScreen4SubParam);
+      const screen5subParam = params.get('screen5sub') || params.get('screen5tobe');
+      if (screen5subParam) setScreen5ToBeSubScreen(screen5subParam);
+      const screen5fundhasproductsParam = params.get('screen5fundhasproducts');
+      if (screen5fundhasproductsParam !== null) setScreen5FundAccumulationHasProducts(screen5fundhasproductsParam === 'true');
       const mallTabParam = params.get('mallTab');
       if (mallTabParam) setActiveMallTab(mallTabParam);
       const ownedDisplayParam = params.get('ownedDisplay');
