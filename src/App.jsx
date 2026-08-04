@@ -9051,6 +9051,8 @@ function App() {
   const [screen5FundAccumulationHasProducts, setScreen5FundAccumulationHasProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5fundhasproducts') === 'true';
   });
+  const [isBuyDateBsheetOpen, setIsBuyDateBsheetOpen] = useState(false);
+  const [isBuyPeriodBsheetOpen, setIsBuyPeriodBsheetOpen] = useState(false);
   const [screen5AutoTransferOption, setScreen5AutoTransferOption] = useState('동의');
   const [screen5BuyDate, setScreen5BuyDate] = useState('매월 10일');
   const [screen5BuyPeriod, setScreen5BuyPeriod] = useState('12개월');
@@ -14219,7 +14221,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>투자 금액</span>
               <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '1,000,000' : '0'}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {/* 매수 일자 */}
+            <div 
+              onClick={() => setIsBuyDateBsheetOpen(true)}
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+            >
               <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 일자</span>
               <div 
                 style={{
@@ -14229,8 +14235,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   justifyContent: 'flex-end',
                   alignItems: 'center',
                   paddingBottom: '3px',
-                  borderBottom: '1px solid #e2e8f0',
-                  cursor: 'pointer'
+                  borderBottom: '1px solid #e2e8f0'
                 }}
               >
                 <span style={{ fontSize: '0.9rem', fontWeight: screen5FundAccumulationHasProducts ? '600' : '400', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
@@ -14238,7 +14243,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </span>
               </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {/* 매수 기간 */}
+            <div 
+              onClick={() => setIsBuyPeriodBsheetOpen(true)}
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+            >
               <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 기간</span>
               <div 
                 style={{
@@ -14248,8 +14257,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   justifyContent: 'flex-end',
                   alignItems: 'center',
                   paddingBottom: '3px',
-                  borderBottom: '1px solid #e2e8f0',
-                  cursor: 'pointer'
+                  borderBottom: '1px solid #e2e8f0'
                 }}
               >
                 <span style={{ fontSize: '0.9rem', fontWeight: screen5FundAccumulationHasProducts ? '600' : '400', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
@@ -14456,6 +14464,188 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
           <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
         </div>
+
+        {/* 매수 일자 선택 바텀시트 (Image 1 & 2 Style) */}
+        {isBuyDateBsheetOpen && (
+          <>
+            <div 
+              onClick={() => setIsBuyDateBsheetOpen(false)}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                zIndex: 9999,
+                backdropFilter: 'blur(1px)'
+              }}
+            />
+            <div style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: '#ffffff',
+              borderTopLeftRadius: '16px',
+              borderTopRightRadius: '16px',
+              padding: '24px 20px 28px 20px',
+              zIndex: 10000,
+              boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+              boxSizing: 'border-box',
+              animation: 'buyDateSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}>
+              <style>{`
+                @keyframes buyDateSlideUp {
+                  from { transform: translateY(100%); }
+                  to { transform: translateY(0); }
+                }
+              `}</style>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '18px'
+              }}>
+                <div style={{ fontSize: '1.05rem', fontWeight: '700', color: '#111111', letterSpacing: '-0.3px' }}>
+                  매수 일자 선택
+                </div>
+                <button 
+                  onClick={() => setIsBuyDateBsheetOpen(false)}
+                  style={{ border: 'none', background: 'none', cursor: 'pointer', padding: '4px', fontSize: '1.1rem', color: '#6b7280' }}
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Day buttons grid 1 ~ 31 */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', maxHeight: '300px', overflowY: 'auto', paddingRight: '2px' }}>
+                {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => {
+                  const dayText = `매월 ${day}일`;
+                  const isSelected = screen5BuyDate === dayText || screen5BuyDate === `${day}일`;
+                  return (
+                    <button
+                      key={day}
+                      onClick={() => {
+                        setScreen5BuyDate(`매월 ${day}일`);
+                        setIsBuyDateBsheetOpen(false);
+                      }}
+                      style={{
+                        height: '42px',
+                        borderRadius: '8px',
+                        border: isSelected ? '2px solid #111111' : '1px solid #e2e8f0',
+                        backgroundColor: '#ffffff',
+                        color: isSelected ? '#111111' : '#4b5563',
+                        fontWeight: isSelected ? '700' : '400',
+                        fontSize: '0.88rem',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      {day}일
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* 매수 기간 선택 바텀시트 (Image 1 Style) */}
+        {isBuyPeriodBsheetOpen && (
+          <>
+            <div 
+              onClick={() => setIsBuyPeriodBsheetOpen(false)}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                zIndex: 9999,
+                backdropFilter: 'blur(1px)'
+              }}
+            />
+            <div style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: '#ffffff',
+              borderTopLeftRadius: '16px',
+              borderTopRightRadius: '16px',
+              padding: '24px 20px 24px 20px',
+              zIndex: 10000,
+              boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+              boxSizing: 'border-box',
+              animation: 'buyPeriodSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}>
+              <style>{`
+                @keyframes buyPeriodSlideUp {
+                  from { transform: translateY(100%); }
+                  to { transform: translateY(0); }
+                }
+              `}</style>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '16px'
+              }}>
+                <div style={{ fontSize: '1.05rem', fontWeight: '700', color: '#111111', letterSpacing: '-0.3px' }}>
+                  매수 기간 선택
+                </div>
+                <button 
+                  onClick={() => setIsBuyPeriodBsheetOpen(false)}
+                  style={{ border: 'none', background: 'none', cursor: 'pointer', padding: '4px', fontSize: '1.1rem', color: '#6b7280' }}
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Period option list */}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {['3개월', '6개월', '1년', '3년', '5년'].map((period) => {
+                  const isSelected = screen5BuyPeriod === period || (period === '1년' && screen5BuyPeriod === '12개월');
+                  return (
+                    <div
+                      key={period}
+                      onClick={() => {
+                        setScreen5BuyPeriod(period);
+                        setIsBuyPeriodBsheetOpen(false);
+                      }}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '14px 0',
+                        borderBottom: '1px solid #f1f5f9',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <span style={{
+                        fontSize: '0.95rem',
+                        fontWeight: isSelected ? '700' : '400',
+                        color: isSelected ? '#111111' : '#6b7280'
+                      }}>
+                        {period}
+                      </span>
+                      {isSelected && (
+                        <span style={{ fontSize: '1rem', fontWeight: '800', color: '#111111' }}>
+                          ✓
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Phone Bottom Navigation Footer */}
         <div style={{
