@@ -9051,8 +9051,12 @@ function App() {
   const [screen5FundAccumulationHasProducts, setScreen5FundAccumulationHasProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5fundhasproducts') === 'true';
   });
-  const [isBuyDateBsheetOpen, setIsBuyDateBsheetOpen] = useState(false);
-  const [isBuyPeriodBsheetOpen, setIsBuyPeriodBsheetOpen] = useState(false);
+  const [isBuyDateBsheetOpen, setIsBuyDateBsheetOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen5buydatebsheet') === 'true';
+  });
+  const [isBuyPeriodBsheetOpen, setIsBuyPeriodBsheetOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen5buyperiodbsheet') === 'true';
+  });
   const [screen5AutoTransferOption, setScreen5AutoTransferOption] = useState('동의');
   const [screen5BuyDate, setScreen5BuyDate] = useState('매월 10일');
   const [screen5BuyPeriod, setScreen5BuyPeriod] = useState('12개월');
@@ -17966,6 +17970,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
     const screen5subParam = params.get('screen5sub') || params.get('screen5tobe');
     if (screen5subParam) setScreen5ToBeSubScreen(screen5subParam);
+    const buydatebsheetParam = params.get('screen5buydatebsheet');
+    if (buydatebsheetParam !== null) setIsBuyDateBsheetOpen(buydatebsheetParam === 'true');
+    const buyperiodbsheetParam = params.get('screen5buyperiodbsheet');
+    if (buyperiodbsheetParam !== null) setIsBuyPeriodBsheetOpen(buyperiodbsheetParam === 'true');
     const screen5agreedParam = params.get('screen5agreed');
     if (screen5agreedParam) setScreen5Agreed(screen5agreedParam === 'true');
     const screen5hasproductsParam = params.get('screen5hasproducts');
@@ -18055,6 +18063,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen5agreed', screen5Agreed ? 'true' : 'false');
     params.set('screen5hasproducts', savingsStep2HasProducts ? 'true' : 'false');
     params.set('screen5fundhasproducts', screen5FundAccumulationHasProducts ? 'true' : 'false');
+    params.set('screen5buydatebsheet', isBuyDateBsheetOpen ? 'true' : 'false');
+    params.set('screen5buyperiodbsheet', isBuyPeriodBsheetOpen ? 'true' : 'false');
     params.set('screen5hasapplied', screen5HasAppliedProducts ? 'true' : 'false');
     params.set('screen5activetab', screen5ActiveTab);
     params.set('screen5tab', screen5ActiveTab);
@@ -18093,7 +18103,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, screen5HasAppliedProducts, screen5ActiveTab, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
