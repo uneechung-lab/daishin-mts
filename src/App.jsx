@@ -14290,8 +14290,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     하나파이팅코리아증권투자신탁[주식]ClassC-PE
                   </div>
                   <div style={{ width: '90px', display: 'flex', justifyContent: 'center', paddingRight: '8px' }}>
-                    <div style={{ borderBottom: '1px solid #0d9488', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '700', color: '#111827', fontSize: '0.92rem' }}>
-                      50<span style={{ color: '#0d9488', fontWeight: '300' }}>|</span>
+                    <div style={{ borderBottom: '1px solid #d1d5db', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '700', color: '#111827', fontSize: '0.92rem' }}>
+                      50
                     </div>
                   </div>
                 </div>
