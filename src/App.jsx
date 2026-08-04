@@ -9079,7 +9079,7 @@ function App() {
         sellProduct: (p.get('screen5tobe') === 'fund_accumulation') ? '예수금' : 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
         amount: (p.get('screen5tobe') === 'fund_accumulation') ? '1,000,000원' : '1,000,000좌',
         startDate: '2026.06.19',
-        endDate: '2026.06.19',
+        endDate: '2027.05.19',
         buyProducts: [
           { name: '미래에셋클린테크증권자투자신탁(주식)', ratio: '60%' },
           { name: (p.get('screen5tobe') === 'fund_accumulation') ? '대신 코리아 증권자투자신탁(주식)' : '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
@@ -15853,7 +15853,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     sellProduct: isFundAccumulation ? '예수금' : 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E',
                     amount: isFundAccumulation ? '1,000,000원' : '1,000,000좌',
                     startDate: '2026.06.19',
-                    endDate: '2026.06.19',
+                    endDate: '2027.05.19',
                     buyProducts: [
                       { name: '미래에셋클린테크증권자투자신탁(주식)', ratio: '60%' },
                       { name: isFundAccumulation ? '대신 코리아 증권자투자신탁(주식)' : '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
