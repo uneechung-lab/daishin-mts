@@ -13929,7 +13929,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>적립식 투자</span>
+                    <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>월정기입금 자동매수</span>
                     <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
                   </div>
                   <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
@@ -14325,7 +14325,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
-            {isMaturity ? '만기상품 예약 매매' : '적립식 투자'}
+            {isMaturity ? '만기상품 예약 매매' : '월정기입금 자동매수'}
           </span>
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
