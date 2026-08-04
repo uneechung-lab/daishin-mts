@@ -14513,7 +14513,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 cursor: 'pointer'
               }}
             >
-              {isFundAccumulation ? '펀드 모으기 내역' : isMaturity ? '신청내역' : '적립투자 내역'}
+              {(isFundAccumulation || isMaturity) ? '신청내역' : '적립투자 내역'}
             </div>
           </div>
 
@@ -14530,7 +14530,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 fontWeight: '400',
                 backgroundColor: '#ffffff'
               }}>
-                {isFundAccumulation ? '펀드 모으기 내역이 없습니다.' : isMaturity ? '신청내역이 없습니다.' : '적립투자 내역이 없습니다.'}
+                {(isFundAccumulation || isMaturity) ? '신청내역이 없습니다.' : '적립투자 내역이 없습니다.'}
               </div>
             ) : (
               /* Execution History Table View (Matching Attached Image Specification) */
