@@ -14581,7 +14581,7 @@ const renderScreen5ToBeSavings = () => {
             letterSpacing: '-0.3px',
             zIndex: 1
           }}>
-            {isFundAccumulation ? '펀드 모으기' : isMaturity ? '만기상품 예약 매매' : '월정기입금 자동매수'}
+            {isFundAccumulation ? '펀드 모으기' : isMaturity ? '만기상품 예약 매매' : '적립식 투자'}
           </span>
 
           <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
