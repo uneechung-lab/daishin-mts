@@ -14261,9 +14261,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             /* Product List Table View (Matching Attachment 2) */
             <div>
               {/* Table Header */}
-              <div style={{ display: 'flex', backgroundColor: '#f5f5f5', borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb', fontSize: '0.78rem', color: '#374151', padding: '8px 0', textAlign: 'center', fontWeight: '600' }}>
+              <div style={{ display: 'flex', backgroundColor: '#f4f4f6', borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb', fontSize: '0.8rem', color: '#555555', padding: '6px 0', textAlign: 'center', fontWeight: '600', alignItems: 'center' }}>
                 <div style={{ width: '44px' }}>삭제</div>
-                <div style={{ flex: 1, textAlign: 'left', paddingLeft: '8px' }}>펀드명</div>
+                <div style={{ flex: 1, textAlign: 'center' }}>펀드명</div>
                 <div style={{ width: '90px' }}>비율(%)</div>
               </div>
 
@@ -14323,7 +14323,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               {/* 자동이체 안내 및 선택 영역 (Attached Image Specification) */}
               <div style={{ marginTop: '4px', borderTop: '1px solid #e5e7eb' }}>
                 {/* Header Bar */}
-                <div style={{ backgroundColor: '#f4f4f6', padding: '10px 16px', fontSize: '0.84rem', fontWeight: '600', color: '#555555' }}>
+                <div style={{ backgroundColor: '#f4f4f6', padding: '6px 16px', fontSize: '0.8rem', fontWeight: '600', color: '#555555', display: 'flex', alignItems: 'center' }}>
                   자동이체
                 </div>
 
