@@ -14913,7 +14913,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             }}
             style={{ flex: 1, backgroundColor: '#1c1c1e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '600', cursor: 'pointer' }}
           >
-            다음
+            선택
           </div>
         </div>
 
