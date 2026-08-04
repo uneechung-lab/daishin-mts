@@ -9048,6 +9048,9 @@ function App() {
   const [savingsStep2HasProducts, setSavingsStep2HasProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5hasproducts') === 'true';
   });
+  const [screen5FundAccumulationHasProducts, setScreen5FundAccumulationHasProducts] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen5fundhasproducts') === 'true';
+  });
   const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
   });
@@ -14174,7 +14177,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
 
-          {/* Action Buttons Row: 투자비율 가져오기 | 매수상품 추가하기 */}
+          {/* Action Buttons Row: 투자 금액 선택하기 | 모을 펀드 추가하기 */}
           <div style={{ display: 'flex', gap: '8px', padding: '0 14px 14px 14px' }}>
             <button style={{
               flex: 1,
@@ -14189,17 +14192,20 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             }}>
               투자 금액 선택하기
             </button>
-            <button style={{
-              flex: 1,
-              height: '42px',
-              border: 'none',
-              borderRadius: '4px',
-              backgroundColor: '#d92528',
-              color: '#ffffff',
-              fontSize: '0.9rem',
-              fontWeight: '700',
-              cursor: 'pointer'
-            }}>
+            <button 
+              onClick={() => setScreen5FundAccumulationHasProducts(true)}
+              style={{
+                flex: 1,
+                height: '42px',
+                border: 'none',
+                borderRadius: '4px',
+                backgroundColor: '#d92528',
+                color: '#ffffff',
+                fontSize: '0.9rem',
+                fontWeight: '700',
+                cursor: 'pointer'
+              }}
+            >
               모을 펀드 추가하기
             </button>
           </div>
@@ -14208,47 +14214,139 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           <div style={{ padding: '0 14px 14px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>투자 금액</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>10,000</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '800', color: '#111827' }}>0</span>
             </div>
           </div>
 
-          {/* Alert Subheader Bar */}
-          <div style={{ backgroundColor: '#f8fafc', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>
-            <span style={{ color: '#dc2626', fontWeight: '700' }}>모을 펀드 상품</span>
-            <span style={{ color: '#4b5563' }}>을 선택해주세요.</span>
-          </div>
+          {!screen5FundAccumulationHasProducts ? (
+            <>
+              {/* Alert Subheader Bar */}
+              <div style={{ backgroundColor: '#f8fafc', padding: '12px 16px', textAlign: 'center', fontSize: '0.85rem', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>
+                <span style={{ color: '#dc2626', fontWeight: '700' }}>모을 펀드 상품</span>
+                <span style={{ color: '#4b5563' }}>을 선택해주세요.</span>
+              </div>
 
-          {/* Empty Product State */}
-          <div style={{ padding: '56px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: '16px' }}>
-            <div style={{ color: '#6b7280', fontSize: '0.92rem', lineHeight: '1.6' }}>
-              상품을 추가해주세요.
+              {/* Empty Product State */}
+              <div style={{ padding: '56px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: '16px' }}>
+                <div style={{ color: '#6b7280', fontSize: '0.92rem', lineHeight: '1.6' }}>
+                  상품을 추가해주세요.
+                </div>
+                <button 
+                  onClick={() => setScreen5FundAccumulationHasProducts(true)}
+                  style={{
+                    padding: '8px 24px',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: '4px',
+                    backgroundColor: '#ffffff',
+                    color: '#1e293b',
+                    fontSize: '0.88rem',
+                    fontWeight: '700',
+                    cursor: 'pointer'
+                  }}
+                >
+                  상품 추가하기
+                </button>
+              </div>
+            </>
+          ) : (
+            /* Product List Table View (Matching Attachment 2) */
+            <div>
+              {/* Table Header */}
+              <div style={{ display: 'flex', backgroundColor: '#f5f5f5', borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb', fontSize: '0.78rem', color: '#374151', padding: '8px 0', textAlign: 'center', fontWeight: '600' }}>
+                <div style={{ width: '44px' }}>삭제</div>
+                <div style={{ flex: 1, textAlign: 'left', paddingLeft: '8px' }}>펀드명</div>
+                <div style={{ width: '90px' }}>비율(%)</div>
+              </div>
+
+              {/* Table Rows */}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {/* Row 1 */}
+                <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #f1f5f9', padding: '12px 0', fontSize: '0.82rem' }}>
+                  <div 
+                    onClick={() => setScreen5FundAccumulationHasProducts(false)}
+                    style={{ width: '44px', display: 'flex', justifyContent: 'center', color: '#9ca3af', cursor: 'pointer', fontSize: '1rem' }}
+                  >
+                    ✕
+                  </div>
+                  <div style={{ flex: 1, paddingRight: '12px', color: '#111827', fontWeight: '600', lineHeight: '1.35', wordBreak: 'break-all' }}>
+                    한국투자다시성장코리아증권자투자신탁 1(주식)(C-Pe)
+                  </div>
+                  <div style={{ width: '90px', display: 'flex', justifyContent: 'center', paddingRight: '8px' }}>
+                    <div style={{ borderBottom: '1px solid #d1d5db', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '700', color: '#111827', fontSize: '0.92rem' }}>
+                      50
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 2 */}
+                <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #f1f5f9', padding: '12px 0', fontSize: '0.82rem' }}>
+                  <div 
+                    onClick={() => setScreen5FundAccumulationHasProducts(false)}
+                    style={{ width: '44px', display: 'flex', justifyContent: 'center', color: '#9ca3af', cursor: 'pointer', fontSize: '1rem' }}
+                  >
+                    ✕
+                  </div>
+                  <div style={{ flex: 1, paddingRight: '12px', color: '#111827', fontWeight: '600', lineHeight: '1.35', wordBreak: 'break-all' }}>
+                    하나파이팅코리아증권투자신탁[주식]ClassC-PE
+                  </div>
+                  <div style={{ width: '90px', display: 'flex', justifyContent: 'center', paddingRight: '8px' }}>
+                    <div style={{ borderBottom: '1px solid #0d9488', width: '56px', textAlign: 'center', paddingBottom: '2px', fontWeight: '700', color: '#111827', fontSize: '0.92rem' }}>
+                      50<span style={{ color: '#0d9488', fontWeight: '300' }}>|</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Ratio Summary Row (Attachment 2) */}
+              <div style={{ backgroundColor: '#f9fafb', padding: '10px 16px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px', borderBottom: '1px solid #f3f4f6' }}>
+                <span style={{ fontSize: '0.88rem', color: '#374151', fontWeight: '600' }}>비율합계</span>
+                <span style={{ fontSize: '1.02rem', fontWeight: '800', color: '#111827' }}>100%</span>
+              </div>
+
+              {/* Bullet Notes (Attachment 2) */}
+              <div style={{ padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.78rem', color: '#6b7280', lineHeight: '1.45' }}>
+                <div>
+                  • 최대 <span style={{ color: '#2563eb', fontWeight: '600' }}>10개까지 등록 가능</span>합니다.
+                </div>
+                <div>
+                  • 전체 <span style={{ color: '#2563eb', fontWeight: '600' }}>투자비율 합계는 100%가 되도록 설정</span>하셔야 합니다.
+                </div>
+                <div style={{ paddingLeft: '8px', color: '#9ca3af' }}>
+                  (비중은 10% 단위로만 입력 가능합니다.)
+                </div>
+              </div>
             </div>
-            <button style={{
-              padding: '8px 24px',
-              border: '1px solid #cbd5e1',
-              borderRadius: '4px',
-              backgroundColor: '#ffffff',
-              color: '#1e293b',
-              fontSize: '0.88rem',
-              fontWeight: '700',
-              cursor: 'pointer'
-            }}>
-              상품 추가하기
-            </button>
-          </div>
+          )}
 
         </div>
 
-        {/* Bottom Total & Next Action Bar */}
-        <div style={{ display: 'flex', height: '52px', borderTop: '1px solid #e2e8f0' }}>
+        {/* Bottom Total & Next Action Bar (Attachment 1 Specification) */}
+        <div style={{ display: 'flex', height: '54px', borderTop: '1px solid #e2e8f0' }}>
           <div style={{ flex: 1, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '16px' }}>
-            <span style={{ fontSize: '0.73rem', color: '#6b7280' }}>합계</span>
-            <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#1d4ed8' }}>0 원</span>
+            <span style={{ fontSize: '0.73rem', color: '#4b5563', fontWeight: '500' }}>비율합계</span>
+            <span style={{ fontSize: '1.15rem', fontWeight: '800', color: '#111827', marginTop: '1px' }}>
+              {screen5FundAccumulationHasProducts ? '100 %' : '0 %'}
+            </span>
           </div>
           <div 
-            style={{ flex: 1, backgroundColor: '#e2e8f0', color: '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '700', cursor: 'not-allowed' }}
+            onClick={() => {
+              if (screen5FundAccumulationHasProducts) {
+                setScreen5ToBeSubScreen('savings_apply_step2');
+              }
+            }}
+            style={{ 
+              flex: 1, 
+              backgroundColor: screen5FundAccumulationHasProducts ? '#1c1c1e' : '#e2e8f0', 
+              color: screen5FundAccumulationHasProducts ? '#ffffff' : '#94a3b8', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              fontSize: '1.02rem', 
+              fontWeight: '700', 
+              cursor: screen5FundAccumulationHasProducts ? 'pointer' : 'not-allowed' 
+            }}
           >
-            다음
+            투자비율 적용
           </div>
         </div>
 
@@ -14258,7 +14356,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
         </div>
 
-        {/* Bottom Phone Navigation */}
+        {/* Phone Bottom Navigation Footer */}
         <div style={{
           height: '44px',
           display: 'flex',
@@ -14314,7 +14412,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     );
   };
 
-const renderScreen5ToBeSavings = () => {
+  const renderScreen5ToBeSavings = () => {
     const isMaturity = screen5ToBeSubScreen === 'maturity';
     const isFundAccumulation = screen5ToBeSubScreen === 'fund_accumulation';
     if (screen5SelectedCardDetail) {
