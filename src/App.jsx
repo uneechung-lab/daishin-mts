@@ -15761,7 +15761,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     startDate: '2026.05.01',
                     endDate: '2027.05.01',
                     buyProducts: [
-                      { name: 'KODEX 미국나스닥100TR', ratio: '100%' }
+                      { name: isFundAccumulation ? '미래에셋 미국나스닥100 증권자투자신탁(주식)' : 'KODEX 미국나스닥100TR', ratio: '100%' }
                     ],
                     totalRatio: '100%',
                     cancelStatus: isMaturity ? '취소 (2026.07.01)' : '중지 (2026.07.01)'
@@ -15823,7 +15823,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           flexShrink: 0
                         }}>매수</span>
                         <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          KODEX 미국나스닥100TR
+                          {isFundAccumulation ? '미래에셋 미국나스닥100 증권자투자신탁(주식)' : 'KODEX 미국나스닥100TR'}
                         </span>
                       </div>
                     </div>
@@ -15849,8 +15849,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     startDate: '2026.06.19',
                     endDate: '2026.06.19',
                     buyProducts: [
-                      { name: '미래에셋클린테크증권자투자신탁', ratio: '60%' },
-                      { name: '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
+                      { name: '미래에셋클린테크증권자투자신탁(주식)', ratio: '60%' },
+                      { name: isFundAccumulation ? '대신 코리아 증권자투자신탁(주식)' : '(IRP) 다올저축은행/정기예금/1년', ratio: '40%' }
                     ],
                     totalRatio: '100%',
                     cancelStatus: '취소 (2026.06.22)'
@@ -15937,7 +15937,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     startDate: '2026.07.10',
                     endDate: '2029.07.10',
                     buyProducts: [
-                      { name: 'KODEX 200 TR', ratio: '100%' }
+                      { name: isFundAccumulation ? '대신 코리아 증권자투자신탁(주식)' : 'KODEX 200 TR', ratio: '100%' }
                     ],
                     totalRatio: '100%',
                     cancelStatus: '-'
@@ -15998,7 +15998,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           flexShrink: 0
                         }}>매수</span>
                         <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#334155', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          KODEX 200 TR
+                          {isFundAccumulation ? '대신 코리아 증권자투자신탁(주식)' : 'KODEX 200 TR'}
                         </span>
                       </div>
                     </div>
@@ -16070,7 +16070,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             flexShrink: 0
                           }}>매수</span>
                           <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            SOL 미국배당다우존스
+                            {isFundAccumulation ? '한국투자 미국배당 증권자투자신탁(주식)' : 'SOL 미국배당다우존스'}
                           </span>
                         </div>
                       </div>
@@ -16138,7 +16138,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             flexShrink: 0
                           }}>매수</span>
                           <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            TIGER 미국S&P500
+                            {isFundAccumulation ? 'KB 스타 미국S&P500 증권자투자신탁(주식)' : 'TIGER 미국S&P500'}
                           </span>
                         </div>
                       </div>
@@ -16206,7 +16206,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             flexShrink: 0
                           }}>매수</span>
                           <span style={{ fontSize: '0.88rem', fontWeight: '600', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            ACE 미국빅테크10
+                            {isFundAccumulation ? '신한 글로벌 빅테크 증권자투자신탁(주식)' : 'ACE 미국빅테크10'}
                           </span>
                         </div>
                       </div>
