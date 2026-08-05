@@ -6535,19 +6535,21 @@ function PensionReceiptRequestView({ isDark, isToBe, onBackClick, isDrawerOpen, 
         </>
       )}
 
-      {/* S&P500 Footer bar */}
+      {/* KOSDAQ Ticker bar */}
       <div style={{
-        height: '24px',
-        borderTop: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
-        backgroundColor: isDark ? '#111827' : '#f8fafc',
+        height: '26px',
+        borderTop: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+        borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+        backgroundColor: isDark ? '#1e293b' : '#f8fafc',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 12px',
-        fontSize: '0.7rem'
+        fontSize: '0.78rem',
+        flexShrink: 0
       }}>
-        <span style={{ fontWeight: '600' }}>S&P500</span>
-        <span style={{ color: '#de201e', fontWeight: '700' }}>7,440.43 ▲ 86.41 (1.18%)</span>
+        <span style={{ fontWeight: '800', color: isDark ? '#f8fafc' : '#0f172a' }}>KOSDAQ</span>
+        <span style={{ color: '#ef4444', fontWeight: '700' }}>818.71 ▲ 34.73 (4.43%)</span>
       </div>
 
       {/* Navigation Footer */}
@@ -8975,6 +8977,25 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
 function App() {
 
   const [isDark, setIsDark] = useState(false);
+  const renderMarketTickerBar = (dark = isDark) => (
+    <div style={{
+      height: '26px',
+      backgroundColor: dark ? '#1e293b' : '#f8fafc',
+      borderTop: dark ? '1px solid #334155' : '1px solid #e2e8f0',
+      borderBottom: dark ? '1px solid #334155' : '1px solid #e2e8f0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '0 12px',
+      fontSize: '0.78rem',
+      boxSizing: 'border-box',
+      width: '100%',
+      flexShrink: 0
+    }}>
+      <span style={{ fontWeight: '800', color: dark ? '#f8fafc' : '#0f172a' }}>KOSDAQ</span>
+      <span style={{ color: '#ef4444', fontWeight: '700' }}>818.71 ▲ 34.73 (4.43%)</span>
+    </div>
+  );
   const [isFigmaExportMode, setIsFigmaExportMode] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('figmaExport') === 'true';
@@ -12323,6 +12344,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         )}
                       </div>
 
+                      {/* Ticker Bar */}
+                      {renderMarketTickerBar(isDark)}
+
                       {/* Footer Bar */}
                       <div style={{
                         height: '48px',
@@ -12776,11 +12800,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '12px', color: '#de201e' }}>289,000</div>
                           </div>
 
-                          {/* KOSDAQ footer -> S&P500 footer */}
-                          <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
-                            <span style={{ fontWeight: '800' }}>S&P500</span>
-                            <span style={{ color: '#de201e', fontWeight: '800' }}>7,537.43 ▲ 54.19 (0.72%)</span>
-                          </div>
+                          {/* KOSDAQ Ticker Bar */}
+                          {renderMarketTickerBar(isDark)}
 
                           {/* Bottom bar */}
                           <div style={{
@@ -13214,11 +13235,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '12px', color: '#de201e' }}>289,000</div>
                           </div>
 
-                          {/* KOSDAQ footer -> S&P500 footer */}
-                          <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
-                            <span style={{ fontWeight: '800' }}>S&P500</span>
-                            <span style={{ color: '#de201e', fontWeight: '800' }}>7,537.43 ▲ 54.19 (0.72%)</span>
-                          </div>
+                          {/* KOSDAQ Ticker Bar */}
+                          {renderMarketTickerBar(isDark)}
 
                           {/* Bottom bar */}
                           <div style={{
@@ -13698,6 +13716,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
         </div>
 
+        {/* Ticker Bar */}
+        {renderMarketTickerBar(isDark)}
+
         {/* Bottom Navigation Tab Bar (identical to Screen 6) */}
         <div style={{
           height: '50px',
@@ -14023,6 +14044,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </div>
         </div>
+
+        {/* Ticker Bar */}
+        {renderMarketTickerBar(isDark)}
 
         {/* Bottom Navigation Tab Bar (identical to Screen 6) */}
         <div style={{
@@ -14466,10 +14490,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Ticker Bar */}
-        <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
-          <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
-          <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
-        </div>
+        {renderMarketTickerBar(isDark)}
 
         {/* 매수 일자 선택 바텀시트 (Image 1 & 2 Style) */}
         {isBuyDateBsheetOpen && (
@@ -14634,6 +14655,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             </div>
           </>
         )}
+
+        {/* Ticker Bar */}
+        {renderMarketTickerBar(isDark)}
 
         {/* Phone Bottom Navigation Footer */}
         <div style={{
@@ -14918,10 +14942,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Ticker Bar */}
-        <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
-          <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
-          <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
-        </div>
+        {renderMarketTickerBar(isDark)}
 
         {/* Phone Footer Navigation */}
         <div style={{
@@ -16431,6 +16452,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
         )}
 
+        {/* Ticker Bar */}
+        {renderMarketTickerBar(isDark)}
+
         {/* Bottom Navigation Tab Bar (identical to Screen 6 & Screen 5) */}
         <div style={{
           height: '50px',
@@ -16793,6 +16817,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           다음
         </div>
 
+        {/* Ticker Bar */}
+        {renderMarketTickerBar(isDark)}
+
         {/* Bottom Navigation Tab Bar */}
         <div style={{
           height: '50px',
@@ -17071,10 +17098,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Ticker Bar */}
-        <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
-          <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
-          <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
-        </div>
+        {renderMarketTickerBar(isDark)}
 
         {/* Phone Footer Navigation */}
         <div style={{
@@ -17498,10 +17522,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Ticker Bar */}
-        <div style={{ height: '24px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem' }}>
-          <span style={{ fontWeight: '700', color: '#333' }}>S&P500</span>
-          <span style={{ color: '#2563eb', fontWeight: '700' }}>7,316.15 ▼ 112.63 (1.52%)</span>
-        </div>
+        {renderMarketTickerBar(isDark)}
 
         {/* Phone Footer Navigation */}
         <div style={{
