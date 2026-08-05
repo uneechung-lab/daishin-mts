@@ -9143,6 +9143,24 @@ function App() {
     }
     return '진행중';
   });
+  const screen5ContentRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (screen5ContentRef.current) {
+        const params = new URLSearchParams(window.location.search);
+        const urlScrollTop = params.get('tobeScrollTop') || params.get('scrollTop') || params.get('screen5scroll') || params.get('scroll');
+        if (urlScrollTop) {
+          if (urlScrollTop === 'true' || urlScrollTop === 'scrolled') {
+            screen5ContentRef.current.scrollTop = 260;
+          } else {
+            screen5ContentRef.current.scrollTop = parseInt(urlScrollTop, 10);
+          }
+        }
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [screen5ToBeSubScreen, appliedStatusFilter, historyStatusFilter, screen5ActiveTab]);
 
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
@@ -15305,7 +15323,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Contents Container */}
-        <div ref={contentRef} onScroll={handleScroll} style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
+        <div ref={screen5ContentRef} style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
           
           {/* Account Selector Bar (Identical to Page 6 보유상품 현황 style) */}
           <div style={{ padding: '8px 12px' }}>
