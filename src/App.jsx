@@ -17763,41 +17763,94 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
             ) : screen5SelectedCategory === 'IRP/퇴직연금' ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '20px' }}>
-                  {[
-                    '전체자산 현황',
-                    '보유상품 현황',
-                    '투자비율 현황',
-                    '디폴트옵션 현황',
-                    '만기예정',
-                    '통합 거래내역',
-                    '연간납입한도 설정',
-                    '가입확인서 발급',
-                    '실물이전 사전조회'
-                  ].map((item, idx) => (
-                    <span key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
-                      {item}
-                    </span>
-                  ))}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                {/* 1. MY 퇴직연금 */}
+                <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {[
+                      '전체자산 현황',
+                      '보유상품 현황',
+                      '투자비율 현황',
+                      '디폴트옵션 현황',
+                      '만기예정',
+                      '통합 거래내역',
+                      '연간납입한도 설정',
+                      '가입확인서 발급',
+                      '실물이전 사전조회'
+                    ].map((item, idx) => (
+                      <span key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  {[
-                    { name: '전체상품검색' },
-                    { name: '금융상품 투자하기', action: isToBe ? () => setScreen5ToBeSubScreen('invest') : null },
-                    { name: '장외채권 매매' },
-                    { name: '장내채권 매매' },
-                    { name: '장내채권 미체결/체결' },
-                    { name: '장내(외)채권 잔고' },
-                    { name: '디폴트옵션 매매' },
-                    { name: 'ELB 청약예약' }
-                  ].map((item, idx) => (
-                    <span key={idx} onClick={item.action} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
-                      {item.name}
-                    </span>
-                  ))}
+
+                {/* 2. 상품 매매 */}
+                <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {(isToBe ? [
+                      { name: '전체상품검색' },
+                      { name: '금융상품 투자하기', action: () => setScreen5ToBeSubScreen('invest') },
+                      { name: '장외채권 매매' },
+                      { name: '장내채권 매매' },
+                      { name: '장내채권 미체결/체결' },
+                      { name: '장내(외)채권 잔고' },
+                      { name: '디폴트옵션 매매' },
+                      { name: 'ELB 청약예약' }
+                    ] : [
+                      { name: '전체상품검색' },
+                      { name: '자산배분펀드(TDF+디딤펀드)' },
+                      { name: '보유상품 매도후매수' },
+                      { name: '금융상품 매수' },
+                      { name: '금융상품 매도' },
+                      { name: '만기 예약매매' },
+                      { name: '자동 분할매수' },
+                      { name: '장외채권 매매' },
+                      { name: '디폴트옵션 매매' },
+                      { name: '매매내역 조회/취소' },
+                      { name: 'ELB 청약예약' }
+                    ]).map((item, idx) => (
+                      <span key={idx} onClick={item.action} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                        {item.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. 연금세금 */}
+                <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>연금세금</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {[
+                      '예상세금 계산기',
+                      '예상퇴직소득세 계산기',
+                      '연금개시 시뮬레이션'
+                    ].map((item, idx) => (
+                      <span key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 4. IRP 관리 */}
+                <div>
+                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>IRP 관리</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {[
+                      '연금수령 신청',
+                      '연금수령 신청 조회/취소',
+                      '연금수령 현황',
+                      'IRP 해지신청',
+                      'IRP 해지신청 조회/취소'
+                    ].map((item, idx) => (
+                      <span key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ) : (
