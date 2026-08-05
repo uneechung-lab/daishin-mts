@@ -9145,21 +9145,56 @@ function App() {
   });
   const screen5ContentRef = useRef(null);
 
+  const handleScreen5Scroll = (e) => {
+    const st = e.target.scrollTop;
+    if (st !== undefined) {
+      sessionStorage.setItem('screen5ScrollTop', st);
+      const params = new URLSearchParams(window.location.search);
+      if (st > 50) {
+        params.set('tobeScrollTop', Math.round(st));
+        params.set('scroll', 'true');
+      } else {
+        params.delete('tobeScrollTop');
+        params.delete('scroll');
+      }
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      if (window.location.search !== `?${params.toString()}`) {
+        window.history.replaceState({}, '', newUrl);
+      }
+    }
+  };
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const restoreScroll = () => {
       if (screen5ContentRef.current) {
         const params = new URLSearchParams(window.location.search);
         const urlScrollTop = params.get('tobeScrollTop') || params.get('scrollTop') || params.get('screen5scroll') || params.get('scroll');
-        if (urlScrollTop) {
-          if (urlScrollTop === 'true' || urlScrollTop === 'scrolled') {
-            screen5ContentRef.current.scrollTop = 260;
-          } else {
-            screen5ContentRef.current.scrollTop = parseInt(urlScrollTop, 10);
-          }
+        const savedSessionScroll = sessionStorage.getItem('screen5ScrollTop');
+        
+        let targetScroll = 0;
+        if (urlScrollTop === 'true' || urlScrollTop === 'scrolled') {
+          targetScroll = 260;
+        } else if (urlScrollTop && !isNaN(parseInt(urlScrollTop, 10))) {
+          targetScroll = parseInt(urlScrollTop, 10);
+        } else if (savedSessionScroll && !isNaN(parseInt(savedSessionScroll, 10))) {
+          targetScroll = parseInt(savedSessionScroll, 10);
+        }
+
+        if (targetScroll > 0) {
+          screen5ContentRef.current.scrollTop = targetScroll;
         }
       }
-    }, 100);
-    return () => clearTimeout(timer);
+    };
+
+    restoreScroll();
+    const t1 = setTimeout(restoreScroll, 50);
+    const t2 = setTimeout(restoreScroll, 150);
+    const t3 = setTimeout(restoreScroll, 300);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, [screen5ToBeSubScreen, appliedStatusFilter, historyStatusFilter, screen5ActiveTab]);
 
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
@@ -15329,7 +15364,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Contents Container */}
-        <div ref={screen5ContentRef} style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
+        <div ref={screen5ContentRef} onScroll={handleScreen5Scroll} style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
           
           {!isScrolledMode && (
             <>
