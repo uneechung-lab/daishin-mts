@@ -9144,22 +9144,6 @@ function App() {
     return '진행중';
   });
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (appliedStatusFilter) {
-      params.set('screen5status', appliedStatusFilter);
-    }
-    if (screen5ToBeSubScreen) {
-      params.set('screen5tobe', screen5ToBeSubScreen);
-    }
-    if (screen5ActiveTab) {
-      params.set('screen5tab', screen5ActiveTab);
-    }
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    if (window.location.search !== `?${params.toString()}`) {
-      window.history.replaceState({}, '', newUrl);
-    }
-  }, [appliedStatusFilter, historyStatusFilter, screen5ToBeSubScreen, screen5ActiveTab]);
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
@@ -18390,6 +18374,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen5activetab', screen5ActiveTab);
     params.set('screen5tab', screen5ActiveTab);
     params.set('tab', screen5ActiveTab);
+    params.set('screen5status', appliedStatusFilter);
     if (screen5SelectedCardDetail) {
       params.set('screen5detail', 'true');
     } else {
@@ -18424,7 +18409,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, appliedStatusFilter, historyStatusFilter, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
