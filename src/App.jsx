@@ -13803,11 +13803,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Bottom Navigation Tab Bar (identical to Screen 6) */}
         <div style={{
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 100,
           height: '50px',
           display: 'flex',
           alignItems: 'stretch',
           borderTop: '1px solid #e2e8f0',
-          backgroundColor: '#ffffff'
+          backgroundColor: '#ffffff',
+          flexShrink: 0
         }}>
           <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
@@ -14132,11 +14136,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Bottom Navigation Tab Bar (identical to Screen 6) */}
         <div style={{
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 100,
           height: '50px',
           display: 'flex',
           alignItems: 'stretch',
           borderTop: '1px solid #e2e8f0',
-          backgroundColor: '#ffffff'
+          backgroundColor: '#ffffff',
+          flexShrink: 0
         }}>
           <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
@@ -16256,6 +16264,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Bottom Navigation Tab Bar (identical to Screen 6 & Screen 5) */}
         <div style={{
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 100,
           height: '50px',
           display: 'flex',
           alignItems: 'stretch',
@@ -16621,6 +16632,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Bottom Navigation Tab Bar */}
         <div style={{
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 100,
           height: '50px',
           display: 'flex',
           alignItems: 'stretch',
