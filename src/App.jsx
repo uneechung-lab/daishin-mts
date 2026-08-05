@@ -15050,6 +15050,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
   const renderScreen5ToBeSavings = () => {
     const isMaturity = screen5ToBeSubScreen === 'maturity';
     const isFundAccumulation = screen5ToBeSubScreen === 'fund_accumulation';
+    const isScrolledMode = (() => {
+      const p = new URLSearchParams(window.location.search);
+      const s = p.get('scroll') || p.get('scrolled') || p.get('sticky') || p.get('figmaScroll') || p.get('screen5scroll');
+      return s === 'true' || s === 'scrolled' || s === 'sticky';
+    })();
+
     if (screen5SelectedCardDetail) {
       return (
         <div style={{
@@ -15325,148 +15331,152 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         {/* Contents Container */}
         <div ref={screen5ContentRef} style={{ flex: isFigmaExportMode ? 'none' : 1, overflowY: isFigmaExportMode ? 'visible' : 'auto', backgroundColor: '#ffffff' }}>
           
-          {/* Account Selector Bar (Identical to Page 6 보유상품 현황 style) */}
-          <div style={{ padding: '8px 12px' }}>
-            <div 
-              onClick={() => setScreen6ToBeBsheetState('account')}
-              style={{
-                border: '1px solid #e2e8f0',
-                borderRadius: '6px',
-                padding: '8px 12px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#f8fafc',
-                cursor: 'pointer'
-              }}
-            >
-              <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-100029(41) 김대신</span>
-              <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
-            </div>
-          </div>
+          {!isScrolledMode && (
+            <>
+              {/* Account Selector Bar (Identical to Page 6 보유상품 현황 style) */}
+              <div style={{ padding: '8px 12px' }}>
+                <div 
+                  onClick={() => setScreen6ToBeBsheetState('account')}
+                  style={{
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '6px',
+                    padding: '8px 12px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: '#f8fafc',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span style={{ fontSize: '12px', fontWeight: '600', color: '#333333' }}>782-100029(41) 김대신</span>
+                  <span style={{ fontSize: '10px', color: '#666666' }}>▼</span>
+                </div>
+              </div>
 
-          {/* Hero Banner Section */}
-          <div style={{ padding: '24px 16px 20px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
-            <div style={{ flex: 1, paddingRight: '10px' }}>
-              {screen5HasAppliedProducts ? (
-                <>
-                  <h2 style={{ fontSize: '1.02rem', fontWeight: '700', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
-                    {isMaturity ? (
-                      '2건의 만기 예정 상품이 만기일에 4개의 금융상품으로 자동매수 예약되어 있습니다.'
-                    ) : (
-                      <>
-                        {!isFundAccumulation && <>매월 4개의 금융상품에<br /></>}
-                        {isFundAccumulation ? (
-                          <>2건의 펀드모으기로<br />총 2,000,000원이 재투자 됩니다.</>
-                        ) : isMaturity ? (
-                          '만기상품 예약 매매 이용 중입니다.'
+              {/* Hero Banner Section */}
+              <div style={{ padding: '24px 16px 20px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #f1f3f5' }}>
+                <div style={{ flex: 1, paddingRight: '10px' }}>
+                  {screen5HasAppliedProducts ? (
+                    <>
+                      <h2 style={{ fontSize: '1.02rem', fontWeight: '700', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
+                        {isMaturity ? (
+                          '2건의 만기 예정 상품이 만기일에 4개의 금융상품으로 자동매수 예약되어 있습니다.'
                         ) : (
-                          '적립식 투자하고 있어요.'
+                          <>
+                            {!isFundAccumulation && <>매월 4개의 금융상품에<br /></>}
+                            {isFundAccumulation ? (
+                              <>2건의 펀드모으기로<br />총 2,000,000원이 재투자 됩니다.</>
+                            ) : isMaturity ? (
+                              '만기상품 예약 매매 이용 중입니다.'
+                            ) : (
+                              '적립식 투자하고 있어요.'
+                            )}
+                          </>
                         )}
-                      </>
-                    )}
-                  </h2>
-                  {!isMaturity && (
-                    <p style={{ fontSize: '0.86rem', color: '#2563eb', fontWeight: '600', margin: '0 0 14px 0', lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                      매월 5일, 10일에 매수하고 있어요.
-                    </p>
+                      </h2>
+                      {!isMaturity && (
+                        <p style={{ fontSize: '0.86rem', color: '#2563eb', fontWeight: '600', margin: '0 0 14px 0', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                          매월 5일, 10일에 매수하고 있어요.
+                        </p>
+                      )}
+                      {/* [적립/만기상품 추가하기] 버튼 */}
+                      <button
+                        onClick={() => setScreen5HasAppliedProducts(false)}
+                        style={{
+                          backgroundColor: '#111827',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '5px',
+                          padding: '10.5px 16px',
+                          fontSize: '0.84rem',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}
+                      >
+                        {isFundAccumulation ? '펀드 모으기 추가하기' : isMaturity ? '만기예약상품 추가하기' : '적립상품 추가하기'}
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <h2 style={{ fontSize: '1.02rem', fontWeight: '700', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
+                        {isFundAccumulation ? (
+                          <>
+                            선택하신 펀드 상품과<br />
+                            매수일, 투자기간만 설정하시면<br />
+                            신경 쓸 필요 없이 알아서 투자되는<br />
+                            자동 매수 서비스
+                          </>
+                        ) : isMaturity ? (
+                          <>
+                            만기 다가오는 상품,<br />
+                            원하는 신규 상품으로<br />
+                            만기 시 알아서 재투자해 주는<br />
+                            자동 예약 매매 서비스
+                          </>
+                        ) : (
+                          <>
+                            원하는 날짜, 원하는 상품으로<br />
+                            매월 알아서 투자해 주는<br />
+                            자동 매수 서비스
+                          </>
+                        )}
+                      </h2>
+                      <p style={{ fontSize: '0.8rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                        {isFundAccumulation ? '보유하신 예수금을 재원으로, 지정하신 조건에 맞춰 자동으로 투자가 진행됩니다.' : isMaturity ? '보유하신 상품의 만기 상환금을 재원으로 신경 쓸 필요 없이 자동으로 투자가 진행됩니다.' : '보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.'}
+                      </p>
+                    </>
                   )}
-                  {/* [적립/만기상품 추가하기] 버튼 */}
-                  <button
-                    onClick={() => setScreen5HasAppliedProducts(false)}
-                    style={{
-                      backgroundColor: '#111827',
-                      color: '#ffffff',
-                      border: 'none',
-                      borderRadius: '5px',
-                      padding: '10.5px 16px',
-                      fontSize: '0.84rem',
-                      fontWeight: '700',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px'
-                    }}
-                  >
-                    {isFundAccumulation ? '펀드 모으기 추가하기' : isMaturity ? '만기예약상품 추가하기' : '적립상품 추가하기'}
-                  </button>
-                </>
-              ) : (
-                <>
-                  <h2 style={{ fontSize: '1.02rem', fontWeight: '700', margin: '0 0 10px 0', color: '#1e293b', lineHeight: '1.4', wordBreak: 'keep-all', letterSpacing: '-0.4px' }}>
-                    {isFundAccumulation ? (
-                      <>
-                        선택하신 펀드 상품과<br />
-                        매수일, 투자기간만 설정하시면<br />
-                        신경 쓸 필요 없이 알아서 투자되는<br />
-                        자동 매수 서비스
-                      </>
-                    ) : isMaturity ? (
-                      <>
-                        만기 다가오는 상품,<br />
-                        원하는 신규 상품으로<br />
-                        만기 시 알아서 재투자해 주는<br />
-                        자동 예약 매매 서비스
-                      </>
-                    ) : (
-                      <>
-                        원하는 날짜, 원하는 상품으로<br />
-                        매월 알아서 투자해 주는<br />
-                        자동 매수 서비스
-                      </>
-                    )}
-                  </h2>
-                  <p style={{ fontSize: '0.8rem', color: '#64748b', margin: 0, lineHeight: '1.5', wordBreak: 'keep-all' }}>
-                    {isFundAccumulation ? '보유하신 예수금을 재원으로, 지정하신 조건에 맞춰 자동으로 투자가 진행됩니다.' : isMaturity ? '보유하신 상품의 만기 상환금을 재원으로 신경 쓸 필요 없이 자동으로 투자가 진행됩니다.' : '보유하신 현금이나 상품을 재원으로 원하는 기간 동안 자동으로 투자가 진행됩니다.'}
-                  </p>
-                </>
-              )}
-            </div>
-            {/* Hero Image Section */}
-            {isFundAccumulation ? (
-              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: '44px', marginLeft: '4px' }}>
-                <img 
-                  src="/savings_hero4.png" 
-                  alt="펀드 모으기 이미지"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
+                </div>
+                {/* Hero Image Section */}
+                {isFundAccumulation ? (
+                  <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: '44px', marginLeft: '4px' }}>
+                    <img 
+                      src="/savings_hero4.png" 
+                      alt="펀드 모으기 이미지"
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    />
+                  </div>
+                ) : !isMaturity ? (
+                  <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', transform: 'translateX(-5px)' }}>
+                    <img 
+                      src="/savings_hero2.png" 
+                      alt="적립식 투자 돼지 이미지"
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    />
+                  </div>
+                ) : (
+                  <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: '44px', marginLeft: '4px' }}>
+                    <img 
+                      src="/savings_hero3.png" 
+                      alt="만기상품 예약 매매 이미지"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const svgEl = e.currentTarget.parentElement?.querySelector('svg');
+                        if (svgEl) svgEl.style.display = 'block';
+                      }}
+                      onLoad={(e) => {
+                        const svgEl = e.currentTarget.parentElement?.querySelector('svg');
+                        if (svgEl) svgEl.style.display = 'none';
+                      }}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    />
+                    <svg width="85" height="85" viewBox="0 0 100 100" fill="none">
+                      <path d="M50 15 C 70 15, 85 30, 85 50 C 85 60, 78 70, 70 78 L 58 64 C 62 59, 65 54, 65 48 C 65 38, 58 30, 50 30 Z" fill="#ec4899" />
+                      <path d="M70 78 C 60 88, 40 88, 30 78 L 42 64 C 47 69, 53 69, 58 64 Z" fill="#06b6d4" />
+                      <path d="M30 78 C 20 70, 15 55, 15 40 C 15 28, 25 18, 40 15 L 44 30 C 35 32, 30 38, 30 45 C 30 53, 34 60, 42 64 Z" fill="#6366f1" />
+                      <circle cx="82" cy="28" r="9.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="2" />
+                      <path d="M82 32V24M78.5 27.5L82 24L85.5 27.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <circle cx="20" cy="72" r="8.5" fill="#f43f5e" stroke="#ffffff" strokeWidth="2" />
+                      <path d="M20 68V76M17 73L20 76L23 73" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                )}
               </div>
-            ) : !isMaturity ? (
-              <div style={{ width: '110px', height: '110px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px', transform: 'translateX(-5px)' }}>
-                <img 
-                  src="/savings_hero2.png" 
-                  alt="적립식 투자 돼지 이미지"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
-              </div>
-            ) : (
-              <div style={{ width: '85px', height: '85px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: '44px', marginLeft: '4px' }}>
-                <img 
-                  src="/savings_hero3.png" 
-                  alt="만기상품 예약 매매 이미지"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    const svgEl = e.currentTarget.parentElement?.querySelector('svg');
-                    if (svgEl) svgEl.style.display = 'block';
-                  }}
-                  onLoad={(e) => {
-                    const svgEl = e.currentTarget.parentElement?.querySelector('svg');
-                    if (svgEl) svgEl.style.display = 'none';
-                  }}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
-                <svg width="85" height="85" viewBox="0 0 100 100" fill="none">
-                  <path d="M50 15 C 70 15, 85 30, 85 50 C 85 60, 78 70, 70 78 L 58 64 C 62 59, 65 54, 65 48 C 65 38, 58 30, 50 30 Z" fill="#ec4899" />
-                  <path d="M70 78 C 60 88, 40 88, 30 78 L 42 64 C 47 69, 53 69, 58 64 Z" fill="#06b6d4" />
-                  <path d="M30 78 C 20 70, 15 55, 15 40 C 15 28, 25 18, 40 15 L 44 30 C 35 32, 30 38, 30 45 C 30 53, 34 60, 42 64 Z" fill="#6366f1" />
-                  <circle cx="82" cy="28" r="9.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="2" />
-                  <path d="M82 32V24M78.5 27.5L82 24L85.5 27.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <circle cx="20" cy="72" r="8.5" fill="#f43f5e" stroke="#ffffff" strokeWidth="2" />
-                  <path d="M20 68V76M17 73L20 76L23 73" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            )}
-          </div>
+            </>
+          )}
 
           {/* Sub Navigation Tabs (directly under hero section / button) */}
           <div style={{
