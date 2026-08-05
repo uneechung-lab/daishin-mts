@@ -17764,7 +17764,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
             ) : screen5SelectedCategory === 'IRP/퇴직연금' ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                {/* 1. MY 퇴직연금 */}
+                {/* 1. MY 퇴직연금 (잠시 숨김)
                 <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
                   <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 퇴직연금</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -17785,6 +17785,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     ))}
                   </div>
                 </div>
+                */}
 
                 {/* 2. 상품 매매 */}
                 <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
