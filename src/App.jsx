@@ -9082,7 +9082,11 @@ function App() {
   const [screen5BuyDate, setScreen5BuyDate] = useState('매월 10일');
   const [screen5BuyPeriod, setScreen5BuyPeriod] = useState('12개월');
   const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen5hasapplied') === 'true';
+    const p = new URLSearchParams(window.location.search);
+    const val = p.get('screen5hasapplied') || p.get('hasapplied');
+    if (val !== null) return val === 'true';
+    if (p.has('screen5status') || p.has('status') || p.has('filter') || p.has('appliedstatus')) return true;
+    return true;
   });
   const [maturityPeriodFilter, setMaturityPeriodFilter] = useState('1개월');
   const [selectedMaturityProducts, setSelectedMaturityProducts] = useState([0]);
@@ -9113,8 +9117,49 @@ function App() {
   });
   const [historyPeriod, setHistoryPeriod] = useState('기간설정');
   const [showStoppedInvestments, setShowStoppedInvestments] = useState(false);
-  const [appliedStatusFilter, setAppliedStatusFilter] = useState('진행중');
-  const [historyStatusFilter, setHistoryStatusFilter] = useState('진행중');
+  const [appliedStatusFilter, setAppliedStatusFilter] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    const val = p.get('screen5status') || p.get('status') || p.get('filter') || p.get('appliedstatus');
+    if (!val) return '진행중';
+    const decoded = decodeURIComponent(val).toLowerCase();
+    if (decoded.includes('취소') || decoded.includes('중지') || decoded.includes('stop') || decoded.includes('cancel')) {
+      return '중지된';
+    }
+    if (decoded.includes('완료') || decoded.includes('complet') || decoded.includes('done')) {
+      return '완료됨';
+    }
+    return '진행중';
+  });
+  const [historyStatusFilter, setHistoryStatusFilter] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    const val = p.get('screen5status') || p.get('status') || p.get('filter') || p.get('historystatus');
+    if (!val) return '진행중';
+    const decoded = decodeURIComponent(val).toLowerCase();
+    if (decoded.includes('취소') || decoded.includes('중지') || decoded.includes('stop') || decoded.includes('cancel')) {
+      return '중지됨';
+    }
+    if (decoded.includes('완료') || decoded.includes('complet') || decoded.includes('done')) {
+      return '완료됨';
+    }
+    return '진행중';
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (appliedStatusFilter) {
+      params.set('screen5status', appliedStatusFilter);
+    }
+    if (screen5ToBeSubScreen) {
+      params.set('screen5tobe', screen5ToBeSubScreen);
+    }
+    if (screen5ActiveTab) {
+      params.set('screen5tab', screen5ActiveTab);
+    }
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    if (window.location.search !== `?${params.toString()}`) {
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [appliedStatusFilter, historyStatusFilter, screen5ToBeSubScreen, screen5ActiveTab]);
   const [screen6ToBeSwitchOn, setScreen6ToBeSwitchOn] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobeswitch') !== 'false';
   });
