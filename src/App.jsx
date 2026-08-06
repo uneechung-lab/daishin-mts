@@ -15580,26 +15580,90 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             ) : (
               /* Execution History Table View (Matching Attached Image Specification) */
               (() => {
-                const rawHistoryList = historyPeriod === '1개월' ? [
+                const rawHistoryList = isMaturity ? [
+                  // --- 진행중 (예약된) 14개 ---
+                  { round: '0회차', status: '진행중', date: '2026.07.30', maturityDate: '2026.08.10', buyDate: '2026.08.10', sellProduct: '(IRP)대신저축은행/정기예금/3년', amount: '3,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.28', maturityDate: '2026.08.15', buyDate: '2026.08.15', sellProduct: '(개인연금)OK저축은행/정기예금/1년', amount: '5,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.25', maturityDate: '2026.08.20', buyDate: '2026.08.20', sellProduct: '대신 2026-1회차 발행어음 1년', amount: '2,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.22', maturityDate: '2026.08.25', buyDate: '2026.08.25', sellProduct: '(IRP)페퍼저축은행/정기예금/2년', amount: '10,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.20', maturityDate: '2026.08.28', buyDate: '2026.08.28', sellProduct: '대신 국고채권 24-1 3년', amount: '1,500,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.18', maturityDate: '2026.09.02', buyDate: '2026.09.02', sellProduct: '(개인연금)SBI저축은행/정기예금/1년', amount: '4,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.15', maturityDate: '2026.09.05', buyDate: '2026.09.05', sellProduct: '대신 신종자본증권 25-2', amount: '7,500,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.12', maturityDate: '2026.09.10', buyDate: '2026.09.10', sellProduct: '(IRP)웰컴저축은행/정기예금/1년', amount: '1,200,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.10', maturityDate: '2026.09.15', buyDate: '2026.09.15', sellProduct: '대신 회사채(AA-) 25-3', amount: '6,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.08', maturityDate: '2026.09.20', buyDate: '2026.09.20', sellProduct: '(개인연금)한국투자저축은행/정기예금/2년', amount: '8,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.05', maturityDate: '2026.09.25', buyDate: '2026.09.25', sellProduct: '(IRP)다올저축은행/정기예금/1년', amount: '3,500,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.02', maturityDate: '2026.09.28', buyDate: '2026.09.28', sellProduct: '대신 특판 ELS 2850호', amount: '5,000,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.07.01', maturityDate: '2026.10.02', buyDate: '2026.10.02', sellProduct: '(개인연금)상상인저축은행/정기예금/1년', amount: '2,500,000원' },
+                  { round: '0회차', status: '진행중', date: '2026.06.28', maturityDate: '2026.10.05', buyDate: '2026.10.05', sellProduct: '대신 2026-2회차 발행어음 1년', amount: '4,500,000원' },
+
+                  // --- 중지됨 (예약취소) 7개 ---
+                  { round: '0회차', status: '중지됨', date: '2026.07.14', maturityDate: '2026.08.08', buyDate: '2026.08.08', sellProduct: '(IRP)상상인플러스저축은행/1년', amount: '2,000,000원' },
+                  { round: '0회차', status: '중지됨', date: '2026.07.05', maturityDate: '2026.08.02', buyDate: '2026.08.02', sellProduct: '대신 전단채(A1) 26-05', amount: '1,000,000원' },
+                  { round: '0회차', status: '중지됨', date: '2026.06.20', maturityDate: '2026.07.28', buyDate: '2026.07.28', sellProduct: '(개인연금)애큐온저축은행/1년', amount: '4,500,000원' },
+                  { round: '0회차', status: '중지됨', date: '2026.06.10', maturityDate: '2026.07.15', buyDate: '2026.07.15', sellProduct: '대신 주택도시보증공사 채권', amount: '3,000,000원' },
+                  { round: '0회차', status: '중지됨', date: '2026.05.28', maturityDate: '2026.07.01', buyDate: '2026.07.01', sellProduct: '(IRP)모아저축은행/정기예금/2년', amount: '6,000,000원' },
+                  { round: '0회차', status: '중지됨', date: '2026.05.15', maturityDate: '2026.06.25', buyDate: '2026.06.25', sellProduct: '대신 특판 DLS 1020호', amount: '2,500,000원' },
+                  { round: '0회차', status: '중지됨', date: '2026.04.28', maturityDate: '2026.05.28', buyDate: '2026.05.28', sellProduct: '(개인연금)JT저축은행/정기예금/1년', amount: '1,500,000원' },
+
+                  // --- 완료됨 (매매완료) 7개 ---
+                  { round: '0회차', status: '완료됨', date: '2026.06.01', maturityDate: '2026.07.20', buyDate: '2026.07.20', sellProduct: '(IRP)JT친애저축은행/정기예금/1년', amount: '5,000,000원' },
+                  { round: '0회차', status: '완료됨', date: '2026.05.20', maturityDate: '2026.07.10', buyDate: '2026.07.10', sellProduct: '대신 국채 23-5 3년', amount: '10,000,000원' },
+                  { round: '0회차', status: '완료됨', date: '2026.05.01', maturityDate: '2026.06.30', buyDate: '2026.06.30', sellProduct: '(개인연금)OSB저축은행/정기예금/1년', amount: '3,000,000원' },
+                  { round: '0회차', status: '완료됨', date: '2026.04.15', maturityDate: '2026.06.15', buyDate: '2026.06.15', sellProduct: '대신 2025-4회차 발행어음', amount: '7,000,000원' },
+                  { round: '0회차', status: '완료됨', date: '2026.04.01', maturityDate: '2026.05.30', buyDate: '2026.05.30', sellProduct: '(IRP)신한저축은행/정기예금/1년', amount: '4,000,000원' },
+                  { round: '0회차', status: '완료됨', date: '2026.03.20', maturityDate: '2026.05.10', buyDate: '2026.05.10', sellProduct: '대신 금융지주 채권(AA)', amount: '1,500,000원' },
+                  { round: '0회차', status: '완료됨', date: '2026.01.30', maturityDate: '2026.03.30', buyDate: '2026.03.30', sellProduct: '(개인연금)푸른저축은행/1년', amount: '8,000,000원' }
+                ] : (historyPeriod === '1개월' ? [
                   { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '5회차', status: '진행중', date: '2026.07.28', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.25', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '800,000원(60좌)' },
+                  { round: '1회차', status: '진행중', date: '2026.07.20', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '300,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.07.18', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '1,500,000원' },
+                  { round: '3회차', status: '진행중', date: '2026.07.15', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '700,000원' },
+                  { round: '6회차', status: '진행중', date: '2026.07.12', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '2,000,000원' },
+                  { round: '5회차', status: '진행중', date: '2026.07.08', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '450,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
-                  { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' }
+                  { round: '2회차', status: '진행중', date: '2026.07.02', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '600,000원' },
+                  { round: '8회차', status: '중지됨', date: '2026.07.14', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
+                  { round: '3회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '250,000원' },
+                  { round: '1회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '350,000원' },
+                  { round: '12회차', status: '완료됨', date: '2026.07.15', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '24회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' }
                 ] : historyPeriod === '3개월' ? [
                   { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '5회차', status: '진행중', date: '2026.07.28', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.25', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '800,000원(60좌)' },
+                  { round: '1회차', status: '진행중', date: '2026.07.20', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '300,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.07.18', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '1,500,000원' },
+                  { round: '3회차', status: '진행중', date: '2026.07.15', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '700,000원' },
+                  { round: '6회차', status: '진행중', date: '2026.07.12', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '2,000,000원' },
+                  { round: '5회차', status: '진행중', date: '2026.07.08', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '450,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.02', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '600,000원' },
                   { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
                   { round: '3회차', status: '중지됨', date: '2026.06.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '200,000원(15좌)' },
-                  { round: '10회차', status: '중지됨', date: '2026.05.25', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '300,000원(22좌)' }
+                  { round: '10회차', status: '중지됨', date: '2026.05.25', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '300,000원(22좌)' },
+                  { round: '12회차', status: '완료됨', date: '2026.06.20', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '24회차', status: '완료됨', date: '2026.05.30', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' }
                 ] : [
                   { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '5회차', status: '진행중', date: '2026.07.28', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.25', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '800,000원(60좌)' },
+                  { round: '1회차', status: '진행중', date: '2026.07.20', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '300,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.07.18', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '1,500,000원' },
+                  { round: '3회차', status: '진행중', date: '2026.07.15', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '700,000원' },
+                  { round: '6회차', status: '진행중', date: '2026.07.12', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '2,000,000원' },
+                  { round: '5회차', status: '진행중', date: '2026.07.08', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '450,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.02', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '600,000원' },
                   { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
                   { round: '3회차', status: '중지됨', date: '2026.06.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '200,000원(15좌)' },
                   { round: '10회차', status: '중지됨', date: '2026.05.25', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '300,000원(22좌)' },
                   { round: '2회차', status: '중지됨', date: '2026.04.28', buyDate: '매월 28일', sellProduct: '현금성 자산', amount: '150,000원(11좌)' },
                   { round: '12회차', status: '완료됨', date: '2026.03.20', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '1,000,000원' },
                   { round: '24회차', status: '완료됨', date: '2026.01.30', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' }
-                ];
+                ]);
 
                 const countRunning = rawHistoryList.filter(item => item.status === '진행중').length;
                 const countStopped = rawHistoryList.filter(item => item.status === '중지됨').length;
@@ -15817,13 +15881,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 {row.date}
                               </td>
                               <td style={{ padding: '8px 4px 2px 4px', fontSize: '0.82rem', color: '#6b7280', textAlign: 'center', fontWeight: '400', borderBottom: '1px solid #f3f4f6' }}>
-                                {isMaturity ? '(IRP)대신저축은행/정기예금/3년' : (isFundAccumulation && (row.sellProduct === '현금성 자산' || row.sellProduct === 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E')) ? '예수금' : row.sellProduct}
+                                {isMaturity ? (row.sellProduct || '(IRP)대신저축은행/정기예금/3년') : (isFundAccumulation && (row.sellProduct === '현금성 자산' || row.sellProduct === 'DB차이나바이오헬스케어증권자투자신탁(UH)주식C-P2E')) ? '예수금' : row.sellProduct}
                               </td>
                             </tr>
                             <tr>
                               {/* Bottom Row: 정기매수일 & 금액(좌수) (진하게: color #111827, fontWeight 600, fontSize 0.86rem) */}
                               <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderRight: '1px solid #f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
-                                {isMaturity ? (row.maturityDate || row.date) : row.buyDate}
+                                {isMaturity ? (row.maturityDate || row.buyDate || row.date) : row.buyDate}
                               </td>
                               <td style={{ padding: '2px 4px 8px 4px', fontSize: '0.86rem', color: '#111827', textAlign: 'center', fontWeight: '600', borderBottom: '1px solid #e5e7eb' }}>
                                 {isMaturity ? row.amount?.replace(/\([^)]*\)/g, '') : row.amount}
