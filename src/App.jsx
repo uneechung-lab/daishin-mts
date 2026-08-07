@@ -9145,6 +9145,7 @@ function App() {
     return '진행중';
   });
   const screen5ContentRef = useRef(null);
+  const notificationScrollRef = useRef(null);
 
   const handleScreen5Scroll = (e) => {
     const st = e.target.scrollTop;
@@ -9157,6 +9158,23 @@ function App() {
       } else {
         params.delete('tobeScrollTop');
         params.delete('scroll');
+      }
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      if (window.location.search !== `?${params.toString()}`) {
+        window.history.replaceState({}, '', newUrl);
+      }
+    }
+  };
+
+  const handleNotificationScroll = (e) => {
+    const st = e.target.scrollTop;
+    if (st !== undefined) {
+      sessionStorage.setItem('notificationScrollTop', st);
+      const params = new URLSearchParams(window.location.search);
+      if (st > 10) {
+        params.set('notifScroll', Math.round(st));
+      } else {
+        params.delete('notifScroll');
       }
       const newUrl = `${window.location.pathname}?${params.toString()}`;
       if (window.location.search !== `?${params.toString()}`) {
@@ -9183,6 +9201,23 @@ function App() {
 
         if (targetScroll > 0) {
           screen5ContentRef.current.scrollTop = targetScroll;
+        }
+      }
+
+      if (notificationScrollRef.current) {
+        const params = new URLSearchParams(window.location.search);
+        const urlNotifScroll = params.get('notifScroll');
+        const sessionNotifScroll = sessionStorage.getItem('notificationScrollTop');
+        
+        let targetScroll = 0;
+        if (urlNotifScroll && !isNaN(parseInt(urlNotifScroll, 10))) {
+          targetScroll = parseInt(urlNotifScroll, 10);
+        } else if (sessionNotifScroll && !isNaN(parseInt(sessionNotifScroll, 10))) {
+          targetScroll = parseInt(sessionNotifScroll, 10);
+        }
+
+        if (targetScroll > 0) {
+          notificationScrollRef.current.scrollTop = targetScroll;
         }
       }
     };
@@ -17756,14 +17791,18 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
         </div>
 
         {/* Chat Content Scroll View Area */}
-        <div style={{
-          flex: isFigmaExportMode ? 'none' : 1,
-          overflowY: isFigmaExportMode ? 'visible' : 'auto',
-          padding: '12px 10px 60px 10px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '18px'
-        }}>
+        <div 
+          ref={notificationScrollRef}
+          onScroll={handleNotificationScroll}
+          style={{
+            flex: isFigmaExportMode ? 'none' : 1,
+            overflowY: isFigmaExportMode ? 'visible' : 'auto',
+            padding: '12px 10px 60px 10px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '18px'
+          }}
+        >
           {notifications.map((item) => (
             <div key={item.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', width: '100%' }}>
               {/* Profile Avatar */}
