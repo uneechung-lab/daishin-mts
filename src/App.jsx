@@ -9067,7 +9067,7 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen5agreed') === 'true';
   });
   const [savingsStep2HasProducts, setSavingsStep2HasProducts] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen5hasproducts') === 'true';
+    return new URLSearchParams(window.location.search).get('screen5hasproducts') !== 'false';
   });
   const [screen5FundAccumulationHasProducts, setScreen5FundAccumulationHasProducts] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen5fundhasproducts') === 'true';
@@ -9079,6 +9079,7 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen5buyperiodbsheet') === 'true';
   });
   const [screen5AutoTransferOption, setScreen5AutoTransferOption] = useState('동의');
+  const [screen5NotificationIndex, setScreen5NotificationIndex] = useState(0);
   const [screen5BuyDate, setScreen5BuyDate] = useState('매월 10일');
   const [screen5BuyPeriod, setScreen5BuyPeriod] = useState('12개월');
   const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
@@ -17532,14 +17533,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
           <div 
             onClick={() => {
-              if (!savingsStep2HasProducts) {
-                setSavingsStep2HasProducts(true);
-              }
+              setScreen5NotificationIndex(0);
+              setScreen5ToBeSubScreen('notification_preview');
             }}
             style={{
               flex: 1,
-              backgroundColor: savingsStep2HasProducts ? '#1c1c1e' : '#f1f5f9',
-              color: savingsStep2HasProducts ? '#ffffff' : '#a1a1aa',
+              backgroundColor: '#1c1c1e',
+              color: '#ffffff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -17605,6 +17605,297 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             style={{ width: '44px', border: 'none', background: 'none', borderLeft: '1px solid #f1f3f5', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11" /></svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderScreen5ToBeNotificationPreview = () => {
+    const notifications = [
+      {
+        id: 1,
+        title: '적립식 투자 자동매수 예정 안내',
+        time: '오후 6:00',
+        content: `보이스피싱 등 금융사고 피해방지를 위해 지정하신 적립식 투자의 자동매수가 내일(08월 10일) 진행될 예정입니다.
+
+■ 계좌번호: 200-231234(41)
+■ 매수 예정일: 2026.08.10
+■ 정기 매수 상품:
+  - 미래에셋차이나H인덱스증권 5,000원
+  - 교보악사내일함께조단기우량채 5,000원
+■ 총 매수 예정금액: 10,000원
+■ 매도 재원: 대신 정기 RP (1년)
+
+※ 원활한 매수를 위해 매수 예정일 전일까지 계좌 잔액 또는 매도 재원 상품을 확인해 주시기 바랍니다.
+
+문의사항: 연금솔루션부(02-769-3400)`,
+        buttonLabel: '신청내역 안내'
+      },
+      {
+        id: 2,
+        title: '적립식 투자 정기매수 체결 완료 안내',
+        time: '오전 9:05',
+        content: `신청하신 적립식 정기매수가 정상적으로 체결 완료되었습니다.
+
+■ 계좌번호: 200-231234(41)
+■ 매수 체결일: 2026.08.10 09:05
+■ 매수 체결 내역:
+  - 미래에셋차이나H인덱스 5,000원 (체결완료)
+  - 교보악사내일함께조단기우량채 5,000원 (체결완료)
+■ 총 체결 금액: 10,000원
+■ 매도 재원 소진: 대신 정기 RP (1년)
+
+자세한 체결 내역 및 보유 잔고는 MTS [적립식 투자 현황] 메뉴에서 확인하실 수 있습니다.
+
+문의사항: 연금솔루션부(02-769-3400)`,
+        buttonLabel: '체결내역 확인'
+      },
+      {
+        id: 3,
+        title: '적립식 투자 1차 매수 실패 및 재시도 안내',
+        time: '오전 9:30',
+        content: `지정하신 적립식 정기매수 1차 실행이 매도재원/예수금 부족으로 처리되지 않았습니다.
+
+■ 계좌번호: 200-231234(41)
+■ 매수 시도일: 2026.08.10 (1차)
+■ 실패 사유: 매도재원(대신 정기 RP) 잔액 부족
+■ 2차 재시도 예정: 오늘(08월 10일) 13:00 배치 재실행
+
+※ 오늘 13시 전까지 해당 계좌에 부족 금액(10,000원)을 입금 또는 매도 재원을 충전해 주시면 2차 재시도 시 자동으로 매수가 진행됩니다.
+
+문의사항: 연금솔루션부(02-769-3400)`,
+        buttonLabel: '잔액충전 안내'
+      },
+      {
+        id: 4,
+        title: '적립식 투자 최종 매수 미실행 안내',
+        time: '오후 2:05',
+        content: `적립식 정기매수 2차 재시도가 최종 매수 미실행 처리되었습니다.
+
+■ 계좌번호: 200-231234(41)
+■ 처리 일시: 2026.08.10 14:00
+■ 미실행 사유: 매도재원 잔액 부족 (2차 최종)
+■ 미실행 상품:
+  - 미래에셋차이나H인덱스 외 1건 (총 10,000원)
+
+※ 금회 미매수 건은 다음 정기 매수 주기(09월 10일)에 정상 재시도됩니다.
+
+문의사항: 연금솔루션부(02-769-3400)`,
+        buttonLabel: '적립투자 현황'
+      }
+    ];
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isFigmaExportMode ? 'auto' : '100%',
+        backgroundColor: '#075e54',
+        color: '#ffffff',
+        fontFamily: 'sans-serif'
+      }}>
+        {/* Status Bar */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: '#075e54',
+          color: '#ffffff',
+          borderBottom: 'none'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '600' }}>SKT 3:44</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '600' }}>5G</span>
+            <div style={{ border: '1px solid #fff', borderRadius: '3px', padding: '0px 3px', fontSize: '0.62rem', fontWeight: '700', backgroundColor: '#fff', color: '#075e54' }}>100</div>
+          </div>
+        </div>
+
+        {/* KakaoTalk App Header Bar */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: '48px',
+          padding: '0 14px',
+          backgroundColor: '#075e54',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          position: 'relative'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <button 
+              onClick={() => setScreen5ToBeSubScreen('savings_apply_step2')}
+              style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, color: '#ffffff' }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M15 18l-6-6 6-6" /></svg>
+            </button>
+
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ fontSize: '0.98rem', fontWeight: '700', color: '#ffffff', letterSpacing: '-0.3px' }}>대신증권</span>
+                {/* Verified Checkmark Icon */}
+                <div style={{
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  backgroundColor: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#075e54'
+                }}>
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4"><polyline points="20 6 9 17 4 12" /></svg>
+                </div>
+              </div>
+              <span style={{ fontSize: '0.73rem', color: 'rgba(255, 255, 255, 0.8)' }}>1588-4488 ∨</span>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', color: '#ffffff' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+          </div>
+        </div>
+
+        {/* Chat Content Scroll View Area */}
+        <div style={{
+          flex: isFigmaExportMode ? 'none' : 1,
+          overflowY: isFigmaExportMode ? 'visible' : 'auto',
+          padding: '12px 10px 60px 10px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '18px'
+        }}>
+          {notifications.map((item) => (
+            <div key={item.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', width: '100%' }}>
+              {/* Profile Avatar */}
+              <div style={{
+                width: '34px',
+                height: '34px',
+                borderRadius: '12px',
+                backgroundColor: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                flexShrink: 0
+              }}>
+                <img src="/logo.png" alt="대신증권" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+              </div>
+
+              {/* Main Column (Sender Name + Speech Bubble + Time) */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flex: 1, minWidth: 0 }}>
+                {/* Sender Name */}
+                <span style={{ fontSize: '0.78rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.92)' }}>
+                  대신증권
+                </span>
+
+                {/* Speech Bubble Box + Timestamp Row */}
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', width: '100%' }}>
+                  {/* Alimtalk Speech Bubble Box */}
+                  <div style={{
+                    backgroundColor: '#ffffff',
+                    borderRadius: '14px',
+                    overflow: 'hidden',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.18)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
+                    minWidth: 0
+                  }}>
+                    {/* Yellow Top Banner: "알림톡 도착" */}
+                    <div style={{
+                      backgroundColor: '#fee500',
+                      padding: '7px 12px',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}>
+                      <span style={{ fontSize: '0.78rem', fontWeight: '600', color: '#111111', letterSpacing: '-0.2px' }}>알림톡 도착</span>
+                    </div>
+
+                    {/* Card Main White Body */}
+                    <div style={{ padding: '12px 12px 14px 12px', display: 'flex', flexDirection: 'column' }}>
+                      <span style={{ fontSize: '0.72rem', color: '#8e8e93', fontWeight: '500', marginBottom: '2px' }}>대신증권</span>
+                      
+                      {/* Card Title */}
+                      <div style={{ fontSize: '0.92rem', fontWeight: '600', color: '#000000', lineHeight: '1.35', marginBottom: '10px', letterSpacing: '-0.3px' }}>
+                        {item.title}
+                      </div>
+
+                      {/* Body Paragraph */}
+                      <div style={{
+                        fontSize: '0.78rem',
+                        color: '#2c2c2e',
+                        lineHeight: '1.5',
+                        whiteSpace: 'pre-line',
+                        wordBreak: 'keep-all'
+                      }}>
+                        {item.content}
+                      </div>
+
+                      {/* Card Gray Action Button */}
+                      <button 
+                        onClick={() => setScreen5ToBeSubScreen('savings')}
+                        style={{
+                          marginTop: '12px',
+                          width: '100%',
+                          padding: '9px 0',
+                          backgroundColor: '#f2f2f4',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: '0.78rem',
+                          fontWeight: '500',
+                          color: '#111111',
+                          cursor: 'pointer',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {item.buttonLabel}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Timestamp outside bottom right of speech bubble */}
+                  <span style={{ fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.75)', flexShrink: 0, marginBottom: '2px', whiteSpace: 'nowrap' }}>
+                    {item.time}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Floating Bottom Button (Full Width with side padding) */}
+        <div style={{
+          position: 'sticky',
+          bottom: '14px',
+          padding: '0 12px',
+          width: '100%',
+          boxSizing: 'border-box',
+          zIndex: 10,
+          pointerEvents: 'none'
+        }}>
+          <button
+            onClick={() => setScreen5ToBeSubScreen('savings_apply_step2')}
+            style={{
+              pointerEvents: 'auto',
+              width: '100%',
+              backgroundColor: '#ffffff',
+              color: '#111111',
+              border: 'none',
+              borderRadius: '24px',
+              padding: '12px 0',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '1.05rem' }}>⌂</span>
+            <span>채널 홈 바로가기</span>
           </button>
         </div>
       </div>
@@ -20519,7 +20810,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   borderRadius: '0px',
                   overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
-                  {screen5ToBeSubScreen === 'fund_accumulation_select_amount' ? renderScreen5ToBeFundAccumulationSelectAmount() : screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'fund_accumulation_apply' ? renderScreen5ToBeFundAccumulationApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity' || screen5ToBeSubScreen === 'fund_accumulation') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
+                  {screen5ToBeSubScreen === 'notification_preview' ? renderScreen5ToBeNotificationPreview() : screen5ToBeSubScreen === 'fund_accumulation_select_amount' ? renderScreen5ToBeFundAccumulationSelectAmount() : screen5ToBeSubScreen === 'savings_apply_step2' || screen5ToBeSubScreen === 'maturity_apply_step2' ? renderScreen5ToBeSavingsApplyStep2() : screen5ToBeSubScreen === 'maturity_apply' ? renderScreen5ToBeMaturityApply() : screen5ToBeSubScreen === 'fund_accumulation_apply' ? renderScreen5ToBeFundAccumulationApply() : screen5ToBeSubScreen === 'savings_apply' ? renderScreen5ToBeSavingsApply() : (screen5ToBeSubScreen === 'savings' || screen5ToBeSubScreen === 'maturity' || screen5ToBeSubScreen === 'fund_accumulation') ? renderScreen5ToBeSavings() : screen5ToBeSubScreen === 'invest_pension' ? renderScreen5ToBePensionInvest() : screen5ToBeSubScreen === 'invest' ? renderScreen5ToBeInvest() : renderScreen5Menu(true)}
                 </div>
               </div>
             </div>
