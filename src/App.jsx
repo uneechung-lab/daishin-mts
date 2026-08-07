@@ -15615,54 +15615,107 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   { round: '0회차', status: '완료됨', date: '2026.03.20', maturityDate: '2026.05.10', buyDate: '2026.05.10', sellProduct: '대신 금융지주 채권(AA)', amount: '1,500,000원' },
                   { round: '0회차', status: '완료됨', date: '2026.01.30', maturityDate: '2026.03.30', buyDate: '2026.03.30', sellProduct: '(개인연금)푸른저축은행/1년', amount: '8,000,000원' }
                 ] : (historyPeriod === '1개월' ? [
+                  // --- 진행중 15개 ---
                   { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
                   { round: '5회차', status: '진행중', date: '2026.07.28', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
                   { round: '2회차', status: '진행중', date: '2026.07.25', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '800,000원(60좌)' },
+                  { round: '1회차', status: '진행중', date: '2026.07.22', buyDate: '매월 22일', sellProduct: '현금성 자산', amount: '1,500,000원' },
                   { round: '1회차', status: '진행중', date: '2026.07.20', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '300,000원' },
                   { round: '4회차', status: '진행중', date: '2026.07.18', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '1,500,000원' },
                   { round: '3회차', status: '진행중', date: '2026.07.15', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '700,000원' },
                   { round: '6회차', status: '진행중', date: '2026.07.12', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '2,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.10', buyDate: '매월 28일', sellProduct: '현금성 자산', amount: '1,200,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.08', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '450,000원' },
+                  { round: '1회차', status: '진행중', date: '2026.07.06', buyDate: '매월 18일', sellProduct: '현금성 자산', amount: '350,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.04', buyDate: '매월 12일', sellProduct: '현금성 자산', amount: '900,000원' },
                   { round: '2회차', status: '진행중', date: '2026.07.02', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '600,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.07.01', buyDate: '매월 8일', sellProduct: '현금성 자산', amount: '750,000원' },
+
+                  // --- 중지됨 6개 ---
                   { round: '8회차', status: '중지됨', date: '2026.07.14', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
                   { round: '3회차', status: '중지됨', date: '2026.07.10', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '250,000원' },
+                  { round: '5회차', status: '중지됨', date: '2026.07.08', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '500,000원' },
+                  { round: '2회차', status: '중지됨', date: '2026.07.05', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '300,000원' },
                   { round: '1회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '350,000원' },
+                  { round: '4회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '600,000원' },
+
+                  // --- 완료됨 5개 ---
                   { round: '12회차', status: '완료됨', date: '2026.07.15', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '1,000,000원' },
-                  { round: '24회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' }
+                  { round: '12회차', status: '완료됨', date: '2026.07.10', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '800,000원' },
+                  { round: '24회차', status: '완료됨', date: '2026.07.05', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '6회차', status: '완료됨', date: '2026.07.03', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '400,000원' },
+                  { round: '12회차', status: '완료됨', date: '2026.07.01', buyDate: '매월 8일', sellProduct: '현금성 자산', amount: '700,000원' }
                 ] : historyPeriod === '3개월' ? [
+                  // --- 진행중 15개 ---
                   { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
                   { round: '5회차', status: '진행중', date: '2026.07.28', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
                   { round: '2회차', status: '진행중', date: '2026.07.25', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '800,000원(60좌)' },
+                  { round: '1회차', status: '진행중', date: '2026.07.22', buyDate: '매월 22일', sellProduct: '현금성 자산', amount: '1,500,000원' },
                   { round: '1회차', status: '진행중', date: '2026.07.20', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '300,000원' },
                   { round: '4회차', status: '진행중', date: '2026.07.18', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '1,500,000원' },
                   { round: '3회차', status: '진행중', date: '2026.07.15', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '700,000원' },
                   { round: '6회차', status: '진행중', date: '2026.07.12', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '2,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.10', buyDate: '매월 28일', sellProduct: '현금성 자산', amount: '1,200,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.08', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '450,000원' },
+                  { round: '1회차', status: '진행중', date: '2026.07.06', buyDate: '매월 18일', sellProduct: '현금성 자산', amount: '350,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.04', buyDate: '매월 12일', sellProduct: '현금성 자산', amount: '900,000원' },
                   { round: '2회차', status: '진행중', date: '2026.07.02', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '600,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.07.01', buyDate: '매월 8일', sellProduct: '현금성 자산', amount: '750,000원' },
+
+                  // --- 중지됨 7개 ---
                   { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
                   { round: '3회차', status: '중지됨', date: '2026.06.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '200,000원(15좌)' },
                   { round: '10회차', status: '중지됨', date: '2026.05.25', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '300,000원(22좌)' },
+                  { round: '4회차', status: '중지됨', date: '2026.05.20', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '450,000원' },
+                  { round: '2회차', status: '중지됨', date: '2026.05.15', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '250,000원' },
+                  { round: '6회차', status: '중지됨', date: '2026.05.10', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '600,000원' },
+                  { round: '1회차', status: '중지됨', date: '2026.05.02', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '350,000원' },
+
+                  // --- 완료됨 6개 ---
                   { round: '12회차', status: '완료됨', date: '2026.06.20', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '1,000,000원' },
-                  { round: '24회차', status: '완료됨', date: '2026.05.30', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' }
+                  { round: '6회차', status: '완료됨', date: '2026.06.10', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '600,000원' },
+                  { round: '24회차', status: '완료됨', date: '2026.05.30', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '12회차', status: '완료됨', date: '2026.05.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
+                  { round: '12회차', status: '완료됨', date: '2026.05.08', buyDate: '매월 8일', sellProduct: '현금성 자산', amount: '700,000원' },
+                  { round: '6회차', status: '완료됨', date: '2026.05.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원' }
                 ] : [
+                  // --- 진행중 15개 ---
                   { round: '0회차', status: '진행중', date: '2026.07.30', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
                   { round: '5회차', status: '진행중', date: '2026.07.28', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
                   { round: '2회차', status: '진행중', date: '2026.07.25', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '800,000원(60좌)' },
+                  { round: '1회차', status: '진행중', date: '2026.07.22', buyDate: '매월 22일', sellProduct: '현금성 자산', amount: '1,500,000원' },
                   { round: '1회차', status: '진행중', date: '2026.07.20', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '300,000원' },
                   { round: '4회차', status: '진행중', date: '2026.07.18', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '1,500,000원' },
                   { round: '3회차', status: '진행중', date: '2026.07.15', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '700,000원' },
                   { round: '6회차', status: '진행중', date: '2026.07.12', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '2,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.10', buyDate: '매월 28일', sellProduct: '현금성 자산', amount: '1,200,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.08', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '450,000원' },
+                  { round: '1회차', status: '진행중', date: '2026.07.06', buyDate: '매월 18일', sellProduct: '현금성 자산', amount: '350,000원' },
                   { round: '5회차', status: '진행중', date: '2026.07.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '1,000,000원' },
+                  { round: '2회차', status: '진행중', date: '2026.07.04', buyDate: '매월 12일', sellProduct: '현금성 자산', amount: '900,000원' },
                   { round: '2회차', status: '진행중', date: '2026.07.02', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '600,000원' },
+                  { round: '4회차', status: '진행중', date: '2026.07.01', buyDate: '매월 8일', sellProduct: '현금성 자산', amount: '750,000원' },
+
+                  // --- 중지됨 8개 ---
                   { round: '8회차', status: '중지됨', date: '2026.07.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원(30좌)' },
                   { round: '3회차', status: '중지됨', date: '2026.06.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '200,000원(15좌)' },
                   { round: '10회차', status: '중지됨', date: '2026.05.25', buyDate: '매월 25일', sellProduct: '현금성 자산', amount: '300,000원(22좌)' },
                   { round: '2회차', status: '중지됨', date: '2026.04.28', buyDate: '매월 28일', sellProduct: '현금성 자산', amount: '150,000원(11좌)' },
+                  { round: '5회차', status: '중지됨', date: '2026.03.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '500,000원' },
+                  { round: '1회차', status: '중지됨', date: '2026.02.20', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '250,000원' },
+                  { round: '3회차', status: '중지됨', date: '2026.02.10', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '350,000원' },
+                  { round: '4회차', status: '중지됨', date: '2026.01.15', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '600,000원' },
+
+                  // --- 완료됨 7개 ---
                   { round: '12회차', status: '완료됨', date: '2026.03.20', buyDate: '매월 20일', sellProduct: '현금성 자산', amount: '1,000,000원' },
-                  { round: '24회차', status: '완료됨', date: '2026.01.30', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' }
+                  { round: '24회차', status: '완료됨', date: '2026.01.30', buyDate: '매월 30일', sellProduct: '현금성 자산', amount: '500,000원(38좌)' },
+                  { round: '12회차', status: '완료됨', date: '2025.12.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '1,200,000원' },
+                  { round: '6회차', status: '완료됨', date: '2025.11.10', buyDate: '매월 10일', sellProduct: '현금성 자산', amount: '800,000원' },
+                  { round: '12회차', status: '완료됨', date: '2025.10.05', buyDate: '매월 5일', sellProduct: '현금성 자산', amount: '700,000원' },
+                  { round: '6회차', status: '완료됨', date: '2025.09.01', buyDate: '매월 1일', sellProduct: '현금성 자산', amount: '400,000원' },
+                  { round: '24회차', status: '완료됨', date: '2025.08.15', buyDate: '매월 15일', sellProduct: '현금성 자산', amount: '900,000원' }
                 ]);
 
                 const countRunning = rawHistoryList.filter(item => item.status === '진행중').length;
@@ -15937,9 +15990,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.03)'
               }}>
                 {[
-                  { id: '진행중', label: isMaturity ? '예약된(5)' : '진행중(5)' },
-                  { id: '중지된', label: isMaturity ? '취소된(2)' : '중지된(2)' },
-                  { id: '완료됨', label: '완료됨(1)' }
+                  { id: '진행중', label: isMaturity ? '예약된(10)' : '진행중(10)' },
+                  { id: '중지된', label: isMaturity ? '취소된(5)' : '중지된(5)' },
+                  { id: '완료됨', label: '완료됨(4)' }
                 ].map((chip) => {
                   const isSelected = appliedStatusFilter === chip.id;
                   return (
@@ -15964,7 +16017,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 })}
               </div>
 
-              {/* ===== [진행중 / 예약된] CARDS (5건) ===== */}
+              {/* ===== [진행중 / 예약된] CARDS (10건) ===== */}
               {appliedStatusFilter === '진행중' && (
                 <>
                   {/* Card 1 [매월 5일 / 2026.07.05] */}
