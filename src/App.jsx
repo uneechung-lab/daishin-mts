@@ -16376,63 +16376,62 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
         )}
 
-        {/* Ticker Bar */}
-        {renderMarketTickerBar(isDark)}
+        {/* Sticky Bottom Footer (Ticker Bar + Nav Tab Bar) */}
+        <div style={{ position: 'sticky', bottom: 0, zIndex: 100, flexShrink: 0, backgroundColor: '#ffffff' }}>
+          {/* Ticker Bar */}
+          {renderMarketTickerBar(isDark)}
 
-        {/* Bottom Navigation Tab Bar (identical to Screen 6 & Screen 5) */}
-        <div style={{
-          position: 'sticky',
-          bottom: 0,
-          zIndex: 100,
-          height: '50px',
-          display: 'flex',
-          alignItems: 'stretch',
-          borderTop: '1px solid #e2e8f0',
-          backgroundColor: '#ffffff',
-          flexShrink: 0
-        }}>
-          <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
-          </button>
-          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
-            {[
-              { key: '보유상품 현황', label: `보유상품\n현황` },
-              { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
-              { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
-              { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
-            ].map((tab, idx) => {
-              return (
-                <button
-                  key={tab.key}
-                  style={{
-                    flex: 1,
-                    border: 'none',
-                    background: 'none',
-                    borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
-                    fontSize: '0.62rem',
-                    fontWeight: '500',
-                    color: '#666666',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    whiteSpace: 'pre-line',
-                    lineHeight: '1.2',
-                    padding: '2px 2px'
-                  }}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
+          {/* Bottom Navigation Tab Bar (identical to Screen 6 & Screen 5) */}
+          <div style={{
+            height: '50px',
+            display: 'flex',
+            alignItems: 'stretch',
+            borderTop: '1px solid #e2e8f0',
+            backgroundColor: '#ffffff'
+          }}>
+            <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+            </button>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+              {[
+                { key: '보유상품 현황', label: `보유상품\n현황` },
+                { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+                { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+                { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+              ].map((tab, idx) => {
+                return (
+                  <button
+                    key={tab.key}
+                    style={{
+                      flex: 1,
+                      border: 'none',
+                      background: 'none',
+                      borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
+                      fontSize: '0.62rem',
+                      fontWeight: '500',
+                      color: '#666666',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      whiteSpace: 'pre-line',
+                      lineHeight: '1.2',
+                      padding: '2px 2px'
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+            <button 
+              onClick={() => setScreen5ToBeSubScreen('invest')}
+              style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+            </button>
           </div>
-          <button 
-            onClick={() => setScreen5ToBeSubScreen('invest')}
-            style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
-          </button>
         </div>
       </div>
     );
