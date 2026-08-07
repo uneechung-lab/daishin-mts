@@ -17797,7 +17797,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           style={{
             flex: isFigmaExportMode ? 'none' : 1,
             overflowY: isFigmaExportMode ? 'visible' : 'auto',
-            padding: '12px 10px 60px 10px',
+            padding: '12px 10px 220px 10px',
             display: 'flex',
             flexDirection: 'column',
             gap: '18px'
