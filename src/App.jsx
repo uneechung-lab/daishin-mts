@@ -17866,8 +17866,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
         {/* Floating Bottom Button (Full Width with side padding) */}
         <div style={{
-          position: 'sticky',
-          bottom: '14px',
+          position: isFigmaExportMode ? 'relative' : 'sticky',
+          bottom: isFigmaExportMode ? 'auto' : '14px',
+          marginTop: isFigmaExportMode ? '16px' : '0',
+          marginBottom: isFigmaExportMode ? '20px' : '0',
           padding: '0 12px',
           width: '100%',
           boxSizing: 'border-box',
