@@ -17650,7 +17650,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     const notifications = [
       {
         id: 1,
-        title: '[퇴직연금 적립식투자 예정 안내]',
+        title: '퇴직연금 적립식투자 예정 안내',
         time: '오후 6:00',
         content: `정기 적립 투자를 위해
 다음 영업일에(매도일) 보유하신 상품을 매도하여 신청하신 상품을 매수합니다.
@@ -17670,7 +17670,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       },
       {
         id: 2,
-        title: '[퇴직연금 적립식투자 매도지시 결과]',
+        title: '퇴직연금 적립식투자 매도지시 결과',
         time: '오전 9:05',
         content: `정기 적립 투자를 위해 보유하신 상품의 매도지시 결과를 안내드립니다.
 
@@ -17689,7 +17689,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       },
       {
         id: 3,
-        title: '[퇴직연금 적립식투자 매수지시 결과]',
+        title: '퇴직연금 적립식투자 매수지시 결과',
         time: '오전 9:30',
         content: `정기 적립식 투자 매수지시 결과를 안내드립니다.
 
@@ -17707,7 +17707,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       },
       {
         id: 4,
-        title: '[퇴직연금 적립식투자 취소 안내]',
+        title: '퇴직연금 적립식투자 취소 안내',
         time: '오후 2:05',
         content: `정기 적립 투자 신청이 취소되었습니다.
 
