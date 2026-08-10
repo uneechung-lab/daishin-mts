@@ -18134,10 +18134,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 <div>
                   <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                    {[
+                    {(isToBe ? [
                       { name: '연금저축 펀드검색' },
-                      { name: '연금펀드 투자하기', action: isToBe ? () => setScreen5ToBeSubScreen('invest_pension') : null }
-                    ].map((item, idx) => (
+                      { name: '연금펀드 투자하기', action: () => setScreen5ToBeSubScreen('invest_pension') }
+                    ] : [
+                      { name: '연금저축 펀드검색' },
+                      { name: '펀드 주문' },
+                      { name: '펀드잔고/매매내역' }
+                    ]).map((item, idx) => (
                       <div key={idx} onClick={item.action} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                         <span style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{item.name}</span>
                       </div>
