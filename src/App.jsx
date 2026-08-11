@@ -14457,7 +14457,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span style={{ fontSize: '0.78rem', fontWeight: '400', color: '#6b7280' }}>
-                      {`${screen5StartFullDate} ~ ${screen5CalculatedEndDate}`}
+                      {`(${screen5StartFullDate} ~ ${screen5CalculatedEndDate})`}
                     </span>
                     <span style={{ fontSize: '0.84rem', fontWeight: '600', color: '#111827' }}>
                       {`${screen5BuyPeriod === '12개월' ? '1년' : screen5BuyPeriod}/${screen5MCount}회`}
@@ -14792,41 +14792,41 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
 
-              {/* 맨 위: 매수일 선택 (5일, 10일, 15일, 20일, 25일 분할 버튼 바) */}
-              <div style={{ margin: '0 20px 8px 20px' }}>
+              {/* 맨 위: 매수일 선택 (1일~31일 그리드 선택) */}
+              <div style={{ margin: '0 20px 8px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', lineHeight: '1.4' }}>
                   매수일 선택
                 </div>
+                <div style={{ fontSize: '0.82rem', color: '#d92528', fontWeight: '700' }}>
+                  {screen5BuyDate}
+                </div>
               </div>
               <div style={{
-                display: 'flex',
-                border: '1px solid #d1d5db',
-                borderRadius: '2px',
-                backgroundColor: '#ffffff',
-                overflow: 'hidden',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(7, 1fr)',
+                gap: '6px',
                 margin: '0 20px 22px 20px'
               }}>
-                {['5일', '10일', '15일', '20일', '25일'].map((day, idx) => {
-                  const isActive = screen5BuyDate.includes(day) || (screen5BuyDate === '매월 25일' && day === '25일') || (screen5BuyDate === '매월 10일' && day === '10일') || (screen5BuyDate === '25일' && day === '25일');
+                {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => {
+                  const currentDayNum = parseInt(screen5BuyDate.replace(/[^0-9]/g, ''), 10) || 10;
+                  const isActive = currentDayNum === d;
                   return (
                     <button
-                      key={day}
-                      onClick={() => setScreen5BuyDate(`매월 ${day}`)}
+                      key={d}
+                      onClick={() => setScreen5BuyDate(`매월 ${d}일`)}
                       style={{
-                        flex: 1,
-                        padding: '9px 0',
-                        fontSize: '0.86rem',
-                        fontWeight: isActive ? '700' : '400',
-                        color: isActive ? '#111827' : '#6b7280',
-                        backgroundColor: '#ffffff',
-                        border: 'none',
-                        borderRight: idx < 4 ? '1px solid #e5e7eb' : 'none',
-                        outline: isActive ? '1.5px solid #111111' : 'none',
-                        outlineOffset: '-1.5px',
-                        cursor: 'pointer'
+                        height: '34px',
+                        borderRadius: '4px',
+                        fontSize: '0.8rem',
+                        fontWeight: isActive ? '700' : '500',
+                        color: isActive ? '#ffffff' : '#334155',
+                        backgroundColor: isActive ? '#111827' : '#f8fafc',
+                        border: isActive ? '1px solid #111827' : '1px solid #e2e8f0',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
                       }}
                     >
-                      {day}
+                      {`${d}일`}
                     </button>
                   );
                 })}
