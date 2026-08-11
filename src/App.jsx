@@ -14457,7 +14457,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span style={{ fontSize: '0.78rem', fontWeight: '400', color: '#6b7280' }}>
-                      {`(${screen5StartFullDate} ~ ${screen5CalculatedEndDate})`}
+                      {`${screen5StartFullDate} ~ ${screen5CalculatedEndDate}`}
                     </span>
                     <span style={{ fontSize: '0.84rem', fontWeight: '600', color: '#111827' }}>
                       {`${screen5BuyPeriod === '12개월' ? '1년' : screen5BuyPeriod}/${screen5MCount}회`}
