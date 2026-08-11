@@ -9082,6 +9082,30 @@ function App() {
   const [screen5NotificationIndex, setScreen5NotificationIndex] = useState(0);
   const [screen5BuyDate, setScreen5BuyDate] = useState('매월 10일');
   const [screen5BuyPeriod, setScreen5BuyPeriod] = useState('12개월');
+  const [screen5StartYearMonth, setScreen5StartYearMonth] = useState('2026.08');
+  const [screen5IsPeriodConfirmed, setScreen5IsPeriodConfirmed] = useState(false);
+  const [screen5IsAmountConfirmed, setScreen5IsAmountConfirmed] = useState(false);
+
+  // Compute full start date based on screen5StartYearMonth and screen5BuyDate
+  const screen5DayMatch = screen5BuyDate.match(/\d+/);
+  const screen5DayNum = screen5DayMatch ? parseInt(screen5DayMatch[0], 10) : 10;
+  const screen5DayStr = String(screen5DayNum).padStart(2, '0');
+  const screen5StartFullDate = `${screen5StartYearMonth}.${screen5DayStr}`;
+
+  let screen5MCount = 12;
+  if (screen5BuyPeriod === '3개월') screen5MCount = 3;
+  else if (screen5BuyPeriod === '6개월') screen5MCount = 6;
+  else if (screen5BuyPeriod === '1년' || screen5BuyPeriod === '12개월') screen5MCount = 12;
+  else if (screen5BuyPeriod === '3년') screen5MCount = 36;
+  else if (screen5BuyPeriod === '5년') screen5MCount = 60;
+
+  const [screen5YStr, screen5MStr] = screen5StartYearMonth.split('.');
+  let screen5Y = parseInt(screen5YStr, 10);
+  let screen5M = parseInt(screen5MStr, 10);
+  let screen5TotalM = screen5Y * 12 + (screen5M - 1) + (screen5MCount - 1);
+  let screen5EndY = Math.floor(screen5TotalM / 12);
+  let screen5EndM = (screen5TotalM % 12) + 1;
+  const screen5CalculatedEndDate = `${screen5EndY}.${String(screen5EndM).padStart(2, '0')}.${screen5DayStr}`;
   const [screen5HasAppliedProducts, setScreen5HasAppliedProducts] = useState(() => {
     const p = new URLSearchParams(window.location.search);
     const val = p.get('screen5hasapplied') || p.get('hasapplied');
@@ -14354,7 +14378,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               투자 금액 선택하기
             </button>
             <button 
-              onClick={() => setScreen5FundAccumulationHasProducts(prev => !prev)}
+              onClick={() => {
+                if (screen5IsAmountConfirmed || screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) {
+                  setScreen5IsAmountConfirmed(false);
+                  setScreen5IsPeriodConfirmed(false);
+                  setScreen5FundAccumulationHasProducts(false);
+                } else {
+                  setScreen5FundAccumulationHasProducts(true);
+                }
+              }}
               style={{
                 flex: 1,
                 height: '42px',
@@ -14373,53 +14405,45 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
           {/* Amount Information Block */}
           <div style={{ padding: '0 14px 14px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div 
+              onClick={() => setScreen5ToBeSubScreen('fund_accumulation_select_amount')}
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+            >
               <span style={{ fontSize: '0.84rem', color: '#4b5563' }}>투자 금액</span>
-              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>{screen5FundAccumulationHasProducts ? '1,000,000' : '0'}</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#111827' }}>
+                {screen5IsAmountConfirmed ? '30,000' : (screen5FundAccumulationHasProducts ? '1,000,000' : '0')}
+              </span>
             </div>
-            {/* 매수 일자 */}
-            <div 
-              onClick={() => setIsBuyDateBsheetOpen(true)}
-              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
-            >
-              <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 일자</span>
+            {/* 매수일자 */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div 
-                style={{
-                  flex: 1,
-                  marginLeft: '16px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                  paddingBottom: '3px',
-                  borderBottom: '1px solid #e2e8f0'
-                }}
+                onClick={() => setIsBuyPeriodBsheetOpen(true)}
+                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
               >
-                <span style={{ fontSize: '0.9rem', fontWeight: screen5FundAccumulationHasProducts ? '600' : '400', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
-                  {screen5FundAccumulationHasProducts ? screen5BuyDate : '선택'}
-                </span>
+                <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수일자</span>
+                <div 
+                  style={{
+                    flex: 1,
+                    marginLeft: '16px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    paddingBottom: '3px',
+                    borderBottom: '1px solid #e2e8f0'
+                  }}
+                >
+                  <span style={{ fontSize: '0.9rem', fontWeight: (screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? '600' : '400', color: (screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? '#111827' : '#9ca3af' }}>
+                    {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? screen5BuyDate : '선택'}
+                  </span>
+                </div>
               </div>
-            </div>
-            {/* 매수 기간 */}
-            <div 
-              onClick={() => setIsBuyPeriodBsheetOpen(true)}
-              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
-            >
-              <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 기간</span>
-              <div 
-                style={{
-                  flex: 1,
-                  marginLeft: '16px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                  paddingBottom: '3px',
-                  borderBottom: '1px solid #e2e8f0'
-                }}
-              >
-                <span style={{ fontSize: '0.9rem', fontWeight: screen5FundAccumulationHasProducts ? '600' : '400', color: screen5FundAccumulationHasProducts ? '#111827' : '#9ca3af' }}>
-                  {screen5FundAccumulationHasProducts ? screen5BuyPeriod : '선택'}
-                </span>
-              </div>
+              {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) && (
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '4px' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#6b7280' }}>
+                    {`${screen5StartFullDate} ~ ${screen5CalculatedEndDate} (${screen5BuyPeriod === '12개월' ? '1년' : screen5BuyPeriod}/${screen5MCount}회)`}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -14615,8 +14639,6 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
         </div>
 
-        {/* Ticker Bar */}
-        {renderMarketTickerBar(isDark)}
 
         {/* 매수 일자 선택 바텀시트 (Image 1 & 2 Style) */}
         {isBuyDateBsheetOpen && (
@@ -14698,7 +14720,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </>
         )}
 
-        {/* 매수 기간 선택 바텀시트 (Image 1 Style) */}
+        {/* 매수 기간 선택 바텀시트 (첨부 이미지 레이아웃 반영) */}
         {isBuyPeriodBsheetOpen && (
           <>
             <div 
@@ -14722,10 +14744,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               backgroundColor: '#ffffff',
               borderTopLeftRadius: '16px',
               borderTopRightRadius: '16px',
-              padding: '24px 20px 24px 20px',
+              padding: '20px 0 0 0',
               zIndex: 10000,
               boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
               boxSizing: 'border-box',
+              maxHeight: '85%',
+              overflowY: 'auto',
+              overflowX: 'hidden',
               animation: 'buyPeriodSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
             }}>
               <style>{`
@@ -14734,54 +14759,226 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   to { transform: translateY(0); }
                 }
               `}</style>
-              <div style={{
-                marginBottom: '16px'
-              }}>
-                <div style={{ fontSize: '1.05rem', fontWeight: '700', color: '#111111', letterSpacing: '-0.3px' }}>
-                  매수 기간 선택
+              
+              {/* 바텀시트 헤더 */}
+              <div style={{ margin: '0 20px 22px 20px' }}>
+                <div style={{ fontSize: '1.05rem', fontWeight: '700', color: '#111111', letterSpacing: '-0.3px', lineHeight: '1.4' }}>
+                  매수일자 설정
                 </div>
               </div>
 
-              {/* Period option list */}
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {['3개월', '6개월', '1년', '3년', '5년'].map((period) => {
-                  const isSelected = screen5BuyPeriod === period || (period === '1년' && screen5BuyPeriod === '12개월');
+              {/* 맨 위: 매수일 선택 (5일, 10일, 15일, 20일, 25일 분할 버튼 바) */}
+              <div style={{ margin: '0 20px 8px 20px' }}>
+                <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', lineHeight: '1.4' }}>
+                  매수일 선택
+                </div>
+              </div>
+              <div style={{
+                display: 'flex',
+                border: '1px solid #d1d5db',
+                borderRadius: '2px',
+                backgroundColor: '#ffffff',
+                overflow: 'hidden',
+                margin: '0 20px 22px 20px'
+              }}>
+                {['5일', '10일', '15일', '20일', '25일'].map((day, idx) => {
+                  const isActive = screen5BuyDate.includes(day) || (screen5BuyDate === '매월 25일' && day === '25일') || (screen5BuyDate === '매월 10일' && day === '10일') || (screen5BuyDate === '25일' && day === '25일');
                   return (
-                    <div
-                      key={period}
-                      onClick={() => {
-                        setScreen5BuyPeriod(period);
-                        setIsBuyPeriodBsheetOpen(false);
-                      }}
+                    <button
+                      key={day}
+                      onClick={() => setScreen5BuyDate(`매월 ${day}`)}
                       style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '14px 0',
-                        borderBottom: '1px solid #f1f5f9',
+                        flex: 1,
+                        padding: '9px 0',
+                        fontSize: '0.86rem',
+                        fontWeight: isActive ? '700' : '400',
+                        color: isActive ? '#111827' : '#6b7280',
+                        backgroundColor: '#ffffff',
+                        border: 'none',
+                        borderRight: idx < 4 ? '1px solid #e5e7eb' : 'none',
+                        outline: isActive ? '1.5px solid #111111' : 'none',
+                        outlineOffset: '-1.5px',
                         cursor: 'pointer'
                       }}
                     >
-                      <span style={{
-                        fontSize: '0.95rem',
-                        fontWeight: isSelected ? '700' : '400',
-                        color: isSelected ? '#111111' : '#6b7280'
-                      }}>
-                        {period}
-                      </span>
-                      {isSelected && (
-                        <span style={{ fontSize: '1rem', fontWeight: '800', color: '#111111' }}>
-                          ✓
-                        </span>
-                      )}
-                    </div>
+                      {day}
+                    </button>
                   );
                 })}
               </div>
+
+              {/* 매수 시작월 영역 */}
+              <div style={{ margin: '0 20px 22px 20px' }}>
+                <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', marginBottom: '8px', lineHeight: '1.4' }}>
+                  매수 시작월
+                </div>
+                
+                {/* 매수 시작월 선택 드롭다운 박스 (2026.08.10 인풋과 동일한 스타일) */}
+                <div 
+                  onClick={() => {
+                    const [yStr, mStr] = screen5StartYearMonth.split('.');
+                    let y = parseInt(yStr, 10);
+                    let m = parseInt(mStr, 10);
+                    m += 1;
+                    if (m > 12) { m = 1; y += 1; }
+                    setScreen5StartYearMonth(`${y}.${String(m).padStart(2, '0')}`);
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '2px',
+                    padding: '9px 12px',
+                    backgroundColor: '#ffffff',
+                    fontSize: '0.9rem',
+                    color: '#111827',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+                    {screen5StartYearMonth}
+                  </span>
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: '4px' }}>
+                    <path d="M1 1L5 5L9 1" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* 매수 기간 (3개월, 6개월, 1년, 3년, 5년 및 시작일~종료일 영역) */}
+              <div style={{ margin: '0 20px 8px 20px' }}>
+                <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', lineHeight: '1.4' }}>
+                  매수 기간
+                </div>
+              </div>
+              <div style={{
+                display: 'flex',
+                border: '1px solid #d1d5db',
+                borderRadius: '2px',
+                backgroundColor: '#ffffff',
+                overflow: 'hidden',
+                margin: '0 20px 10px 20px'
+              }}>
+                {['3개월', '6개월', '1년', '3년', '5년'].map((period, idx) => {
+                  const isActive = screen5BuyPeriod === period || (period === '1년' && screen5BuyPeriod === '12개월');
+                  return (
+                    <button
+                      key={period}
+                      onClick={() => setScreen5BuyPeriod(period)}
+                      style={{
+                        flex: 1,
+                        padding: '9px 0',
+                        fontSize: '0.86rem',
+                        fontWeight: isActive ? '700' : '400',
+                        color: isActive ? '#111827' : '#6b7280',
+                        backgroundColor: '#ffffff',
+                        border: 'none',
+                        borderRight: idx < 4 ? '1px solid #e5e7eb' : 'none',
+                        outline: isActive ? '1.5px solid #111111' : 'none',
+                        outlineOffset: '-1.5px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {period}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* 시작일 - 종료일 선택 드롭다운 박스 */}
+              {(() => {
+                let mCount = 12;
+                if (screen5BuyPeriod === '3개월') mCount = 3;
+                else if (screen5BuyPeriod === '6개월') mCount = 6;
+                else if (screen5BuyPeriod === '1년' || screen5BuyPeriod === '12개월') mCount = 12;
+                else if (screen5BuyPeriod === '3년') mCount = 36;
+                else if (screen5BuyPeriod === '5년') mCount = 60;
+
+                const [yStr, mStr] = screen5StartYearMonth.split('.');
+                let y = parseInt(yStr, 10);
+                let m = parseInt(mStr, 10);
+                let totalM = y * 12 + (m - 1) + (mCount - 1);
+                let endY = Math.floor(totalM / 12);
+                let endM = (totalM % 12) + 1;
+                let endD = screen5DayNum;
+                const calculatedEndDate = `${endY}.${String(endM).padStart(2, '0')}.${String(endD).padStart(2, '0')}`;
+
+                return (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    margin: '0 20px 28px 20px'
+                  }}>
+                    {/* 시작일 드롭다운 */}
+                    <div style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '2px',
+                      padding: '8px 12px',
+                      backgroundColor: '#ffffff',
+                      fontSize: '0.9rem',
+                      color: '#111827',
+                      cursor: 'pointer'
+                    }}>
+                      <span>{screen5StartFullDate}</span>
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: '4px' }}>
+                        <path d="M1 1L5 5L9 1" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+
+                    <span style={{ color: '#64748b', fontSize: '0.85rem' }}>-</span>
+
+                    {/* 종료일 드롭다운 */}
+                    <div style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '2px',
+                      padding: '8px 12px',
+                      backgroundColor: '#ffffff',
+                      fontSize: '0.9rem',
+                      color: '#111827',
+                      cursor: 'pointer'
+                    }}>
+                      <span>{calculatedEndDate}</span>
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: '4px' }}>
+                        <path d="M1 1L5 5L9 1" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* 너비 꽉 차고 하단에 딱 붙는 확인 버튼 */}
+              <button
+                onClick={() => {
+                  setScreen5IsPeriodConfirmed(true);
+                  setIsBuyPeriodBsheetOpen(false);
+                }}
+                style={{
+                  width: '100%',
+                  padding: '15px 0',
+                  backgroundColor: '#111111',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: 0,
+                  fontSize: '0.95rem',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  display: 'block'
+                }}
+              >
+                확인
+              </button>
             </div>
           </>
         )}
-
         {/* Ticker Bar */}
         {renderMarketTickerBar(isDark)}
 
@@ -15110,6 +15307,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
           </div>
           <div 
             onClick={() => {
+              setScreen5IsAmountConfirmed(true);
               setScreen5ToBeSubScreen('fund_accumulation_apply');
             }}
             style={{ flex: 1, backgroundColor: '#1c1c1e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.02rem', fontWeight: '600', cursor: 'pointer' }}
