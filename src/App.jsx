@@ -14414,36 +14414,61 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 {screen5IsAmountConfirmed ? '30,000' : (screen5FundAccumulationHasProducts ? '1,000,000' : '0')}
               </span>
             </div>
-            {/* 매수일자 */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {/* 매수 일자 */}
+            <div 
+              onClick={() => setIsBuyPeriodBsheetOpen(true)}
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+            >
+              <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 일자</span>
               <div 
-                onClick={() => setIsBuyPeriodBsheetOpen(true)}
-                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                style={{
+                  flex: 1,
+                  marginLeft: '16px',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  paddingBottom: '3px',
+                  borderBottom: '1px solid #e2e8f0'
+                }}
               >
-                <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수일자</span>
-                <div 
-                  style={{
-                    flex: 1,
-                    marginLeft: '16px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    paddingBottom: '3px',
-                    borderBottom: '1px solid #e2e8f0'
-                  }}
-                >
-                  <span style={{ fontSize: '0.9rem', fontWeight: (screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? '600' : '400', color: (screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? '#111827' : '#9ca3af' }}>
-                    {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? screen5BuyDate : '선택'}
-                  </span>
-                </div>
+                <span style={{ fontSize: '0.9rem', fontWeight: (screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? '600' : '400', color: (screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? '#111827' : '#9ca3af' }}>
+                  {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? screen5BuyDate : '선택'}
+                </span>
               </div>
-              {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) && (
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '4px' }}>
-                  <span style={{ fontSize: '0.8rem', color: '#6b7280' }}>
-                    {`${screen5StartFullDate} ~ ${screen5CalculatedEndDate} (${screen5BuyPeriod === '12개월' ? '1년' : screen5BuyPeriod}/${screen5MCount}회)`}
+            </div>
+
+            {/* 매수 기간 */}
+            <div 
+              onClick={() => setIsBuyPeriodBsheetOpen(true)}
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+            >
+              <span style={{ fontSize: '0.84rem', color: '#4b5563', whiteSpace: 'nowrap' }}>매수 기간</span>
+              <div 
+                style={{
+                  flex: 1,
+                  marginLeft: '16px',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  paddingBottom: '3px',
+                  borderBottom: '1px solid #e2e8f0'
+                }}
+              >
+                {(screen5IsPeriodConfirmed || screen5FundAccumulationHasProducts) ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ fontSize: '0.78rem', fontWeight: '400', color: '#6b7280' }}>
+                      {`(${screen5StartFullDate} ~ ${screen5CalculatedEndDate})`}
+                    </span>
+                    <span style={{ fontSize: '0.84rem', fontWeight: '600', color: '#111827' }}>
+                      {`${screen5BuyPeriod === '12개월' ? '1년' : screen5BuyPeriod}/${screen5MCount}회`}
+                    </span>
+                  </div>
+                ) : (
+                  <span style={{ fontSize: '0.9rem', fontWeight: '400', color: '#9ca3af' }}>
+                    선택
                   </span>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
 
