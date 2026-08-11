@@ -14832,41 +14832,41 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 })}
               </div>
 
-              {/* 매수 시작월 영역 */}
+              {/* 매수 시작월 영역 (이번달 + 3개월 버튼 칩) */}
               <div style={{ margin: '0 20px 22px 20px' }}>
                 <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', marginBottom: '8px', lineHeight: '1.4' }}>
                   매수 시작월
                 </div>
                 
-                {/* 매수 시작월 선택 드롭다운 박스 (2026.08.10 인풋과 동일한 스타일) */}
-                <div 
-                  onClick={() => {
-                    const [yStr, mStr] = screen5StartYearMonth.split('.');
-                    let y = parseInt(yStr, 10);
-                    let m = parseInt(mStr, 10);
-                    m += 1;
-                    if (m > 12) { m = 1; y += 1; }
-                    setScreen5StartYearMonth(`${y}.${String(m).padStart(2, '0')}`);
-                  }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '2px',
-                    padding: '9px 12px',
-                    backgroundColor: '#ffffff',
-                    fontSize: '0.9rem',
-                    color: '#111827',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <span style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-                    {screen5StartYearMonth}
-                  </span>
-                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: '4px' }}>
-                    <path d="M1 1L5 5L9 1" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  {[0, 1, 2, 3].map(offset => {
+                    let y = 2026;
+                    let m = 8 + offset;
+                    if (m > 12) { m -= 12; y += 1; }
+                    const ymStr = `${y}.${String(m).padStart(2, '0')}`;
+                    const labelStr = `${String(y).slice(2)}년 ${String(m).padStart(2, '0')}월`;
+                    const isActive = screen5StartYearMonth === ymStr;
+                    return (
+                      <button
+                        key={ymStr}
+                        onClick={() => setScreen5StartYearMonth(ymStr)}
+                        style={{
+                          flex: 1,
+                          height: '38px',
+                          borderRadius: '6px',
+                          fontSize: '0.82rem',
+                          fontWeight: isActive ? '700' : '400',
+                          color: isActive ? '#ffffff' : '#334155',
+                          backgroundColor: isActive ? '#111827' : '#ffffff',
+                          border: isActive ? '1.5px solid #111827' : '1px solid #d1d5db',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        {labelStr}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
