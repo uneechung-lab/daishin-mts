@@ -14792,44 +14792,38 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 </div>
               </div>
 
-              {/* 맨 위: 매수일 선택 (1일~31일 그리드 선택) */}
-              <div style={{ margin: '0 20px 8px 20px' }}>
+              {/* 맨 위: 매수일 선택 (1일~31일 둥근 칩 그리드) */}
+              <div style={{ margin: '0 20px 8px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', lineHeight: '1.4' }}>
                   매수일 선택
+                </div>
+                <div style={{ fontSize: '0.82rem', color: '#d92528', fontWeight: '700' }}>
+                  {screen5BuyDate}
                 </div>
               </div>
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(7, 1fr)',
-                border: '1px solid #d1d5db',
-                borderRadius: '2px',
-                backgroundColor: '#ffffff',
-                overflow: 'hidden',
+                gap: '6px',
                 margin: '0 20px 22px 20px'
               }}>
-                {Array.from({ length: 31 }, (_, i) => i + 1).map((d, idx) => {
+                {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => {
                   const currentDayNum = parseInt(screen5BuyDate.replace(/[^0-9]/g, ''), 10) || 10;
                   const isActive = currentDayNum === d;
-                  const col = idx % 7;
-                  const row = Math.floor(idx / 7);
                   return (
                     <button
                       key={d}
                       onClick={() => setScreen5BuyDate(`매월 ${d}일`)}
                       style={{
-                        padding: '9px 0',
-                        fontSize: '0.82rem',
+                        height: '36px',
+                        borderRadius: '6px',
+                        fontSize: '0.8rem',
                         fontWeight: isActive ? '700' : '400',
-                        color: isActive ? '#111827' : '#6b7280',
-                        backgroundColor: '#ffffff',
-                        border: 'none',
-                        borderRight: col < 6 ? '1px solid #e5e7eb' : 'none',
-                        borderBottom: row < 4 ? '1px solid #e5e7eb' : 'none',
-                        outline: isActive ? '1.5px solid #111111' : 'none',
-                        outlineOffset: '-1.5px',
-                        position: isActive ? 'relative' : 'static',
-                        zIndex: isActive ? 2 : 1,
-                        cursor: 'pointer'
+                        color: isActive ? '#ffffff' : '#334155',
+                        backgroundColor: isActive ? '#111827' : '#ffffff',
+                        border: isActive ? '1.5px solid #111827' : '1px solid #d1d5db',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
                       }}
                     >
                       {`${d}일`}
@@ -14838,7 +14832,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 })}
               </div>
 
-              {/* 매수 시작월 영역 (이번달 + 3개월) */}
+              {/* 매수 시작월 영역 (이번달 + 3개월 둥근 칩) */}
               <div style={{ margin: '0 20px 8px 20px' }}>
                 <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', lineHeight: '1.4' }}>
                   매수 시작월
@@ -14846,13 +14840,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
               <div style={{
                 display: 'flex',
-                border: '1px solid #d1d5db',
-                borderRadius: '2px',
-                backgroundColor: '#ffffff',
-                overflow: 'hidden',
+                gap: '8px',
                 margin: '0 20px 22px 20px'
               }}>
-                {[0, 1, 2, 3].map((offset, idx) => {
+                {[0, 1, 2, 3].map((offset) => {
                   let y = 2026;
                   let m = 8 + offset;
                   if (m > 12) { m -= 12; y += 1; }
@@ -14865,16 +14856,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       onClick={() => setScreen5StartYearMonth(ymStr)}
                       style={{
                         flex: 1,
-                        padding: '9px 0',
-                        fontSize: '0.86rem',
+                        height: '38px',
+                        borderRadius: '6px',
+                        fontSize: '0.82rem',
                         fontWeight: isActive ? '700' : '400',
-                        color: isActive ? '#111827' : '#6b7280',
-                        backgroundColor: '#ffffff',
-                        border: 'none',
-                        borderRight: idx < 3 ? '1px solid #e5e7eb' : 'none',
-                        outline: isActive ? '1.5px solid #111111' : 'none',
-                        outlineOffset: '-1.5px',
-                        cursor: 'pointer'
+                        color: isActive ? '#ffffff' : '#334155',
+                        backgroundColor: isActive ? '#111827' : '#ffffff',
+                        border: isActive ? '1.5px solid #111827' : '1px solid #d1d5db',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
                       }}
                     >
                       {labelStr}
@@ -14883,7 +14873,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                 })}
               </div>
 
-              {/* 매수 기간 (3개월, 6개월, 1년, 3년, 5년 및 시작일~종료일 영역) */}
+              {/* 매수 기간 (3개월, 6개월, 1년, 3년, 5년 둥근 칩) */}
               <div style={{ margin: '0 20px 8px 20px' }}>
                 <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: '600', lineHeight: '1.4' }}>
                   매수 기간
@@ -14891,13 +14881,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </div>
               <div style={{
                 display: 'flex',
-                border: '1px solid #d1d5db',
-                borderRadius: '2px',
-                backgroundColor: '#ffffff',
-                overflow: 'hidden',
+                gap: '6px',
                 margin: '0 20px 10px 20px'
               }}>
-                {['3개월', '6개월', '1년', '3년', '5년'].map((period, idx) => {
+                {['3개월', '6개월', '1년', '3년', '5년'].map((period) => {
                   const isActive = screen5BuyPeriod === period || (period === '1년' && screen5BuyPeriod === '12개월');
                   return (
                     <button
@@ -14905,16 +14892,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       onClick={() => setScreen5BuyPeriod(period)}
                       style={{
                         flex: 1,
-                        padding: '9px 0',
-                        fontSize: '0.86rem',
+                        height: '38px',
+                        borderRadius: '6px',
+                        fontSize: '0.84rem',
                         fontWeight: isActive ? '700' : '400',
-                        color: isActive ? '#111827' : '#6b7280',
-                        backgroundColor: '#ffffff',
-                        border: 'none',
-                        borderRight: idx < 4 ? '1px solid #e5e7eb' : 'none',
-                        outline: isActive ? '1.5px solid #111111' : 'none',
-                        outlineOffset: '-1.5px',
-                        cursor: 'pointer'
+                        color: isActive ? '#ffffff' : '#334155',
+                        backgroundColor: isActive ? '#111827' : '#ffffff',
+                        border: isActive ? '1.5px solid #111827' : '1px solid #d1d5db',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
                       }}
                     >
                       {period}
