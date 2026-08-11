@@ -14819,9 +14819,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         borderRadius: '6px',
                         fontSize: '0.8rem',
                         fontWeight: isActive ? '700' : '400',
-                        color: isActive ? '#ffffff' : '#334155',
-                        backgroundColor: isActive ? '#111827' : '#ffffff',
-                        border: isActive ? '1.5px solid #111827' : '1px solid #d1d5db',
+                        color: isActive ? '#111827' : '#4b5563',
+                        backgroundColor: '#ffffff',
+                        border: isActive ? '1.5px solid #111111' : '1px solid #d1d5db',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease'
                       }}
@@ -14860,9 +14860,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         borderRadius: '6px',
                         fontSize: '0.82rem',
                         fontWeight: isActive ? '700' : '400',
-                        color: isActive ? '#ffffff' : '#334155',
-                        backgroundColor: isActive ? '#111827' : '#ffffff',
-                        border: isActive ? '1.5px solid #111827' : '1px solid #d1d5db',
+                        color: isActive ? '#111827' : '#4b5563',
+                        backgroundColor: '#ffffff',
+                        border: isActive ? '1.5px solid #111111' : '1px solid #d1d5db',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease'
                       }}
@@ -14896,9 +14896,9 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                         borderRadius: '6px',
                         fontSize: '0.84rem',
                         fontWeight: isActive ? '700' : '400',
-                        color: isActive ? '#ffffff' : '#334155',
-                        backgroundColor: isActive ? '#111827' : '#ffffff',
-                        border: isActive ? '1.5px solid #111827' : '1px solid #d1d5db',
+                        color: isActive ? '#111827' : '#4b5563',
+                        backgroundColor: '#ffffff',
+                        border: isActive ? '1.5px solid #111111' : '1px solid #d1d5db',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease'
                       }}
