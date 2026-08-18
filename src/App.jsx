@@ -10320,8 +10320,10 @@ function App() {
             <h3 style={{ fontSize: '0.92rem', fontWeight: '800', margin: '0 0 16px 0' }}>과세유형</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '4px' }}>과세기준</span>
-                <span style={{ fontSize: '1.05rem', fontWeight: '800', color: '#111111' }}>개인</span>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>과세기준</span>
+                <div style={{ paddingBottom: '6px' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111111' }}>개인</span>
+                </div>
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>과세구분</span>
