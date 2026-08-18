@@ -9542,7 +9542,7 @@ function App() {
   const [screen6ToBeBalanceType, setScreen6ToBeBalanceType] = useState('잔고선택');
   const [screen6ToBeHoldBalanceType, setScreen6ToBeHoldBalanceType] = useState('보유잔고');
   const [screen6ToBeTaxType, setScreen6ToBeTaxType] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen6ToBeTaxType') || '연금소득세(연금수령 시)';
+    return new URLSearchParams(window.location.search).get('screen6ToBeTaxType') || '비과세';
   });
   const [screen6AsIsUnexecutedOpen, setScreen6AsIsUnexecutedOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6AsIsUnexecutedOpen') === 'true';
@@ -10325,16 +10325,21 @@ function App() {
               </div>
               <div>
                 <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>과세구분</span>
-                <div 
-                  onClick={() => {
-                    if (isAsIs) setScreen6AsIsBsheetState('tax_select');
-                    else setScreen6ToBeBsheetState('tax_select');
-                  }}
-                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}
-                >
-                  <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{isAsIs ? screen6AsIsTaxType : screen6ToBeTaxType}</span>
-                  <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
-                </div>
+                {isAsIs ? (
+                  <div 
+                    onClick={() => {
+                      setScreen6AsIsBsheetState('tax_select');
+                    }}
+                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px', cursor: 'pointer' }}
+                  >
+                    <span style={{ fontSize: '0.92rem', fontWeight: '700' }}>{screen6AsIsTaxType}</span>
+                    <span style={{ fontSize: '8px', color: '#888' }}>▼</span>
+                  </div>
+                ) : (
+                  <div style={{ paddingBottom: '6px' }}>
+                    <span style={{ fontSize: '0.92rem', fontWeight: '700', color: '#111111' }}>비과세</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
