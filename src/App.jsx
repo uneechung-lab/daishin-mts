@@ -9408,6 +9408,50 @@ function PcWebView() {
           </div>
         </div>
 
+        {/* Section 0: 분할매수 신청내역 (Newly Added Section Matching media_1787128102735.png 100%) */}
+        <div style={{ marginBottom: '30px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: 0 }}>
+              분할매수 신청내역
+            </h3>
+            <span style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}>
+              신규 분할매수 추가 &gt;
+            </span>
+          </div>
+          <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
+              <thead>
+                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
+                  <th style={{ border: '1px solid #eaeaea', width: '40px', padding: '10px 5px', backgroundColor: '#f9fbfd' }} />
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>신청일자</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 16px', backgroundColor: '#f9fbfd' }}>매도상품</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>정기매도금액</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>매수일자</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>시작일</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>종료일</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ height: '42px', backgroundColor: '#ffffff', color: '#333333' }}>
+                  <td style={{ border: '1px solid #eaeaea', padding: '8px' }}>
+                    <input type="radio" name="split_purchase_history" defaultChecked style={{ cursor: 'pointer' }} />
+                  </td>
+                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
+                  <td style={{ border: '1px solid #eaeaea', padding: '8px 16px', textAlign: 'left' }}>
+                    <u style={{ textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }}>
+                      한국투자퇴직연금롱텀밸류증권자투자신탁
+                    </u>
+                  </td>
+                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>1,000,000</td>
+                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>15</td>
+                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
+                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2026.01.15</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         {/* Section 1: 매도대상 상품 */}
         <div style={{ marginBottom: '30px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: '0 0 10px 0' }}>
