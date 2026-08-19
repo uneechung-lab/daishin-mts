@@ -8974,6 +8974,613 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
   return null;
 }
 
+
+function PcWebView() {
+  return (
+    <div className="pcweb-container" style={{
+      width: '100vw',
+      minHeight: '100vh',
+      backgroundColor: '#ffffff',
+      fontFamily: '"Malgun Gothic", "맑은 고딕", sans-serif',
+      color: '#333333',
+      lineHeight: 1.65,
+      letterSpacing: '-0.5px',
+      margin: 0,
+      padding: '0 0 70px 0',
+      boxSizing: 'border-box'
+    }}>
+      <style>{`
+        .pcweb-container, .pcweb-container * {
+          font-family: "Malgun Gothic", "맑은 고딕", sans-serif !important;
+          line-height: 1.65 !important;
+          letter-spacing: -0.5px !important;
+        }
+        .top-utility-bar, .top-utility-bar * {
+          font-family: "Dotum", "돋음", sans-serif !important;
+        }
+      `}</style>
+
+      {/* Centered Main Page Wrapper (Compact 980px width) */}
+      <div style={{
+        width: '980px',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        {/* 1. Header: Official Logo Image (Left) & Utility Links (Right) */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          padding: '22px 0 16px 0'
+        }}>
+          {/* Official Public Logo Image /retire_daishin.png */}
+          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <img
+              src="/retire_daishin.png"
+              alt="Daishin 퇴직연금"
+              style={{ width: '260px', height: '43px', display: 'block', objectFit: 'contain' }}
+            />
+          </div>
+
+          {/* Top Right Utility Bar */}
+          <div className="top-utility-bar" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '12px',
+            color: '#444444'
+          }}>
+            {/* User Name */}
+            <span style={{ fontSize: '12px' }}>
+              <u style={{ textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }}>김대신</u> 님!
+            </span>
+
+            {/* Timer & Login Extension */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginLeft: '2px' }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#555555" strokeWidth="1.8" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span style={{ color: '#333333', fontWeight: 'normal', fontSize: '12px', marginLeft: '1px' }}>00:19:24</span>
+              <u style={{ color: '#333333', textDecoration: 'underline', textUnderlineOffset: '3px', marginLeft: '3px', cursor: 'pointer', fontSize: '12px' }}>
+                로그인연장
+              </u>
+            </div>
+
+            {/* Combined Box: 정보수정 | 로그아웃 */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              border: '1px solid #cccccc',
+              backgroundColor: '#ffffff',
+              fontSize: '11px',
+              color: '#444444',
+              marginLeft: '4px'
+            }}>
+              <span style={{ padding: '3px 10px', cursor: 'pointer', borderRight: '1px solid #cccccc' }}>
+                정보수정
+              </span>
+              <span style={{ padding: '3px 10px', cursor: 'pointer' }}>
+                로그아웃
+              </span>
+            </div>
+
+            {/* Account Select Box */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              border: '1px solid #cccccc',
+              backgroundColor: '#ffffff',
+              padding: '3px 10px',
+              fontSize: '11px',
+              color: '#0066cc',
+              cursor: 'pointer',
+              minWidth: '200px'
+            }}>
+              <span>김대신_IRP (300000035941)</span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666666" strokeWidth="2.5" style={{ marginLeft: '6px' }}>
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Main Navigation Bar */}
+        <div style={{
+          backgroundColor: '#363636',
+          height: '48px',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 20px',
+          width: '100%',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%', width: '100%' }}>
+            {[
+              'Why대신증권',
+              '퇴직연금안내',
+              '퇴직연금 상품',
+              '공시/자료실',
+              '나의 퇴직연금'
+            ].map((menu, idx) => (
+              <React.Fragment key={menu}>
+                <div style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  color: '#ffffff',
+                  fontSize: '16px',
+                  fontWeight: menu === '나의 퇴직연금' ? 'bold' : 'normal',
+                  cursor: 'pointer'
+                }}>
+                  {menu}
+                </div>
+                {idx < 4 && (
+                  <div style={{
+                    width: '1px',
+                    height: '13px',
+                    backgroundColor: '#525761'
+                  }} />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+
+        {/* 3. Segmented Breadcrumb Bar */}
+        <div style={{
+          border: '1px solid #dcdcdc',
+          backgroundColor: '#ffffff',
+          height: '40px',
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          boxSizing: 'border-box',
+          marginTop: '0px',
+          marginBottom: '22px',
+          fontSize: '13px',
+          color: '#555555'
+        }}>
+          {/* Segment 1: Home Icon */}
+          <div style={{
+            width: '40px',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRight: '1px solid #dcdcdc',
+            color: '#888888',
+            flexShrink: 0
+          }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
+            </svg>
+          </div>
+
+          {/* Segment 2: 나의 퇴직연금 > */}
+          <div style={{
+            padding: '0 14px',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderRight: '1px solid #dcdcdc',
+            minWidth: '130px',
+            boxSizing: 'border-box',
+            flexShrink: 0
+          }}>
+            <span>나의 퇴직연금</span>
+            <span style={{ color: '#aaaaaa', fontSize: '12px', marginLeft: '10px' }}>&gt;</span>
+          </div>
+
+          {/* Segment 3: 운용지시 > */}
+          <div style={{
+            padding: '0 14px',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderRight: '1px solid #dcdcdc',
+            minWidth: '120px',
+            boxSizing: 'border-box',
+            flexShrink: 0
+          }}>
+            <span>운용지시</span>
+            <span style={{ color: '#aaaaaa', fontSize: '12px', marginLeft: '10px' }}>&gt;</span>
+          </div>
+
+          {/* Segment 4: 매매주문 v */}
+          <div style={{
+            padding: '0 14px',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderRight: '1px solid #dcdcdc',
+            minWidth: '135px',
+            boxSizing: 'border-box',
+            flexShrink: 0
+          }}>
+            <span style={{ color: '#0088cc', fontWeight: 'normal' }}>매매주문</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#999999" strokeWidth="2.2" style={{ marginLeft: '14px' }}>
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+
+          {/* Empty Space Segment extending to right */}
+          <div style={{ flex: 1, height: '100%' }} />
+        </div>
+
+        {/* 4. Title Area (28px Title) */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          marginBottom: '20px'
+        }}>
+          <h1 style={{ fontSize: '28px', fontWeight: 'bold', margin: 0, color: '#222222', letterSpacing: '-1px !important' }}>
+            매매주문
+          </h1>
+          <div style={{
+            fontSize: '13px',
+            color: '#666666',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '4px'
+          }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555555" strokeWidth="1.8">
+              <polyline points="6 9 6 2 18 2 18 9"/>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+              <rect x="6" y="14" width="12" height="8"/>
+            </svg>
+            <span>인쇄</span>
+          </div>
+        </div>
+
+        {/* Sub Navigation Tabs Bar */}
+        <div style={{
+          width: '100%',
+          borderBottom: '2px solid #222222',
+          display: 'flex',
+          alignItems: 'flex-end',
+          marginBottom: '20px'
+        }}>
+          {[
+            { name: '교체매매', active: false },
+            { name: '일반매도', active: false },
+            { name: '일반매수', active: false },
+            { name: '만기예약매매', active: false },
+            { name: '자동분할매수', active: true },
+            { name: '주문조회/취소', active: false }
+          ].map((tab) => (
+            <div
+              key={tab.name}
+              style={{
+                padding: '10px 20px',
+                fontSize: '15px',
+                fontWeight: tab.active ? 'bold' : 'normal',
+                color: tab.active ? '#222222' : '#666666',
+                backgroundColor: 'transparent',
+                borderTop: tab.active ? '2px solid #222222' : '1px solid #e0e0e0',
+                borderLeft: tab.active ? '2px solid #222222' : '1px solid #e0e0e0',
+                borderRight: tab.active ? '2px solid #222222' : '1px solid #e0e0e0',
+                borderBottom: tab.active ? '3px solid #ffffff' : 'none',
+                marginBottom: tab.active ? '-2px' : '0px',
+                cursor: 'pointer',
+                position: 'relative',
+                zIndex: tab.active ? 2 : 1
+              }}
+            >
+              {tab.name}
+            </div>
+          ))}
+        </div>
+
+        {/* Step Indicator Bar */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px', fontSize: '13px', marginBottom: '16px' }}>
+          <span style={{ fontWeight: 'bold', color: '#0072bc' }}>Step 01 정보입력</span>
+          <span style={{ color: '#888888', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            ••••▶ <span style={{ marginLeft: '2px' }}>Step 02 입력확인</span>
+          </span>
+          <span style={{ color: '#888888', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            ••••▶ <span style={{ marginLeft: '2px' }}>Step 03 신청완료</span>
+          </span>
+        </div>
+
+        {/* Form Box 1: 주민등록번호 */}
+        <div style={{
+          border: '2px solid #4a5056',
+          backgroundColor: '#ffffff',
+          padding: '14px 20px',
+          marginBottom: '18px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '26px' }}>
+            <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#333333' }}>
+              주민등록번호
+            </span>
+            <span style={{ fontSize: '14px', color: '#333333' }}>
+              800819-******* 김대신
+            </span>
+          </div>
+          <button style={{
+            backgroundColor: '#788088',
+            color: '#ffffff',
+            border: 'none',
+            padding: '7px 24px',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            borderRadius: '1px'
+          }}>
+            조회
+          </button>
+        </div>
+
+        {/* Form Box 2: 투자성향등급 */}
+        <div style={{
+          backgroundColor: '#ffffff',
+          border: '1px solid #d0d0d0',
+          height: '58px',
+          marginTop: '14px',
+          marginBottom: '36px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingRight: '16px',
+          position: 'relative'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', height: '100%' }}>
+            {/* Full-height Arrow Badge */}
+            <div style={{
+              backgroundColor: '#6a727c',
+              color: '#ffffff',
+              fontSize: '15px',
+              fontWeight: 'bold',
+              height: 'calc(100% + 2px)',
+              marginTop: '-1px',
+              marginBottom: '-1px',
+              marginLeft: '-1px',
+              display: 'flex',
+              alignItems: 'center',
+              padding: '0 42px 0 24px',
+              clipPath: 'polygon(0% 0%, 84% 0%, 100% 50%, 84% 100%, 0% 100%)',
+              border: 'none',
+              outline: 'none',
+              position: 'relative',
+              zIndex: 2
+            }}>
+              투자성향등급
+            </div>
+            <span style={{ fontSize: '15px', color: '#333333' }}>
+              고객님의 투자성향은 <strong style={{ color: '#d90000', fontWeight: 'bold', fontSize: '17px' }}>공격투자형</strong> 입니다.
+            </span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* Button 1 */}
+            <button style={{
+              border: '1px solid #b5b5b5',
+              backgroundColor: '#ffffff',
+              padding: '0 14px',
+              height: '28px',
+              fontSize: '12.5px',
+              color: '#555555',
+              cursor: 'pointer',
+              boxSizing: 'border-box'
+            }}>
+              투자성향 확인
+            </button>
+            <div style={{
+              width: '13px',
+              height: '13px',
+              border: '1px solid #b5b5b5',
+              backgroundColor: '#ffffff',
+              borderRadius: '1px',
+              margin: '0 2px',
+              cursor: 'pointer'
+            }} />
+            {/* Button 2 */}
+            <button style={{
+              border: '1px solid #b5b5b5',
+              backgroundColor: '#ffffff',
+              padding: '0 14px',
+              height: '28px',
+              fontSize: '12.5px',
+              color: '#555555',
+              cursor: 'pointer',
+              boxSizing: 'border-box',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}>
+              <span>투자성향 변경</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0072bc" strokeWidth="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Section 1: 매도대상 상품 (Matching media_1787125109153.png 100%) */}
+        <div style={{ marginBottom: '30px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: '0 0 10px 0' }}>
+            매도대상 상품
+          </h3>
+          <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
+              <thead>
+                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>자산기관</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>상품명</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>매입원금</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>보유수량</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>정기매도</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>정기매수일자</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>시작일자</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>결제일수</th>
+                </tr>
+                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>평가금액</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>매도가능수량</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>종료일자</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <p style={{ fontSize: '12.5px', color: '#666666', marginTop: '8px', marginBottom: 0, lineHeight: 1.65 }}>
+            · 정기매수일자는 매수운용지시가 나가는 날 기준입니다. MMF/수익증권은 수량매도, ELS/DLS는 원금기준으로 신청가능합니다.
+          </p>
+        </div>
+
+        {/* Section 2: 매수대상 상품 (Matching media_1787125109153.png 100%) */}
+        <div style={{ marginBottom: '30px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: 0 }}>
+              매수대상 상품
+            </h3>
+            <div style={{ display: 'flex', gap: '16px', fontSize: '13px' }}>
+              <span style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold' }}>투자비율 가져오기 &gt;</span>
+              <span style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold' }}>상품추가 &gt;</span>
+            </div>
+          </div>
+          <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
+              <thead>
+                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold', height: '38px' }}>
+                  <th style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd' }}><input type="checkbox" /></th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품군</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품명</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>투자한도(%)</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>매수비율</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>결제일수</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
+            <button style={{ border: '1px solid #cccccc', backgroundColor: '#ffffff', padding: '4px 14px', fontSize: '12px', color: '#555555', cursor: 'pointer' }}>상품삭제</button>
+            <button style={{
+              backgroundColor: '#009fe3',
+              color: '#ffffff',
+              fontSize: '15px',
+              fontWeight: 'bold',
+              padding: '8px 30px',
+              border: 'none',
+              borderRadius: '2px',
+              cursor: 'pointer'
+            }}>
+              분할매수
+            </button>
+          </div>
+        </div>
+
+        {/* Notice Section */}
+        <div style={{
+          marginTop: '32px',
+          fontSize: '12.5px',
+          lineHeight: '1.7',
+          color: '#555555'
+        }}>
+          {/* Header line */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontWeight: 'bold', color: '#222222', marginBottom: '6px', fontSize: '13px' }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#444444" strokeWidth="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>안내</span>
+          </div>
+          <p style={{ margin: 0, paddingLeft: '4px', color: '#555555', lineHeight: '1.7' }}>
+            · 상기 <strong style={{ color: '#d90000', fontWeight: 'bold' }}>운용지시 결과에 대한 책임</strong>은 <strong style={{ color: '#d90000', fontWeight: 'bold' }}>운용 지시자</strong>에게 <strong style={{ color: '#d90000', fontWeight: 'bold' }}>귀속</strong>되며, 선택한 운용방법과 투자상품에 따라 이익 또는 손실이 발생할 수 있으므로 운용지시 전에 반드시 투자설명서 등을 읽어 보시기 바랍니다.
+          </p>
+        </div>
+
+        {/* Footer Area matching Target Image media_1787123900248.png 100% */}
+        <div style={{
+          borderTop: '1px solid #e5e5e5',
+          backgroundColor: '#ffffff',
+          padding: '20px 0 28px 0',
+          marginTop: '36px',
+          fontSize: '11px',
+          color: '#444444'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            {/* Left Side Links & Copyright */}
+            <div>
+              <div style={{ display: 'flex', gap: '14px', fontWeight: 'bold', color: '#333333', marginBottom: '6px', fontSize: '11px' }}>
+                <span style={{ cursor: 'pointer' }}>영업점안내</span>
+                <span style={{ cursor: 'pointer' }}>보안프로그램</span>
+                <span style={{ cursor: 'pointer' }}>공동인증</span>
+                <span style={{ cursor: 'pointer' }}>개인정보처리방침</span>
+              </div>
+              <div style={{ color: '#555555', fontSize: '11px' }}>
+                Copyright © 2015 DAISHIN Securities Co., Ltd. All Rights Reserved.
+              </div>
+            </div>
+
+            {/* Right Side Stacked Contact Columns & Public WA Logo Image */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '22px', textAlign: 'center' }}>
+                {/* Column 1: 퇴직연금 */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                  <span style={{ fontSize: '11px', color: '#444444' }}>퇴직연금</span>
+                  <span style={{ fontSize: '13.5px', color: '#009fe3', fontWeight: 'normal' }}>02-769-3400</span>
+                </div>
+                {/* Column 2: 금융지원센터 */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                  <span style={{ fontSize: '11px', color: '#444444' }}>금융지원센터</span>
+                  <span style={{ fontSize: '13.5px', color: '#009fe3', fontWeight: 'normal' }}>1588-4488</span>
+                </div>
+                {/* Column 3: 크레온 */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                  <span style={{ fontSize: '11px', color: '#444444' }}>크레온</span>
+                  <span style={{ fontSize: '13.5px', color: '#009fe3', fontWeight: 'normal' }}>1544-4488</span>
+                </div>
+                {/* Column 4: 원격 지원 */}
+                <div style={{ display: 'flex', flexDirection: 'column', fontSize: '11px', color: '#444444', lineHeight: 1.25 }}>
+                  <span>원격</span>
+                  <span>지원</span>
+                </div>
+                {/* Column 5: Official WA Logo Image from /WA_logo.png */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src="/WA_logo.png"
+                    alt="웹접근성 WA 인증마크"
+                    style={{ height: '32px', width: 'auto', display: 'block' }}
+                  />
+                </div>
+              </div>
+
+              {/* Family Site Dropdown Button */}
+              <button style={{
+                border: '1px solid #cccccc',
+                backgroundColor: '#ffffff',
+                padding: '3px 14px',
+                fontSize: '11px',
+                color: '#444444',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '180px'
+              }}>
+                <span>Family Site</span>
+                <span style={{ fontSize: '8px', color: '#666666' }}>▲</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
 
   const [isDark, setIsDark] = useState(false);
@@ -19244,6 +19851,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     }, 3500);
   };
 
+  
+  const isPcWeb = new URLSearchParams(window.location.search).get('pcweb') === 'true';
+
+  if (isPcWeb) {
+    return <PcWebView />;
+  }
+
   return (
     <div className={isDark ? 'dark-theme' : 'light-theme'} style={styles.appWrapper}>
       {/* Badges 1-9 at Top Left */}
@@ -22172,16 +22786,57 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
             {/* Task Title */}
             <div style={{
-              fontSize: '1.35rem',
-              fontWeight: '600',
-              color: isDark ? '#94a3b8' : '#475569',
-              letterSpacing: '-0.5px',
-              textAlign: 'center',
-              opacity: 0.85,
-              marginTop: '8px',
-              wordBreak: 'keep-all'
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              marginTop: '8px'
             }}>
-              장내 채권 매매 시스템
+              <div style={{
+                fontSize: '1.35rem',
+                fontWeight: '600',
+                color: isDark ? '#94a3b8' : '#475569',
+                letterSpacing: '-0.5px',
+                textAlign: 'center',
+                opacity: 0.85,
+                wordBreak: 'keep-all'
+              }}>
+                장내 채권 매매 시스템
+              </div>
+              <button
+                onClick={() => window.open('?pcweb=true', '_blank')}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  backgroundColor: '#2563eb',
+                  color: '#ffffff',
+                  fontSize: '0.85rem',
+                  fontWeight: '700',
+                  padding: '6px 14px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 6px rgba(37,99,235,0.3)',
+                  transition: 'all 0.2s ease',
+                  letterSpacing: '0.5px'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = '#1d4ed8';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = '#2563eb';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                PC WEB
+              </button>
             </div>
           </div>
         ) : (
