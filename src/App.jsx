@@ -9239,13 +9239,14 @@ function PcWebView() {
           </div>
         </div>
 
-        {/* Sub Navigation Tabs Bar */}
+        {/* Sub Navigation Tabs Bar (Matching Figma Import media_1787127004649.png 100%) */}
         <div style={{
           width: '100%',
-          borderBottom: '2px solid #222222',
           display: 'flex',
           alignItems: 'flex-end',
-          marginBottom: '20px'
+          position: 'relative',
+          marginBottom: '20px',
+          borderBottom: '2px solid #222222'
         }}>
           {[
             { name: '교체매매', active: false },
@@ -9254,23 +9255,23 @@ function PcWebView() {
             { name: '만기예약매매', active: false },
             { name: '자동분할매수', active: true },
             { name: '주문조회/취소', active: false }
-          ].map((tab) => (
+          ].map((tab, idx) => (
             <div
               key={tab.name}
               style={{
-                padding: '10px 20px',
-                fontSize: '15px',
+                padding: '9px 24px',
+                fontSize: '14px',
                 fontWeight: tab.active ? 'bold' : 'normal',
                 color: tab.active ? '#222222' : '#666666',
-                backgroundColor: 'transparent',
+                backgroundColor: '#ffffff',
                 borderTop: tab.active ? '2px solid #222222' : '1px solid #e0e0e0',
-                borderLeft: tab.active ? '2px solid #222222' : '1px solid #e0e0e0',
-                borderRight: tab.active ? '2px solid #222222' : '1px solid #e0e0e0',
-                borderBottom: tab.active ? '3px solid #ffffff' : 'none',
+                borderLeft: tab.active ? '2px solid #222222' : (idx === 0 ? '1px solid #e0e0e0' : 'none'),
+                borderRight: tab.active ? '2px solid #222222' : (idx === 5 ? '1px solid #e0e0e0' : '1px solid #e0e0e0'),
+                borderBottom: tab.active ? '2px solid #ffffff' : 'none',
                 marginBottom: tab.active ? '-2px' : '0px',
                 cursor: 'pointer',
                 position: 'relative',
-                zIndex: tab.active ? 2 : 1
+                zIndex: tab.active ? 3 : 1
               }}
             >
               {tab.name}
@@ -9407,7 +9408,7 @@ function PcWebView() {
           </div>
         </div>
 
-        {/* Section 1: 매도대상 상품 (Matching media_1787125109153.png 100%) */}
+        {/* Section 1: 매도대상 상품 */}
         <div style={{ marginBottom: '30px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: '0 0 10px 0' }}>
             매도대상 상품
@@ -9439,7 +9440,7 @@ function PcWebView() {
           </p>
         </div>
 
-        {/* Section 2: 매수대상 상품 (Matching media_1787125109153.png 100%) */}
+        {/* Section 2: 매수대상 상품 */}
         <div style={{ marginBottom: '30px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: 0 }}>
