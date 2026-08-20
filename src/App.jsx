@@ -8998,15 +8998,14 @@ function PcWebView() {
   ];
   // State Machine matching Specification Diagram & User Directives
   const searchParams = new URLSearchParams(window.location.search);
-  const isExplicitEmpty = searchParams.get('empty') === 'true';
-  const isHistoryMode = searchParams.get('history') === 'true' || searchParams.get('selected') === 'true' || searchParams.get('select') === 'true';
+  const isExplicitNew = searchParams.get('new') === 'true';
 
   const [step, setStep] = React.useState(1);
-  const [isSearched, setIsSearched] = React.useState(!isExplicitEmpty);
-  const [historySelected, setHistorySelected] = React.useState(isHistoryMode);
-  // 새로고침 시에도 라디오 버튼 선택 상태가 유지되도록 디폴트값 0(선택) 설정
-  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(isExplicitEmpty ? null : 0);
-  const [buyItems, setBuyItems] = React.useState(!isExplicitEmpty ? defaultBuyItems : []);
+  const [isSearched, setIsSearched] = React.useState(true);
+  // 피그마 임포트 및 새로고침 시 media_1787211709406.png 화면(신청내역 선택 완결 상태)이 바로 노출되도록 디폴트 historySelected=true 설정
+  const [historySelected, setHistorySelected] = React.useState(!isExplicitNew);
+  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(!isExplicitNew ? 0 : null);
+  const [buyItems, setBuyItems] = React.useState(!isExplicitNew ? defaultBuyItems : []);
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
