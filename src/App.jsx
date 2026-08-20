@@ -8975,27 +8975,45 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
 }
 
 
+const defaultBuyItems = [
+  {
+    checked: true,
+    risk: '매우낮은위험',
+    group: 'MMF',
+    name: '삼성MMF법인제1호Cpe(퇴직연금)',
+    limit: '100',
+    ratio: '0',
+    settlementDays: 'D+2'
+  },
+  {
+    checked: true,
+    risk: '낮은위험',
+    group: '해외채권혼합형',
+    name: '삼성퇴직연금CHINA본토포커스40증권자투자신탁1채혼C',
+    limit: '100',
+    ratio: '0',
+    settlementDays: 'D+3'
+  }
+];
+
+const historyAppliedSellItem = {
+  institution: '대신증권',
+  risk: '중위험(●)',
+  name: '한국투자퇴직연금롱텀밸류증권자투자신탁',
+  purchasePrice: '1,000,000',
+  evalPrice: '1,000,000',
+  holdingQty: '1,000,000',
+  sellableQty: '1,000,000',
+  regularSellType: '원금',
+  regularSellAmount: '1,000,000',
+  regularBuyDate: '15일',
+  startDate: '2025/01/01',
+  endDate: '2026/01/15',
+  settlementDays: 'D+3'
+};
+
 function PcWebView() {
-  const defaultBuyItems = [
-    {
-      checked: true,
-      risk: '매우낮은위험',
-      group: 'MMF',
-      name: '삼성MMF법인제1호Cpe(퇴직연금)',
-      limit: '100',
-      ratio: '0',
-      settlementDays: 'D+2'
-    },
-    {
-      checked: true,
-      risk: '낮은위험',
-      group: '해외채권혼합형',
-      name: '삼성퇴직연금CHINA본토포커스40증권자투자신탁1채혼C',
-      limit: '100',
-      ratio: '0',
-      settlementDays: 'D+3'
-    }
-  ];
+
   // State Machine matching Specification Diagram & User Directives
   const searchParams = new URLSearchParams(window.location.search);
   const isExplicitSearched = searchParams.get('searched') === 'true' || searchParams.get('data') === 'true' || searchParams.get('history') === 'true';
@@ -9017,21 +9035,7 @@ function PcWebView() {
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
-  const historyAppliedSellItem = {
-    institution: '대신증권',
-    risk: '중위험(●)',
-    name: '한국투자퇴직연금롱텀밸류증권자투자신탁',
-    purchasePrice: '1,000,000',
-    evalPrice: '1,000,000',
-    holdingQty: '1,000,000',
-    sellableQty: '1,000,000',
-    regularSellType: '원금',
-    regularSellAmount: '1,000,000',
-    regularBuyDate: '15일',
-    startDate: '2025/01/01',
-    endDate: '2026/01/15',
-    settlementDays: 'D+3'
-  };
+
 
   const [sellItems, setSellItems] = React.useState([
     {
