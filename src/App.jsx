@@ -9052,6 +9052,14 @@ function PcWebView() {
     setBuyItems([]);
   };
 
+  // 좌측 상단 BI 로고 클릭 시 조회 이전 데이터 없는 화면(빈 헤더 상태)으로 이동
+  const handleResetToEmptyState = () => {
+    setIsSearched(false);
+    setHistorySelected(false);
+    setSelectedSellItemIndex(null);
+    setBuyItems([]);
+  };
+
   // 신규 분할매수 추가 버튼 클릭
   const handleNewSplitPurchaseAdd = () => {
     if (!isSearched) setIsSearched(true);
@@ -9214,7 +9222,7 @@ function PcWebView() {
           padding: '22px 0 16px 0'
         }}>
           {/* Official Public Logo Image /retire_daishin.png */}
-          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={handleQuerySearch}>
+          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={handleResetToEmptyState}>
             <img
               src="/retire_daishin.png"
               alt="Daishin 퇴직연금"
