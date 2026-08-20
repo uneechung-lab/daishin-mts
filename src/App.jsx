@@ -9637,6 +9637,7 @@ function PcWebView() {
                   <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>매수일자</th>
                   <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>시작일</th>
                   <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>종료일</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>취소</th>
                 </tr>
               </thead>
               <tbody>
@@ -9661,6 +9662,14 @@ function PcWebView() {
                     <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>15</td>
                     <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
                     <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2026.01.15</td>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>
+                      <u
+                        style={{ textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer', color: '#0072bc' }}
+                        onClick={handleCancelSplitPurchase}
+                      >
+                        신청취소
+                      </u>
+                    </td>
                   </tr>
                 )}
               </tbody>
