@@ -8998,14 +8998,15 @@ function PcWebView() {
   ];
   // State Machine matching Specification Diagram & User Directives
   const searchParams = new URLSearchParams(window.location.search);
-  const isExplicitEmpty = searchParams.get('empty') === 'true' || searchParams.get('searched') === 'false';
-  const isExplicitNew = searchParams.get('new') === 'true';
+  const isExplicitSearched = searchParams.get('searched') === 'true' || searchParams.get('data') === 'true' || searchParams.get('history') === 'true';
+  const isHistoryMode = searchParams.get('history') === 'true' || searchParams.get('selected') === 'true';
 
   const [step, setStep] = React.useState(1);
-  const [isSearched, setIsSearched] = React.useState(!isExplicitEmpty);
-  const [historySelected, setHistorySelected] = React.useState(!isExplicitEmpty && !isExplicitNew);
-  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(!isExplicitEmpty && !isExplicitNew ? 0 : null);
-  const [buyItems, setBuyItems] = React.useState(!isExplicitEmpty && !isExplicitNew ? defaultBuyItems : []);
+  // 디폴트 기본 상태는 무조건 false! 새로고침이나 기본 진입 시 절대로 데이터가 변하지 않고 데이터 없는 헤더만 노출
+  const [isSearched, setIsSearched] = React.useState(isExplicitSearched);
+  const [historySelected, setHistorySelected] = React.useState(isHistoryMode);
+  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(isHistoryMode ? 0 : null);
+  const [buyItems, setBuyItems] = React.useState(isHistoryMode ? defaultBuyItems : []);
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
