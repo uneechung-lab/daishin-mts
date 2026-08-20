@@ -9017,6 +9017,22 @@ function PcWebView() {
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
+  const historyAppliedSellItem = {
+    institution: '대신증권',
+    risk: '중위험(●)',
+    name: '한국투자퇴직연금롱텀밸류증권자투자신탁',
+    purchasePrice: '1,000,000',
+    evalPrice: '1,000,000',
+    holdingQty: '1,000,000',
+    sellableQty: '1,000,000',
+    regularSellType: '원금',
+    regularSellAmount: '1,000,000',
+    regularBuyDate: '15일',
+    startDate: '2025/01/01',
+    endDate: '2026/01/15',
+    settlementDays: 'D+3'
+  };
+
   const [sellItems, setSellItems] = React.useState([
     {
       institution: '대신증권',
@@ -9718,7 +9734,7 @@ function PcWebView() {
                 </tr>
               </thead>
               <tbody>
-                {isSearched && sellItems.map((item, idx) => {
+                {isSearched && (historySelected ? [historyAppliedSellItem] : sellItems).map((item, idx) => {
                   const isChecked = selectedSellItemIndex === idx;
                   return (
                     <React.Fragment key={idx}>
@@ -9758,7 +9774,7 @@ function PcWebView() {
                         </td>
                         <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>
                           <select disabled={historySelected} style={{ height: '24px', padding: '0 6px', fontSize: '12px', border: '1px solid #cccccc', backgroundColor: historySelected ? '#f5f5f5' : '#ffffff', color: '#333333', boxSizing: 'border-box', borderRadius: '1px' }}>
-                            <option>선택</option>
+                            <option>{item.regularBuyDate || '선택'}</option>
                           </select>
                         </td>
                         <td style={{ border: '1px solid #eaeaea', padding: '4px' }}>
