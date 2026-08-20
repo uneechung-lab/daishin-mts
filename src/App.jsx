@@ -9680,7 +9680,7 @@ function PcWebView() {
                         onChange={handleSelectHistoryRow}
                         style={{
                           cursor: 'pointer',
-                          accentColor: '#555555',
+                          accentColor: '#0072bc',
                           width: '14px',
                           height: '14px'
                         }}
