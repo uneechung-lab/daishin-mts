@@ -9002,10 +9002,11 @@ function PcWebView() {
   const isHistoryMode = searchParams.get('history') === 'true' || searchParams.get('selected') === 'true' || searchParams.get('select') === 'true';
 
   const [step, setStep] = React.useState(1);
-  const [isSearched, setIsSearched] = React.useState(true);
+  const [isSearched, setIsSearched] = React.useState(!isExplicitEmpty);
   const [historySelected, setHistorySelected] = React.useState(isHistoryMode);
-  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(isHistoryMode ? 0 : null);
-  const [buyItems, setBuyItems] = React.useState(isHistoryMode ? defaultBuyItems : (!isExplicitEmpty ? defaultBuyItems : []));
+  // 새로고침 시에도 라디오 버튼 선택 상태가 유지되도록 디폴트값 0(선택) 설정
+  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(isExplicitEmpty ? null : 0);
+  const [buyItems, setBuyItems] = React.useState(!isExplicitEmpty ? defaultBuyItems : []);
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
