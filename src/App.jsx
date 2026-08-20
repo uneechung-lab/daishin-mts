@@ -9007,6 +9007,13 @@ function PcWebView() {
   const [historySelected, setHistorySelected] = React.useState(isHistoryMode);
   const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(isHistoryMode ? 0 : null);
   const [buyItems, setBuyItems] = React.useState(isHistoryMode ? defaultBuyItems : []);
+
+  // Helper function to dynamically update URL search parameters in address bar for Figma HTML Import
+  const updateUrlState = (paramsStr) => {
+    if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', window.location.pathname + paramsStr);
+    }
+  };
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
@@ -9051,6 +9058,7 @@ function PcWebView() {
     setHistorySelected(false);
     setSelectedSellItemIndex(null);
     setBuyItems([]);
+    updateUrlState('?pcweb=true&searched=true');
   };
 
   // 좌측 상단 BI 로고 클릭 시 조회 이전 데이터 없는 화면(빈 헤더 상태)으로 이동
@@ -9059,6 +9067,7 @@ function PcWebView() {
     setHistorySelected(false);
     setSelectedSellItemIndex(null);
     setBuyItems([]);
+    updateUrlState('?pcweb=true');
   };
 
   // 신규 분할매수 추가 버튼 클릭
@@ -9075,6 +9084,7 @@ function PcWebView() {
     setHistorySelected(true);
     setSelectedSellItemIndex(0);
     setBuyItems(defaultBuyItems);
+    updateUrlState('?pcweb=true&searched=true&history=true');
   };
 
   // 매도대상 상품 레디오 버튼 선택 변경 시 기 입력내용 초기화
