@@ -8977,11 +8977,15 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
 
 function PcWebView() {
   // State Machine matching Specification Diagram & User Directives
+  const searchParams = new URLSearchParams(window.location.search);
+  const initialSearched = searchParams.get('searched') === 'true' || searchParams.get('data') === 'true';
+  const initialHistory = searchParams.get('history') === 'true';
+
   const [step, setStep] = React.useState(1);
-  const [isSearched, setIsSearched] = React.useState(false); // 최초 진입 시 조회 전까지 모든 테이블 헤더만 노출
-  const [historySelected, setHistorySelected] = React.useState(false); // 기존 신청내역 선택 상태
-  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(null); // 매도대상 상품 레디오 선택
-  const [buyItems, setBuyItems] = React.useState([]); // 매수대상 상품 리스트
+  const [isSearched, setIsSearched] = React.useState(initialSearched);
+  const [historySelected, setHistorySelected] = React.useState(initialHistory);
+  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(initialHistory ? 0 : (initialSearched ? 0 : null));
+  const [buyItems, setBuyItems] = React.useState(initialHistory ? defaultBuyItems : (initialSearched ? defaultBuyItems : []));
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
@@ -9713,7 +9717,7 @@ function PcWebView() {
                         <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.holdingQty}</td>
                         <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>
                           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                            <select disabled={historySelected} style={{ padding: '2px 4px', fontSize: '12px' }}>
+                            <select disabled={historySelected} style={{ height: '24px', padding: '0 4px', fontSize: '12px', border: '1px solid #cccccc', backgroundColor: historySelected ? '#f5f5f5' : '#ffffff', color: '#333333', boxSizing: 'border-box', borderRadius: '1px' }}>
                               <option>원금</option>
                             </select>
                             <input
@@ -9724,13 +9728,13 @@ function PcWebView() {
                                 setSellItems(prev => prev.map((s, i) => i === idx ? { ...s, regularSellAmount: val } : s));
                               }}
                               disabled={historySelected}
-                              style={{ width: '60px', padding: '2px 4px', textAlign: 'right', fontSize: '12px' }}
+                              style={{ width: '64px', height: '24px', padding: '0 4px', textAlign: 'right', fontSize: '12px', border: '1px solid #cccccc', backgroundColor: historySelected ? '#f5f5f5' : '#ffffff', color: '#333333', boxSizing: 'border-box', borderRadius: '1px' }}
                             />
                             <span>원</span>
                           </div>
                         </td>
                         <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>
-                          <select disabled={historySelected} style={{ padding: '2px 6px', fontSize: '12px' }}>
+                          <select disabled={historySelected} style={{ height: '24px', padding: '0 6px', fontSize: '12px', border: '1px solid #cccccc', backgroundColor: historySelected ? '#f5f5f5' : '#ffffff', color: '#333333', boxSizing: 'border-box', borderRadius: '1px' }}>
                             <option>선택</option>
                           </select>
                         </td>
@@ -9747,7 +9751,8 @@ function PcWebView() {
                               disabled={historySelected}
                               style={{
                                 width: '102px',
-                                padding: '2px 22px 2px 4px',
+                                height: '24px',
+                                padding: '0 22px 0 4px',
                                 fontSize: '12px',
                                 textAlign: 'center',
                                 border: '1px solid #cccccc',
@@ -9781,7 +9786,8 @@ function PcWebView() {
                               disabled={historySelected}
                               style={{
                                 width: '102px',
-                                padding: '2px 22px 2px 4px',
+                                height: '24px',
+                                padding: '0 22px 0 4px',
                                 fontSize: '12px',
                                 textAlign: 'center',
                                 border: '1px solid #cccccc',
@@ -9866,7 +9872,7 @@ function PcWebView() {
                               setBuyItems(prev => prev.map((item, i) => i === bIdx ? { ...item, ratio: val } : item));
                             }}
                             disabled={historySelected}
-                            style={{ width: '50px', padding: '2px 4px', textAlign: 'right', fontSize: '12px' }}
+                            style={{ width: '50px', height: '24px', padding: '0 4px', textAlign: 'right', fontSize: '12px', border: '1px solid #cccccc', backgroundColor: historySelected ? '#f5f5f5' : '#ffffff', color: '#333333', boxSizing: 'border-box', borderRadius: '1px' }}
                           /> %
                         </td>
                         <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{bItem.settlementDays}</td>
