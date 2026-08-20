@@ -9615,16 +9615,10 @@ function PcWebView() {
 
         {/* Section 1: [분할매수 신청내역] Table */}
         <div style={{ marginBottom: '30px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+          <div style={{ marginBottom: '10px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: 0 }}>
               분할매수 신청내역
             </h3>
-            <span
-              onClick={handleNewSplitPurchaseAdd}
-              style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}
-            >
-              신규 분할매수 추가 &gt;
-            </span>
           </div>
           <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
