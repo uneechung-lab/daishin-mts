@@ -9678,7 +9678,12 @@ function PcWebView() {
                         name="split_purchase_history"
                         checked={historySelected}
                         onChange={handleSelectHistoryRow}
-                        style={{ cursor: 'pointer' }}
+                        style={{
+                          cursor: 'pointer',
+                          accentColor: '#555555',
+                          width: '14px',
+                          height: '14px'
+                        }}
                       />
                     </td>
                     <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
@@ -9746,7 +9751,14 @@ function PcWebView() {
                             checked={isChecked}
                             disabled={historySelected}
                             onChange={() => handleSellRadioChange(idx)}
-                            style={{ cursor: historySelected ? 'default' : 'pointer' }}
+                            style={{
+                              cursor: historySelected ? 'default' : 'pointer',
+                              accentColor: historySelected ? '#999999' : '#0072bc',
+                              opacity: historySelected ? 0.55 : 1,
+                              filter: historySelected ? 'grayscale(100%)' : 'none',
+                              width: '14px',
+                              height: '14px'
+                            }}
                           />
                         </td>
                         <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px 8px', whiteSpace: 'nowrap' }}>{item.institution}</td>
@@ -9880,7 +9892,20 @@ function PcWebView() {
               <thead>
                 <tr style={{ backgroundColor: '#f9fbfd', whiteSpace: 'nowrap', color: '#555555', fontWeight: 'bold', height: '38px' }}>
                   <th style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>
-                    <input type="checkbox" checked={false} onChange={() => {}} disabled={historySelected} />
+                    <input
+                      type="checkbox"
+                      checked={false}
+                      onChange={() => {}}
+                      disabled={historySelected}
+                      style={{
+                        accentColor: '#999999',
+                        opacity: historySelected ? 0.55 : 1,
+                        filter: historySelected ? 'grayscale(100%)' : 'none',
+                        cursor: historySelected ? 'default' : 'pointer',
+                        width: '14px',
+                        height: '14px'
+                      }}
+                    />
                   </th>
                   <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>상품위험등급</th>
                   <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>상품군</th>
@@ -9896,7 +9921,19 @@ function PcWebView() {
                     {buyItems.map((bItem, bIdx) => (
                       <tr key={bIdx} style={{ height: '38px', backgroundColor: '#ffffff', color: '#333333' }}>
                         <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>
-                          <input type="checkbox" defaultChecked={bItem.checked} disabled={historySelected} />
+                          <input
+                            type="checkbox"
+                            defaultChecked={bItem.checked}
+                            disabled={historySelected}
+                            style={{
+                              accentColor: historySelected ? '#999999' : '#0072bc',
+                              opacity: historySelected ? 0.55 : 1,
+                              filter: historySelected ? 'grayscale(100%)' : 'none',
+                              cursor: historySelected ? 'default' : 'pointer',
+                              width: '14px',
+                              height: '14px'
+                            }}
+                          />
                         </td>
                         <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{bItem.risk}</td>
                         <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{bItem.group}</td>
