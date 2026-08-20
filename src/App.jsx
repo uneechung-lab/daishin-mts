@@ -8998,14 +8998,14 @@ function PcWebView() {
   ];
   // State Machine matching Specification Diagram & User Directives
   const searchParams = new URLSearchParams(window.location.search);
-  // 피그마 임포트 및 새로고침 시 데이터가 즉시 보이도록 디폴트값 true 설정 (empty=true 파라미터 시에만 빈 헤더)
   const isExplicitEmpty = searchParams.get('empty') === 'true';
+  const isHistoryMode = searchParams.get('history') === 'true' || searchParams.get('selected') === 'true' || searchParams.get('select') === 'true';
 
   const [step, setStep] = React.useState(1);
-  const [isSearched, setIsSearched] = React.useState(!isExplicitEmpty);
-  const [historySelected, setHistorySelected] = React.useState(searchParams.get('history') === 'true');
-  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(searchParams.get('history') === 'true' ? 0 : null);
-  const [buyItems, setBuyItems] = React.useState(!isExplicitEmpty ? defaultBuyItems : []);
+  const [isSearched, setIsSearched] = React.useState(true);
+  const [historySelected, setHistorySelected] = React.useState(isHistoryMode);
+  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(isHistoryMode ? 0 : null);
+  const [buyItems, setBuyItems] = React.useState(isHistoryMode ? defaultBuyItems : (!isExplicitEmpty ? defaultBuyItems : []));
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
