@@ -9149,11 +9149,13 @@ function PcWebView() {
     });
   };
 
-  // Modal Confirm
+  // Modal Confirm - 확인 클릭 시 데이터를 조회 직후 상태로 리셋
   const handleCloseAlert = () => {
-    if (alertModal.type === 'CANCEL_SUCCESS') {
-      handleNewSplitPurchaseAdd();
-    }
+    setIsSearched(true);
+    setHistorySelected(false);
+    setSelectedSellItemIndex(null);
+    setBuyItems([]);
+    updateUrlState('?pcweb=true&searched=true');
     setAlertModal({ open: false, message: '', type: '' });
   };
 
