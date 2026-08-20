@@ -9661,9 +9661,7 @@ function PcWebView() {
               </tbody>
             </table>
           </div>
-          <p style={{ fontSize: '12px', color: '#888888', marginTop: '8px', marginBottom: 0, lineHeight: 1.65, textAlign: 'left' }}>
-            · 정기매수일자는 매수운용지시가 나가는 날 기준입니다. MMF/수익증권은 수량매도, ELS/DLS는 원금기준으로 신청가능합니다.
-          </p>
+
         </div>
 
         {/* Section 2: [매도대상 상품] Table */}
@@ -9806,11 +9804,9 @@ function PcWebView() {
               </tbody>
             </table>
           </div>
-          {isSearched && (
-            <p style={{ fontSize: '12.5px', color: '#666666', marginTop: '8px', marginBottom: 0, lineHeight: 1.65 }}>
-              · 정기매수일자는 매수운용지시가 나가는 날 기준입니다. MMF/수익증권은 수량매도, ELS/DLS는 원금기준으로 신청가능합니다.
-            </p>
-          )}
+          <p style={{ fontSize: '12px', color: '#888888', marginTop: '8px', marginBottom: 0, lineHeight: 1.65, textAlign: 'left' }}>
+            · 정기매수일자는 매수운용지시가 나가는 날 기준입니다. MMF/수익증권은 수량매도, ELS/DLS는 원금기준으로 신청가능합니다.
+          </p>
         </div>
 
         {/* Section 3: [매수대상 상품] Table */}
