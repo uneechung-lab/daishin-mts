@@ -8976,8 +8976,9 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
 
 
 function PcWebView() {
-  // State Machine matching Attachment 2 (media_1787199872425.png) 100%
+  // State Machine matching Specification Diagram & User Directives
   const [step, setStep] = React.useState(1);
+  const [isSearched, setIsSearched] = React.useState(false); // 최초 진입 시 조회 전까지 모든 테이블 헤더만 노출
   const [historySelected, setHistorySelected] = React.useState(false); // 기존 신청내역 선택 상태
   const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(null); // 매도대상 상품 레디오 선택
   const [buyItems, setBuyItems] = React.useState([]); // 매수대상 상품 리스트
@@ -9038,26 +9039,35 @@ function PcWebView() {
     }
   ];
 
-  // 1.3) 신규 분할매수 추가 버튼 클릭: 매수대상 상품 리스트 초기화, 신청내역/매도대상 상품 레디오버튼 초기화
-  const handleNewSplitPurchaseAdd = () => {
+  // [조회] 버튼 클릭 시 데이터 노출
+  const handleQuerySearch = () => {
+    setIsSearched(true);
     setHistorySelected(false);
     setSelectedSellItemIndex(null);
     setBuyItems([]);
   };
 
-  // 1.2) 기존 신청내역 클릭 시: 매수대상 상품 표시부에 신청한 매수종목 리스트 조회, 매도상품 리스트에도 신청했던 매도상품 선택상태로 조회
-  const handleSelectHistoryRow = () => {
-    setHistorySelected(true);
-    setSelectedSellItemIndex(0); // 첫번째 매도상품 선택 상태로 조회
-    setBuyItems(defaultBuyItems); // 신청한 매수종목 리스트 조회
+  // 신규 분할매수 추가 버튼 클릭
+  const handleNewSplitPurchaseAdd = () => {
+    if (!isSearched) setIsSearched(true);
+    setHistorySelected(false);
+    setSelectedSellItemIndex(null);
+    setBuyItems([]);
   };
 
-  // 2.2) 매도대상 상품 레디오 버튼 선택 변경 시 기 입력내용 초기화
+  // 기존 신청내역 클릭 시
+  const handleSelectHistoryRow = () => {
+    if (!isSearched) setIsSearched(true);
+    setHistorySelected(true);
+    setSelectedSellItemIndex(0);
+    setBuyItems(defaultBuyItems);
+  };
+
+  // 매도대상 상품 레디오 버튼 선택 변경 시 기 입력내용 초기화
   const handleSellRadioChange = (index) => {
-    if (historySelected) return; // 기존 신청내역 선택 시 변경 불가
+    if (historySelected) return;
 
     setSelectedSellItemIndex(index);
-    // Reset input fields for sellItems
     setSellItems(prevItems =>
       prevItems.map((item, idx) => {
         if (idx === index) {
@@ -9076,6 +9086,7 @@ function PcWebView() {
 
   // 매수대상 상품 추가 / 투자비율 가져오기 클릭
   const handleAddBuyItems = () => {
+    if (!isSearched) setIsSearched(true);
     if (historySelected) {
       setAlertModal({
         open: true,
@@ -9087,7 +9098,7 @@ function PcWebView() {
     }
   };
 
-  // 1.4) 취소 버튼 클릭 (기존 신청내역 선택 시 활성화된 취소 버튼)
+  // 취소 버튼 클릭
   const handleCancelSplitPurchase = () => {
     if (!historySelected) return;
 
@@ -9198,7 +9209,7 @@ function PcWebView() {
           padding: '22px 0 16px 0'
         }}>
           {/* Official Public Logo Image /retire_daishin.png */}
-          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={handleNewSplitPurchaseAdd}>
+          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={handleQuerySearch}>
             <img
               src="/retire_daishin.png"
               alt="Daishin 퇴직연금"
@@ -9493,16 +9504,20 @@ function PcWebView() {
               800819-******* 김대신
             </span>
           </div>
-          <button style={{
-            backgroundColor: '#788088',
-            color: '#ffffff',
-            border: 'none',
-            padding: '7px 24px',
-            fontSize: '13px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            borderRadius: '1px'
-          }}>
+          {/* [조회] 버튼: 클릭 전까지 모든 테이블은 헤더만 노출 */}
+          <button
+            onClick={handleQuerySearch}
+            style={{
+              backgroundColor: '#788088',
+              color: '#ffffff',
+              border: 'none',
+              padding: '7px 24px',
+              fontSize: '13px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              borderRadius: '1px'
+            }}
+          >
             조회
           </button>
         </div>
@@ -9599,7 +9614,6 @@ function PcWebView() {
             <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: 0 }}>
               분할매수 신청내역
             </h3>
-            {/* 1.3) 신규 분할매수 추가 버튼/링크 */}
             <span
               onClick={handleNewSplitPurchaseAdd}
               style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}
@@ -9621,33 +9635,38 @@ function PcWebView() {
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ height: '42px', backgroundColor: historySelected ? '#f5f9fd' : '#ffffff', color: '#333333' }}>
-                  <td style={{ border: '1px solid #eaeaea', padding: '8px' }}>
-                    <input
-                      type="radio"
-                      name="split_purchase_history"
-                      checked={historySelected}
-                      onChange={handleSelectHistoryRow}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </td>
-                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
-                  <td style={{ border: '1px solid #eaeaea', padding: '8px 16px', textAlign: 'left' }}>
-                    <u style={{ textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }} onClick={handleSelectHistoryRow}>
-                      한국투자퇴직연금롱텀밸류증권자투자신탁
-                    </u>
-                  </td>
-                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>1,000,000</td>
-                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>15</td>
-                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
-                  <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2026.01.15</td>
-                </tr>
+                {isSearched && (
+                  <tr style={{ height: '42px', backgroundColor: historySelected ? '#f5f9fd' : '#ffffff', color: '#333333' }}>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px' }}>
+                      <input
+                        type="radio"
+                        name="split_purchase_history"
+                        checked={historySelected}
+                        onChange={handleSelectHistoryRow}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    </td>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px 16px', textAlign: 'left' }}>
+                      <u style={{ textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }} onClick={handleSelectHistoryRow}>
+                        한국투자퇴직연금롱텀밸류증권자투자신탁
+                      </u>
+                    </td>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>1,000,000</td>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>15</td>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
+                    <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2026.01.15</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
+          <p style={{ fontSize: '12px', color: '#888888', marginTop: '8px', marginBottom: 0, lineHeight: 1.65, textAlign: 'left' }}>
+            · 정기매수일자는 매수운용지시가 나가는 날 기준입니다. MMF/수익증권은 수량매도, ELS/DLS는 원금기준으로 신청가능합니다.
+          </p>
         </div>
 
-        {/* Section 2: [매도대상 상품] Table (2.1: 하나만 선택 가능하도록 레디오 버튼 UX 변경) */}
+        {/* Section 2: [매도대상 상품] Table */}
         <div style={{ marginBottom: '30px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: '0 0 10px 0' }}>
             매도대상 상품
@@ -9674,12 +9693,11 @@ function PcWebView() {
                 </tr>
               </thead>
               <tbody>
-                {sellItems.map((item, idx) => {
+                {isSearched && sellItems.map((item, idx) => {
                   const isChecked = selectedSellItemIndex === idx;
                   return (
                     <React.Fragment key={idx}>
                       <tr style={{ height: '36px', backgroundColor: isChecked ? '#f5f9fd' : '#ffffff', color: '#333333' }}>
-                        {/* 2.1) 하나만 선택 가능한 레디오 버튼 */}
                         <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '4px' }}>
                           <input
                             type="radio"
@@ -9788,9 +9806,11 @@ function PcWebView() {
               </tbody>
             </table>
           </div>
-          <p style={{ fontSize: '12.5px', color: '#666666', marginTop: '8px', marginBottom: 0, lineHeight: 1.65 }}>
-            · 정기매수일자는 매수운용지시가 나가는 날 기준입니다. MMF/수익증권은 수량매도, ELS/DLS는 원금기준으로 신청가능합니다.
-          </p>
+          {isSearched && (
+            <p style={{ fontSize: '12.5px', color: '#666666', marginTop: '8px', marginBottom: 0, lineHeight: 1.65 }}>
+              · 정기매수일자는 매수운용지시가 나가는 날 기준입니다. MMF/수익증권은 수량매도, ELS/DLS는 원금기준으로 신청가능합니다.
+            </p>
+          )}
         </div>
 
         {/* Section 3: [매수대상 상품] Table */}
@@ -9830,7 +9850,7 @@ function PcWebView() {
                 </tr>
               </thead>
               <tbody>
-                {buyItems.length > 0 && (
+                {isSearched && buyItems.length > 0 && (
                   <>
                     {buyItems.map((bItem, bIdx) => (
                       <tr key={bIdx} style={{ height: '38px', backgroundColor: '#ffffff', color: '#333333' }}>
@@ -9871,52 +9891,52 @@ function PcWebView() {
           {/* Bottom Action Area */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
             <button
-              disabled={historySelected || buyItems.length === 0}
+              disabled={!isSearched || historySelected || buyItems.length === 0}
               style={{
                 border: '1px solid #cccccc',
                 backgroundColor: '#ffffff',
                 padding: '4px 14px',
                 fontSize: '12px',
-                color: historySelected || buyItems.length === 0 ? '#aaaaaa' : '#555555',
-                cursor: historySelected || buyItems.length === 0 ? 'default' : 'pointer'
+                color: !isSearched || historySelected || buyItems.length === 0 ? '#aaaaaa' : '#555555',
+                cursor: !isSearched || historySelected || buyItems.length === 0 ? 'default' : 'pointer'
               }}
             >
               상품삭제
             </button>
 
-            {/* 1.4) [취소] 버튼을 [분할매수] 버튼 왼쪽 옆에 생성함 (기존 신청내역 클릭시 취소버튼 활성화/분할매수 비활성화, 신규 추가 클릭시 취소버튼 비활성화/분할매수 활성화) */}
+            {/* Main Bottom Action Buttons (CTA) */}
             <div style={{ display: 'flex', gap: '12px', margin: '30px auto 0 auto' }}>
-              {/* [취소] 버튼: 분할매수 버튼 왼쪽 옆 */}
+              {/* [분할매수 취소] 버튼 */}
               <button
-                disabled={!historySelected}
+                disabled={!isSearched || !historySelected}
                 onClick={handleCancelSplitPurchase}
                 style={{
-                  backgroundColor: historySelected ? '#788088' : '#e0e0e0',
-                  color: historySelected ? '#ffffff' : '#999999',
+                  backgroundColor: isSearched && historySelected ? '#788088' : '#e0e0e0',
+                  color: isSearched && historySelected ? '#ffffff' : '#999999',
                   fontSize: '16px',
                   fontWeight: 'bold',
                   padding: '12px 42px',
                   border: 'none',
                   borderRadius: '2px',
-                  cursor: historySelected ? 'pointer' : 'default'
+                  cursor: isSearched && historySelected ? 'pointer' : 'default'
                 }}
               >
                 분할매수 취소
               </button>
 
-              {/* [분할매수] 버튼 */}
+              {/* [분할매수 신청] 버튼 */}
               <button
-                disabled={historySelected}
-                onClick={() => !historySelected && setStep(2)}
+                disabled={!isSearched || historySelected}
+                onClick={() => isSearched && !historySelected && setStep(2)}
                 style={{
-                  backgroundColor: historySelected ? '#e0e0e0' : '#009fe3',
-                  color: historySelected ? '#999999' : '#ffffff',
+                  backgroundColor: isSearched && !historySelected ? '#009fe3' : '#e0e0e0',
+                  color: isSearched && !historySelected ? '#ffffff' : '#999999',
                   fontSize: '16px',
                   fontWeight: 'bold',
                   padding: '12px 42px',
                   border: 'none',
                   borderRadius: '2px',
-                  cursor: historySelected ? 'default' : 'pointer'
+                  cursor: isSearched && !historySelected ? 'pointer' : 'default'
                 }}
               >
                 분할매수 신청
