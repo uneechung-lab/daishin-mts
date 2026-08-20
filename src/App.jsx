@@ -9889,53 +9889,70 @@ function PcWebView() {
             <button
               disabled={!isSearched || historySelected || buyItems.length === 0}
               style={{
-                border: '1px solid #cccccc',
-                backgroundColor: '#ffffff',
-                padding: '4px 14px',
-                fontSize: '12px',
-                color: !isSearched || historySelected || buyItems.length === 0 ? '#aaaaaa' : '#555555',
-                cursor: !isSearched || historySelected || buyItems.length === 0 ? 'default' : 'pointer'
+                border: '1px solid #b0b8c0',
+                backgroundColor: '#edf1f5',
+                padding: '0 14px',
+                height: '28px',
+                fontSize: '12.5px',
+                color: '#333333',
+                cursor: !isSearched || historySelected || buyItems.length === 0 ? 'default' : 'pointer',
+                opacity: !isSearched || historySelected || buyItems.length === 0 ? 0.6 : 1,
+                boxSizing: 'border-box',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap'
               }}
             >
               상품삭제
             </button>
 
-            {/* Main Bottom Action Buttons (CTA) */}
-            <div style={{ display: 'flex', gap: '12px', margin: '30px auto 0 auto' }}>
-              {/* [분할매수 취소] 버튼 */}
+            {/* Main Bottom Action Buttons (CTA) - 16px Normal Font */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '16px', width: '100%' }}>
+              {/* [신청취소] 버튼 */}
               <button
-                disabled={!isSearched || !historySelected}
                 onClick={handleCancelSplitPurchase}
                 style={{
-                  backgroundColor: isSearched && historySelected ? '#788088' : '#e0e0e0',
-                  color: isSearched && historySelected ? '#ffffff' : '#999999',
+                  backgroundColor: '#788088',
+                  color: '#ffffff',
                   fontSize: '16px',
-                  fontWeight: 'bold',
-                  padding: '12px 42px',
+                  fontWeight: 'normal',
+                  height: '38px',
+                  padding: '0 24px',
                   border: 'none',
-                  borderRadius: '2px',
-                  cursor: isSearched && historySelected ? 'pointer' : 'default'
+                  borderRadius: '1px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxSizing: 'border-box',
+                  whiteSpace: 'nowrap'
                 }}
               >
-                분할매수 취소
+                신청취소
               </button>
 
-              {/* [분할매수 신청] 버튼 */}
+              {/* [분할매수] 버튼 */}
               <button
-                disabled={!isSearched || historySelected}
-                onClick={() => isSearched && !historySelected && setStep(2)}
+                onClick={() => setStep(2)}
                 style={{
-                  backgroundColor: isSearched && !historySelected ? '#009fe3' : '#e0e0e0',
-                  color: isSearched && !historySelected ? '#ffffff' : '#999999',
+                  backgroundColor: '#009fe3',
+                  color: '#ffffff',
                   fontSize: '16px',
-                  fontWeight: 'bold',
-                  padding: '12px 42px',
+                  fontWeight: 'normal',
+                  height: '38px',
+                  padding: '0 24px',
                   border: 'none',
-                  borderRadius: '2px',
-                  cursor: isSearched && !historySelected ? 'pointer' : 'default'
+                  borderRadius: '1px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxSizing: 'border-box',
+                  whiteSpace: 'nowrap'
                 }}
               >
-                분할매수 신청
+                분할매수
               </button>
             </div>
           </div>
