@@ -9157,6 +9157,31 @@ function PcWebView() {
     setAlertModal({ open: false, message: '', type: '' });
   };
 
+  // [분할매수] 버튼 클릭 시 검증 및 다이얼로그 팝업 호출 (media_1787216407377.png 100% 일치)
+  const handleSplitPurchaseButtonClick = () => {
+    if (historySelected) {
+      setAlertModal({
+        open: true,
+        message: '기존 신청하신 내역은 변경이 불가능합니다.\n변경을 원하시면 취소 후 재신청 해주시기 바랍니다.',
+        type: 'READONLY_WARNING'
+      });
+    } else if (selectedSellItemIndex === null) {
+      setAlertModal({
+        open: true,
+        message: '매도대상 상품이 선택되지 않았습니다.',
+        type: 'NO_SELL_SELECTED'
+      });
+    } else if (buyItems.length === 0) {
+      setAlertModal({
+        open: true,
+        message: '매수대상 상품이 선택되지 않았습니다.',
+        type: 'NO_BUY_SELECTED'
+      });
+    } else {
+      setStep(2);
+    }
+  };
+
   const totalRatio = buyItems.reduce((acc, item) => acc + (parseInt(item.ratio || '0', 10) || 0), 0);
 
   return (
@@ -9183,7 +9208,7 @@ function PcWebView() {
         }
       `}</style>
 
-      {/* Alert Modal Dialog */}
+      {/* Alert Modal Dialog matching media_1787216407377.png 100% */}
       {alertModal.open && (
         <div style={{
           position: 'fixed',
@@ -9191,7 +9216,7 @@ function PcWebView() {
           left: 0,
           width: '100vw',
           height: '100vh',
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -9199,37 +9224,52 @@ function PcWebView() {
         }}>
           <div style={{
             backgroundColor: '#ffffff',
-            border: '2px solid #333333',
-            borderRadius: '2px',
-            width: '420px',
-            padding: '24px 20px 20px 20px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-            textAlign: 'center'
+            border: '1px solid #cccccc',
+            borderRadius: '8px',
+            width: '380px',
+            padding: '20px 24px 20px 24px',
+            boxShadow: '0 8px 30px rgba(0,0,0,0.25)',
+            textAlign: 'left'
           }}>
+            {/* Header Domain Line */}
             <div style={{
-              fontSize: '14px',
+              fontSize: '13.5px',
+              fontWeight: 'bold',
               color: '#333333',
+              marginBottom: '14px'
+            }}>
+              www.daishin.com 내용:
+            </div>
+
+            {/* Warning Message Content */}
+            <div style={{
+              fontSize: '13px',
+              color: '#444444',
               lineHeight: '1.6',
               whiteSpace: 'pre-line',
               marginBottom: '22px'
             }}>
               {alertModal.message}
             </div>
-            <button
-              onClick={handleCloseAlert}
-              style={{
-                backgroundColor: '#009fe3',
-                color: '#ffffff',
-                border: 'none',
-                padding: '8px 36px',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                borderRadius: '2px'
-              }}
-            >
-              확인
-            </button>
+
+            {/* Right Aligned Blue Confirm Button */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                onClick={handleCloseAlert}
+                style={{
+                  backgroundColor: '#0072bc',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '6px 22px',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  borderRadius: '16px'
+                }}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -9993,7 +10033,7 @@ function PcWebView() {
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px', width: '100%' }}>
               {/* [분할매수] 버튼 */}
               <button
-                onClick={() => setStep(2)}
+                onClick={handleSplitPurchaseButtonClick}
                 style={{
                   backgroundColor: '#009fe3',
                   color: '#ffffff',
