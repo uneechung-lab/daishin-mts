@@ -9717,9 +9717,9 @@ function PcWebView() {
               <thead>
                 <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
                   <th rowSpan="2" style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd' }} />
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>자산기관</th>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>상품명</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', minWidth: '68px', whiteSpace: 'nowrap', backgroundColor: '#f9fbfd' }}>자산기관</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', minWidth: '115px', whiteSpace: 'nowrap', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', backgroundColor: '#f9fbfd' }}>상품명</th>
                   <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>매입원금</th>
                   <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>보유수량</th>
                   <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>정기매도</th>
@@ -9749,9 +9749,9 @@ function PcWebView() {
                             style={{ cursor: historySelected ? 'default' : 'pointer' }}
                           />
                         </td>
-                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.institution}</td>
-                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.risk}</td>
-                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px', textAlign: 'left' }}>{item.name}</td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px 8px', whiteSpace: 'nowrap' }}>{item.institution}</td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px 8px', whiteSpace: 'nowrap' }}>{item.risk}</td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px 8px', textAlign: 'left' }}>{item.name}</td>
                         <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.purchasePrice}</td>
                         <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.holdingQty}</td>
                         <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>
