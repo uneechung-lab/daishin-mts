@@ -8976,16 +8976,36 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
 
 
 function PcWebView() {
+  const defaultBuyItems = [
+    {
+      checked: true,
+      risk: '매우낮은위험',
+      group: 'MMF',
+      name: '삼성MMF법인제1호Cpe(퇴직연금)',
+      limit: '100',
+      ratio: '0',
+      settlementDays: 'D+2'
+    },
+    {
+      checked: true,
+      risk: '낮은위험',
+      group: '해외채권혼합형',
+      name: '삼성퇴직연금CHINA본토포커스40증권자투자신탁1채혼C',
+      limit: '100',
+      ratio: '0',
+      settlementDays: 'D+3'
+    }
+  ];
   // State Machine matching Specification Diagram & User Directives
   const searchParams = new URLSearchParams(window.location.search);
-  const initialSearched = searchParams.get('searched') === 'true' || searchParams.get('data') === 'true';
-  const initialHistory = searchParams.get('history') === 'true';
+  // 피그마 임포트 및 새로고침 시 데이터가 즉시 보이도록 디폴트값 true 설정 (empty=true 파라미터 시에만 빈 헤더)
+  const isExplicitEmpty = searchParams.get('empty') === 'true';
 
   const [step, setStep] = React.useState(1);
-  const [isSearched, setIsSearched] = React.useState(initialSearched);
-  const [historySelected, setHistorySelected] = React.useState(initialHistory);
-  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(initialHistory ? 0 : (initialSearched ? 0 : null));
-  const [buyItems, setBuyItems] = React.useState(initialHistory ? defaultBuyItems : (initialSearched ? defaultBuyItems : []));
+  const [isSearched, setIsSearched] = React.useState(!isExplicitEmpty);
+  const [historySelected, setHistorySelected] = React.useState(searchParams.get('history') === 'true');
+  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(searchParams.get('history') === 'true' ? 0 : null);
+  const [buyItems, setBuyItems] = React.useState(!isExplicitEmpty ? defaultBuyItems : []);
   const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
 
   // Sell Items state to support resetting inputs on radio change
@@ -9022,26 +9042,7 @@ function PcWebView() {
     }
   ]);
 
-  const defaultBuyItems = [
-    {
-      checked: true,
-      risk: '매우낮은위험',
-      group: 'MMF',
-      name: '삼성MMF법인제1호Cpe(퇴직연금)',
-      limit: '100',
-      ratio: '0',
-      settlementDays: 'D+2'
-    },
-    {
-      checked: true,
-      risk: '낮은위험',
-      group: '해외채권혼합형',
-      name: '삼성퇴직연금CHINA본토포커스40증권자투자신탁1채혼C',
-      limit: '100',
-      ratio: '0',
-      settlementDays: 'D+3'
-    }
-  ];
+
 
   // [조회] 버튼 클릭 시 데이터 노출
   const handleQuerySearch = () => {
