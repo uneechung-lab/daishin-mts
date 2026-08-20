@@ -9923,31 +9923,8 @@ function PcWebView() {
               상품삭제
             </button>
 
-            {/* Main Bottom Action Buttons (CTA) - 16px Normal Font */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '16px', width: '100%' }}>
-              {/* [신청취소] 버튼 */}
-              <button
-                onClick={handleCancelSplitPurchase}
-                style={{
-                  backgroundColor: '#788088',
-                  color: '#ffffff',
-                  fontSize: '16px',
-                  fontWeight: 'normal',
-                  height: '38px',
-                  padding: '0 24px',
-                  border: 'none',
-                  borderRadius: '1px',
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxSizing: 'border-box',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                신청취소
-              </button>
-
+            {/* Main Bottom Action Buttons (CTA) - [분할매수] Only */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px', width: '100%' }}>
               {/* [분할매수] 버튼 */}
               <button
                 onClick={() => setStep(2)}
