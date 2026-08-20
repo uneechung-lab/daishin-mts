@@ -8976,6 +8976,138 @@ function PensionSimulationView({ isDark, isToBe, step, setStep, onBackClick }) {
 
 
 function PcWebView() {
+  // State Machine matching Attachment 2 (media_1787199872425.png) 100%
+  const [step, setStep] = React.useState(1);
+  const [historySelected, setHistorySelected] = React.useState(false); // 기존 신청내역 선택 상태
+  const [selectedSellItemIndex, setSelectedSellItemIndex] = React.useState(null); // 매도대상 상품 레디오 선택
+  const [buyItems, setBuyItems] = React.useState([]); // 매수대상 상품 리스트
+  const [alertModal, setAlertModal] = React.useState({ open: false, message: '', type: '' });
+
+  // Sell Items state to support resetting inputs on radio change
+  const [sellItems, setSellItems] = React.useState([
+    {
+      institution: '대신증권',
+      risk: '매우낮은위험(●)',
+      name: '현금성자산',
+      purchasePrice: '9,448,826',
+      evalPrice: '9,448,826',
+      holdingQty: '9,448,826',
+      sellableQty: '9,448,826',
+      regularSellType: '원금',
+      regularSellAmount: '0',
+      regularBuyDate: '선택',
+      startDate: '2026/07/16',
+      endDate: '',
+      settlementDays: 'D+0'
+    },
+    {
+      institution: '대신증권',
+      risk: '매우낮은위험(●)',
+      name: '(IRP)다올저축은행/정기예금/1년',
+      purchasePrice: '10',
+      evalPrice: '10',
+      holdingQty: '10',
+      sellableQty: '10',
+      regularSellType: '원금',
+      regularSellAmount: '0',
+      regularBuyDate: '선택',
+      startDate: '',
+      endDate: '',
+      settlementDays: 'D+1'
+    }
+  ]);
+
+  const defaultBuyItems = [
+    {
+      checked: true,
+      risk: '매우낮은위험',
+      group: 'MMF',
+      name: '삼성MMF법인제1호Cpe(퇴직연금)',
+      limit: '100',
+      ratio: '0',
+      settlementDays: 'D+2'
+    },
+    {
+      checked: true,
+      risk: '낮은위험',
+      group: '해외채권혼합형',
+      name: '삼성퇴직연금CHINA본토포커스40증권자투자신탁1채혼C',
+      limit: '100',
+      ratio: '0',
+      settlementDays: 'D+3'
+    }
+  ];
+
+  // 1.3) 신규 분할매수 추가 버튼 클릭: 매수대상 상품 리스트 초기화, 신청내역/매도대상 상품 레디오버튼 초기화
+  const handleNewSplitPurchaseAdd = () => {
+    setHistorySelected(false);
+    setSelectedSellItemIndex(null);
+    setBuyItems([]);
+  };
+
+  // 1.2) 기존 신청내역 클릭 시: 매수대상 상품 표시부에 신청한 매수종목 리스트 조회, 매도상품 리스트에도 신청했던 매도상품 선택상태로 조회
+  const handleSelectHistoryRow = () => {
+    setHistorySelected(true);
+    setSelectedSellItemIndex(0); // 첫번째 매도상품 선택 상태로 조회
+    setBuyItems(defaultBuyItems); // 신청한 매수종목 리스트 조회
+  };
+
+  // 2.2) 매도대상 상품 레디오 버튼 선택 변경 시 기 입력내용 초기화
+  const handleSellRadioChange = (index) => {
+    if (historySelected) return; // 기존 신청내역 선택 시 변경 불가
+
+    setSelectedSellItemIndex(index);
+    // Reset input fields for sellItems
+    setSellItems(prevItems =>
+      prevItems.map((item, idx) => {
+        if (idx === index) {
+          return {
+            ...item,
+            regularSellAmount: '0',
+            regularBuyDate: '선택',
+            startDate: idx === 0 ? '2026/07/16' : '',
+            endDate: ''
+          };
+        }
+        return item;
+      })
+    );
+  };
+
+  // 매수대상 상품 추가 / 투자비율 가져오기 클릭
+  const handleAddBuyItems = () => {
+    if (historySelected) {
+      setAlertModal({
+        open: true,
+        message: '기존 신청하신 내역은 변경이 불가능합니다.\n변경을 원하시면 취소 후 재신청 해주시기 바랍니다.',
+        type: 'READONLY_WARNING'
+      });
+    } else {
+      setBuyItems(defaultBuyItems);
+    }
+  };
+
+  // 1.4) 취소 버튼 클릭 (기존 신청내역 선택 시 활성화된 취소 버튼)
+  const handleCancelSplitPurchase = () => {
+    if (!historySelected) return;
+
+    setAlertModal({
+      open: true,
+      message: '신청하신 자동분할매수가 취소되었습니다.',
+      type: 'CANCEL_SUCCESS'
+    });
+  };
+
+  // Modal Confirm
+  const handleCloseAlert = () => {
+    if (alertModal.type === 'CANCEL_SUCCESS') {
+      handleNewSplitPurchaseAdd();
+    }
+    setAlertModal({ open: false, message: '', type: '' });
+  };
+
+  const totalRatio = buyItems.reduce((acc, item) => acc + (parseInt(item.ratio || '0', 10) || 0), 0);
+
   return (
     <div className="pcweb-container" style={{
       width: '100vw',
@@ -9000,6 +9132,57 @@ function PcWebView() {
         }
       `}</style>
 
+      {/* Alert Modal Dialog */}
+      {alertModal.open && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            backgroundColor: '#ffffff',
+            border: '2px solid #333333',
+            borderRadius: '2px',
+            width: '420px',
+            padding: '24px 20px 20px 20px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            textAlign: 'center'
+          }}>
+            <div style={{
+              fontSize: '14px',
+              color: '#333333',
+              lineHeight: '1.6',
+              whiteSpace: 'pre-line',
+              marginBottom: '22px'
+            }}>
+              {alertModal.message}
+            </div>
+            <button
+              onClick={handleCloseAlert}
+              style={{
+                backgroundColor: '#009fe3',
+                color: '#ffffff',
+                border: 'none',
+                padding: '8px 36px',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                borderRadius: '2px'
+              }}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Centered Main Page Wrapper (Compact 980px width) */}
       <div style={{
         width: '980px',
@@ -9015,7 +9198,7 @@ function PcWebView() {
           padding: '22px 0 16px 0'
         }}>
           {/* Official Public Logo Image /retire_daishin.png */}
-          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={handleNewSplitPurchaseAdd}>
             <img
               src="/retire_daishin.png"
               alt="Daishin 퇴직연금"
@@ -9239,7 +9422,7 @@ function PcWebView() {
           </div>
         </div>
 
-        {/* Sub Navigation Tabs Bar (Matching Figma Import media_1787127004649.png 100%) */}
+        {/* Sub Navigation Tabs Bar */}
         <div style={{
           width: '100%',
           display: 'flex',
@@ -9281,12 +9464,14 @@ function PcWebView() {
 
         {/* Step Indicator Bar */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px', fontSize: '13px', marginBottom: '16px' }}>
-          <span style={{ fontWeight: 'bold', color: '#0072bc' }}>Step 01 정보입력</span>
-          <span style={{ color: '#888888', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            ••••▶ <span style={{ marginLeft: '2px' }}>Step 02 입력확인</span>
+          <span style={{ fontWeight: step === 1 ? 'bold' : 'normal', color: step === 1 ? '#0072bc' : '#888888' }}>
+            Step 01 정보입력
           </span>
           <span style={{ color: '#888888', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            ••••▶ <span style={{ marginLeft: '2px' }}>Step 03 신청완료</span>
+            ••••▶ <span style={{ marginLeft: '2px', fontWeight: step === 2 ? 'bold' : 'normal', color: step === 2 ? '#0072bc' : '#888888' }}>Step 02 입력확인</span>
+          </span>
+          <span style={{ color: '#888888', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            ••••▶ <span style={{ marginLeft: '2px', fontWeight: step === 3 ? 'bold' : 'normal', color: step === 3 ? '#0072bc' : '#888888' }}>Step 03 신청완료</span>
           </span>
         </div>
 
@@ -9358,7 +9543,7 @@ function PcWebView() {
               투자성향등급
             </div>
             <span style={{ fontSize: '15px', color: '#333333' }}>
-              고객님의 투자성향은 <strong style={{ color: '#d90000', fontWeight: 'bold', fontSize: '17px' }}>공격투자형</strong> 입니다.
+              고객님의 투자성향은 <strong style={{ color: '#d90000', fontWeight: 'bold', fontSize: '17px' }}>전문투자자</strong> 입니다.
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -9408,13 +9593,17 @@ function PcWebView() {
           </div>
         </div>
 
-        {/* Section 0: 분할매수 신청내역 (Newly Added Section Matching media_1787128102735.png 100%) */}
+        {/* Section 1: [분할매수 신청내역] Table */}
         <div style={{ marginBottom: '30px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: 0 }}>
               분할매수 신청내역
             </h3>
-            <span style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}>
+            {/* 1.3) 신규 분할매수 추가 버튼/링크 */}
+            <span
+              onClick={handleNewSplitPurchaseAdd}
+              style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}
+            >
               신규 분할매수 추가 &gt;
             </span>
           </div>
@@ -9432,13 +9621,19 @@ function PcWebView() {
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ height: '42px', backgroundColor: '#ffffff', color: '#333333' }}>
+                <tr style={{ height: '42px', backgroundColor: historySelected ? '#f5f9fd' : '#ffffff', color: '#333333' }}>
                   <td style={{ border: '1px solid #eaeaea', padding: '8px' }}>
-                    <input type="radio" name="split_purchase_history" defaultChecked style={{ cursor: 'pointer' }} />
+                    <input
+                      type="radio"
+                      name="split_purchase_history"
+                      checked={historySelected}
+                      onChange={handleSelectHistoryRow}
+                      style={{ cursor: 'pointer' }}
+                    />
                   </td>
                   <td style={{ border: '1px solid #eaeaea', padding: '8px 12px' }}>2025.01.01</td>
                   <td style={{ border: '1px solid #eaeaea', padding: '8px 16px', textAlign: 'left' }}>
-                    <u style={{ textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }}>
+                    <u style={{ textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' }} onClick={handleSelectHistoryRow}>
                       한국투자퇴직연금롱텀밸류증권자투자신탁
                     </u>
                   </td>
@@ -9452,7 +9647,7 @@ function PcWebView() {
           </div>
         </div>
 
-        {/* Section 1: 매도대상 상품 */}
+        {/* Section 2: [매도대상 상품] Table (2.1: 하나만 선택 가능하도록 레디오 버튼 UX 변경) */}
         <div style={{ marginBottom: '30px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: '0 0 10px 0' }}>
             매도대상 상품
@@ -9461,6 +9656,7 @@ function PcWebView() {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
               <thead>
                 <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd' }} />
                   <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>자산기관</th>
                   <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
                   <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>상품명</th>
@@ -9477,6 +9673,119 @@ function PcWebView() {
                   <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>종료일자</th>
                 </tr>
               </thead>
+              <tbody>
+                {sellItems.map((item, idx) => {
+                  const isChecked = selectedSellItemIndex === idx;
+                  return (
+                    <React.Fragment key={idx}>
+                      <tr style={{ height: '36px', backgroundColor: isChecked ? '#f5f9fd' : '#ffffff', color: '#333333' }}>
+                        {/* 2.1) 하나만 선택 가능한 레디오 버튼 */}
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '4px' }}>
+                          <input
+                            type="radio"
+                            name="sell_target_product"
+                            checked={isChecked}
+                            disabled={historySelected}
+                            onChange={() => handleSellRadioChange(idx)}
+                            style={{ cursor: historySelected ? 'default' : 'pointer' }}
+                          />
+                        </td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.institution}</td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.risk}</td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px', textAlign: 'left' }}>{item.name}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.purchasePrice}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.holdingQty}</td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>
+                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            <select disabled={historySelected} style={{ padding: '2px 4px', fontSize: '12px' }}>
+                              <option>원금</option>
+                            </select>
+                            <input
+                              type="text"
+                              value={item.regularSellAmount || ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setSellItems(prev => prev.map((s, i) => i === idx ? { ...s, regularSellAmount: val } : s));
+                              }}
+                              disabled={historySelected}
+                              style={{ width: '60px', padding: '2px 4px', textAlign: 'right', fontSize: '12px' }}
+                            />
+                            <span>원</span>
+                          </div>
+                        </td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>
+                          <select disabled={historySelected} style={{ padding: '2px 6px', fontSize: '12px' }}>
+                            <option>선택</option>
+                          </select>
+                        </td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '4px' }}>
+                          <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+                            <input
+                              type="text"
+                              value={item.startDate || ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setSellItems(prev => prev.map((s, i) => i === idx ? { ...s, startDate: val } : s));
+                              }}
+                              placeholder="YYYY/MM/DD"
+                              disabled={historySelected}
+                              style={{
+                                width: '102px',
+                                padding: '2px 22px 2px 4px',
+                                fontSize: '12px',
+                                textAlign: 'center',
+                                border: '1px solid #cccccc',
+                                backgroundColor: historySelected ? '#f5f5f5' : '#ffffff',
+                                boxSizing: 'border-box'
+                              }}
+                            />
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#666666" strokeWidth="1.8" style={{ position: 'absolute', right: '5px', pointerEvents: 'none' }}>
+                              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                              <line x1="16" y1="2" x2="16" y2="6"/>
+                              <line x1="8" y1="2" x2="8" y2="6"/>
+                              <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                          </div>
+                        </td>
+                        <td rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.settlementDays}</td>
+                      </tr>
+                      <tr style={{ height: '36px', backgroundColor: isChecked ? '#f5f9fd' : '#ffffff', color: '#333333' }}>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.evalPrice}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{item.sellableQty}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '4px' }}>
+                          <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+                            <input
+                              type="text"
+                              value={item.endDate || ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setSellItems(prev => prev.map((s, i) => i === idx ? { ...s, endDate: val } : s));
+                              }}
+                              placeholder="YYYY/MM/DD"
+                              disabled={historySelected}
+                              style={{
+                                width: '102px',
+                                padding: '2px 22px 2px 4px',
+                                fontSize: '12px',
+                                textAlign: 'center',
+                                border: '1px solid #cccccc',
+                                backgroundColor: historySelected ? '#f5f5f5' : '#ffffff',
+                                boxSizing: 'border-box'
+                              }}
+                            />
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#666666" strokeWidth="1.8" style={{ position: 'absolute', right: '5px', pointerEvents: 'none' }}>
+                              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                              <line x1="16" y1="2" x2="16" y2="6"/>
+                              <line x1="8" y1="2" x2="8" y2="6"/>
+                              <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                          </div>
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  );
+                })}
+              </tbody>
             </table>
           </div>
           <p style={{ fontSize: '12.5px', color: '#666666', marginTop: '8px', marginBottom: 0, lineHeight: 1.65 }}>
@@ -9484,22 +9793,34 @@ function PcWebView() {
           </p>
         </div>
 
-        {/* Section 2: 매수대상 상품 */}
+        {/* Section 3: [매수대상 상품] Table */}
         <div style={{ marginBottom: '30px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 'normal', color: '#222222', margin: 0 }}>
               매수대상 상품
             </h3>
             <div style={{ display: 'flex', gap: '16px', fontSize: '13px' }}>
-              <span style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold' }}>투자비율 가져오기 &gt;</span>
-              <span style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold' }}>상품추가 &gt;</span>
+              <span
+                onClick={handleAddBuyItems}
+                style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold' }}
+              >
+                투자비율 가져오기 &gt;
+              </span>
+              <span
+                onClick={handleAddBuyItems}
+                style={{ color: '#0072bc', cursor: 'pointer', fontWeight: 'bold' }}
+              >
+                상품추가 &gt;
+              </span>
             </div>
           </div>
           <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
               <thead>
                 <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold', height: '38px' }}>
-                  <th style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd' }}><input type="checkbox" /></th>
+                  <th style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd' }}>
+                    <input type="checkbox" checked={false} onChange={() => {}} disabled={historySelected} />
+                  </th>
                   <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
                   <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품군</th>
                   <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품명</th>
@@ -9508,22 +9829,99 @@ function PcWebView() {
                   <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>결제일수</th>
                 </tr>
               </thead>
+              <tbody>
+                {buyItems.length > 0 && (
+                  <>
+                    {buyItems.map((bItem, bIdx) => (
+                      <tr key={bIdx} style={{ height: '38px', backgroundColor: '#ffffff', color: '#333333' }}>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>
+                          <input type="checkbox" defaultChecked={bItem.checked} disabled={historySelected} />
+                        </td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{bItem.risk}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{bItem.group}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px', textAlign: 'left' }}>{bItem.name}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{bItem.limit}</td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>
+                          <input
+                            type="text"
+                            value={bItem.ratio || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setBuyItems(prev => prev.map((item, i) => i === bIdx ? { ...item, ratio: val } : item));
+                            }}
+                            disabled={historySelected}
+                            style={{ width: '50px', padding: '2px 4px', textAlign: 'right', fontSize: '12px' }}
+                          /> %
+                        </td>
+                        <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{bItem.settlementDays}</td>
+                      </tr>
+                    ))}
+                    {/* Total Row (합계) */}
+                    <tr style={{ height: '38px', backgroundColor: '#fcfcfc', color: '#222222', fontWeight: 'bold' }}>
+                      <td colSpan="5" style={{ border: '1px solid #eaeaea', padding: '6px', textAlign: 'center' }}>합계</td>
+                      <td style={{ border: '1px solid #eaeaea', padding: '6px' }}>{totalRatio}%</td>
+                      <td style={{ border: '1px solid #eaeaea', padding: '6px' }} />
+                    </tr>
+                  </>
+                )}
+              </tbody>
             </table>
           </div>
+
+          {/* Bottom Action Area */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
-            <button style={{ border: '1px solid #cccccc', backgroundColor: '#ffffff', padding: '4px 14px', fontSize: '12px', color: '#555555', cursor: 'pointer' }}>상품삭제</button>
-            <button style={{
-              backgroundColor: '#009fe3',
-              color: '#ffffff',
-              fontSize: '15px',
-              fontWeight: 'bold',
-              padding: '8px 30px',
-              border: 'none',
-              borderRadius: '2px',
-              cursor: 'pointer'
-            }}>
-              분할매수
+            <button
+              disabled={historySelected || buyItems.length === 0}
+              style={{
+                border: '1px solid #cccccc',
+                backgroundColor: '#ffffff',
+                padding: '4px 14px',
+                fontSize: '12px',
+                color: historySelected || buyItems.length === 0 ? '#aaaaaa' : '#555555',
+                cursor: historySelected || buyItems.length === 0 ? 'default' : 'pointer'
+              }}
+            >
+              상품삭제
             </button>
+
+            {/* 1.4) [취소] 버튼을 [분할매수] 버튼 왼쪽 옆에 생성함 (기존 신청내역 클릭시 취소버튼 활성화/분할매수 비활성화, 신규 추가 클릭시 취소버튼 비활성화/분할매수 활성화) */}
+            <div style={{ display: 'flex', gap: '12px', margin: '30px auto 0 auto' }}>
+              {/* [취소] 버튼: 분할매수 버튼 왼쪽 옆 */}
+              <button
+                disabled={!historySelected}
+                onClick={handleCancelSplitPurchase}
+                style={{
+                  backgroundColor: historySelected ? '#788088' : '#e0e0e0',
+                  color: historySelected ? '#ffffff' : '#999999',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  padding: '12px 42px',
+                  border: 'none',
+                  borderRadius: '2px',
+                  cursor: historySelected ? 'pointer' : 'default'
+                }}
+              >
+                분할매수 취소
+              </button>
+
+              {/* [분할매수] 버튼 */}
+              <button
+                disabled={historySelected}
+                onClick={() => !historySelected && setStep(2)}
+                style={{
+                  backgroundColor: historySelected ? '#e0e0e0' : '#009fe3',
+                  color: historySelected ? '#999999' : '#ffffff',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  padding: '12px 42px',
+                  border: 'none',
+                  borderRadius: '2px',
+                  cursor: historySelected ? 'default' : 'pointer'
+                }}
+              >
+                분할매수 신청
+              </button>
+            </div>
           </div>
         </div>
 
