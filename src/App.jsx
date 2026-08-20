@@ -9658,15 +9658,15 @@ function PcWebView() {
           <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
               <thead>
-                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
-                  <th style={{ border: '1px solid #eaeaea', width: '40px', padding: '10px 5px', backgroundColor: '#f9fbfd' }} />
-                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>신청일자</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '10px 16px', backgroundColor: '#f9fbfd' }}>매도상품</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>정기매도금액</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>매수일자</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>시작일</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>종료일</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd' }}>취소</th>
+                <tr style={{ backgroundColor: '#f9fbfd', whiteSpace: 'nowrap', color: '#555555', fontWeight: 'bold' }}>
+                  <th style={{ border: '1px solid #eaeaea', width: '40px', padding: '10px 5px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }} />
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>신청일자</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 16px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>매도상품</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>정기매도금액</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>매수일자</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>시작일</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>종료일</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '10px 12px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>취소</th>
                 </tr>
               </thead>
               <tbody>
@@ -9715,22 +9715,22 @@ function PcWebView() {
           <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
               <thead>
-                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd' }} />
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', minWidth: '68px', whiteSpace: 'nowrap', backgroundColor: '#f9fbfd' }}>자산기관</th>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', minWidth: '115px', whiteSpace: 'nowrap', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', backgroundColor: '#f9fbfd' }}>상품명</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>매입원금</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>보유수량</th>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>정기매도</th>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>정기매수일자</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>시작일자</th>
-                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd' }}>결제일수</th>
+                <tr style={{ backgroundColor: '#f9fbfd', whiteSpace: 'nowrap', color: '#555555', fontWeight: 'bold' }}>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }} />
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', minWidth: '68px', whiteSpace: 'nowrap', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>자산기관</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', minWidth: '115px', whiteSpace: 'nowrap', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>상품위험등급</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 8px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>상품명</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>매입원금</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>보유수량</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>정기매도</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>정기매수일자</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>시작일자</th>
+                  <th rowSpan="2" style={{ border: '1px solid #eaeaea', padding: '10px 5px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>결제일수</th>
                 </tr>
-                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold' }}>
-                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>평가금액</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>매도가능수량</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd' }}>종료일자</th>
+                <tr style={{ backgroundColor: '#f9fbfd', whiteSpace: 'nowrap', color: '#555555', fontWeight: 'bold' }}>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>평가금액</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>매도가능수량</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '6px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>종료일자</th>
                 </tr>
               </thead>
               <tbody>
@@ -9878,16 +9878,16 @@ function PcWebView() {
           <div style={{ borderTop: '2px solid #777777', overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
               <thead>
-                <tr style={{ backgroundColor: '#f9fbfd', color: '#555555', fontWeight: 'bold', height: '38px' }}>
-                  <th style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd' }}>
+                <tr style={{ backgroundColor: '#f9fbfd', whiteSpace: 'nowrap', color: '#555555', fontWeight: 'bold', height: '38px' }}>
+                  <th style={{ border: '1px solid #eaeaea', width: '38px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>
                     <input type="checkbox" checked={false} onChange={() => {}} disabled={historySelected} />
                   </th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품위험등급</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품군</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>상품명</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>투자한도(%)</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>매수비율</th>
-                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd' }}>결제일수</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>상품위험등급</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>상품군</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>상품명</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>투자한도(%)</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>매수비율</th>
+                  <th style={{ border: '1px solid #eaeaea', padding: '7px', backgroundColor: '#f9fbfd', whiteSpace: 'nowrap' }}>결제일수</th>
                 </tr>
               </thead>
               <tbody>
