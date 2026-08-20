@@ -9220,8 +9220,9 @@ function PcWebView() {
           height: '100vh',
           backgroundColor: 'rgba(0, 0, 0, 0.45)',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'center',
+          paddingTop: '50px',
           zIndex: 9999
         }}>
           <div style={{
