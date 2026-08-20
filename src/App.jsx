@@ -9127,13 +9127,7 @@ function PcWebView() {
   // 매수대상 상품 추가 / 투자비율 가져오기 클릭
   const handleAddBuyItems = () => {
     if (!isSearched) setIsSearched(true);
-    if (historySelected) {
-      setAlertModal({
-        open: true,
-        message: '기존 신청하신 내역은 변경이 불가능합니다.\n변경을 원하시면 취소 후 재신청 해주시기 바랍니다.',
-        type: 'READONLY_WARNING'
-      });
-    } else {
+    if (!historySelected) {
       setBuyItems(defaultBuyItems);
     }
   };
@@ -9161,13 +9155,7 @@ function PcWebView() {
 
   // [분할매수] 버튼 클릭 시 검증 및 다이얼로그 팝업 호출 (media_1787216407377.png 100% 일치)
   const handleSplitPurchaseButtonClick = () => {
-    if (historySelected) {
-      setAlertModal({
-        open: true,
-        message: '기존 신청하신 내역은 변경이 불가능합니다.\n변경을 원하시면 취소 후 재신청 해주시기 바랍니다.',
-        type: 'READONLY_WARNING'
-      });
-    } else if (selectedSellItemIndex === null) {
+    if (selectedSellItemIndex === null) {
       setAlertModal({
         open: true,
         message: '매도대상 상품이 선택되지 않았습니다.',
@@ -9183,8 +9171,6 @@ function PcWebView() {
       setStep(2);
     }
   };
-
-  const totalRatio = buyItems.reduce((acc, item) => acc + (parseInt(item.ratio || '0', 10) || 0), 0);
 
   return (
     <div className="pcweb-container" style={{
