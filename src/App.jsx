@@ -2134,12 +2134,14 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark, searchQuery, setSearchQ
   );
 }
 
-function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption, ownedSortOption, setOwnedSortOption, isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen, isFavoriteBsheetOpen, setIsFavoriteBsheetOpen, searchQuery, setSearchQuery, selectedChip, setSelectedChip, isPeriodBsheetOpen: isBottomSheetOpen, setIsPeriodBsheetOpen: setIsBottomSheetOpen }) {
+function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption, ownedSortOption, setOwnedSortOption, isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen, isFavoriteBsheetOpen, setIsFavoriteBsheetOpen, searchQuery, setSearchQuery, selectedChip, setSelectedChip, isPeriodBsheetOpen: isBottomSheetOpen, setIsPeriodBsheetOpen: setIsBottomSheetOpen, isFigmaExportMode }) {
   const [activeTab, setActiveTab] = useState('1주일 매수고객순'); // '1주일 매수고객순', '1주일 매수금액순'
   const [sortOption, setSortOption] = useState('1주일');
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
   const [pendingFavoriteCode, setPendingFavoriteCode] = useState(null);
+  const [isCriteriaModalOpen, setIsCriteriaModalOpen] = useState(false);
+  const [isCautionModalOpen, setIsCautionModalOpen] = useState(false);
   const [showKeyboard, setShowKeyboard] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('showKeyboard') === 'true';
@@ -2198,10 +2200,11 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: isFigmaExportMode ? 'auto' : '100%',
     backgroundColor: isDark ? '#0b0f19' : '#ffffff',
     color: isDark ? '#cbd5e1' : '#333333',
-    position: 'relative'
+    position: 'relative',
+    overflow: isFigmaExportMode ? 'visible' : 'hidden'
   };
 
   const headerStyle = {
@@ -2263,10 +2266,11 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   };
 
   const rankingSectionStyle = {
-    flex: 1,
-    overflowY: 'auto',
+    flex: isFigmaExportMode ? 'none' : 1,
+    overflowY: isFigmaExportMode ? 'visible' : 'auto',
     padding: '16px 12px',
-    backgroundColor: isDark ? '#0b0f19' : '#ffffff'
+    backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+    height: isFigmaExportMode ? 'auto' : undefined
   };
 
   const pillContainerStyle = {
@@ -2902,7 +2906,29 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
         <span style={{ fontWeight: '700', fontSize: '1.15rem', flex: 1, textAlign: 'center', pointerEvents: 'none' }}>
           {etfMallNavMode === 'search' ? '종목검색' : 'ETF/리츠 몰'}
         </span>
-        <div style={{ width: '22px' }} />
+        <button
+          type="button"
+          onClick={() => setIsCriteriaModalOpen(true)}
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: isDark ? '#ffffff' : '#111111',
+            position: 'relative',
+            zIndex: 10
+          }}
+          title="선정기준 안내"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </button>
       </div>
 
       {/* Horizontal Tabs Menu */}
@@ -3080,7 +3106,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           )}
         </div>
       )}      {/* Ranking and List Area */}
-      <div style={{ ...rankingSectionStyle, padding: '0 0 ' + (etfMallNavMode === 'search' ? '60px' : '0') + ' 0' }}>
+      <div style={{ ...rankingSectionStyle, padding: '0 0 ' + (etfMallNavMode === 'search' ? '60px' : '0') + ' 0', display: 'flex', flexDirection: 'column' }}>
         {activeMallTab === '추천' && (
           <>
             {/* Section Title + Tabs */}
@@ -3358,8 +3384,35 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
             {/* GO배당GO금리 퇴직연금 ETF Section */}
             <div style={{ padding: etfMallNavMode === 'search' ? '0' : '16px 0 0 0', backgroundColor: isDark ? '#0b0f19' : '#ffffff' }}>
               {etfMallNavMode !== 'search' && (
-                <div style={{ padding: '0 14px', marginBottom: '12px' }}>
+                <div style={{
+                  padding: '0 14px',
+                  marginBottom: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}>
                   <span style={{ fontSize: '1.12rem', fontWeight: '600', color: isDark ? '#ffffff' : '#111111', letterSpacing: '-0.3px' }}>GO배당GO금리</span>
+                  <button
+                    type="button"
+                    onClick={() => setIsCautionModalOpen(true)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      padding: '2px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: isDark ? '#94a3b8' : '#71717a'
+                    }}
+                    title="투자 유의사항"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="16" x2="12" y2="12" />
+                      <line x1="12" y1="8" x2="12.01" y2="8" />
+                    </svg>
+                  </button>
                 </div>
               )}
               <div>
@@ -3522,6 +3575,33 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                   );
                 })}
               </div>
+
+              {/* 첨부 4: 안내사항 영역 */}
+              {etfMallNavMode !== 'search' && (
+                <div style={{
+                  margin: '16px 0 0 0',
+                  padding: '14px 14px 20px 14px',
+                  backgroundColor: isDark ? '#111827' : '#f4f6f8',
+                  borderRadius: '0px',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                  fontSize: '0.67rem',
+                  lineHeight: '1.55',
+                  color: isDark ? '#94a3b8' : '#666666',
+                  letterSpacing: '-0.35px',
+                  whiteSpace: 'nowrap'
+                }}>
+                  <div style={{ marginBottom: '2px' }}>
+                    ※ 대신증권 준법감시인 심사필 제 2026-0119호 (2026.03.12 ~ 2027.03.11)
+                  </div>
+                  <div style={{ marginBottom: '2px' }}>
+                    각 금융상품의 선정기준 및 투자유의사항을 반드시 확인하여 주시기 바랍니다.
+                  </div>
+                  <div>
+                    (선정기준 : 오른쪽 상단. ‘ ? ’ 확인 / 투자유의사항 : GO배당GO금리 우측. ⓘ 확인)
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
@@ -3697,9 +3777,75 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
         {/* GO배당GO금리 Tab View */}
         {activeMallTab === 'GO배당GO금리' && (
-          <div style={{ padding: '0px 0' }}>
+          <div style={{
+            padding: '0px 0',
+            backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            boxSizing: 'border-box'
+          }}>
             <div>
-              {renderStockList(goDividendList)}
+              {/* 탭 아래 유의사항 영역 */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                padding: '8px 14px',
+                backgroundColor: isDark ? '#0f172a' : '#f8f9fa',
+                borderBottom: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9'
+              }}>
+                <div 
+                  onClick={() => setIsCautionModalOpen(true)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    cursor: 'pointer',
+                    color: isDark ? '#94a3b8' : '#71717a',
+                    fontSize: '0.78rem',
+                    fontWeight: '500',
+                    letterSpacing: '-0.2px'
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                  <span>유의사항</span>
+                </div>
+              </div>
+
+              <div>
+                {renderStockList(goDividendList)}
+              </div>
+            </div>
+
+            {/* 첨부 4: 안내사항 영역 -> 화면 끝에 오도록 */}
+            <div style={{
+              margin: '24px 0 0 0',
+              padding: '14px 14px 20px 14px',
+              backgroundColor: isDark ? '#111827' : '#f4f6f8',
+              borderRadius: '0px',
+              width: '100%',
+              boxSizing: 'border-box',
+              fontSize: '0.67rem',
+              lineHeight: '1.55',
+              color: isDark ? '#94a3b8' : '#666666',
+              letterSpacing: '-0.35px',
+              whiteSpace: 'nowrap'
+            }}>
+              <div style={{ marginBottom: '2px' }}>
+                ※ 대신증권 준법감시인 심사필 제 2026-0119호 (2026.03.12 ~ 2027.03.11)
+              </div>
+              <div style={{ marginBottom: '2px' }}>
+                각 금융상품의 선정기준 및 투자유의사항을 반드시 확인하여 주시기 바랍니다.
+              </div>
+              <div>
+                (선정기준 : 오른쪽 상단. ‘ ? ’ 확인 / 투자유의사항 : 탭 아래 ⓘ 유의사항 확인)
+              </div>
             </div>
           </div>
         )}
@@ -4191,6 +4337,318 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
           </div>
         </>
       )}
+      {/* 상품 선정기준 풀스크린 팝업 */}
+      {isCriteriaModalOpen && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+          zIndex: 10000,
+          display: 'flex',
+          flexDirection: 'column',
+          boxSizing: 'border-box'
+        }}>
+          {/* Top Header Bar */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            height: '48px',
+            padding: '0 14px',
+            borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e5e7eb',
+            backgroundColor: isDark ? '#121826' : '#ffffff',
+            position: 'relative',
+            flexShrink: 0
+          }}>
+            <button
+              type="button"
+              onClick={() => setIsCriteriaModalOpen(false)}
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: '4px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                color: isDark ? '#ffffff' : '#111111',
+                position: 'relative',
+                zIndex: 1
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <span style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              textAlign: 'center',
+              fontSize: '1.05rem',
+              fontWeight: '700',
+              color: isDark ? '#ffffff' : '#111111',
+              pointerEvents: 'none'
+            }}>
+              상품 선정기준
+            </span>
+          </div>
+
+          {/* Scrollable Content Body */}
+          <div style={{
+            flex: 1,
+            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            {/* Hero Text */}
+            <div style={{
+              padding: '20px 16px 16px 16px',
+              fontSize: '0.98rem',
+              fontWeight: '700',
+              lineHeight: '1.45',
+              color: isDark ? '#ffffff' : '#111111',
+              wordBreak: 'keep-all'
+            }}>
+              리서치센터뷰를 바탕으로 상품별 선정 기준에 따라 각 상품 부서에서 엄선하였습니다.
+            </div>
+
+            {/* Category 1: 채권(원화/외화) */}
+            <div>
+              <div style={{
+                padding: '8px 16px',
+                backgroundColor: isDark ? '#171e2e' : '#f1f3f5',
+                fontSize: '0.82rem',
+                fontWeight: '600',
+                color: isDark ? '#94a3b8' : '#555555'
+              }}>
+                채권(원화/외화)
+              </div>
+              <div style={{
+                padding: '14px 16px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                fontSize: '0.82rem',
+                color: isDark ? '#cbd5e1' : '#374151',
+                lineHeight: '1.5'
+              }}>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>신용등급 A 이상 국내외 국공채, 회사채 또는 은행채</span>
+                </div>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>신용등급 A2 이상 대형증권사 신용보강 단기사채 또는 우량기업 CP</span>
+                </div>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>낮은 표면이율로 절세효과를 볼 수 있는 미국국채 선택 항목 추가</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Category 2: 펀드 */}
+            <div>
+              <div style={{
+                padding: '8px 16px',
+                backgroundColor: isDark ? '#171e2e' : '#f1f3f5',
+                fontSize: '0.82rem',
+                fontWeight: '600',
+                color: isDark ? '#94a3b8' : '#555555'
+              }}>
+                펀드
+              </div>
+              <div style={{
+                padding: '14px 16px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                fontSize: '0.82rem',
+                color: isDark ? '#cbd5e1' : '#374151',
+                lineHeight: '1.5'
+              }}>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>리서치센터의 시장전망을 바탕으로 시장 및 자산별 투자매력도를 점검하여 자산군 선별</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Category 3: ETF */}
+            <div>
+              <div style={{
+                padding: '8px 16px',
+                backgroundColor: isDark ? '#171e2e' : '#f1f3f5',
+                fontSize: '0.82rem',
+                fontWeight: '600',
+                color: isDark ? '#94a3b8' : '#555555'
+              }}>
+                ETF
+              </div>
+              <div style={{
+                padding: '14px 16px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                fontSize: '0.82rem',
+                color: isDark ? '#cbd5e1' : '#374151',
+                lineHeight: '1.5'
+              }}>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>리서치센터의 시장전망을 바탕으로 투자매력도가 높을 것으로 예상되는 자산군/시장/테마 선정</span>
+                </div>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>정량평가 : 운용자산 규모, 거래대금, BM 대비 성과, 분배금 수익률, 총보수율 등 고려</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Category 4: ELB/DLB */}
+            <div>
+              <div style={{
+                padding: '8px 16px',
+                backgroundColor: isDark ? '#171e2e' : '#f1f3f5',
+                fontSize: '0.82rem',
+                fontWeight: '600',
+                color: isDark ? '#94a3b8' : '#555555'
+              }}>
+                ELB/DLB
+              </div>
+              <div style={{
+                padding: '14px 16px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                fontSize: '0.82rem',
+                color: isDark ? '#cbd5e1' : '#374151',
+                lineHeight: '1.5'
+              }}>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>원금을 지급하는 형태의 금융상품으로, 원금 손실의 위험을 피하면서 예금 금리 이상의 수익을 추구할 수 있는 상품</span>
+                </div>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#888888', flexShrink: 0 }}>•</span>
+                  <span>시황 및 리서치센터 시장전망을 고려하여 선정</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Compliance footer notice */}
+            <div style={{
+              padding: '14px 16px',
+              backgroundColor: isDark ? '#0f172a' : '#f8f9fa',
+              fontSize: '0.72rem',
+              color: isDark ? '#94a3b8' : '#777777',
+              lineHeight: '1.5',
+              marginTop: 'auto'
+            }}>
+              ※ 대신증권 준법감시인 심사필 제 2026-0311호 (2026.04.30 ~ 2027.04.29)
+            </div>
+          </div>
+
+          {/* Bottom Action Button */}
+          <button
+            type="button"
+            onClick={() => setIsCriteriaModalOpen(false)}
+            style={{
+              width: '100%',
+              height: '52px',
+              backgroundColor: '#1c1c1e',
+              color: '#ffffff',
+              border: 'none',
+              fontSize: '0.96rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              flexShrink: 0
+            }}
+          >
+            확인
+          </button>
+        </div>
+      )}
+
+      {/* 투자자 유의사항 풀스크린 팝업 */}
+      {isCautionModalOpen && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+          zIndex: 10000,
+          display: 'flex',
+          flexDirection: 'column',
+          overflowY: 'auto',
+          boxSizing: 'border-box'
+        }}>
+          {/* Top Close Button */}
+          <div style={{ padding: '16px 18px 0 18px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <button
+              type="button"
+              onClick={() => setIsCautionModalOpen(false)}
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: '4px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                color: isDark ? '#ffffff' : '#111111'
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Large Title */}
+          <div style={{
+            padding: '24px 20px 20px 20px',
+            fontSize: '1.45rem',
+            fontWeight: '700',
+            color: isDark ? '#ffffff' : '#111111',
+            letterSpacing: '-0.4px',
+            flexShrink: 0
+          }}>
+            투자자 유의사항
+          </div>
+
+          {/* Bulleted Content Body */}
+          <div style={{
+            padding: '0 20px 40px 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            fontSize: '0.86rem',
+            lineHeight: '1.65',
+            color: isDark ? '#cbd5e1' : '#4b5563',
+            wordBreak: 'keep-all'
+          }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+              <span style={{ fontWeight: '700', flexShrink: 0 }}>·</span>
+              <span>본 서비스는 당사에서 거래하는 고객 데이터 기반의 통계자료로 만든 콘텐츠로 투자성향 및 투자목적 등이 미반영된 단순 투자 참고 자료입니다.</span>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+              <span style={{ fontWeight: '700', flexShrink: 0 }}>·</span>
+              <span>본 서비스의 목적은 정보 제공으로 특정 종목에 대한 매수(매도)신호, 추천, 투자권유를 의미하지 않는 단순 참고용일뿐 투자의 최종 판단에 대한 책임은 이용하시는 고객에게 있고 대신증권은 이에 대한 어떠한 법적 책임을 지지 않습니다.</span>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+              <span style={{ fontWeight: '700', flexShrink: 0 }}>·</span>
+              <span>본 서비스는 대신증권의 저작물로 당사의 동의없이 어떠한 형태로든 제공 정보를 복제, 배포, 전송, 대여할 수 없습니다.</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Virtual Korean Keyboard */}
       {showKeyboard && (
         <div 
@@ -20496,7 +20954,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       </button>
 
       {/* Floating Figma Export Mode Toggle Button */}
-      {(activeScreen === 4 || activeScreen === 5 || activeScreen === 6) && (
+      {(activeScreen === 1 || activeScreen === 4 || activeScreen === 5 || activeScreen === 6) && (
         <button
           onClick={() => setIsFigmaExportMode(!isFigmaExportMode)}
           style={{
@@ -20554,7 +21012,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               gap: '60px',
               flexWrap: 'wrap',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: isFigmaExportMode ? 'flex-start' : 'center'
             }}>
               {/* AS IS Emulator */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
@@ -20573,10 +21031,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   ...styles.phoneMockup,
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
-                  height: '800px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
                   display: 'flex',
                   flexDirection: 'column',
-                  position: 'relative'
+                  position: 'relative',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
                   {asIsSubScreen === 'menu' ? (
                       <>
@@ -20895,13 +21354,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   ...styles.phoneMockup,
                   backgroundColor: isDark ? '#0b0f19' : '#fff',
                   width: '360px',
-                  height: '800px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
                   display: 'flex',
                   flexDirection: 'column',
-                  position: 'relative'
+                  position: 'relative',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
                 }}>
                   {toBeSubScreen === 'etfMall' ? (
-                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} ownedDisplayOption={ownedDisplayOption} setOwnedDisplayOption={setOwnedDisplayOption} ownedSortOption={ownedSortOption} setOwnedSortOption={setOwnedSortOption} isOwnedSortBsheetOpen={isOwnedSortBsheetOpen} setIsOwnedSortBsheetOpen={setIsOwnedSortBsheetOpen} isFavoriteBsheetOpen={isFavoriteBsheetOpen} setIsFavoriteBsheetOpen={setIsFavoriteBsheetOpen} searchQuery={tobeSearchQuery} setSearchQuery={setTobeSearchQuery} selectedChip={etfMallSelectedChip} setSelectedChip={setEtfMallSelectedChip} isPeriodBsheetOpen={isPeriodBsheetOpen} setIsPeriodBsheetOpen={setIsPeriodBsheetOpen} />
+                    <ToBeEtfMallView setToBeSubScreen={setToBeSubScreen} isDark={isDark} isDrawerOpen={isDrawerOpen} setToBePrevSubScreen={setToBePrevSubScreen} etfMallNavMode={etfMallNavMode} setEtfMallNavMode={setEtfMallNavMode} activeMallTab={activeMallTab} setActiveMallTab={setActiveMallTab} ownedDisplayOption={ownedDisplayOption} setOwnedDisplayOption={setOwnedDisplayOption} ownedSortOption={ownedSortOption} setOwnedSortOption={setOwnedSortOption} isOwnedSortBsheetOpen={isOwnedSortBsheetOpen} setIsOwnedSortBsheetOpen={setIsOwnedSortBsheetOpen} isFavoriteBsheetOpen={isFavoriteBsheetOpen} setIsFavoriteBsheetOpen={setIsFavoriteBsheetOpen} searchQuery={tobeSearchQuery} setSearchQuery={setTobeSearchQuery} selectedChip={etfMallSelectedChip} setSelectedChip={setEtfMallSelectedChip} isPeriodBsheetOpen={isPeriodBsheetOpen} setIsPeriodBsheetOpen={setIsPeriodBsheetOpen} isFigmaExportMode={isFigmaExportMode} />
                   ) : toBeSubScreen === 'tigerDetail' ? (
                     <ToBeTigerDetailView setToBeSubScreen={setToBeSubScreen} isDark={isDark} setToBePrevSubScreen={setToBePrevSubScreen} isDrawerOpen={isDrawerOpen} setEtfMallNavMode={setEtfMallNavMode} />
                   ) : toBeSubScreen === 'stockSearch' ? (
