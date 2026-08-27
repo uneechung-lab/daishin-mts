@@ -2140,8 +2140,14 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
   const [pendingFavoriteCode, setPendingFavoriteCode] = useState(null);
-  const [isCriteriaModalOpen, setIsCriteriaModalOpen] = useState(false);
-  const [isCautionModalOpen, setIsCautionModalOpen] = useState(false);
+  const [isCriteriaModalOpen, setIsCriteriaModalOpen] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('criteriaPopup') === 'true' || params.get('criteriaModal') === 'true';
+  });
+  const [isCautionModalOpen, setIsCautionModalOpen] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('cautionPopup') === 'true' || params.get('cautionModal') === 'true';
+  });
   const [showKeyboard, setShowKeyboard] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('showKeyboard') === 'true';
@@ -2179,11 +2185,21 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     } else {
       params.delete('checkedCodes');
     }
+    if (isCriteriaModalOpen) {
+      params.set('criteriaPopup', 'true');
+    } else {
+      params.delete('criteriaPopup');
+    }
+    if (isCautionModalOpen) {
+      params.set('cautionPopup', 'true');
+    } else {
+      params.delete('cautionPopup');
+    }
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showKeyboard, checkedItems]);
+  }, [showKeyboard, checkedItems, isCriteriaModalOpen, isCautionModalOpen]);
 
   useEffect(() => {
     if (etfMallNavMode === 'search' && activeMallTab !== '전체') {
@@ -4340,15 +4356,18 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       {/* 상품 선정기준 풀스크린 팝업 */}
       {isCriteriaModalOpen && (
         <div style={{
-          position: 'absolute',
+          position: isFigmaExportMode ? 'relative' : 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
+          height: isFigmaExportMode ? 'auto' : '100%',
+          minHeight: isFigmaExportMode ? 'auto' : '100%',
           backgroundColor: isDark ? '#0b0f19' : '#ffffff',
           zIndex: 10000,
           display: 'flex',
           flexDirection: 'column',
+          overflow: isFigmaExportMode ? 'visible' : 'hidden',
           boxSizing: 'border-box'
         }}>
           {/* Top Header Bar */}
@@ -4398,10 +4417,11 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
           {/* Scrollable Content Body */}
           <div style={{
-            flex: 1,
-            overflowY: 'auto',
+            flex: isFigmaExportMode ? 'none' : 1,
+            overflowY: isFigmaExportMode ? 'visible' : 'auto',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            height: isFigmaExportMode ? 'auto' : undefined
           }}>
             {/* Hero Text */}
             <div style={{
@@ -4576,16 +4596,19 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       {/* 투자자 유의사항 풀스크린 팝업 */}
       {isCautionModalOpen && (
         <div style={{
-          position: 'absolute',
+          position: isFigmaExportMode ? 'relative' : 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
+          height: isFigmaExportMode ? 'auto' : '100%',
+          minHeight: isFigmaExportMode ? 'auto' : '100%',
           backgroundColor: isDark ? '#0b0f19' : '#ffffff',
           zIndex: 10000,
           display: 'flex',
           flexDirection: 'column',
-          overflowY: 'auto',
+          overflowY: isFigmaExportMode ? 'visible' : 'auto',
+          overflow: isFigmaExportMode ? 'visible' : 'hidden',
           boxSizing: 'border-box'
         }}>
           {/* Top Close Button */}
