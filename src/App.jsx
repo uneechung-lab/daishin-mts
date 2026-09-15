@@ -474,26 +474,6 @@ function PhoneEmulator({
         boxSizing: 'border-box',
         position: 'relative'
       }}>
-        {isToBe && isDrawerOpen && (
-          <div style={{
-            position: 'absolute',
-            top: '4px',
-            left: '4px',
-            width: '18px',
-            height: '18px',
-            borderRadius: '50%',
-            backgroundColor: '#00c3a5',
-            color: '#fff',
-            fontSize: '11px',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 10
-          }}>
-            1
-          </div>
-        )}
         {!isToBe ? (
           <>
             {/* Row 1: KRX Badge */}
@@ -960,26 +940,6 @@ function PhoneEmulator({
           overflow: 'hidden',
           position: 'relative'
         }}>
-          {isDrawerOpen && (
-            <div style={{
-              position: 'absolute',
-              top: '3px',
-              left: '4px',
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              backgroundColor: '#00c3a5',
-              color: '#fff',
-              fontSize: '11px',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10
-            }}>
-              3
-            </div>
-          )}
           <div style={{ fontWeight: '700' }}>{selectedStock}</div>
           {marketMode === '통합' ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -1036,26 +996,6 @@ function PhoneEmulator({
               position: 'relative'
             }}
           >
-            {isDrawerOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '-6px',
-                left: '-6px',
-                width: '18px',
-                height: '18px',
-                borderRadius: '50%',
-                backgroundColor: '#00c3a5',
-                color: '#fff',
-                fontSize: '11px',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 10
-              }}>
-                2
-              </div>
-            )}
             <span>{marketMode}</span>
             <span style={{ fontSize: '9px' }}>☰</span>
           </div>
@@ -2136,6 +2076,11 @@ function AsIsStockSearchView({ setAsIsSubScreen, isDark, searchQuery, setSearchQ
 
 function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSubScreen, etfMallNavMode, setEtfMallNavMode, activeMallTab, setActiveMallTab, ownedDisplayOption, setOwnedDisplayOption, ownedSortOption, setOwnedSortOption, isOwnedSortBsheetOpen, setIsOwnedSortBsheetOpen, isFavoriteBsheetOpen, setIsFavoriteBsheetOpen, searchQuery, setSearchQuery, selectedChip, setSelectedChip, isPeriodBsheetOpen: isBottomSheetOpen, setIsPeriodBsheetOpen: setIsBottomSheetOpen, isFigmaExportMode }) {
   const [activeTab, setActiveTab] = useState('1주일 매수고객순'); // '1주일 매수고객순', '1주일 매수금액순'
+  const [weeklyTradingTab, setWeeklyTradingTab] = useState('매수');
+  const [etfRankTab, setEtfRankTab] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('etfRankTab') || '수익률';
+  });
   const [sortOption, setSortOption] = useState('1주일');
   const [favorites, setFavorites] = useState(['A0207Z0', 'A390140']);
   const [favoritePosition, setFavoritePosition] = useState('bottom');
@@ -2195,11 +2140,16 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
     } else {
       params.delete('cautionPopup');
     }
+    if (etfRankTab && etfRankTab !== '수익률') {
+      params.set('etfRankTab', etfRankTab);
+    } else {
+      params.delete('etfRankTab');
+    }
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [showKeyboard, checkedItems, isCriteriaModalOpen, isCautionModalOpen]);
+  }, [showKeyboard, checkedItems, isCriteriaModalOpen, isCautionModalOpen, etfRankTab]);
 
   useEffect(() => {
     if (etfMallNavMode === 'search' && activeMallTab !== '전체') {
@@ -2530,25 +2480,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               </div>
             </div>
           )}
-          {/* 원숫자 1번을 수량/평단가 앞에 위치시킴 */}
-          {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
-            <div style={{
-              position: 'absolute',
-              left: '1px',
-              top: '36px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '17px',
-              height: '17px',
-              borderRadius: '50%',
-              backgroundColor: '#00c3a5',
-              color: '#fff',
-              fontSize: '11px',
-              fontWeight: 'bold',
-              zIndex: 12
-            }}>1</div>
-          )}
 
           {/* Col 1 */}
           <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
@@ -2594,25 +2525,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
                 return (
                   <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                    {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
-                      <div style={{
-                        position: 'absolute',
-                        left: '-24px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '17px',
-                        height: '17px',
-                        borderRadius: '50%',
-                        backgroundColor: '#00c3a5',
-                        color: '#fff',
-                        fontSize: '11px',
-                        fontWeight: 'bold',
-                        zIndex: 11
-                      }}>3</div>
-                    )}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
                       {/* 평가금액 */}
                       <span style={{
@@ -2742,25 +2654,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                 </svg>
               </div>
-              {isDrawerOpen && activeMallTab === '보유' && idx === 0 && (
-                <div style={{
-                  position: 'absolute',
-                  left: '-18px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '17px',
-                  height: '17px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#fff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  zIndex: 11
-                }}>5</div>
-              )}
             </div>
           )}
         </div>
@@ -2962,25 +2855,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
               style={{ ...menuTabItemStyle(activeMallTab === tab), position: 'relative' }}
             >
               {tab}
-              {tab === '추천' && activeMallTab === '추천' && isDrawerOpen && (
-                <div style={{
-                  position: 'absolute',
-                  top: '-4px',
-                  right: '-10px',
-                  width: '17px',
-                  height: '17px',
-                  borderRadius: '50%',
-                  backgroundColor: '#00c3a5',
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                  zIndex: 15
-                }}>1</div>
-              )}
             </span>
           ))}
         </div>
@@ -3125,7 +2999,7 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
       <div style={{ ...rankingSectionStyle, padding: '0 0 ' + (etfMallNavMode === 'search' ? '60px' : '0') + ' 0', display: 'flex', flexDirection: 'column' }}>
         {activeMallTab === '추천' && (
           <>
-            {/* Section Title + Tabs */}
+            {/* Section Title + Tabs: 퇴직연금 ETF 순위 */}
             {etfMallNavMode !== 'search' && (
               <div style={{ padding: '14px 14px 0 14px' }}>
                 {/* Title */}
@@ -3156,18 +3030,20 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                 {/* 거래 고객순 / 거래 금액순 Tabs */}
                 <div style={{ display: 'flex', borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0' }}>
                   {['수익률', '거래량', '거래대금'].map((tab) => {
-                    const isActive = tab === '수익률';
+                    const isActive = etfRankTab === tab;
                     return (
-                      <span key={tab} style={{
-                        padding: '8px 0',
-                        marginRight: '20px',
-                        fontSize: '0.88rem',
-                        fontWeight: isActive ? '700' : '400',
-                        color: isActive ? (isDark ? '#ffffff' : '#111111') : (isDark ? '#64748b' : '#999999'),
-                        borderBottom: isActive ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #111111') : '2.5px solid transparent',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap'
-                      }}>{tab}</span>
+                      <span key={tab} 
+                        onClick={() => setEtfRankTab(tab)}
+                        style={{
+                          padding: '8px 0',
+                          marginRight: '20px',
+                          fontSize: '0.88rem',
+                          fontWeight: isActive ? '700' : '400',
+                          color: isActive ? (isDark ? '#ffffff' : '#111111') : (isDark ? '#64748b' : '#999999'),
+                          borderBottom: isActive ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #111111') : '2.5px solid transparent',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap'
+                        }}>{tab}</span>
                     );
                   })}
                 </div>
@@ -3176,195 +3052,166 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
 
             {/* ETF Ranked List */}
             <div>
-              {filterByChip([
-                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true, hasK: true, hasN: true  },
-                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true, hasK: true, hasN: false },
-                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false, hasK: false, hasN: true },
-                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false, hasK: false, hasN: false },
-                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true, hasK: true, hasN: true }
-              ]).length === 0 ? renderEmptyState() : filterByChip([
-                { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', price: 14550, pct: 1.76,  positive: true, hasK: true, hasN: true  },
-                { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  price: 12840, pct: 2.56,  positive: true, hasK: true, hasN: false },
-                { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  price: 28165, pct: -0.32, positive: false, hasK: false, hasN: true },
-                { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  price: 11730, pct: -5.17, positive: false, hasK: false, hasN: false },
-                { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', price: 9850,  pct: 1.28,  positive: true, hasK: true, hasN: true }
-              ]).map((item, idx, arr) => {
-                const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
-                return (
-                  <div key={idx} 
-                    onClick={() => {
-                      setToBePrevSubScreen('etfMall');
-                      setToBeSubScreen('tigerDetail');
-                    }}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      padding: '12px 10px 12px 14px',
-                      borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
-                      cursor: 'pointer',
-                      gap: '10px'
-                    }}>
-                    {/* Rank number */}
-                    {etfMallNavMode !== 'search' && (
-                      <span style={{
-                        fontSize: '1.05rem',
-                        fontWeight: '800',
-                        fontStyle: 'italic',
-                        color: isDark ? '#ffffff' : '#111111',
-                        width: '18px',
-                        flexShrink: 0
-                      }}>{item.rank}</span>
-                    )}
+              {(() => {
+                const rankedEtfList = [
+                  { rank: 1, name: 'RISE 삼성전자SK하이닉스채권혼합50', code: 'A0189Z0', limit: '투자한도100%', returnRate: '9.44%', returnPositive: true,  volumeText: '2,845,120주', volumeChange: '345,120주', amountText: '628억원', amountChange: '78억원', price: 14550, pct: 1.76,  positive: true, hasK: true, hasN: true  },
+                  { rank: 2, name: 'SOL AI반도체TOP2플러스',             code: 'A0207Z0', limit: '투자한도70%',  returnRate: '8.12%', returnPositive: true,  volumeText: '2,130,500주', volumeChange: '210,500주', amountText: '482억원', amountChange: '52억원', price: 12840, pct: 2.56,  positive: true, hasK: true, hasN: false },
+                  { rank: 3, name: 'TIGER 미국S&P500',                   code: 'A0191B0', limit: '투자한도70%',  returnRate: '3.25%', returnPositive: true,  volumeText: '1,750,420주', volumeChange: '185,200주', amountText: '375억원', amountChange: '41억원', price: 28165, pct: -0.32, positive: false, hasK: false, hasN: true },
+                  { rank: 4, name: 'TIGER 미국우주테크',                  code: 'A0185L0', limit: '투자한도70%',  returnRate: '1.48%', returnPositive: false, volumeText: '1,290,180주', volumeChange: '95,400주',  amountText: '240억원', amountChange: '19억원', price: 11730, pct: -5.17, positive: false, hasK: false, hasN: false },
+                  { rank: 5, name: 'TIGER 반도체TOP10',                   code: 'A0199C0', limit: '투자한도100%', returnRate: '3.12%', returnPositive: false, volumeText: '985,600주',   volumeChange: '82,300주',  amountText: '185억원', amountChange: '15억원', price: 9850,  pct: 1.28,  positive: true, hasK: true, hasN: true }
+                ];
+                const filteredList = filterByChip(rankedEtfList);
+                if (filteredList.length === 0) return renderEmptyState();
 
-                    {/* Left: ETF Name + subtitle */}
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
-                      {/* ETF Name only */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flexWrap: 'wrap' }}>
+                return filteredList.map((item, idx, arr) => {
+                  const absChange = Math.round(item.price * (Math.abs(item.pct) / 100));
+                  return (
+                    <div key={idx} 
+                      onClick={() => {
+                        setToBePrevSubScreen('etfMall');
+                        setToBeSubScreen('tigerDetail');
+                      }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '12px 10px 12px 14px',
+                        borderBottom: idx < arr.length - 1 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                        cursor: 'pointer',
+                        gap: '10px'
+                      }}>
+                      {/* Rank number */}
+                      {etfMallNavMode !== 'search' && (
                         <span style={{
-                          fontSize: item.name.length > 12 ? '0.74rem' : '0.85rem',
-                          fontWeight: '600',
-                          color: isDark ? '#e2e8f0' : '#111111',
-                          letterSpacing: '-0.2px',
-                          wordBreak: 'break-all',
-                          whiteSpace: 'normal',
-                          lineHeight: '1.2',
-                          flex: 1,
-                          minWidth: 0
-                        }}>{item.name}</span>
-                        {item.rank === 1 && isDrawerOpen && etfMallNavMode !== 'search' && (
-                          <div style={{
-                            width: '18px',
-                            height: '18px',
-                            borderRadius: '50%',
-                            backgroundColor: '#00c3a5',
-                            color: '#ffffff',
-                            fontSize: '11px',
-                            fontWeight: 'bold',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                            flexShrink: 0
-                          }}>2</div>
-                        )}
-                        {item.rank === 3 && isDrawerOpen && etfMallNavMode !== 'search' && (
-                          <div style={{
-                            width: '18px',
-                            height: '18px',
-                            borderRadius: '50%',
-                            backgroundColor: '#00c3a5',
-                            color: '#ffffff',
-                            fontSize: '11px',
-                            fontWeight: 'bold',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                            flexShrink: 0
-                          }}>3</div>
-                        )}
-                      </div>
-                      {/* 투자한도 + code + 구분 (matches style of renderStockList) */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-                        <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>
-                          {item.limit.startsWith('투자한도') ? '투자한도 ' + item.limit.replace('투자한도', '') : item.limit}
-                        </span>
-                        <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
-                        <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                          {item.code}
-                        </span>
-                      </div>
-                    </div>
+                          fontSize: '1.05rem',
+                          fontWeight: '800',
+                          fontStyle: 'italic',
+                          color: isDark ? '#ffffff' : '#111111',
+                          width: '18px',
+                          flexShrink: 0
+                        }}>{item.rank}</span>
+                      )}
 
-                    {/* Right side aligned to renderStockList layout */}
-                    {etfMallNavMode !== 'search' && (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
-                        {/* Col 2 */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
-                            <span style={{
-                              fontSize: '0.92rem',
-                              fontWeight: '700',
-                              color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#e2e8f0' : '#111111') : '#2366ca'),
-                              letterSpacing: '-0.3px'
-                            }}>{item.price.toLocaleString()}</span>
-                            <span style={{
-                              fontSize: '0.72rem',
-                              color: isDark ? '#64748b' : '#888888',
-                              letterSpacing: '-0.1px'
-                            }}>
-                              {(item.volume || 109760).toLocaleString()}
-                            </span>
-                          </div>
-                          
-                          {/* K / N Stack */}
-                          {(item.hasK !== false || item.hasN !== false) && (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flexShrink: 0 }}>
-                              {item.hasK !== false && (
-                                <div style={{
-                                  width: '12px',
-                                  height: '12px',
-                                  border: isDark ? '1px solid #144b3e' : '1px solid #cce8e2',
-                                  backgroundColor: isDark ? '#0f2420' : '#f0f9f6',
-                                  color: isDark ? '#52c4a5' : '#007a5a',
-                                  fontSize: '8px',
-                                  fontWeight: '800',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  borderRadius: '1px',
-                                  lineHeight: 1
-                                }}>K</div>
-                              )}
-                              {item.hasN !== false && (
-                                <div style={{
-                                  width: '12px',
-                                  height: '12px',
-                                  backgroundColor: '#d99a06',
-                                  color: '#ffffff',
-                                  fontSize: '8px',
-                                  fontWeight: '800',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  borderRadius: '1px',
-                                  lineHeight: 1
-                                }}>N</div>
-                              )}
-                            </div>
-                          )}
-
-                          {/* Arrow next to badges */}
+                      {/* Left: ETF Name + subtitle */}
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0, paddingRight: '8px' }}>
+                        {/* ETF Name only */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flexWrap: 'wrap' }}>
                           <span style={{
-                            fontSize: '0.62rem',
-                            color: item.positive ? '#de201e' : (item.pct === 0 ? 'transparent' : '#2366ca'),
-                            marginLeft: '2px',
-                            flexShrink: 0
-                          }}>
-                            {item.positive ? '▲' : (item.pct === 0 ? '' : '▼')}
+                            fontSize: item.name.length > 12 ? '0.74rem' : '0.84rem',
+                            fontWeight: '600',
+                            color: isDark ? '#e2e8f0' : '#111111',
+                            letterSpacing: '-0.3px',
+                            wordBreak: 'break-all',
+                            whiteSpace: 'normal',
+                            lineHeight: '1.25',
+                            maxWidth: '185px'
+                          }}>{item.name}</span>
+                        </div>
+                        {/* 투자한도 + code + 구분 (matches style of renderStockList) */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '500', color: '#3b82f6', flexShrink: 0 }}>
+                            {item.limit.startsWith('투자한도') ? '투자한도 ' + item.limit.replace('투자한도', '') : item.limit}
+                          </span>
+                          <span style={{ width: '1px', height: '10px', backgroundColor: isDark ? '#334155' : '#d1d5db', flexShrink: 0 }} />
+                          <span style={{ fontSize: '0.72rem', color: isDark ? '#64748b' : '#888888', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                            {item.code}
                           </span>
                         </div>
-
-                        {/* Col 3 */}
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
-                          <span style={{
-                            fontSize: '0.88rem',
-                            fontWeight: '600',
-                            color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca'),
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '2px'
-                          }}>
-                            {absChange.toLocaleString()}
-                          </span>
-                          <span style={{
-                            fontSize: '0.75rem',
-                            fontWeight: '600',
-                            color: item.positive ? '#de201e' : (item.pct === 0 ? (isDark ? '#64748b' : '#888888') : '#2366ca')
-                          }}>{item.positive ? '+' : ''}{item.pct}%</span>
-                        </div>
                       </div>
-                    )}
+
+                      {/* Right side aligned to renderStockList layout */}
+                      {etfMallNavMode !== 'search' && (
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', minWidth: '95px', flexShrink: 0, paddingRight: '2px' }}>
+                          {etfRankTab === '수익률' && (() => {
+                            const isPositive = item.returnPositive !== undefined 
+                              ? item.returnPositive 
+                              : (!item.returnRate?.startsWith('-') && item.positive);
+                            const displayRate = (item.returnRate || `${Math.abs(item.pct)}%`).replace(/^[+-]/, '');
+                            const color = isPositive ? '#de201e' : '#2366ca';
+                            return (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '3px', justifyContent: 'flex-end' }}>
+                                <span style={{ fontSize: '0.62rem', color: color, lineHeight: 1 }}>
+                                  {isPositive ? '▲' : '▼'}
+                                </span>
+                                <span style={{
+                                  fontSize: '0.96rem',
+                                  fontWeight: '700',
+                                  color: color,
+                                  letterSpacing: '-0.3px',
+                                  textAlign: 'right'
+                                }}>
+                                  {displayRate}
+                                </span>
+                              </div>
+                            );
+                          })()}
+                          {etfRankTab === '거래량' && (() => {
+                            const isPositive = item.positive;
+                            const color = isPositive ? '#de201e' : '#2366ca';
+                            return (
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+                                {/* 총 거래량 */}
+                                <span style={{
+                                  fontSize: '0.92rem',
+                                  fontWeight: '700',
+                                  color: isDark ? '#ffffff' : '#111111',
+                                  letterSpacing: '-0.3px',
+                                  textAlign: 'right'
+                                }}>
+                                  {item.volumeText || (item.volume ? `${item.volume.toLocaleString()}주` : '109,760주')}
+                                </span>
+                                {/* 아래: 전일대비 거래량 등락폭 표시 */}
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '3px', justifyContent: 'flex-end' }}>
+                                  <span style={{ fontSize: '0.62rem', color: color, lineHeight: 1 }}>
+                                    {isPositive ? '▲' : '▼'}
+                                  </span>
+                                  <span style={{
+                                    fontSize: '0.74rem',
+                                    fontWeight: '600',
+                                    color: color,
+                                    letterSpacing: '-0.2px',
+                                    textAlign: 'right'
+                                  }}>
+                                    {item.volumeChange || '120,500주'}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })()}
+                          {etfRankTab === '거래대금' && (() => {
+                            const isPositive = item.positive;
+                            const color = isPositive ? '#de201e' : '#2366ca';
+                            return (
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+                                {/* 총 거래대금 */}
+                                <span style={{
+                                  fontSize: '0.92rem',
+                                  fontWeight: '700',
+                                  color: isDark ? '#ffffff' : '#111111',
+                                  letterSpacing: '-0.3px',
+                                  textAlign: 'right'
+                                }}>
+                                  {item.amountText || '582억원'}
+                                </span>
+                                {/* 아래: 전일대비 거래대금 등락폭 표시 */}
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '3px', justifyContent: 'flex-end' }}>
+                                  <span style={{ fontSize: '0.62rem', color: color, lineHeight: 1 }}>
+                                    {isPositive ? '▲' : '▼'}
+                                  </span>
+                                  <span style={{
+                                    fontSize: '0.74rem',
+                                    fontWeight: '600',
+                                    color: color,
+                                    letterSpacing: '-0.2px',
+                                    textAlign: 'right'
+                                  }}>
+                                    {item.amountChange || '45억원'}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      )}
 
                     {/* Col 4: Favorite star icon */}
                     {etfMallNavMode !== 'search' && (
@@ -3385,8 +3232,168 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                     )}
                   </div>
                 );
-              })}
+              });
+            })()}
             </div>
+
+            {/* Grey Bar Separator */}
+            {etfMallNavMode !== 'search' && (
+              <div style={{
+                height: '8px',
+                backgroundColor: isDark ? '#121826' : '#f1f5f9',
+                flexShrink: 0
+              }} />
+            )}
+
+            {/* 퇴직연금 주간 매매 TOP Section */}
+            {etfMallNavMode !== 'search' && (
+              <div style={{
+                padding: '16px 12px 14px 12px',
+                borderBottom: isDark ? '8px solid #131b2e' : '8px solid #f8fafc'
+              }}>
+                {/* Header Title with Right Arrow */}
+                <div 
+                  onClick={() => {
+                    // Navigate or open full list if applicable
+                  }}
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '4px', 
+                    cursor: 'pointer',
+                    marginBottom: '10px',
+                    width: 'fit-content'
+                  }}
+                >
+                  <span style={{ 
+                    fontSize: '1.12rem', 
+                    fontWeight: '600', 
+                    color: isDark ? '#ffffff' : '#111111', 
+                    letterSpacing: '-0.3px' 
+                  }}>
+                    퇴직연금 주간 매매 TOP
+                  </span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#94a3b8' : '#555555', marginTop: '1px' }}>
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+
+                {/* Tabs: 매수 | 매도 | 전일보유 */}
+                <div style={{ 
+                  display: 'flex', 
+                  borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                  marginBottom: '12px'
+                }}>
+                  {[
+                    { id: '매수', label: '매수' },
+                    { id: '매도', label: '매도' },
+                    { id: '전일보유', label: '전일보유' }
+                  ].map((tab) => {
+                    const isActive = weeklyTradingTab === tab.id;
+                    return (
+                      <span
+                        key={tab.id}
+                        onClick={() => setWeeklyTradingTab(tab.id)}
+                        style={{
+                          padding: '8px 0',
+                          marginRight: '20px',
+                          fontSize: '0.88rem',
+                          fontWeight: isActive ? '700' : '400',
+                          color: isActive ? (isDark ? '#ffffff' : '#111111') : (isDark ? '#64748b' : '#999999'),
+                          borderBottom: isActive ? (isDark ? '2.5px solid #ffffff' : '2.5px solid #111111') : '2.5px solid transparent',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        {tab.label}
+                      </span>
+                    );
+                  })}
+                </div>
+
+                {/* Pill List */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 6px', alignItems: 'flex-start' }}>
+                  {(() => {
+                    const weeklyDataMap = {
+                      '매수': [
+                        { name: 'TIGER 미국S&P500', rate: '0.35%', sign: '+', code: 'A0191B0' },
+                        { name: 'KODEX 미국나스닥100', rate: '0.70%', sign: '+', code: 'A133690' },
+                        { name: 'KODEX 미국S&P500', rate: '0.32%', sign: '+', code: 'A379800' },
+                        { name: 'RISE 삼성전자SK하이닉스채권혼합50', rate: '0.00%', sign: '0', code: 'A0189Z0' },
+                        { name: 'TIGER 반도체TOP10', rate: '0.06%', sign: '+', code: 'A0199C0' }
+                      ],
+                      '매도': [
+                        { name: 'KODEX 200', rate: '0.45%', sign: '-', code: 'A069500' },
+                        { name: 'TIGER 차이나전기차SOLACTIVE', rate: '1.20%', sign: '-', code: 'A371460' },
+                        { name: 'KODEX 단기채권PLUS', rate: '0.01%', sign: '+', code: 'A214980' },
+                        { name: 'TIGER 미국배당다우존스', rate: '0.15%', sign: '+', code: 'A458730' }
+                      ],
+                      '전일보유': [
+                        { name: 'TIGER 미국S&P500', rate: '0.35%', sign: '+', code: 'A0191B0' },
+                        { name: 'KODEX 200선물인버스2X', rate: '0.80%', sign: '-', code: 'A252670' },
+                        { name: 'ACE 미국30년국채액티브(H)', rate: '0.12%', sign: '+', code: 'A453850' },
+                        { name: 'SOL 미국배당다우존스', rate: '0.22%', sign: '+', code: 'A446720' }
+                      ]
+                    };
+
+                    const currentList = weeklyDataMap[weeklyTradingTab] || weeklyDataMap['매수'];
+
+                    return currentList.map((item, idx) => {
+                      const isUp = item.sign === '+';
+                      const isDown = item.sign === '-';
+                      const rateColor = isUp ? '#de201e' : (isDown ? '#2366ca' : (isDark ? '#94a3b8' : '#555555'));
+                      const pillBg = isUp 
+                        ? (isDark ? 'rgba(239, 68, 68, 0.12)' : '#fff1f0')
+                        : (isDown 
+                          ? (isDark ? 'rgba(59, 130, 246, 0.12)' : '#f0f6ff')
+                          : (isDark ? '#1e293b' : '#f1f3f5'));
+
+                      return (
+                        <div
+                          key={idx}
+                          onClick={() => {
+                            setToBePrevSubScreen('etfMall');
+                            setToBeSubScreen('tigerDetail');
+                          }}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            padding: '6px 8px',
+                            borderRadius: '16px',
+                            backgroundColor: pillBg,
+                            cursor: 'pointer',
+                            boxSizing: 'border-box',
+                            flexShrink: 0
+                          }}
+                        >
+                          <span style={{
+                            fontSize: '0.73rem',
+                            fontWeight: '500',
+                            color: isDark ? '#e2e8f0' : '#222222',
+                            letterSpacing: '-0.35px',
+                            lineHeight: 1.2,
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {item.name}
+                          </span>
+                          <span style={{
+                            fontSize: '0.73rem',
+                            fontWeight: '600',
+                            color: rateColor,
+                            letterSpacing: '-0.25px',
+                            lineHeight: 1.2,
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {item.rate}
+                          </span>
+                        </div>
+                      );
+                    });
+                  })()}
+                </div>
+              </div>
+            )}
 
             {/* Grey Bar Separator */}
             {etfMallNavMode !== 'search' && (
@@ -3668,24 +3675,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                     pointerEvents: 'none',
                     color: isDark ? '#94a3b8' : '#777777'
                   }}>▼</span>
-                  {isDrawerOpen && activeMallTab === '보유' && (
-                    <div style={{
-                      position: 'absolute',
-                      right: '25px',
-                      top: '-10px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '17px',
-                      height: '17px',
-                      borderRadius: '50%',
-                      backgroundColor: '#00c3a5',
-                      color: '#fff',
-                      fontSize: '11px',
-                      fontWeight: 'bold',
-                      zIndex: 11
-                    }}>2</div>
-                  )}
                 </div>
 
                 {/* 평가금 / 현재가 Toggle Button Group */}
@@ -3739,44 +3728,6 @@ function ToBeEtfMallView({ setToBeSubScreen, isDark, isDrawerOpen, setToBePrevSu
                       현재가
                     </button>
                   </div>
-                  {isDrawerOpen && activeMallTab === '보유' && (
-                    <>
-                      {/* 평가금 버튼용 배지 3 */}
-                      <div style={{
-                        position: 'absolute',
-                        left: '16px',
-                        top: '-10px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '17px',
-                        height: '17px',
-                        borderRadius: '50%',
-                        backgroundColor: '#00c3a5',
-                        color: '#fff',
-                        fontSize: '11px',
-                        fontWeight: 'bold',
-                        zIndex: 11
-                      }}>3</div>
-                      {/* 현재가 버튼용 배지 4 */}
-                      <div style={{
-                        position: 'absolute',
-                        right: '16px',
-                        top: '-10px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '17px',
-                        height: '17px',
-                        borderRadius: '50%',
-                        backgroundColor: '#00c3a5',
-                        color: '#fff',
-                        fontSize: '11px',
-                        fontWeight: 'bold',
-                        zIndex: 11
-                      }}>4</div>
-                    </>
-                  )}
                 </div>
               </div>
             )}
@@ -5072,63 +5023,21 @@ function ToBeTigerDetailView({ setToBeSubScreen, isDark, setToBePrevSubScreen, i
           </svg>
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flex: 1, justifyContent: 'flex-start' }}>
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            {isDrawerOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '-7px',
-                left: '-8px',
-                width: '18px',
-                height: '18px',
-                borderRadius: '50%',
-                backgroundColor: '#00c3a5',
-                color: '#ffffff',
-                fontSize: '11px',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                zIndex: 10
-              }}>1</div>
-            )}
-            <span style={{ fontWeight: '800', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>TIGER 미국S&P500</span>
-          </div>
+          <span style={{ fontWeight: '800', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>TIGER 미국S&P500</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ color: isDark ? '#94a3b8' : '#777777' }}>
             <path d="M7 10l5 5 5-5z" />
           </svg>
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center', color: isDark ? '#94a3b8' : '#333333' }}>
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            {isDrawerOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '-7px',
-                left: '-8px',
-                width: '18px',
-                height: '18px',
-                borderRadius: '50%',
-                backgroundColor: '#00c3a5',
-                color: '#ffffff',
-                fontSize: '11px',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                zIndex: 10
-              }}>2</div>
-            )}
-            <div 
-              onClick={() => {
-                setEtfMallNavMode('search');
+          <div 
+            onClick={() => {
+              setEtfMallNavMode('search');
                 setToBePrevSubScreen('tigerDetail');
                 setToBeSubScreen('etfMall');
               }}
               style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-            </div>
           </div>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
