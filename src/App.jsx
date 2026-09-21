@@ -11118,6 +11118,9 @@ function App() {
   const [screen6ToBeHoldBalancePopupOpen, setScreen6ToBeHoldBalancePopupOpen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6ToBeHoldBalancePopupOpen') === 'true';
   });
+  const [screen6ToBeDesignatedSellOpen, setScreen6ToBeDesignatedSellOpen] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6ToBeDesignatedSellOpen') === 'true';
+  });
   const [screen6BalanceActiveTab, setScreen6BalanceActiveTab] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6BalanceActiveTab') || '잔고';
   });
@@ -12535,6 +12538,380 @@ function App() {
     );
   };
 
+    const Screen6DesignatedSellPopup = ({ onClose, stockName = '삼척블루파워10' }) => {
+      const [selectAll, setSelectAll] = useState(false);
+      const [checkedItems, setCheckedItems] = useState({ item1: false, item2: false });
+      const [qty1, setQty1] = useState('');
+      const [qty2, setQty2] = useState('');
+
+      const handleToggleAll = () => {
+        const nextVal = !selectAll;
+        setSelectAll(nextVal);
+        setCheckedItems({ item1: nextVal, item2: nextVal });
+        if (nextVal) {
+          if (!qty1) setQty1('5000');
+          if (!qty2) setQty2('5000');
+        } else {
+          setQty1('');
+          setQty2('');
+        }
+      };
+
+      const handleToggleItem = (key, defaultQty) => {
+        const nextState = { ...checkedItems, [key]: !checkedItems[key] };
+        setCheckedItems(nextState);
+        setSelectAll(nextState.item1 && nextState.item2);
+        if (nextState[key]) {
+          if (key === 'item1' && !qty1) setQty1(defaultQty);
+          if (key === 'item2' && !qty2) setQty2(defaultQty);
+        } else {
+          if (key === 'item1') setQty1('');
+          if (key === 'item2') setQty2('');
+        }
+      };
+
+      return (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#ffffff',
+          zIndex: 1100,
+          display: 'flex',
+          flexDirection: 'column',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          color: '#111111'
+        }}>
+          {/* Phone Camera & Status Bar (좌측 AS IS 화면과 동일한 규격) */}
+          <div style={styles.phoneCamera} />
+          <div style={styles.phoneHeaderBar}>
+            <span style={{ fontSize: '0.75rem', fontWeight: '700', color: isDark ? '#94a3b8' : '#475569' }}>SKT 10:39</span>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.65rem', fontWeight: '800', color: isDark ? '#94a3b8' : '#333' }}>5G</span>
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+                <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              </div>
+              <div style={{
+                border: isDark ? '1px solid #94a3b8' : '1px solid #333',
+                borderRadius: '3px',
+                padding: '0px 3px',
+                fontSize: '0.62rem',
+                fontWeight: '900',
+                height: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: isDark ? '#94a3b8' : '#333',
+                color: isDark ? '#0b0f19' : '#fff',
+                lineHeight: 1
+              }}>
+                86
+              </div>
+            </div>
+          </div>
+
+          {/* Header Bar */}
+          <div style={{
+            height: '48px',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 12px',
+            borderBottom: '1px solid #f1f3f5',
+            position: 'relative',
+            backgroundColor: '#ffffff',
+            flexShrink: 0
+          }}>
+            <button
+              onClick={onClose}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px 4px',
+                display: 'flex',
+                alignItems: 'center',
+                color: '#111111'
+              }}
+              title="뒤로가기"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+            </button>
+            <div style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              fontSize: '16.5px',
+              fontWeight: '700',
+              color: '#111111'
+            }}>
+              지정매도 설정
+            </div>
+          </div>
+
+          {/* Product Title Section */}
+          <div style={{
+            padding: '16px 16px 14px 16px',
+            borderBottom: '1px solid #f1f3f5',
+            backgroundColor: '#ffffff',
+            flexShrink: 0
+          }}>
+            <div style={{
+              fontSize: '15.5px',
+              fontWeight: '700',
+              color: '#222222',
+              letterSpacing: '-0.3px'
+            }}>
+              {stockName}
+            </div>
+          </div>
+
+          {/* "전체" Checkbox Row */}
+          <div 
+            onClick={handleToggleAll}
+            style={{
+              padding: '12px 16px',
+              borderBottom: '1px solid #eceff1',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              cursor: 'pointer',
+              backgroundColor: '#ffffff',
+              userSelect: 'none',
+              flexShrink: 0
+            }}
+          >
+            <div style={{
+              width: '19px',
+              height: '19px',
+              borderRadius: '4px',
+              border: selectAll ? '1.5px solid #222222' : '1.5px solid #9ca3af',
+              backgroundColor: selectAll ? '#222222' : '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.15s ease'
+            }}>
+              {selectAll && (
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              )}
+            </div>
+            <span style={{ fontSize: '15px', fontWeight: '700', color: '#222222' }}>전체</span>
+          </div>
+
+          {/* List Scroll Area */}
+          <div style={{
+            flex: 1,
+            overflowY: 'auto',
+            backgroundColor: '#ffffff'
+          }}>
+            {/* Item 1 */}
+            <div style={{
+              padding: '16px',
+              borderBottom: '1px solid #f1f3f5',
+              display: 'flex',
+              gap: '12px'
+            }}>
+              {/* Item Checkbox */}
+              <div 
+                onClick={() => handleToggleItem('item1', '5000')}
+                style={{
+                  width: '19px',
+                  height: '19px',
+                  borderRadius: '4px',
+                  border: checkedItems.item1 ? '1.5px solid #222222' : '1.5px solid #9ca3af',
+                  backgroundColor: checkedItems.item1 ? '#222222' : '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  marginTop: '2px',
+                  flexShrink: 0,
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                {checkedItems.item1 && (
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                )}
+              </div>
+
+              {/* Item Details */}
+              <div style={{ flex: 1 }}>
+                {/* 추가된 잔고구분 */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>잔고구분</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '700', color: '#111111' }}>퇴직납입금</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>매수일자</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>2026.07.10</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>만기일자</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>2029.09.15</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>가능수량(좌)</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '700', color: '#111111' }}>5,000</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>매입단가(원)</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>10,065.0 원</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#666666' }}>수량설정</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>
+                    {qty1 ? `${Number(qty1.replace(/,/g, '')).toLocaleString()} 원` : '0 원'}
+                  </span>
+                </div>
+                <div style={{ borderBottom: '1px solid #e2e8f0', padding: '4px 0' }}>
+                  <input
+                    type="text"
+                    placeholder="수량설정"
+                    value={qty1 ? Number(qty1.replace(/,/g, '')).toLocaleString() : ''}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/[^0-9]/g, '');
+                      setQty1(val);
+                      if (val && !checkedItems.item1) {
+                        setCheckedItems(prev => ({ ...prev, item1: true }));
+                      }
+                    }}
+                    style={{
+                      width: '100%',
+                      border: 'none',
+                      outline: 'none',
+                      fontSize: '14px',
+                      color: '#111111',
+                      backgroundColor: 'transparent',
+                      padding: '2px 0'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Item 2 */}
+            <div style={{
+              padding: '16px',
+              borderBottom: '1px solid #f1f3f5',
+              display: 'flex',
+              gap: '12px'
+            }}>
+              {/* Item Checkbox */}
+              <div 
+                onClick={() => handleToggleItem('item2', '5000')}
+                style={{
+                  width: '19px',
+                  height: '19px',
+                  borderRadius: '4px',
+                  border: checkedItems.item2 ? '1.5px solid #222222' : '1.5px solid #9ca3af',
+                  backgroundColor: checkedItems.item2 ? '#222222' : '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  marginTop: '2px',
+                  flexShrink: 0,
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                {checkedItems.item2 && (
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                )}
+              </div>
+
+              {/* Item Details */}
+              <div style={{ flex: 1 }}>
+                {/* 추가된 잔고구분 */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>잔고구분</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '700', color: '#111111' }}>고객납입금</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>매수일자</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>2026.07.10</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>만기일자</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>2029.09.15</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>가능수량(좌)</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '700', color: '#111111' }}>5,000</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#444444' }}>매입단가(원)</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>10,065.0 원</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '13.5px', color: '#666666' }}>수량설정</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: '600', color: '#111111' }}>
+                    {qty2 ? `${Number(qty2.replace(/,/g, '')).toLocaleString()} 원` : '0 원'}
+                  </span>
+                </div>
+                <div style={{ borderBottom: '1px solid #e2e8f0', padding: '4px 0' }}>
+                  <input
+                    type="text"
+                    placeholder="수량설정"
+                    value={qty2 ? Number(qty2.replace(/,/g, '')).toLocaleString() : ''}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/[^0-9]/g, '');
+                      setQty2(val);
+                      if (val && !checkedItems.item2) {
+                        setCheckedItems(prev => ({ ...prev, item2: true }));
+                      }
+                    }}
+                    style={{
+                      width: '100%',
+                      border: 'none',
+                      outline: 'none',
+                      fontSize: '14px',
+                      color: '#111111',
+                      backgroundColor: 'transparent',
+                      padding: '2px 0'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Confirm Button */}
+          <button
+            onClick={onClose}
+            style={{
+              height: '50px',
+              backgroundColor: '#222222',
+              color: '#ffffff',
+              fontSize: '15.5px',
+              fontWeight: '700',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}
+          >
+            확인
+          </button>
+        </div>
+      );
+    };
+
     const renderScreen6HoldBalancePopup = (onClose) => {
     return (
       <div style={{
@@ -12638,7 +13015,17 @@ function App() {
             color: '#111111'
           }}>
             <tbody>
-              <tr style={{ borderBottom: '1px solid #cbd5e1' }}>
+              <tr 
+                onClick={() => setScreen6ToBeDesignatedSellOpen(true)}
+                style={{ 
+                  borderBottom: '1px solid #cbd5e1',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.15s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
+                title="종목 선택 시 지정매도 설정 화면으로 이동합니다"
+              >
                 <td style={{ width: '22%', padding: '6px 2px', borderRight: '1px solid #cbd5e1', textAlign: 'left', paddingLeft: '4px' }}>
                   <div style={{ fontWeight: '700', color: '#111111' }}>삼척블루파워10</div>
                   <div style={{ fontSize: '8px', color: '#888888', marginTop: '4px' }}>KR6002361A97</div>
@@ -12658,7 +13045,7 @@ function App() {
                 </td>
                 <td style={{ width: '20%', padding: '6px 2px', textAlign: 'center', verticalAlign: 'middle' }}>
                   <div style={{ fontWeight: '700' }}>종합과세</div>
-                  <div style={{ fontSize: '9px', fontWeight: '700', marginTop: '4px' }}>퇴직납입금</div>
+                  <div style={{ fontSize: '9px', fontWeight: '700', marginTop: '4px' }}>-</div>
                 </td>
               </tr>
             </tbody>
@@ -20637,6 +21024,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen6AsIsUnexecutedOpen', screen6AsIsUnexecutedOpen ? 'true' : 'false');
     params.set('screen6ToBeUnexecutedOpen', screen6ToBeUnexecutedOpen ? 'true' : 'false');
     params.set('screen6ToBeHoldBalancePopupOpen', screen6ToBeHoldBalancePopupOpen ? 'true' : 'false');
+    params.set('screen6ToBeDesignatedSellOpen', screen6ToBeDesignatedSellOpen ? 'true' : 'false');
     params.set('screen6BalanceActiveTab', screen6BalanceActiveTab);
     params.set('screen6keypad', screen6CalcKeypadOpen ? 'true' : 'false');
     
@@ -20644,7 +21032,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, appliedStatusFilter, historyStatusFilter, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, appliedStatusFilter, historyStatusFilter, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6ToBeDesignatedSellOpen, screen6CalcKeypadOpen]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -20692,6 +21080,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen6CompanyBondModalParam) setScreen6CompanyBondModalOpen(screen6CompanyBondModalParam === 'true');
       const screen6tobenoplanmodalParam = params.get('screen6tobeno-plan-modal');
       if (screen6tobenoplanmodalParam) setScreen6ToBeNoPlanModalOpen(screen6tobenoplanmodalParam === 'true');
+      const screen6tobedesignatedsellParam = params.get('screen6tobedesignatedsell') || params.get('screen6ToBeDesignatedSellOpen');
+      if (screen6tobedesignatedsellParam !== null) setScreen6ToBeDesignatedSellOpen(screen6tobedesignatedsellParam === 'true');
+      const screen6tobeholdbalanceParam = params.get('screen6ToBeHoldBalancePopupOpen');
+      if (screen6tobeholdbalanceParam !== null) setScreen6ToBeHoldBalancePopupOpen(screen6tobeholdbalanceParam === 'true');
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
@@ -22819,6 +23211,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           {renderScreen6Bsheet('tobe')}
                           {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
               {screen6ToBeHoldBalancePopupOpen && renderScreen6HoldBalancePopup(() => setScreen6ToBeHoldBalancePopupOpen(false))}
+              {screen6ToBeDesignatedSellOpen && <Screen6DesignatedSellPopup onClose={() => setScreen6ToBeDesignatedSellOpen(false)} />}
               {screen6ToBeNoPlanModalOpen && renderScreen6ToBeNoPlanModal()}
                         </>
                       );
@@ -23739,6 +24132,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   )}
               {renderScreen6Bsheet('tobe')}
               {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
+              {screen6ToBeHoldBalancePopupOpen && renderScreen6HoldBalancePopup(() => setScreen6ToBeHoldBalancePopupOpen(false))}
+              {screen6ToBeDesignatedSellOpen && <Screen6DesignatedSellPopup onClose={() => setScreen6ToBeDesignatedSellOpen(false)} />}
               {screen6ToBeNoPlanModalOpen && renderScreen6ToBeNoPlanModal()}
             </div>
               </div>
