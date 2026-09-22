@@ -10594,8 +10594,20 @@ function App() {
   const [screen6ActiveAccount, setScreen6ActiveAccount] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6account') || '200-233354(01)';
   });
-  const [screen6DepositTab, setScreen6DepositTab] = useState('고객납입금');
+  const [screen6DepositTab, setScreen6DepositTab] = useState(() => {
+    const p = new URLSearchParams(window.location.search).get('screen6deposittab') || new URLSearchParams(window.location.search).get('screen6paymenttype');
+    if (p === '퇴직' || p === '퇴직납입금') return '퇴직납입금';
+    if (p === '고객' || p === '고객납입금') return '고객납입금';
+    if (p === '사용자' || p === '가입자1' || p === '가입자2') return p;
+    return '고객납입금';
+  });
+  const screen6DepositTabInitialized = useRef(false);
   useEffect(() => {
+    if (!screen6DepositTabInitialized.current) {
+      screen6DepositTabInitialized.current = true;
+      const p = new URLSearchParams(window.location.search).get('screen6deposittab') || new URLSearchParams(window.location.search).get('screen6paymenttype');
+      if (p) return;
+    }
     if (screen6ActiveAccount === '200-233354(43)') {
       setScreen6DepositTab('사용자');
     } else {
@@ -11101,8 +11113,18 @@ function App() {
       </div>
     );
   };
-  const [screen6AsIsPaymentType, setScreen6AsIsPaymentType] = useState('고객');
-  const [screen6ToBePaymentType, setScreen6ToBePaymentType] = useState('고객');
+  const [screen6AsIsPaymentType, setScreen6AsIsPaymentType] = useState(() => {
+    const p = new URLSearchParams(window.location.search).get('screen6paymenttype') || new URLSearchParams(window.location.search).get('screen6deposittab');
+    if (p === '퇴직' || p === '퇴직납입금') return '퇴직';
+    if (p === '사용자' || p === '가입자1' || p === '가입자2') return p;
+    return '고객';
+  });
+  const [screen6ToBePaymentType, setScreen6ToBePaymentType] = useState(() => {
+    const p = new URLSearchParams(window.location.search).get('screen6paymenttype') || new URLSearchParams(window.location.search).get('screen6deposittab');
+    if (p === '퇴직' || p === '퇴직납입금') return '퇴직';
+    if (p === '사용자' || p === '가입자1' || p === '가입자2') return p;
+    return '고객';
+  });
   const [screen6AsIsBsheetState, setScreen6AsIsBsheetState] = useState('closed'); // 'closed', 'product', 'account', 'balance_select', 'hold_balance', 'tax_select'
   const [screen6ToBeBsheetState, setScreen6ToBeBsheetState] = useState('closed'); // 'closed', 'product', 'account', 'balance_select', 'hold_balance', 'tax_select'
   const [screen6AsIsBalanceType, setScreen6AsIsBalanceType] = useState('잔고선택');
@@ -15214,7 +15236,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                     marginBottom: '4px'
                                   }}>
                                     <div 
-                                      onClick={() => setScreen6AsIsPaymentType('고객')}
+                                      onClick={() => {
+                                        setScreen6AsIsPaymentType('고객');
+                                        setScreen6ToBePaymentType('고객');
+                                        setScreen6DepositTab('고객납입금');
+                                      }}
                                       style={{
                                         flex: 1,
                                         backgroundColor: screen6AsIsPaymentType === '고객' ? '#525b62' : '#ffffff',
@@ -15230,7 +15256,11 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                       고객납입금
                                     </div>
                                     <div 
-                                      onClick={() => setScreen6AsIsPaymentType('퇴직')}
+                                      onClick={() => {
+                                        setScreen6AsIsPaymentType('퇴직');
+                                        setScreen6ToBePaymentType('퇴직');
+                                        setScreen6DepositTab('퇴직납입금');
+                                      }}
                                       style={{
                                         flex: 1,
                                         backgroundColor: screen6AsIsPaymentType === '퇴직' ? '#525b62' : '#ffffff',
@@ -21458,6 +21488,15 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     const screen6ToBeOrderTabParam = params.get('screen6ToBeOrderTab');
     if (screen6ToBeOrderTabParam) setScreen6ToBeOrderTab(screen6ToBeOrderTabParam);
 
+    // Restore deposit tab & payment type
+    const screen6paymenttypeParam = params.get('screen6paymenttype') || params.get('screen6deposittab');
+    if (screen6paymenttypeParam) {
+      const isRetire = screen6paymenttypeParam === '퇴직' || screen6paymenttypeParam === '퇴직납입금';
+      setScreen6AsIsPaymentType(isRetire ? '퇴직' : screen6paymenttypeParam);
+      setScreen6ToBePaymentType(isRetire ? '퇴직' : screen6paymenttypeParam);
+      setScreen6DepositTab(isRetire ? '퇴직납입금' : screen6paymenttypeParam);
+    }
+
     // Restore Pension Receipt Status states from URL params on mount
     const statusActiveTabParam = params.get('statusActiveTab');
     if (statusActiveTabParam) setStatusActiveTab(statusActiveTabParam);
@@ -21564,12 +21603,14 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen6ToBeDesignatedSellOpen', screen6ToBeDesignatedSellOpen ? 'true' : 'false');
     params.set('screen6BalanceActiveTab', screen6BalanceActiveTab);
     params.set('screen6keypad', screen6CalcKeypadOpen ? 'true' : 'false');
+    params.set('screen6paymenttype', screen6AsIsPaymentType);
+    params.set('screen6deposittab', screen6DepositTab);
     
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, appliedStatusFilter, historyStatusFilter, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6ToBeDesignatedSellOpen, screen6CalcKeypadOpen]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, appliedStatusFilter, historyStatusFilter, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6ToBeDesignatedSellOpen, screen6CalcKeypadOpen, screen6AsIsPaymentType, screen6ToBePaymentType, screen6DepositTab]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -21621,6 +21662,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen6tobedesignatedsellParam !== null) setScreen6ToBeDesignatedSellOpen(screen6tobedesignatedsellParam === 'true');
       const screen6tobeholdbalanceParam = params.get('screen6ToBeHoldBalancePopupOpen');
       if (screen6tobeholdbalanceParam !== null) setScreen6ToBeHoldBalancePopupOpen(screen6tobeholdbalanceParam === 'true');
+      const screen6paymenttypeParam = params.get('screen6paymenttype') || params.get('screen6deposittab');
+      if (screen6paymenttypeParam) {
+        const isRetire = screen6paymenttypeParam === '퇴직' || screen6paymenttypeParam === '퇴직납입금';
+        setScreen6AsIsPaymentType(isRetire ? '퇴직' : screen6paymenttypeParam);
+        setScreen6ToBePaymentType(isRetire ? '퇴직' : screen6paymenttypeParam);
+        setScreen6DepositTab(isRetire ? '퇴직납입금' : screen6paymenttypeParam);
+      }
       const screen4SubParam = params.get('screen4SubScreen');
       if (screen4SubParam) setScreen4SubScreen(screen4SubParam);
       const asisScreen4SubParam = params.get('asisScreen4SubScreen');
@@ -24336,7 +24384,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                                 return (
                                   <div
                                     key={tab}
-                                    onClick={() => setScreen6DepositTab(tab)}
+                                    onClick={() => {
+                                      setScreen6DepositTab(tab);
+                                      const pType = tab === '퇴직납입금' ? '퇴직' : '고객';
+                                      setScreen6AsIsPaymentType(pType);
+                                      setScreen6ToBePaymentType(pType);
+                                    }}
                                     style={{
                                       flex: 1,
                                       display: 'flex',
