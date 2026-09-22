@@ -10620,6 +10620,12 @@ function App() {
   const [screen6ToBeSubScreen, setScreen6ToBeSubScreen] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6tobe') || 'menu';
   });
+  const [screen6ETFAgreed1, setScreen6ETFAgreed1] = useState(true);
+  const [screen6ETFAgreed2, setScreen6ETFAgreed2] = useState(true);
+  const [screen6ProductAgreed1, setScreen6ProductAgreed1] = useState(true);
+  const [screen6ProductAgreed2, setScreen6ProductAgreed2] = useState(true);
+  const [screen6ProductAgreed3, setScreen6ProductAgreed3] = useState(true);
+  const [screen6ProductAgreed4, setScreen6ProductAgreed4] = useState(true);
   const [screen5ToBeSubScreen, setScreen5ToBeSubScreen] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('screen5sub') || params.get('screen5tobe') || 'menu';
@@ -11372,6 +11378,537 @@ function App() {
             확인
           </button>
         </div>
+      </div>
+    );
+  };
+
+  const renderScreen6ETFTerms = (mode) => {
+    const allChecked = screen6ETFAgreed1 && screen6ETFAgreed2;
+
+    const handleToggleAll = () => {
+      const next = !allChecked;
+      setScreen6ETFAgreed1(next);
+      setScreen6ETFAgreed2(next);
+    };
+
+    const handleBack = () => {
+      setScreen6ToBeSubScreen('menu');
+    };
+
+    const handleApply = () => {
+      if (!screen6ETFAgreed1 || !screen6ETFAgreed2) {
+        alert('거래 약관에 모두 동의해주세요.');
+        return;
+      }
+      setScreen6ToBeSubScreen('marketProductTermsAgreement');
+    };
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif',
+        position: 'relative'
+      }}>
+        {/* Galaxy S20 Central Punch-hole Camera */}
+        <div style={styles.phoneCamera} />
+
+        {/* Status Bar matching AS IS */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: 'transparent'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: isDark ? '#94a3b8' : '#475569' }}>SKT 10:39</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800', color: isDark ? '#94a3b8' : '#333' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+            </div>
+            <div style={{
+              border: isDark ? '1px solid #94a3b8' : '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: isDark ? '#94a3b8' : '#333',
+              color: isDark ? '#0b0f19' : '#fff',
+              lineHeight: 1
+            }}>
+              86
+            </div>
+          </div>
+        </div>
+
+        {/* Header Bar without bookmark icon */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '4px 16px',
+          height: '48px',
+          boxSizing: 'border-box'
+        }}>
+          {/* Back button */}
+          <button 
+            onClick={handleBack}
+            style={{
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
+              padding: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Main Content Area */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '28px 24px 0 24px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
+        }}>
+          {/* Title */}
+          <div style={{
+            fontSize: '1.52rem',
+            fontWeight: '500',
+            lineHeight: 1.38,
+            color: '#111111',
+            letterSpacing: '-0.4px',
+            marginBottom: '42px',
+            wordBreak: 'keep-all'
+          }}>
+            퇴직연금 장내채권<br />
+            거래 약관에 동의해주세요.
+          </div>
+
+          {/* All Agree checkbox item */}
+          <div 
+            onClick={handleToggleAll}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              cursor: 'pointer',
+              padding: '4px 0',
+              userSelect: 'none'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={allChecked ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span style={{ fontSize: '1.24rem', fontWeight: '500', color: '#111111', letterSpacing: '-0.3px' }}>
+              전체 동의하기
+            </span>
+          </div>
+
+          {/* Divider */}
+          <div style={{
+            height: '1px',
+            backgroundColor: '#eeeeee',
+            margin: '22px 0 16px 0'
+          }} />
+
+          {/* Item 1 */}
+          <div 
+            onClick={() => setScreen6ETFAgreed1(!screen6ETFAgreed1)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              padding: '12px 0',
+              userSelect: 'none'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={screen6ETFAgreed1 ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontSize: '0.98rem', fontWeight: '400', color: '#222222', letterSpacing: '-0.3px' }}>
+                퇴직연금 장내채권 거래 주요내용
+              </span>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+
+          {/* Item 2 */}
+          <div 
+            onClick={() => setScreen6ETFAgreed2(!screen6ETFAgreed2)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              padding: '12px 0',
+              userSelect: 'none'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={screen6ETFAgreed2 ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontSize: '0.98rem', fontWeight: '400', color: '#222222', letterSpacing: '-0.3px' }}>
+                장내채권 투자위험 안내
+              </span>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+
+          {/* Spacer */}
+          <div style={{ flex: 1 }} />
+
+          {/* Notice Link */}
+          <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+            <span 
+              onClick={() => alert('일중매매거래 위험고지 내용을 확인하였습니다.')}
+              style={{
+                fontSize: '0.88rem',
+                color: '#2563eb',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontWeight: '400'
+              }}
+            >
+              일중매매거래 위험고지 확인했습니다.
+            </span>
+          </div>
+        </div>
+
+        {/* Bottom Button */}
+        <button
+          onClick={handleApply}
+          style={{
+            width: '100%',
+            height: '56px',
+            backgroundColor: '#222222',
+            color: '#ffffff',
+            border: 'none',
+            fontSize: '1.02rem',
+            fontWeight: '500',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }}
+        >
+          거래신청
+        </button>
+      </div>
+    );
+  };
+
+  const renderScreen6MarketProductTerms = (mode) => {
+    const allChecked = screen6ProductAgreed1 && screen6ProductAgreed2 && screen6ProductAgreed3 && screen6ProductAgreed4;
+
+    const handleToggleAll = () => {
+      const next = !allChecked;
+      setScreen6ProductAgreed1(next);
+      setScreen6ProductAgreed2(next);
+      setScreen6ProductAgreed3(next);
+      setScreen6ProductAgreed4(next);
+    };
+
+    const handleBack = () => {
+      setScreen6ToBeSubScreen('etfTermsAgreement');
+    };
+
+    const handleApply = () => {
+      if (!screen6ProductAgreed1 || !screen6ProductAgreed2 || !screen6ProductAgreed3 || !screen6ProductAgreed4) {
+        alert('거래 약관에 모두 동의해주세요.');
+        return;
+      }
+      alert('퇴직연금 장내거래상품 거래 약관 동의 및 거래신청이 완료되었습니다.');
+      setScreen6ToBeSubScreen('bondCurrentPrice');
+    };
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        backgroundColor: '#ffffff',
+        color: '#111111',
+        fontFamily: 'sans-serif',
+        position: 'relative'
+      }}>
+        {/* Galaxy S20 Central Punch-hole Camera */}
+        <div style={styles.phoneCamera} />
+
+        {/* Status Bar matching AS IS */}
+        <div style={{
+          ...styles.phoneHeaderBar,
+          backgroundColor: 'transparent'
+        }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: isDark ? '#94a3b8' : '#475569' }}>SKT 10:39</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: '800', color: isDark ? '#94a3b8' : '#333' }}>5G</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+              <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+              <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+            </div>
+            <div style={{
+              border: isDark ? '1px solid #94a3b8' : '1px solid #333',
+              borderRadius: '3px',
+              padding: '0px 3px',
+              fontSize: '0.62rem',
+              fontWeight: '900',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: isDark ? '#94a3b8' : '#333',
+              color: isDark ? '#0b0f19' : '#fff',
+              lineHeight: 1
+            }}>
+              86
+            </div>
+          </div>
+        </div>
+
+        {/* Header Bar without bookmark icon */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '4px 16px',
+          height: '48px',
+          boxSizing: 'border-box'
+        }}>
+          {/* Back button */}
+          <button 
+            onClick={handleBack}
+            style={{
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
+              padding: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Main Content Area */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '28px 24px 0 24px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
+        }}>
+          {/* Title */}
+          <div style={{
+            fontSize: '1.52rem',
+            fontWeight: '500',
+            lineHeight: 1.38,
+            color: '#111111',
+            letterSpacing: '-0.4px',
+            marginBottom: '42px',
+            wordBreak: 'keep-all'
+          }}>
+            퇴직연금 장내거래상품<br />
+            거래 약관에 동의해주세요
+          </div>
+
+          {/* All Agree checkbox item */}
+          <div 
+            onClick={handleToggleAll}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              cursor: 'pointer',
+              padding: '4px 0',
+              userSelect: 'none'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={allChecked ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span style={{ fontSize: '1.24rem', fontWeight: '500', color: '#111111', letterSpacing: '-0.3px' }}>
+              전체 동의하기
+            </span>
+          </div>
+
+          {/* Divider */}
+          <div style={{
+            height: '1px',
+            backgroundColor: '#eeeeee',
+            margin: '22px 0 16px 0'
+          }} />
+
+          {/* Item 1 */}
+          <div 
+            onClick={() => setScreen6ProductAgreed1(!screen6ProductAgreed1)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              padding: '12px 0',
+              userSelect: 'none'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={screen6ProductAgreed1 ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontSize: '0.98rem', fontWeight: '400', color: '#222222', letterSpacing: '-0.3px' }}>
+                퇴직연금 ETF/리츠 거래 주요내용
+              </span>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+
+          {/* Item 2 */}
+          <div 
+            onClick={() => setScreen6ProductAgreed2(!screen6ProductAgreed2)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              padding: '12px 0',
+              userSelect: 'none'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={screen6ProductAgreed2 ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontSize: '0.98rem', fontWeight: '400', color: '#222222', letterSpacing: '-0.3px' }}>
+                퇴직연금 ETN 거래 주요내용
+              </span>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+
+          {/* Item 3 */}
+          <div 
+            onClick={() => setScreen6ProductAgreed3(!screen6ProductAgreed3)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              padding: '12px 0',
+              userSelect: 'none'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={screen6ProductAgreed3 ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontSize: '0.98rem', fontWeight: '400', color: '#222222', letterSpacing: '-0.3px' }}>
+                퇴직연금 장내채권 거래 주요내용
+              </span>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+
+          {/* Item 4 */}
+          <div 
+            onClick={() => setScreen6ProductAgreed4(!screen6ProductAgreed4)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              padding: '12px 0',
+              userSelect: 'none'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={screen6ProductAgreed4 ? '#111111' : '#cbd5e1'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span style={{ fontSize: '0.98rem', fontWeight: '400', color: '#222222', letterSpacing: '-0.3px' }}>
+                장내채권 투자위험 안내
+              </span>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777777" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+
+          {/* Spacer */}
+          <div style={{ flex: 1 }} />
+
+          {/* Notice Link */}
+          <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+            <span 
+              onClick={() => alert('일중매매거래 위험고지 내용을 확인하였습니다.')}
+              style={{
+                fontSize: '0.88rem',
+                color: '#2563eb',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontWeight: '400'
+              }}
+            >
+              일중매매거래 위험고지 확인했습니다.
+            </span>
+          </div>
+        </div>
+
+        {/* Bottom Button */}
+        <button
+          onClick={handleApply}
+          style={{
+            width: '100%',
+            height: '56px',
+            backgroundColor: '#222222',
+            color: '#ffffff',
+            border: 'none',
+            fontSize: '1.02rem',
+            fontWeight: '500',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }}
+        >
+          거래신청
+        </button>
       </div>
     );
   };
@@ -20363,7 +20900,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                       { name: '전체상품검색' },
                       { name: '금융상품 투자하기', action: () => setScreen5ToBeSubScreen('invest') },
                       { name: '장외채권 매매' },
-                      { name: '장내채권 매매' },
+                      { name: '장내채권 매매', action: () => { setScreen6ToBeSubScreen('etfTermsAgreement'); setActiveScreen(6); } },
                       { name: '장내채권 미체결/체결' },
                       { name: '장내(외)채권 잔고' },
                       { name: '디폴트옵션 매매' },
@@ -20668,7 +21205,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   { name: '전체상품검색' },
                   { name: '금융상품 투자하기', action: () => { setScreen5ToBeSubScreen('invest'); } },
                   { name: '장외채권 매매' },
-                  { name: '장내채권 매매', action: () => { setScreen6ToBeSubScreen('bondCurrentPrice'); setActiveScreen(6); } },
+                  { name: '장내채권 매매', action: () => { setScreen6ToBeSubScreen('etfTermsAgreement'); setActiveScreen(6); } },
                   { name: '장내채권 미체결/체결', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('미체결'); setActiveScreen(6); } },
                   { name: '장내(외)채권 잔고', action: () => { setScreen6ToBeSubScreen('bondBalance'); setScreen6BalanceActiveTab('잔고'); setActiveScreen(6); } },
                   { name: '디폴트옵션 매매' },
@@ -24123,6 +24660,10 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     renderScreen6Balance('tobe')
                   ) : screen6ToBeSubScreen === 'cautionAgreement' ? (
                     renderScreen6Caution('tobe')
+                  ) : screen6ToBeSubScreen === 'etfTermsAgreement' ? (
+                    renderScreen6ETFTerms('tobe')
+                  ) : screen6ToBeSubScreen === 'marketProductTermsAgreement' ? (
+                    renderScreen6MarketProductTerms('tobe')
                   ) : screen6ToBeSubScreen === 'bondDetails' ? (
                     renderScreen6Details('tobe')
                   ) : screen6ToBeSubScreen === 'bondCalc' ? (
