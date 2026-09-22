@@ -11147,7 +11147,10 @@ function App() {
     return new URLSearchParams(window.location.search).get('screen6ToBeHoldBalancePopupOpen') === 'true';
   });
   const [screen6ToBeDesignatedSellOpen, setScreen6ToBeDesignatedSellOpen] = useState(() => {
-    return new URLSearchParams(window.location.search).get('screen6ToBeDesignatedSellOpen') === 'true';
+    return new URLSearchParams(window.location.search).get('screen6tobedesignatedsell') === 'true' || new URLSearchParams(window.location.search).get('screen6ToBeDesignatedSellOpen') === 'true';
+  });
+  const [screen6DesignatedSellSelected, setScreen6DesignatedSellSelected] = useState(() => {
+    return new URLSearchParams(window.location.search).get('screen6designatedsellselected') || '';
   });
   const [screen6BalanceActiveTab, setScreen6BalanceActiveTab] = useState(() => {
     return new URLSearchParams(window.location.search).get('screen6BalanceActiveTab') || '잔고';
@@ -13097,16 +13100,35 @@ function App() {
     );
   };
 
-    const Screen6DesignatedSellPopup = ({ onClose, stockName = '삼척블루파워10' }) => {
-      const [selectAll, setSelectAll] = useState(false);
-      const [checkedItems, setCheckedItems] = useState({ item1: false, item2: false });
-      const [qty1, setQty1] = useState('');
-      const [qty2, setQty2] = useState('');
+    const Screen6DesignatedSellPopup = ({ 
+      onClose, 
+      stockName = '삼척블루파워10',
+      selectedOption = '',
+      onSelectedChange = () => {}
+    }) => {
+      const isInitialAll = selectedOption === 'all' || selectedOption === 'item1,item2' || selectedOption === 'true';
+      const isInitialItem1 = isInitialAll || selectedOption === 'item1';
+      const isInitialItem2 = isInitialAll || selectedOption === 'item2';
+
+      const [selectAll, setSelectAll] = useState(isInitialAll);
+      const [checkedItems, setCheckedItems] = useState({ item1: isInitialItem1, item2: isInitialItem2 });
+      const [qty1, setQty1] = useState(isInitialItem1 ? '5000' : '');
+      const [qty2, setQty2] = useState(isInitialItem2 ? '5000' : '');
+
+      const syncParentSelected = (items) => {
+        let val = '';
+        if (items.item1 && items.item2) val = 'all';
+        else if (items.item1) val = 'item1';
+        else if (items.item2) val = 'item2';
+        onSelectedChange(val);
+      };
 
       const handleToggleAll = () => {
         const nextVal = !selectAll;
         setSelectAll(nextVal);
-        setCheckedItems({ item1: nextVal, item2: nextVal });
+        const nextItems = { item1: nextVal, item2: nextVal };
+        setCheckedItems(nextItems);
+        syncParentSelected(nextItems);
         if (nextVal) {
           if (!qty1) setQty1('5000');
           if (!qty2) setQty2('5000');
@@ -13120,6 +13142,7 @@ function App() {
         const nextState = { ...checkedItems, [key]: !checkedItems[key] };
         setCheckedItems(nextState);
         setSelectAll(nextState.item1 && nextState.item2);
+        syncParentSelected(nextState);
         if (nextState[key]) {
           if (key === 'item1' && !qty1) setQty1(defaultQty);
           if (key === 'item2' && !qty2) setQty2(defaultQty);
@@ -13128,6 +13151,8 @@ function App() {
           if (key === 'item2') setQty2('');
         }
       };
+
+      const hasSelected = checkedItems.item1 || checkedItems.item2;
 
       return (
         <div style={{
@@ -13141,7 +13166,10 @@ function App() {
           display: 'flex',
           flexDirection: 'column',
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-          color: '#111111'
+          color: '#111111',
+          height: isFigmaExportMode ? 'auto' : '100%',
+          minHeight: isFigmaExportMode ? '800px' : '100%',
+          overflow: isFigmaExportMode ? 'visible' : 'hidden'
         }}>
           {/* Phone Camera & Status Bar (좌측 AS IS 화면과 동일한 규격) */}
           <div style={styles.phoneCamera} />
@@ -13269,8 +13297,8 @@ function App() {
 
           {/* List Scroll Area */}
           <div style={{
-            flex: 1,
-            overflowY: 'auto',
+            flex: isFigmaExportMode ? 'none' : 1,
+            overflowY: isFigmaExportMode ? 'visible' : 'auto',
             backgroundColor: '#ffffff'
           }}>
             {/* Item 1 */}
@@ -13450,19 +13478,21 @@ function App() {
 
           {/* Bottom Confirm Button */}
           <button
-            onClick={onClose}
+            onClick={hasSelected ? onClose : undefined}
+            disabled={!hasSelected}
             style={{
               height: '50px',
-              backgroundColor: '#222222',
-              color: '#ffffff',
+              backgroundColor: hasSelected ? '#222222' : '#e2e8f0',
+              color: hasSelected ? '#ffffff' : '#94a3b8',
               fontSize: '15.5px',
               fontWeight: '700',
               border: 'none',
-              cursor: 'pointer',
+              cursor: hasSelected ? 'pointer' : 'not-allowed',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0
+              flexShrink: 0,
+              transition: 'background-color 0.2s ease, color 0.2s ease'
             }}
           >
             확인
@@ -21497,6 +21527,12 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       setScreen6DepositTab(isRetire ? '퇴직납입금' : screen6paymenttypeParam);
     }
 
+    // Restore designated sell states on mount
+    const screen6tobedesignatedsellParam = params.get('screen6tobedesignatedsell') || params.get('screen6ToBeDesignatedSellOpen');
+    if (screen6tobedesignatedsellParam !== null) setScreen6ToBeDesignatedSellOpen(screen6tobedesignatedsellParam === 'true');
+    const screen6designatedsellselectedParam = params.get('screen6designatedsellselected');
+    if (screen6designatedsellselectedParam !== null) setScreen6DesignatedSellSelected(screen6designatedsellselectedParam);
+
     // Restore Pension Receipt Status states from URL params on mount
     const statusActiveTabParam = params.get('statusActiveTab');
     if (statusActiveTabParam) setStatusActiveTab(statusActiveTabParam);
@@ -21600,7 +21636,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     params.set('screen6AsIsUnexecutedOpen', screen6AsIsUnexecutedOpen ? 'true' : 'false');
     params.set('screen6ToBeUnexecutedOpen', screen6ToBeUnexecutedOpen ? 'true' : 'false');
     params.set('screen6ToBeHoldBalancePopupOpen', screen6ToBeHoldBalancePopupOpen ? 'true' : 'false');
+    params.set('screen6tobedesignatedsell', screen6ToBeDesignatedSellOpen ? 'true' : 'false');
     params.set('screen6ToBeDesignatedSellOpen', screen6ToBeDesignatedSellOpen ? 'true' : 'false');
+    if (screen6DesignatedSellSelected) {
+      params.set('screen6designatedsellselected', screen6DesignatedSellSelected);
+    } else {
+      params.delete('screen6designatedsellselected');
+    }
     params.set('screen6BalanceActiveTab', screen6BalanceActiveTab);
     params.set('screen6keypad', screen6CalcKeypadOpen ? 'true' : 'false');
     params.set('screen6paymenttype', screen6AsIsPaymentType);
@@ -21610,7 +21652,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
     if (window.location.search !== `?${params.toString()}`) {
       window.history.replaceState({}, '', newUrl);
     }
-  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, appliedStatusFilter, historyStatusFilter, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6ToBeDesignatedSellOpen, screen6CalcKeypadOpen, screen6AsIsPaymentType, screen6ToBePaymentType, screen6DepositTab]);
+  }, [activeScreen, asIsSubScreen, toBeSubScreen, screen6AsIsSubScreen, screen6ToBeSubScreen, screen5ToBeSubScreen, screen5SelectedCategory, screen5Agreed, savingsStep2HasProducts, screen5FundAccumulationHasProducts, isBuyDateBsheetOpen, isBuyPeriodBsheetOpen, screen5HasAppliedProducts, screen5ActiveTab, appliedStatusFilter, historyStatusFilter, screen5SelectedCardDetail, screen6ToBeSwitchOn, screen6AsIsBsheetState, screen6ToBeBsheetState, screen4SubScreen, asIsScreen4SubScreen, asIsSelectedMenuCategory, toBeSelectedMenuCategory, showAlreadyAppliedModal, showInReceiptChangeModal, activeMallTab, ownedDisplayOption, ownedSortOption, isOwnedSortBsheetOpen, isFavoriteBsheetOpen, isPeriodBsheetOpen, asisSearchQuery, tobeSearchQuery, etfMallNavMode, etfMallSelectedChip, isFigmaExportMode, statusActiveTab, statusViewMode, statusSelectedItem, asisSimulationStep, screen6AsIsSearchOpen, screen6ToBeSearchOpen, screen6AsIsCautionQ1, screen6AsIsCautionQ2, screen6ToBeCautionQ1, screen6ToBeCautionQ2, screen6CalcAmount, screen6ActiveAccount, screen6AsIsModalOpen, screen6CompanyBondModalOpen, screen6AsIsUpdateModalOpen, screen6ToBeNoPlanModalOpen, screen6AsIsOrderTab, screen6ToBeOrderTab, screen6AsIsUnexecutedOpen, screen6ToBeUnexecutedOpen, screen6BalanceActiveTab, screen6ToBeHoldBalancePopupOpen, screen6ToBeDesignatedSellOpen, screen6DesignatedSellSelected, screen6CalcKeypadOpen, screen6AsIsPaymentType, screen6ToBePaymentType, screen6DepositTab]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -21660,6 +21702,8 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       if (screen6tobenoplanmodalParam) setScreen6ToBeNoPlanModalOpen(screen6tobenoplanmodalParam === 'true');
       const screen6tobedesignatedsellParam = params.get('screen6tobedesignatedsell') || params.get('screen6ToBeDesignatedSellOpen');
       if (screen6tobedesignatedsellParam !== null) setScreen6ToBeDesignatedSellOpen(screen6tobedesignatedsellParam === 'true');
+      const screen6designatedsellselectedParam = params.get('screen6designatedsellselected');
+      if (screen6designatedsellselectedParam !== null) setScreen6DesignatedSellSelected(screen6designatedsellselectedParam);
       const screen6tobeholdbalanceParam = params.get('screen6ToBeHoldBalancePopupOpen');
       if (screen6tobeholdbalanceParam !== null) setScreen6ToBeHoldBalancePopupOpen(screen6tobeholdbalanceParam === 'true');
       const screen6paymenttypeParam = params.get('screen6paymenttype') || params.get('screen6deposittab');
@@ -23795,8 +23839,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                           {renderScreen6AsIs(true)}
                           {renderScreen6Bsheet('tobe')}
                           {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
-              {screen6ToBeHoldBalancePopupOpen && renderScreen6HoldBalancePopup(() => setScreen6ToBeHoldBalancePopupOpen(false))}
-              {screen6ToBeDesignatedSellOpen && <Screen6DesignatedSellPopup onClose={() => setScreen6ToBeDesignatedSellOpen(false)} />}
+              {screen6ToBeDesignatedSellOpen && (
+                <Screen6DesignatedSellPopup 
+                  onClose={() => setScreen6ToBeDesignatedSellOpen(false)} 
+                  selectedOption={screen6DesignatedSellSelected}
+                  onSelectedChange={setScreen6DesignatedSellSelected}
+                />
+              )}
               {screen6ToBeNoPlanModalOpen && renderScreen6ToBeNoPlanModal()}
                         </>
                       );
@@ -24726,8 +24775,13 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                   )}
               {renderScreen6Bsheet('tobe')}
               {screen6ToBeUnexecutedOpen && renderScreen6UnexecutedPopup('tobe', () => setScreen6ToBeUnexecutedOpen(false))}
-              {screen6ToBeHoldBalancePopupOpen && renderScreen6HoldBalancePopup(() => setScreen6ToBeHoldBalancePopupOpen(false))}
-              {screen6ToBeDesignatedSellOpen && <Screen6DesignatedSellPopup onClose={() => setScreen6ToBeDesignatedSellOpen(false)} />}
+              {screen6ToBeDesignatedSellOpen && (
+                <Screen6DesignatedSellPopup 
+                  onClose={() => setScreen6ToBeDesignatedSellOpen(false)} 
+                  selectedOption={screen6DesignatedSellSelected}
+                  onSelectedChange={setScreen6DesignatedSellSelected}
+                />
+              )}
               {screen6ToBeNoPlanModalOpen && renderScreen6ToBeNoPlanModal()}
             </div>
               </div>
