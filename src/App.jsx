@@ -10668,6 +10668,7 @@ function App() {
   const [screen5StartYearMonth, setScreen5StartYearMonth] = useState('2026.08');
   const [screen5IsPeriodConfirmed, setScreen5IsPeriodConfirmed] = useState(false);
   const [screen5IsAmountConfirmed, setScreen5IsAmountConfirmed] = useState(false);
+  const [isPensionInvestProposalsModalOpen, setIsPensionInvestProposalsModalOpen] = useState(false);
 
   // Compute full start date based on screen5StartYearMonth and screen5BuyDate
   const screen5DayMatch = screen5BuyDate.match(/\d+/);
@@ -16541,17 +16542,22 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
           </button>
           
-          <span style={{ 
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-            fontSize: '1.02rem', 
-            fontWeight: '700', 
-            color: '#222222', 
-            letterSpacing: '-0.3px',
-            zIndex: 1
-          }}>
+          <span 
+            onClick={() => window.open(`${window.location.origin}${window.location.pathname}?pensionProposals=true`, '_blank')}
+            title="클릭하여 새 창에서 3가지 UI 개선안 열기"
+            style={{ 
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              fontSize: '1.02rem', 
+              fontWeight: '700', 
+              color: '#222222', 
+              letterSpacing: '-0.3px',
+              zIndex: 1,
+              cursor: 'pointer'
+            }}
+          >
             연금펀드 투자하기
           </span>
 
@@ -21832,9 +21838,588 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
 
   
   const isPcWeb = new URLSearchParams(window.location.search).get('pcweb') === 'true';
+  const isPensionProposalsPage = new URLSearchParams(window.location.search).get('pensionProposals') === 'true';
 
   if (isPcWeb) {
     return <PcWebView />;
+  }
+
+  if (isPensionProposalsPage) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        backgroundColor: '#f8fafc',
+        color: '#0f172a',
+        fontFamily: 'sans-serif',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px 24px 28px 24px',
+        boxSizing: 'border-box'
+      }}>
+        {/* Page Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          marginBottom: '18px',
+          textAlign: 'center'
+        }}>
+          <span style={{
+            backgroundColor: '#1e3a8a',
+            color: '#ffffff',
+            fontSize: '0.78rem',
+            fontWeight: '800',
+            padding: '4px 12px',
+            borderRadius: '99px',
+            letterSpacing: '0.5px'
+          }}>UI/UX 개선안 비교</span>
+          <h1 style={{
+            margin: 0,
+            fontSize: '1.35rem',
+            fontWeight: '900',
+            color: '#0f172a',
+            letterSpacing: '-0.5px'
+          }}>
+            [연금펀드 투자하기] 상단 자산 요약 영역 개선안 (3종)
+          </h1>
+        </div>
+
+        {/* 3 Columns Container */}
+        <div style={{
+          display: 'flex',
+          gap: '28px',
+          justifyContent: 'center',
+          alignItems: 'stretch',
+          flexWrap: 'nowrap',
+          maxWidth: '1200px',
+          width: '100%'
+        }}>
+          {[
+            {
+              id: 1,
+              badge: '안 1',
+              title: '카드형 & 시각화',
+              badgeColor: '#2563eb',
+              points: [
+                '기존 하단 메뉴들과 톤앤매너를 맞춰 라운드형 카드로 감싸 안정감을 주었습니다.',
+                "가장 중요한 '총 평가금액'을 상단에 크고 대담하게 강조했습니다.",
+                '보유 상품(7%)과 투자 가능 금액(93%)의 비중을 가로형 그래프(Progress Bar)로 시각화하여, 투자가 가능한 대기 자금 규모를 한눈에 직관적으로 인지할 수 있도록 했습니다.'
+              ]
+            },
+            {
+              id: 2,
+              badge: '안 2',
+              title: '미니멀 & 하이라이트',
+              badgeColor: '#1e3a8a',
+              points: [
+                '불필요한 장식을 배제하고 폰트 크기와 레이아웃만으로 정보 위계를 극대화한 미니멀 스타일입니다.',
+                "'총 평가금액'을 단독 배치해 시선을 모은 뒤, 하단에 2단(2-Column) 분할 레이아웃을 적용해 보유 상품과 투자 가능 금액을 가로로 시원하게 배치했습니다.",
+                '자칫 밋밋할 수 있는 텍스트에 굵기와 컬러(남색) 대비를 주어 가독성을 높였습니다.'
+              ]
+            },
+            {
+              id: 3,
+              badge: '안 3 (원안)',
+              title: '기본 리스트형 (카드 적용)',
+              badgeColor: '#475569',
+              points: [
+                '현재 TO-BE 화면에 적용되어 있는 기본 원안 리스트를 라운드형 카드에 담은 스타일입니다.',
+                '별도의 그래프나 분할 장식 없이 텍스트 리스트 형태로 총 평가금액, 보유 금융상품 평가금액, 투자 가능금액을 직관적으로 나열했습니다.',
+                '안 1(프로그레스 바 카드형), 안 2(2단 분할 카드형)와 한눈에 비교할 수 있도록 구성했습니다.'
+              ]
+            }
+          ].map((proposal) => (
+            <div key={proposal.id} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '360px',
+              gap: '12px'
+            }}>
+              {/* Proposal Header Card */}
+              <div style={{
+                width: '100%',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e2e8f0',
+                borderRadius: '12px',
+                padding: '12px 14px',
+                boxSizing: 'border-box',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
+                minHeight: '136px'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <span style={{
+                    backgroundColor: proposal.badgeColor,
+                    color: '#ffffff',
+                    fontSize: '0.74rem',
+                    fontWeight: '800',
+                    padding: '2px 8px',
+                    borderRadius: '6px'
+                  }}>{proposal.badge}</span>
+                  <span style={{
+                    fontSize: '0.96rem',
+                    fontWeight: '800',
+                    color: '#0f172a',
+                    letterSpacing: '-0.3px'
+                  }}>{proposal.title}</span>
+                </div>
+                <ul style={{
+                  margin: 0,
+                  paddingLeft: '15px',
+                  fontSize: '0.75rem',
+                  color: '#475569',
+                  lineHeight: '1.42',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '3px',
+                  wordBreak: 'keep-all'
+                }}>
+                  {proposal.points.map((pt, i) => (
+                    <li key={i}>{pt}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Phone Emulator for Proposal (Auto Height, No Internal Scroll) */}
+              <div style={{
+                ...styles.phoneMockup,
+                width: '360px',
+                height: 'auto',
+                overflow: 'visible',
+                backgroundColor: '#ffffff',
+                color: '#111111',
+                fontFamily: 'sans-serif',
+                boxShadow: '0 12px 30px rgba(0,0,0,0.1)',
+                flexShrink: 0,
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                {/* Status Bar */}
+                <div style={{
+                  ...styles.phoneHeaderBar,
+                  backgroundColor: '#ffffff',
+                  color: '#333333',
+                  borderBottom: 'none'
+                }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:28</span>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                      <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+                      <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+                      <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+                      <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+                    </div>
+                    <div style={{
+                      border: '1px solid #333',
+                      borderRadius: '3px',
+                      padding: '0px 3px',
+                      fontSize: '0.62rem',
+                      fontWeight: '900',
+                      height: '14px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#333',
+                      color: '#fff',
+                      lineHeight: 1
+                    }}>
+                      52
+                    </div>
+                  </div>
+                </div>
+
+                {/* MTS Toolbar Header */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  height: '44px',
+                  padding: '0 12px',
+                  borderBottom: '1px solid #eee',
+                  backgroundColor: '#fff',
+                  position: 'relative',
+                  flexShrink: 0
+                }}>
+                  <button style={{ border: 'none', background: 'none', cursor: 'default', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+                  </button>
+                  <span style={{ 
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    fontSize: '1.02rem', 
+                    fontWeight: '700', 
+                    color: '#222222', 
+                    letterSpacing: '-0.3px',
+                    zIndex: 1
+                  }}>
+                    연금펀드 투자하기
+                  </span>
+                  <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+                    <button style={{ border: 'none', background: 'none', cursor: 'default', padding: 0 }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Contents Container */}
+                <div style={{ flex: 1, overflow: 'visible', backgroundColor: '#ffffff', padding: '14px 14px 18px 14px' }}>
+                  
+                  {/* Proposal 1: 카드형 & 시각화 */}
+                  {proposal.id === 1 && (
+                    <div style={{ marginBottom: '22px' }}>
+                      <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 10px 0', color: '#111' }}>내 연금저축</h3>
+                      <div style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '12px',
+                        backgroundColor: '#ffffff',
+                        padding: '16px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                      }}>
+                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: '600', marginBottom: '4px' }}>
+                          총 평가금액
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', marginBottom: '14px' }}>
+                          <span style={{ fontSize: '1.55rem', fontWeight: '800', color: '#0f172a', letterSpacing: '-0.5px' }}>100,000,000</span>
+                          <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155' }}>원</span>
+                        </div>
+
+                        {/* Progress Bar (7% vs 93%) */}
+                        <div style={{
+                          width: '100%',
+                          height: '10px',
+                          backgroundColor: '#f1f5f9',
+                          borderRadius: '99px',
+                          overflow: 'hidden',
+                          display: 'flex',
+                          gap: '2px',
+                          marginBottom: '12px'
+                        }}>
+                          <div style={{ width: '7%', backgroundColor: '#94a3b8', borderRadius: '99px 0 0 99px' }} />
+                          <div style={{ width: '93%', backgroundColor: '#2563eb', borderRadius: '0 99px 99px 0' }} />
+                        </div>
+
+                        {/* Legend & Details */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.84rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#94a3b8', display: 'inline-block' }} />
+                              <span style={{ color: '#64748b' }}>보유 금융상품</span>
+                              <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#64748b', backgroundColor: '#f1f5f9', padding: '1px 5px', borderRadius: '4px' }}>7%</span>
+                            </div>
+                            <span style={{ fontWeight: '700', color: '#334155' }}>7,000,000원</span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#2563eb', display: 'inline-block' }} />
+                              <span style={{ color: '#1e293b', fontWeight: '600' }}>투자 가능금액</span>
+                              <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#2563eb', backgroundColor: '#eff6ff', padding: '1px 5px', borderRadius: '4px' }}>93%</span>
+                            </div>
+                            <span style={{ fontWeight: '800', color: '#2563eb' }}>93,000,000원</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Proposal 2: 미니멀 & 하이라이트 (카드 적용) */}
+                  {proposal.id === 2 && (
+                    <div style={{ marginBottom: '22px' }}>
+                      <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 10px 0', color: '#111' }}>내 연금저축</h3>
+                      <div style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '12px',
+                        backgroundColor: '#ffffff',
+                        padding: '16px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                      }}>
+                        <div style={{ marginBottom: '14px', paddingBottom: '14px', borderBottom: '1px solid #e2e8f0' }}>
+                          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '4px', fontWeight: '600' }}>총 평가금액</div>
+                          <div style={{ display: 'flex', alignItems: 'baseline', gap: '3px' }}>
+                            <span style={{ fontSize: '1.65rem', fontWeight: '900', color: '#1e3a8a', letterSpacing: '-0.8px', lineHeight: '1.15' }}>
+                              100,000,000
+                            </span>
+                            <span style={{ fontSize: '0.98rem', fontWeight: '800', color: '#1e3a8a' }}>원</span>
+                          </div>
+                        </div>
+
+                        {/* 2-Column Split Layout inside Card */}
+                        <div style={{ display: 'flex', alignItems: 'stretch' }}>
+                          <div style={{ flex: 1, paddingRight: '12px', borderRight: '1px solid #e2e8f0' }}>
+                            <div style={{ fontSize: '0.76rem', color: '#64748b', marginBottom: '5px', fontWeight: '500' }}>
+                              보유 금융상품 평가금액
+                            </div>
+                            <div style={{ fontSize: '1rem', fontWeight: '700', color: '#334155', letterSpacing: '-0.3px' }}>
+                              7,000,000<span style={{ fontSize: '0.8rem', fontWeight: '600', marginLeft: '1px' }}>원</span>
+                            </div>
+                            <div style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '3px', fontWeight: '600' }}>
+                              비중 7%
+                            </div>
+                          </div>
+                          <div style={{ flex: 1, paddingLeft: '14px' }}>
+                            <div style={{ fontSize: '0.76rem', color: '#1e3a8a', marginBottom: '5px', fontWeight: '700' }}>
+                              투자 가능금액
+                            </div>
+                            <div style={{ fontSize: '1.05rem', fontWeight: '900', color: '#1e3a8a', letterSpacing: '-0.3px' }}>
+                              93,000,000<span style={{ fontSize: '0.8rem', fontWeight: '700', marginLeft: '1px' }}>원</span>
+                            </div>
+                            <div style={{ fontSize: '0.72rem', color: '#2563eb', marginTop: '3px', fontWeight: '700' }}>
+                              대기 자금 93%
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Proposal 3: 원안 (카드 적용) */}
+                  {proposal.id === 3 && (
+                    <div style={{ marginBottom: '22px' }}>
+                      <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 10px 0', color: '#111' }}>내 연금저축</h3>
+                      <div style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '12px',
+                        backgroundColor: '#ffffff',
+                        padding: '16px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '8px',
+                        fontSize: '0.85rem'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: '#666' }}>총 평가금액</span>
+                          <span style={{ fontWeight: '700', color: '#111' }}>100,000,000</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: '#666' }}>보유 금융상품 평가금액</span>
+                          <span style={{ fontWeight: '700', color: '#111' }}>7,000,000</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: '#666' }}>투자 가능금액</span>
+                          <span style={{ fontWeight: '700', color: '#111' }}>93,000,000</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Investment Services Section (Common across all 3) */}
+                  <div>
+                    <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>연금펀드 매매</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      
+                      {/* Card 1: 펀드 매매 */}
+                      <div style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '10px',
+                        backgroundColor: '#ffffff',
+                        padding: '14px 16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                      }}>
+                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                            <path d="M12 14C12 12 15 10 20 10C25 10 28 12 28 14C28 15 27 16 26 16.5C29.5 19 31 23 30 28C29 33 25 35 20 35C15 35 11 33 10 28C9 23 10.5 19 14 16.5C13 16 12 15 12 14Z" fill="#3b82f6" />
+                            <path d="M14 16.5C17 17.5 23 17.5 26 16.5" stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round" />
+                            <text x="20" y="27" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
+                            <circle cx="29" cy="29" r="7" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                            <path d="M26.5 29L28.5 31L31.5 27.5" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드 매매</span>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button style={{
+                              backgroundColor: '#de201e',
+                              color: '#ffffff',
+                              border: 'none',
+                              borderRadius: '4px',
+                              padding: '6px 14px',
+                              fontSize: '0.82rem',
+                              fontWeight: '700',
+                              cursor: 'pointer'
+                            }}>
+                              매수
+                            </button>
+                            <button style={{
+                              backgroundColor: '#2366ca',
+                              color: '#ffffff',
+                              border: 'none',
+                              borderRadius: '4px',
+                              padding: '6px 14px',
+                              fontSize: '0.82rem',
+                              fontWeight: '700',
+                              cursor: 'pointer'
+                            }}>
+                              매도
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card 2: 월정기입금 자동매수 */}
+                      <div style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '10px',
+                        backgroundColor: '#ffffff',
+                        padding: '14px 16px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '12px',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                      }}>
+                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                          <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                            <rect x="6" y="11" width="22" height="15" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                            <text x="17" y="22" textAnchor="middle" fill="#3b82f6" fontSize="10" fontWeight="900" fontFamily="sans-serif">₩</text>
+                            <circle cx="28" cy="26" r="8" fill="#2563eb" stroke="#ffffff" strokeWidth="1.5" />
+                            <path d="M25 24.5C25.5 23.5 27 23 28 23C29.5 23 30.5 24 30.8 25.5M30.8 25.5V23.5M30.8 25.5H29" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M31 27.5C30.5 28.5 29 29 28 29C26.5 29 25.5 28 25.2 26.5M25.2 26.5V28.5M25.2 26.5H27" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>월정기입금 자동매수</span>
+                            <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                          </div>
+                          <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                            매월 정기 입금한 금액으로 원하는 펀드를 자동 매수
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Card 3: 펀드 모으기 */}
+                      <div style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '10px',
+                        backgroundColor: '#ffffff',
+                        padding: '14px 16px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '12px',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                      }}>
+                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                          <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                            <path d="M19 7.5L9 15.5V17H29V15.5L19 7.5Z" fill="#6b7280" />
+                            <rect x="10" y="16" width="18" height="15" rx="2" fill="#c084fc" />
+                            <rect x="10" y="22" width="18" height="4" fill="#a855f7" />
+                            <circle cx="19" cy="13" r="1.8" fill="#ffffff" />
+                            <circle cx="29" cy="27" r="7.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                            <text x="29" y="30" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
+                          </svg>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드 모으기</span>
+                            <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                          </div>
+                          <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                            투자기간과 매수금액 설정 만으로 자동 정기 적립식 투자
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Card 4: 펀드잔고/매매내역 */}
+                      <div style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '10px',
+                        backgroundColor: '#ffffff',
+                        padding: '14px 16px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '12px',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                      }}>
+                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                          <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                            <rect x="8" y="8" width="20" height="24" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                            <path d="M8 11C8 9.3 9.3 8 11 8H25C26.7 8 28 9.3 28 11V14H8V11Z" fill="#0284c7" />
+                            <rect x="12" y="17" width="12" height="2" rx="1" fill="#94a3b8" />
+                            <rect x="12" y="21" width="8" height="2" rx="1" fill="#94a3b8" />
+                            <rect x="12" y="25" width="10" height="2" rx="1" fill="#cbd5e1" />
+                            <circle cx="28" cy="27" r="7.5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+                            <circle cx="27" cy="26" r="3" stroke="#ffffff" strokeWidth="1.6" fill="none" />
+                            <path d="M29 28L31.5 30.5" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" />
+                          </svg>
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드잔고/매매내역</span>
+                            <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                          </div>
+                          <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                            보유 펀드 잔고 및 매수·매도 내역을 조회하고, 처리 중인 신청을 취소
+                          </span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ticker Bar */}
+                {renderMarketTickerBar(false)}
+
+                {/* Bottom Navigation Tab Bar */}
+                <div style={{
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'stretch',
+                  borderTop: '1px solid #e2e8f0',
+                  backgroundColor: '#ffffff',
+                  flexShrink: 0
+                }}>
+                  <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                  </button>
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+                    {[
+                      { key: '보유상품 현황', label: `보유상품\n현황` },
+                      { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+                      { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+                      { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+                    ].map((tab, idx) => (
+                      <button
+                        key={tab.key}
+                        style={{
+                          flex: 1,
+                          border: 'none',
+                          background: 'none',
+                          borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
+                          fontSize: '0.73rem',
+                          fontWeight: '500',
+                          color: '#666',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          textAlign: 'center',
+                          whiteSpace: 'pre-line',
+                          lineHeight: '1.2',
+                          padding: '2px 2px'
+                        }}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                  <button style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -25898,6 +26483,620 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               >
                 닫기
               </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Modal for 연금펀드 투자하기 3가지 개선안 */}
+      {isPensionInvestProposalsModalOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            onClick={() => setIsPensionInvestProposalsModalOpen(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(15, 23, 42, 0.72)',
+              backdropFilter: 'blur(8px)',
+              zIndex: 100000,
+              animation: 'fadeIn 0.2s ease-out'
+            }}
+          />
+          {/* Modal Container */}
+          <div style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '96%',
+            maxWidth: '1280px',
+            maxHeight: '92vh',
+            backgroundColor: isDark ? '#0f172a' : '#f8fafc',
+            borderRadius: '20px',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.45)',
+            zIndex: 100001,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            border: isDark ? '1px solid #334155' : '1px solid #cbd5e1',
+            animation: 'scaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)'
+          }}>
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '18px 28px',
+              borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+              backgroundColor: isDark ? '#1e293b' : '#ffffff',
+              flexShrink: 0
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{
+                  backgroundColor: '#1e3a8a',
+                  color: '#ffffff',
+                  fontSize: '0.78rem',
+                  fontWeight: '800',
+                  padding: '4px 10px',
+                  borderRadius: '99px',
+                  letterSpacing: '0.5px'
+                }}>UI/UX 개선안 비교</span>
+                <span style={{ fontSize: '1.3rem', fontWeight: '800', color: isDark ? '#ffffff' : '#0f172a', letterSpacing: '-0.4px' }}>
+                  [연금펀드 투자하기] 상단 자산 요약 영역 개선안 (3종)
+                </span>
+              </div>
+              <button 
+                onClick={() => setIsPensionInvestProposalsModalOpen(false)}
+                style={{
+                  background: isDark ? '#334155' : '#f1f5f9',
+                  border: 'none',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  fontSize: '22px',
+                  fontWeight: '400',
+                  color: isDark ? '#cbd5e1' : '#475569',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  lineHeight: '1'
+                }}
+              >
+                &times;
+              </button>
+            </div>
+
+            {/* Modal Body: 3 Columns */}
+            <div style={{
+              padding: '28px 24px',
+              overflowY: 'auto',
+              display: 'flex',
+              gap: '28px',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              flexWrap: 'wrap'
+            }}>
+              {[
+                {
+                  id: 1,
+                  badge: '안 1',
+                  title: '카드형 & 시각화',
+                  badgeColor: '#2563eb',
+                  points: [
+                    '기존 하단 메뉴들과 톤앤매너를 맞춰 라운드형 카드로 감싸 안정감을 주었습니다.',
+                    "가장 중요한 '총 평가금액'을 상단에 크고 대담하게 강조했습니다.",
+                    '보유 상품(7%)과 투자 가능 금액(93%)의 비중을 가로형 그래프(Progress Bar)로 시각화하여, 투자가 가능한 대기 자금 규모를 한눈에 직관적으로 인지할 수 있도록 했습니다.'
+                  ]
+                },
+                {
+                  id: 2,
+                  badge: '안 2',
+                  title: '미니멀 & 하이라이트',
+                  badgeColor: '#1e3a8a',
+                  points: [
+                    '불필요한 장식을 배제하고 폰트 크기와 레이아웃만으로 정보 위계를 극대화한 미니멀 스타일입니다.',
+                    "'총 평가금액'을 단독 배치해 시선을 모은 뒤, 하단에 2단(2-Column) 분할 레이아웃을 적용해 보유 상품과 투자 가능 금액을 가로로 시원하게 배치했습니다.",
+                    '자칫 밋밋할 수 있는 텍스트에 굵기와 컬러(남색) 대비를 주어 가독성을 높였습니다.'
+                  ]
+                },
+                {
+                  id: 3,
+                  badge: '안 3 (원안)',
+                  title: '기본 리스트형 (현재 원안)',
+                  badgeColor: '#475569',
+                  points: [
+                    '현재 TO-BE 화면에 적용되어 있는 기본 원안 스타일입니다.',
+                    '별도의 카드 박스나 그래프 장식 없이 텍스트 리스트 형태로 총 평가금액, 보유 금융상품 평가금액, 투자 가능금액을 직관적으로 나열했습니다.',
+                    '안 1(프로그레스 바 카드형), 안 2(2단 분할 카드형)와 한눈에 비교할 수 있도록 구성했습니다.'
+                  ]
+                }
+              ].map((proposal) => (
+                <div key={proposal.id} style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  width: '360px',
+                  gap: '16px'
+                }}>
+                  {/* Proposal Header Card */}
+                  <div style={{
+                    width: '100%',
+                    backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                    border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    boxSizing: 'border-box',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.04)'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                      <span style={{
+                        backgroundColor: proposal.badgeColor,
+                        color: '#ffffff',
+                        fontSize: '0.78rem',
+                        fontWeight: '800',
+                        padding: '3px 9px',
+                        borderRadius: '6px'
+                      }}>{proposal.badge}</span>
+                      <span style={{
+                        fontSize: '1.05rem',
+                        fontWeight: '800',
+                        color: isDark ? '#f8fafc' : '#0f172a',
+                        letterSpacing: '-0.3px'
+                      }}>{proposal.title}</span>
+                    </div>
+                    <ul style={{
+                      margin: 0,
+                      paddingLeft: '16px',
+                      fontSize: '0.8rem',
+                      color: isDark ? '#cbd5e1' : '#475569',
+                      lineHeight: '1.5',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '5px',
+                      wordBreak: 'keep-all'
+                    }}>
+                      {proposal.points.map((pt, i) => (
+                        <li key={i}>{pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Phone Emulator for Proposal */}
+                  <div style={{
+                    ...styles.phoneMockup,
+                    width: '360px',
+                    height: '760px',
+                    backgroundColor: '#ffffff',
+                    color: '#111111',
+                    fontFamily: 'sans-serif',
+                    boxShadow: '0 12px 30px rgba(0,0,0,0.12)',
+                    flexShrink: 0
+                  }}>
+                    {/* Status Bar */}
+                    <div style={{
+                      ...styles.phoneHeaderBar,
+                      backgroundColor: '#ffffff',
+                      color: '#333333',
+                      borderBottom: 'none'
+                    }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 2:28</span>
+                      <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+                        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                          <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+                          <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+                          <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+                          <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+                        </div>
+                        <div style={{
+                          border: '1px solid #333',
+                          borderRadius: '3px',
+                          padding: '0px 3px',
+                          fontSize: '0.62rem',
+                          fontWeight: '900',
+                          height: '14px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: '#333',
+                          color: '#fff',
+                          lineHeight: 1
+                        }}>
+                          52
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* MTS Toolbar Header */}
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      height: '44px',
+                      padding: '0 12px',
+                      borderBottom: '1px solid #eee',
+                      backgroundColor: '#fff',
+                      position: 'relative',
+                      flexShrink: 0
+                    }}>
+                      <button style={{ border: 'none', background: 'none', cursor: 'default', display: 'flex', alignItems: 'center', padding: 0, zIndex: 2 }}>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+                      </button>
+                      <span style={{ 
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        fontSize: '1.02rem', 
+                        fontWeight: '700', 
+                        color: '#222222', 
+                        letterSpacing: '-0.3px',
+                        zIndex: 1
+                      }}>
+                        연금펀드 투자하기
+                      </span>
+                      <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+                        <button style={{ border: 'none', background: 'none', cursor: 'default', padding: 0 }}>
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Contents Container */}
+                    <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#ffffff', padding: '16px 14px' }}>
+                      
+                      {/* Proposal 1: 카드형 & 시각화 */}
+                      {proposal.id === 1 && (
+                        <div style={{ marginBottom: '22px' }}>
+                          <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 10px 0', color: '#111' }}>내 연금저축</h3>
+                          <div style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '12px',
+                            backgroundColor: '#ffffff',
+                            padding: '16px',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                          }}>
+                            <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: '600', marginBottom: '4px' }}>
+                              총 평가금액
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', marginBottom: '14px' }}>
+                              <span style={{ fontSize: '1.55rem', fontWeight: '800', color: '#0f172a', letterSpacing: '-0.5px' }}>100,000,000</span>
+                              <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#334155' }}>원</span>
+                            </div>
+
+                            {/* Progress Bar (7% vs 93%) */}
+                            <div style={{
+                              width: '100%',
+                              height: '10px',
+                              backgroundColor: '#f1f5f9',
+                              borderRadius: '99px',
+                              overflow: 'hidden',
+                              display: 'flex',
+                              gap: '2px',
+                              marginBottom: '12px'
+                            }}>
+                              <div style={{ width: '7%', backgroundColor: '#94a3b8', borderRadius: '99px 0 0 99px' }} />
+                              <div style={{ width: '93%', backgroundColor: '#2563eb', borderRadius: '0 99px 99px 0' }} />
+                            </div>
+
+                            {/* Legend & Details */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.84rem' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#94a3b8', display: 'inline-block' }} />
+                                  <span style={{ color: '#64748b' }}>보유 금융상품</span>
+                                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#64748b', backgroundColor: '#f1f5f9', padding: '1px 5px', borderRadius: '4px' }}>7%</span>
+                                </div>
+                                <span style={{ fontWeight: '700', color: '#334155' }}>7,000,000원</span>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#2563eb', display: 'inline-block' }} />
+                                  <span style={{ color: '#1e293b', fontWeight: '600' }}>투자 가능금액</span>
+                                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#2563eb', backgroundColor: '#eff6ff', padding: '1px 5px', borderRadius: '4px' }}>93%</span>
+                                </div>
+                                <span style={{ fontWeight: '800', color: '#2563eb' }}>93,000,000원</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Proposal 2: 미니멀 & 하이라이트 (카드 적용) */}
+                      {proposal.id === 2 && (
+                        <div style={{ marginBottom: '22px' }}>
+                          <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 10px 0', color: '#111' }}>내 연금저축</h3>
+                          <div style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '12px',
+                            backgroundColor: '#ffffff',
+                            padding: '16px',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                          }}>
+                            <div style={{ marginBottom: '14px', paddingBottom: '14px', borderBottom: '1px solid #e2e8f0' }}>
+                              <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '4px', fontWeight: '600' }}>총 평가금액</div>
+                              <div style={{ display: 'flex', alignItems: 'baseline', gap: '3px' }}>
+                                <span style={{ fontSize: '1.65rem', fontWeight: '900', color: '#1e3a8a', letterSpacing: '-0.8px', lineHeight: '1.15' }}>
+                                  100,000,000
+                                </span>
+                                <span style={{ fontSize: '0.98rem', fontWeight: '800', color: '#1e3a8a' }}>원</span>
+                              </div>
+                            </div>
+
+                            {/* 2-Column Split Layout inside Card */}
+                            <div style={{ display: 'flex', alignItems: 'stretch' }}>
+                              <div style={{ flex: 1, paddingRight: '12px', borderRight: '1px solid #e2e8f0' }}>
+                                <div style={{ fontSize: '0.76rem', color: '#64748b', marginBottom: '5px', fontWeight: '500' }}>
+                                  보유 금융상품 평가금액
+                                </div>
+                                <div style={{ fontSize: '1rem', fontWeight: '700', color: '#334155', letterSpacing: '-0.3px' }}>
+                                  7,000,000<span style={{ fontSize: '0.8rem', fontWeight: '600', marginLeft: '1px' }}>원</span>
+                                </div>
+                                <div style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '3px', fontWeight: '600' }}>
+                                  비중 7%
+                                </div>
+                              </div>
+                              <div style={{ flex: 1, paddingLeft: '14px' }}>
+                                <div style={{ fontSize: '0.76rem', color: '#1e3a8a', marginBottom: '5px', fontWeight: '700' }}>
+                                  투자 가능금액
+                                </div>
+                                <div style={{ fontSize: '1.05rem', fontWeight: '900', color: '#1e3a8a', letterSpacing: '-0.3px' }}>
+                                  93,000,000<span style={{ fontSize: '0.8rem', fontWeight: '700', marginLeft: '1px' }}>원</span>
+                                </div>
+                                <div style={{ fontSize: '0.72rem', color: '#2563eb', marginTop: '3px', fontWeight: '700' }}>
+                                  대기 자금 93%
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Proposal 3: 원안 (카드 적용) */}
+                      {proposal.id === 3 && (
+                        <div style={{ marginBottom: '22px' }}>
+                          <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 10px 0', color: '#111' }}>내 연금저축</h3>
+                          <div style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '12px',
+                            backgroundColor: '#ffffff',
+                            padding: '16px',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '8px',
+                            fontSize: '0.85rem'
+                          }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <span style={{ color: '#666' }}>총 평가금액</span>
+                              <span style={{ fontWeight: '700', color: '#111' }}>100,000,000</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <span style={{ color: '#666' }}>보유 금융상품 평가금액</span>
+                              <span style={{ fontWeight: '700', color: '#111' }}>7,000,000</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <span style={{ color: '#666' }}>투자 가능금액</span>
+                              <span style={{ fontWeight: '700', color: '#111' }}>93,000,000</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Investment Services Section (Common across all 3) */}
+                      <div>
+                        <h3 style={{ fontSize: '0.98rem', fontWeight: '800', margin: '0 0 12px 0', color: '#111' }}>연금펀드 매매</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                          
+                          {/* Card 1: 펀드 매매 */}
+                          <div style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '10px',
+                            backgroundColor: '#ffffff',
+                            padding: '14px 16px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                          }}>
+                            <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                                <path d="M12 14C12 12 15 10 20 10C25 10 28 12 28 14C28 15 27 16 26 16.5C29.5 19 31 23 30 28C29 33 25 35 20 35C15 35 11 33 10 28C9 23 10.5 19 14 16.5C13 16 12 15 12 14Z" fill="#3b82f6" />
+                                <path d="M14 16.5C17 17.5 23 17.5 26 16.5" stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round" />
+                                <text x="20" y="27" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
+                                <circle cx="29" cy="29" r="7" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                                <path d="M26.5 29L28.5 31L31.5 27.5" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </div>
+                            <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드 매매</span>
+                              <div style={{ display: 'flex', gap: '8px' }}>
+                                <button style={{
+                                  backgroundColor: '#de201e',
+                                  color: '#ffffff',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  padding: '6px 14px',
+                                  fontSize: '0.82rem',
+                                  fontWeight: '700',
+                                  cursor: 'pointer'
+                                }}>
+                                  매수
+                                </button>
+                                <button style={{
+                                  backgroundColor: '#2366ca',
+                                  color: '#ffffff',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  padding: '6px 14px',
+                                  fontSize: '0.82rem',
+                                  fontWeight: '700',
+                                  cursor: 'pointer'
+                                }}>
+                                  매도
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Card 2: 월정기입금 자동매수 */}
+                          <div style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '10px',
+                            backgroundColor: '#ffffff',
+                            padding: '14px 16px',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: '12px',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                          }}>
+                            <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                              <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                                <rect x="6" y="11" width="22" height="15" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                                <text x="17" y="22" textAnchor="middle" fill="#3b82f6" fontSize="10" fontWeight="900" fontFamily="sans-serif">₩</text>
+                                <circle cx="28" cy="26" r="8" fill="#2563eb" stroke="#ffffff" strokeWidth="1.5" />
+                                <path d="M25 24.5C25.5 23.5 27 23 28 23C29.5 23 30.5 24 30.8 25.5M30.8 25.5V23.5M30.8 25.5H29" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M31 27.5C30.5 28.5 29 29 28 29C26.5 29 25.5 28 25.2 26.5M25.2 26.5V28.5M25.2 26.5H27" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </div>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>월정기입금 자동매수</span>
+                                <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                              </div>
+                              <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                                매월 정기 입금한 금액으로 원하는 펀드를 자동 매수
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Card 3: 펀드 모으기 */}
+                          <div style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '10px',
+                            backgroundColor: '#ffffff',
+                            padding: '14px 16px',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: '12px',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                          }}>
+                            <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                              <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                                <path d="M19 7.5L9 15.5V17H29V15.5L19 7.5Z" fill="#6b7280" />
+                                <rect x="10" y="16" width="18" height="15" rx="2" fill="#c084fc" />
+                                <rect x="10" y="22" width="18" height="4" fill="#a855f7" />
+                                <circle cx="19" cy="13" r="1.8" fill="#ffffff" />
+                                <circle cx="29" cy="27" r="7.5" fill="#fbbf24" stroke="#ffffff" strokeWidth="1.5" />
+                                <text x="29" y="30" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontFamily="sans-serif">₩</text>
+                              </svg>
+                            </div>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드 모으기</span>
+                                <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                              </div>
+                              <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                                투자기간과 매수금액 설정 만으로 자동 정기 적립식 투자
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Card 4: 펀드잔고/매매내역 */}
+                          <div style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '10px',
+                            backgroundColor: '#ffffff',
+                            padding: '14px 16px',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: '12px',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                          }}>
+                            <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                              <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+                                <rect x="8" y="8" width="20" height="24" rx="3" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                                <path d="M8 11C8 9.3 9.3 8 11 8H25C26.7 8 28 9.3 28 11V14H8V11Z" fill="#0284c7" />
+                                <rect x="12" y="17" width="12" height="2" rx="1" fill="#94a3b8" />
+                                <rect x="12" y="21" width="8" height="2" rx="1" fill="#94a3b8" />
+                                <rect x="12" y="25" width="10" height="2" rx="1" fill="#cbd5e1" />
+                                <circle cx="28" cy="27" r="7.5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+                                <circle cx="27" cy="26" r="3" stroke="#ffffff" strokeWidth="1.6" fill="none" />
+                                <path d="M29 28L31.5 30.5" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" />
+                              </svg>
+                            </div>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{ fontSize: '0.94rem', fontWeight: '700', color: '#111' }}>펀드잔고/매매내역</span>
+                                <span style={{ color: '#888', fontSize: '1rem', fontWeight: 'bold' }}>›</span>
+                              </div>
+                              <span style={{ fontSize: '0.78rem', color: '#666', lineHeight: '1.35' }}>
+                                보유 펀드 잔고 및 매수·매도 내역을 조회하고, 처리 중인 신청을 취소
+                              </span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Ticker Bar */}
+                    {renderMarketTickerBar(false)}
+
+                    {/* Bottom Navigation Tab Bar */}
+                    <div style={{
+                      height: '50px',
+                      display: 'flex',
+                      alignItems: 'stretch',
+                      borderTop: '1px solid #e2e8f0',
+                      backgroundColor: '#ffffff',
+                      flexShrink: 0
+                    }}>
+                      <button style={{ width: '48px', border: 'none', background: 'none', borderRight: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                      </button>
+                      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+                        {[
+                          { key: '보유상품 현황', label: `보유상품\n현황` },
+                          { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+                          { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+                          { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+                        ].map((tab, idx) => (
+                          <button
+                            key={tab.key}
+                            style={{
+                              flex: 1,
+                              border: 'none',
+                              background: 'none',
+                              borderRight: idx < 3 ? '1px solid #f1f5f9' : 'none',
+                              fontSize: '0.73rem',
+                              fontWeight: '500',
+                              color: '#666',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              textAlign: 'center',
+                              whiteSpace: 'pre-line',
+                              lineHeight: '1.2',
+                              padding: '2px 2px'
+                            }}
+                          >
+                            {tab.label}
+                          </button>
+                        ))}
+                      </div>
+                      <button style={{ width: '48px', border: 'none', background: 'none', borderLeft: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </>
