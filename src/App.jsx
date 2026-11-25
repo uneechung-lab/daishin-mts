@@ -10239,19 +10239,7 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
                         transition: 'all 0.15s'
                       }}
                     >
-                      <span>{slot.label}</span>
-                      {isClosed && (
-                        <span style={{
-                          fontSize: '0.66rem',
-                          fontWeight: '600',
-                          backgroundColor: isDark ? '#334155' : '#f1f5f9',
-                          color: isDark ? '#64748b' : '#94a3b8',
-                          padding: '1px 5px',
-                          borderRadius: '3px'
-                        }}>
-                          마감
-                        </span>
-                      )}
+                      <span>{isClosed ? `${slot.label} (마감)` : slot.label}</span>
                     </button>
                   );
                 })}
