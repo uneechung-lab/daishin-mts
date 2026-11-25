@@ -9402,6 +9402,1984 @@ const historyAppliedSellItem = {
   settlementDays: 'D+3'
 };
 
+function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = false, onBackClick, addNotification }) {
+  // Helper for initial business day
+  const getInitialBusinessDay = () => {
+    const d = new Date();
+    while (d.getDay() === 0 || d.getDay() === 6) {
+      d.setDate(d.getDate() + 1);
+    }
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}/${mm}/${dd}`;
+  };
+
+  const formatSlashDate = (dateObj) => {
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const dd = String(dateObj.getDate()).padStart(2, '0');
+    return `${yyyy}/${mm}/${dd}`;
+  };
+
+  const formatDotDate = (slashStr) => {
+    return (slashStr || '').replace(/\//g, '.');
+  };
+
+  // Tabs: 'reserve' (상담예약) | 'history' (상담내역)
+  const [activeTab, setActiveTab] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7tab') || 'reserve';
+  });
+
+  // Accounts
+  const accountOptions = [
+    { id: '102-111111[43]', label: '102-111111[43] 김대진', number: '102-111111', type: '[43] 퇴직연금(IRP)', recentDate: '2026.11.24' },
+    { id: '200-233354[32]', label: '200-233354[32] 김대진', number: '200-233354', type: '[32] 연금저축', recentDate: '2026.11.18' }
+  ];
+  const [selectedAccount, setSelectedAccount] = useState(accountOptions[0].label);
+  const [showAccountBottomSheet, setShowAccountBottomSheet] = useState(false);
+
+  // Reservation State (신규 예약 ↔ 기 예약 조회/정정/취소)
+  const [existingReservation, setExistingReservation] = useState(null);
+
+  // Form States for Tab 1 (상담예약)
+  const [reserveDate, setReserveDate] = useState(getInitialBusinessDay);
+  const [selectedTime, setSelectedTime] = useState('10:00~11:30');
+  const [selectedProducts, setSelectedProducts] = useState(['퇴직연금']);
+  const [consultContent, setConsultContent] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('010-1111-2222');
+  const [highlightedField, setHighlightedField] = useState(null);
+
+  // Calendar Wheel Modal State for Tab 1 & Tab 2 (4페이지 연금수령 신청 > 수령개시 일자 휠 피커와 동일)
+  const [calendarModal, setCalendarModal] = useState({
+    open: false,
+    target: 'reserve',
+    selectedYear: new Date().getFullYear(),
+    selectedMonth: new Date().getMonth() + 1,
+    selectedDate: new Date().getDate()
+  });
+
+  // Popups / Modals State
+  const [alertPopup, setAlertPopup] = useState({ open: false, title: '', message: '' });
+  const [completeModal, setCompleteModal] = useState({ open: false, isUpdate: false, data: null });
+  const [cancelConfirmModal, setCancelConfirmModal] = useState(false);
+
+  // Tab 2 (상담내역) States (5페이지 적립식 투자 > 적립투자 내역 기간 선택과 동일)
+  const [historyPeriodChip, setHistoryPeriodChip] = useState('1개월');
+  const [filterStartDate, setFilterStartDate] = useState('2025/08/01');
+  const [filterEndDate, setFilterEndDate] = useState(() => {
+    const d = new Date();
+    return formatSlashDate(d);
+  });
+
+  // Initial Mockup Data (4 items as specified)
+  const [historyList, setHistoryList] = useState([
+    {
+      id: 1,
+      date: '2025.08.29',
+      time: '09:10',
+      timeSlot: '09:00~10:00',
+      products: ['퇴직연금'],
+      status: '상담예약',
+      manager: '',
+      question: '퇴직연금 ETF 주문은 어떻게 하나요?',
+      answer: '',
+      phone: '010-1111-2222',
+      account: '102-111111[43] 김대진'
+    },
+    {
+      id: 2,
+      date: '2025.08.28',
+      time: '09:10',
+      timeSlot: '09:00~10:00',
+      products: ['연금저축'],
+      status: '상담완료',
+      manager: '김대진',
+      question: '연금저축 세액공제 한도 문의드립니다.',
+      answer: '고객님 안녕하세요. 연금저축 계좌의 연간 세액공제 한도는 최대 600만원(IRP 합산 시 최대 900만원)까지 적용됩니다. 추가 문의사항은 언제든 예약해 주세요.',
+      phone: '010-1111-2222',
+      account: '102-111111[43] 김대진'
+    },
+    {
+      id: 3,
+      date: '2025.08.27',
+      time: '09:10',
+      timeSlot: '09:00~10:00',
+      products: ['퇴직연금'],
+      status: '상담취소',
+      manager: '-',
+      question: '',
+      answer: '',
+      phone: '010-1111-2222',
+      account: '102-111111[43] 김대진'
+    },
+    {
+      id: 4,
+      date: '2025.08.20',
+      time: '13:00',
+      timeSlot: '13:00~14:00',
+      products: ['퇴직연금'],
+      status: '상담보류',
+      manager: '-',
+      question: 'IRP 계좌 이전 절차가 궁금합니다.',
+      answer: '',
+      phone: '010-1111-2222',
+      account: '102-111111[43] 김대진'
+    }
+  ]);
+
+  // Detail BottomSheet State
+  const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
+
+  //Refs for smooth scroll on validation fail
+  const dateRef = useRef(null);
+  const timeRef = useRef(null);
+  const productRef = useRef(null);
+  const phoneRef = useRef(null);
+
+  const timeSlots = [
+    { label: '09:00~10:00', closed: false },
+    { label: '10:00~11:30', closed: false },
+    { label: '13:00~14:00', closed: false },
+    { label: '14:00~15:00', closed: true }, // 기본 마감 목업
+    { label: '15:00~16:00', closed: false },
+    { label: '16:00~17:00', closed: false }
+  ];
+
+  // Phone Auto-formatting
+  const handlePhoneChange = (e) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 11);
+    let formatted = raw;
+    if (raw.length > 3 && raw.length <= 7) {
+      formatted = `${raw.slice(0, 3)}-${raw.slice(3)}`;
+    } else if (raw.length > 7) {
+      formatted = `${raw.slice(0, 3)}-${raw.slice(3, 7)}-${raw.slice(7)}`;
+    }
+    setPhoneNumber(formatted);
+    if (highlightedField === '연락받으실 전화번호') setHighlightedField(null);
+  };
+
+  // Toggle Consultation Product (복수 선택 가능)
+  const handleToggleProduct = (prod) => {
+    setSelectedProducts(prev => {
+      const next = prev.includes(prod) ? prev.filter(p => p !== prod) : [...prev, prod];
+      return next;
+    });
+    if (highlightedField === '상담상품') setHighlightedField(null);
+  };
+
+  // Show Alert & Toast helper
+  const triggerValidationAlert = (fieldName, refEl) => {
+    setHighlightedField(fieldName);
+    const msg = `필수 입력 사항을 입력하세요.(${fieldName})`;
+    setAlertPopup({ open: true, title: '입력 확인', message: msg });
+    if (addNotification) addNotification(msg, 'warning');
+    if (refEl && refEl.current && refEl.current.scrollIntoView) {
+      refEl.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  // Submit / Update Handler
+  const handleReserveOrUpdate = () => {
+    if (!reserveDate) {
+      triggerValidationAlert('상담예약일자', dateRef);
+      return;
+    }
+    if (!selectedTime) {
+      triggerValidationAlert('상담가능시각', timeRef);
+      return;
+    }
+    if (selectedProducts.length === 0) {
+      triggerValidationAlert('상담상품', productRef);
+      return;
+    }
+    const cleanPhone = phoneNumber.replace(/\D/g, '');
+    if (!cleanPhone || cleanPhone.length < 10) {
+      triggerValidationAlert('연락받으실 전화번호', phoneRef);
+      return;
+    }
+
+    // If in existing reservation mode, check if anything changed
+    if (existingReservation) {
+      const isSameDate = existingReservation.date === reserveDate;
+      const isSameTime = existingReservation.time === selectedTime;
+      const isSameProducts =
+        existingReservation.products.length === selectedProducts.length &&
+        existingReservation.products.every(p => selectedProducts.includes(p));
+      const isSameContent = existingReservation.content === consultContent.trim();
+      const isSamePhone = existingReservation.phone === phoneNumber;
+
+      if (isSameDate && isSameTime && isSameProducts && isSameContent && isSamePhone) {
+        setAlertPopup({ open: true, title: '알림', message: '변경된 내용이 없습니다.' });
+        if (addNotification) addNotification('변경된 내용이 없습니다.', 'warning');
+        return;
+      }
+
+      // Update existing reservation
+      const updatedRes = {
+        ...existingReservation,
+        date: reserveDate,
+        time: selectedTime,
+        products: [...selectedProducts],
+        content: consultContent.trim(),
+        phone: phoneNumber,
+        account: selectedAccount
+      };
+      setExistingReservation(updatedRes);
+
+      // Sync with historyList
+      setHistoryList(prev =>
+        prev.map(item =>
+          item.id === existingReservation.id
+            ? {
+                ...item,
+                date: formatDotDate(reserveDate),
+                time: selectedTime.split('~')[0],
+                timeSlot: selectedTime,
+                products: [...selectedProducts],
+                question: consultContent.trim(),
+                phone: phoneNumber,
+                account: selectedAccount
+              }
+            : item
+        )
+      );
+
+      setCompleteModal({ open: true, isUpdate: true, data: updatedRes });
+      if (addNotification) addNotification('상담 예약이 변경되었습니다.', 'success');
+      return;
+    }
+
+    // New reservation mode
+    const newId = Date.now();
+    const newRes = {
+      id: newId,
+      date: reserveDate,
+      time: selectedTime,
+      products: [...selectedProducts],
+      content: consultContent.trim(),
+      phone: phoneNumber,
+      account: selectedAccount
+    };
+    setExistingReservation(newRes);
+
+    const newHistoryEntry = {
+      id: newId,
+      date: formatDotDate(reserveDate),
+      time: selectedTime.split('~')[0],
+      timeSlot: selectedTime,
+      products: [...selectedProducts],
+      status: '상담예약',
+      manager: '',
+      question: consultContent.trim(),
+      answer: '',
+      phone: phoneNumber,
+      account: selectedAccount
+    };
+
+    setHistoryList(prev => [newHistoryEntry, ...prev]);
+    setCompleteModal({ open: true, isUpdate: false, data: newRes });
+    if (addNotification) addNotification('퇴직연금 상담 예약이 완료되었습니다.', 'success');
+  };
+
+  // Cancel Reservation Confirmed
+  const handleConfirmCancelReservation = () => {
+    if (existingReservation) {
+      const targetId = existingReservation.id;
+      setHistoryList(prev =>
+        prev.map(item =>
+          item.id === targetId ? { ...item, status: '상담취소', manager: '-' } : item
+        )
+      );
+    }
+    setExistingReservation(null);
+    setCancelConfirmModal(false);
+    // Reset form to initial new reservation defaults
+    setReserveDate(getInitialBusinessDay());
+    setSelectedTime('10:00~11:30');
+    setSelectedProducts(['퇴직연금']);
+    setConsultContent('');
+    setPhoneNumber('010-1111-2222');
+    setHighlightedField(null);
+    if (addNotification) addNotification('상담 예약이 취소되었습니다.', 'info');
+  };
+
+  // Quick Period Chip Handler for Tab 2 (1개월 | 3개월 | 6개월 | 기간설정)
+  const handleSelectPeriodChip = (chip) => {
+    setHistoryPeriodChip(chip);
+    const end = new Date();
+    if (chip === '1개월') {
+      setFilterStartDate('2025/08/01');
+      setFilterEndDate(formatSlashDate(end));
+    } else if (chip === '3개월') {
+      setFilterStartDate('2025/06/01');
+      setFilterEndDate(formatSlashDate(end));
+    } else if (chip === '6개월') {
+      setFilterStartDate('2025/03/01');
+      setFilterEndDate(formatSlashDate(end));
+    } else if (chip === '기간설정') {
+      setFilterStartDate('2025/01/01');
+      setFilterEndDate('2025/01/31');
+    }
+  };
+
+  // Filter History Items by Date Range
+  const filteredHistory = historyList.filter(item => {
+    const itemNum = parseInt(item.date.replace(/\./g, ''), 10);
+    const startNum = parseInt(filterStartDate.replace(/\//g, ''), 10);
+    const endNum = parseInt(filterEndDate.replace(/\//g, ''), 10);
+    if (!isNaN(itemNum) && !isNaN(startNum) && !isNaN(endNum)) {
+      return itemNum >= startNum && itemNum <= endNum;
+    }
+    return true;
+  });
+
+  // Status Badge Renderer
+  const renderStatusBadge = (status) => {
+    let bg = '#eff6ff';
+    let color = '#2563eb';
+    let border = '1px solid #bfdbfe';
+    if (status === '상담완료') {
+      bg = '#ecfdf5';
+      color = '#059669';
+      border = '1px solid #a7f3d0';
+    } else if (status === '상담취소') {
+      bg = '#f1f5f9';
+      color = '#64748b';
+      border = '1px solid #e2e8f0';
+    } else if (status === '상담보류') {
+      bg = '#fffbeb';
+      color = '#d97706';
+      border = '1px solid #fde68a';
+    }
+    return (
+      <span style={{
+        fontSize: '0.72rem',
+        fontWeight: '700',
+        backgroundColor: bg,
+        color: color,
+        border: border,
+        padding: '2px 8px',
+        borderRadius: '4px',
+        lineHeight: '1.2',
+        display: 'inline-flex',
+        alignItems: 'center'
+      }}>
+        {status}
+      </span>
+    );
+  };
+
+  // Calendar Helper for Wheel Date Picker (4페이지 연금수령 신청 > 수령개시 일자와 동일)
+  const openCalendar = (target) => {
+    const currentStr = target === 'reserve' ? reserveDate : target === 'filterStart' ? filterStartDate : filterEndDate;
+    const parts = (currentStr || '').split(/[./]/);
+    const y = parseInt(parts[0], 10) || new Date().getFullYear();
+    const m = parseInt(parts[1], 10) || (new Date().getMonth() + 1);
+    const d = parseInt(parts[2], 10) || new Date().getDate();
+    setCalendarModal({ open: true, target, selectedYear: y, selectedMonth: m, selectedDate: d });
+  };
+
+  const handleConfirmWheelDate = () => {
+    const { target, selectedYear, selectedMonth, selectedDate } = calendarModal;
+    const maxDaysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+    const safeDay = Math.min(selectedDate, maxDaysInMonth);
+    const formatted = `${selectedYear}/${String(selectedMonth).padStart(2, '0')}/${String(safeDay).padStart(2, '0')}`;
+
+    if (target === 'reserve') {
+      const candidate = new Date(selectedYear, selectedMonth - 1, safeDay);
+      candidate.setHours(0, 0, 0, 0);
+      const dow = candidate.getDay();
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const maxDate = new Date(today);
+      maxDate.setDate(today.getDate() + 30);
+
+      if (dow === 0 || dow === 6) {
+        setCalendarModal(prev => ({ ...prev, open: false }));
+        setAlertPopup({ open: true, title: '알림', message: '주말(토·일)은 상담예약이 불가합니다.\n평일(영업일)을 선택해 주세요.' });
+        return;
+      }
+      if (candidate < today || candidate > maxDate) {
+        setCalendarModal(prev => ({ ...prev, open: false }));
+        setAlertPopup({ open: true, title: '알림', message: '오늘 기준 30일 이내의 일자만\n선택 가능합니다.' });
+        return;
+      }
+      setReserveDate(formatted);
+    } else if (target === 'filterStart') {
+      setFilterStartDate(formatted);
+    } else {
+      setFilterEndDate(formatted);
+    }
+    setCalendarModal(prev => ({ ...prev, open: false }));
+  };
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: isFigmaExportMode ? 'auto' : '100%',
+      width: '100%',
+      backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+      color: isDark ? '#f8fafc' : '#111111',
+      fontFamily: 'var(--font-sans)',
+      position: 'relative',
+      boxSizing: 'border-box'
+    }}>
+      {/* Phone Status Bar */}
+      <div style={{
+        ...styles.phoneHeaderBar,
+        backgroundColor: isDark ? '#111827' : '#ffffff',
+        color: isDark ? '#94a3b8' : '#333333',
+        borderBottom: 'none',
+        flexShrink: 0
+      }}>
+        <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 10:15</span>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+          <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+            <div style={{ width: '2px', height: '3px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+            <div style={{ width: '2px', height: '5px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+            <div style={{ width: '2px', height: '7px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+            <div style={{ width: '2px', height: '9px', backgroundColor: isDark ? '#94a3b8' : '#333' }}></div>
+          </div>
+          <div style={{
+            border: isDark ? '1px solid #94a3b8' : '1px solid #333',
+            borderRadius: '3px',
+            padding: '0px 3px',
+            fontSize: '0.62rem',
+            fontWeight: '900',
+            height: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: isDark ? '#94a3b8' : '#333',
+            color: isDark ? '#0b0f19' : '#fff',
+            lineHeight: 1
+          }}>
+            92
+          </div>
+        </div>
+      </div>
+
+      {/* Sub Screen Header (좌측 뒤로가기, 중앙 타이틀 '상담 예약') */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: '44px',
+        padding: '0 12px',
+        borderBottom: isDark ? '1px solid #1e293b' : '1px solid #eeeeee',
+        backgroundColor: isDark ? '#111827' : '#ffffff',
+        position: 'relative',
+        flexShrink: 0
+      }}>
+        <button
+          onClick={onBackClick}
+          style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0, color: isDark ? '#ffffff' : '#111111', zIndex: 2 }}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <span style={{
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '1.02rem',
+          fontWeight: '700',
+          color: isDark ? '#f8fafc' : '#111111',
+          letterSpacing: '-0.3px',
+          zIndex: 1
+        }}>
+          상담 예약
+        </span>
+
+        <div style={{ marginLeft: 'auto', zIndex: 2, display: 'flex', alignItems: 'center' }}>
+          <button style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0, color: isDark ? '#ffffff' : '#222222' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+          </button>
+        </div>
+      </div>
+
+      {/* 2단 탭 (상담예약 | 상담내역) */}
+      <div style={{
+        display: 'flex',
+        borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+        backgroundColor: isDark ? '#111827' : '#ffffff',
+        flexShrink: 0
+      }}>
+        {[
+          { key: 'reserve', label: '상담예약' },
+          { key: 'history', label: '상담내역' }
+        ].map(tab => {
+          const isSelected = activeTab === tab.key;
+          return (
+            <div
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              style={{
+                flex: 1,
+                padding: '12px 0',
+                textAlign: 'center',
+                fontSize: '0.92rem',
+                fontWeight: isSelected ? '700' : '500',
+                color: isSelected ? (isDark ? '#ffffff' : '#111827') : (isDark ? '#64748b' : '#888888'),
+                borderBottom: isSelected ? `2.5px solid ${isDark ? '#ffffff' : '#111827'}` : '2.5px solid transparent',
+                cursor: 'pointer',
+                transition: 'all 0.15s'
+              }}
+            >
+              {tab.label}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* 계좌 선택부 (펀드 모으기 화면과 동일 규격) */}
+      <div style={{
+        padding: '12px 14px 8px 14px',
+        backgroundColor: isDark ? '#0b0f19' : '#ffffff',
+        flexShrink: 0
+      }}>
+        <div
+          onClick={() => setShowAccountBottomSheet(true)}
+          style={{
+            border: isDark ? '1px solid #334155' : '1px solid #d1d5db',
+            borderRadius: '6px',
+            padding: '10px 14px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            cursor: 'pointer'
+          }}
+        >
+          <span style={{ fontSize: '0.88rem', fontWeight: '500', color: isDark ? '#f8fafc' : '#111827' }}>{selectedAccount}</span>
+          <span style={{ fontSize: '0.75rem', color: isDark ? '#94a3b8' : '#6b7280' }}>▼</span>
+        </div>
+      </div>
+
+      {/* 1. 예약 상태 배너 (투자 금액 선택 서브헤더 안내 바 스타일 적용) */}
+      {activeTab === 'reserve' && existingReservation && (
+        <div style={{
+          backgroundColor: isDark ? '#1e293b' : '#f4f4f6',
+          padding: '12px 16px',
+          textAlign: 'center',
+          fontSize: '0.85rem',
+          lineHeight: '1.45',
+          flexShrink: 0
+        }}>
+          <div style={{ color: isDark ? '#cbd5e1' : '#666666' }}>
+            현재 <span style={{ color: '#2563eb', fontWeight: '600' }}>{formatDotDate(existingReservation.date)} {existingReservation.time}</span>에
+          </div>
+          <div>
+            <span style={{ color: '#2563eb', fontWeight: '600' }}>상담 예약</span>
+            <span style={{ color: isDark ? '#cbd5e1' : '#666666' }}>이 신청되어 있습니다.</span>
+          </div>
+        </div>
+      )}
+
+      {/* Main Tab Content Area */}
+      {activeTab === 'reserve' ? (
+        <>
+          <div style={{
+            flex: isFigmaExportMode ? 'none' : 1,
+            overflowY: isFigmaExportMode ? 'visible' : 'auto',
+            padding: '18px 16px 24px 16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '22px',
+            backgroundColor: isDark ? '#0b0f19' : '#ffffff'
+          }}>
+            {/* 2. 상담예약일자 (필수) */}
+            <div ref={dateRef} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <label style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>
+                  상담예약일자
+                </label>
+                <span style={{ fontSize: '0.7rem', color: isDark ? '#94a3b8' : '#9ca3af' }}>
+                  영업일 기준 30일 이내
+                </span>
+              </div>
+              <div
+                onClick={() => {
+                  if (highlightedField === '상담예약일자') setHighlightedField(null);
+                  openCalendar('reserve');
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 0px 8px 0px',
+                  borderRadius: '0px',
+                  border: 'none',
+                  borderBottom: highlightedField === '상담예약일자'
+                    ? '2px solid #de201e'
+                    : (isDark ? '1px solid #334155' : '1px solid #e5e7eb'),
+                  backgroundColor: 'transparent',
+                  cursor: 'pointer',
+                  transition: 'border-color 0.2s'
+                }}
+              >
+                <span style={{ fontSize: '1.0rem', fontWeight: '500', color: isDark ? '#f8fafc' : '#111827' }}>
+                  {formatDotDate(reserveDate)}
+                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill={isDark ? '#f8fafc' : '#0f172a'}>
+                  <path d="M7 10l5 5 5-5H7z" />
+                </svg>
+              </div>
+            </div>
+
+            {/* 3. 상담가능시각 (필수) */}
+            <div ref={timeRef} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              padding: highlightedField === '상담가능시각' ? '8px' : '0',
+              borderRadius: '8px',
+              border: highlightedField === '상담가능시각' ? '1.5px solid #de201e' : 'none'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <label style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>
+                  상담가능시각
+                </label>
+              </div>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '10px'
+              }}>
+                {timeSlots.map(slot => {
+                  const isSelected = selectedTime === slot.label;
+                  const isClosed = slot.closed;
+                  return (
+                    <button
+                      key={slot.label}
+                      disabled={isClosed}
+                      onClick={() => {
+                        if (isClosed) return;
+                        if (highlightedField === '상담가능시각') setHighlightedField(null);
+                        // 재클릭 시 선택 해제, 단일 선택
+                        setSelectedTime(prev => (prev === slot.label ? '' : slot.label));
+                      }}
+                      style={{
+                        height: '42px',
+                        borderRadius: '6px',
+                        border: isClosed
+                          ? (isDark ? '1px solid #1e293b' : '1px solid #e5e7eb')
+                          : isSelected
+                          ? (isDark ? '1.5px solid #f8fafc' : '1.5px solid #111827')
+                          : (isDark ? '1px solid #334155' : '1px solid #d1d5db'),
+                        backgroundColor: isClosed
+                          ? (isDark ? '#1e293b' : '#f9fafb')
+                          : (isDark ? '#0f172a' : '#ffffff'),
+                        color: isClosed
+                          ? (isDark ? '#475569' : '#cbd5e1')
+                          : isSelected
+                          ? (isDark ? '#f8fafc' : '#111827')
+                          : (isDark ? '#94a3b8' : '#9ca3af'),
+                        fontSize: '0.88rem',
+                        fontWeight: isSelected ? '700' : '500',
+                        cursor: isClosed ? 'not-allowed' : 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        transition: 'all 0.15s'
+                      }}
+                    >
+                      <span>{slot.label}</span>
+                      {isClosed && (
+                        <span style={{
+                          fontSize: '0.66rem',
+                          fontWeight: '600',
+                          backgroundColor: isDark ? '#334155' : '#f1f5f9',
+                          color: isDark ? '#64748b' : '#94a3b8',
+                          padding: '1px 5px',
+                          borderRadius: '3px'
+                        }}>
+                          마감
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 4. 상담상품 (필수, 복수 선택 가능) */}
+            <div ref={productRef} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              padding: highlightedField === '상담상품' ? '8px' : '0',
+              borderRadius: '8px',
+              border: highlightedField === '상담상품' ? '1.5px solid #de201e' : 'none'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <label style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>
+                  상담상품
+                </label>
+                <span style={{ fontSize: '0.7rem', color: isDark ? '#94a3b8' : '#9ca3af' }}>
+                  복수 선택 가능
+                </span>
+              </div>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                {['퇴직연금', '연금저축', 'IRP'].map(prod => {
+                  const isChecked = selectedProducts.includes(prod);
+                  return (
+                    <button
+                      key={prod}
+                      type="button"
+                      onClick={() => handleToggleProduct(prod)}
+                      style={{
+                        flex: 1,
+                        height: '42px',
+                        borderRadius: '6px',
+                        border: isChecked
+                          ? (isDark ? '1.5px solid #f8fafc' : '1.5px solid #111827')
+                          : (isDark ? '1px solid #334155' : '1px solid #d1d5db'),
+                        backgroundColor: isDark ? '#0f172a' : '#ffffff',
+                        color: isChecked
+                          ? (isDark ? '#f8fafc' : '#111827')
+                          : (isDark ? '#94a3b8' : '#9ca3af'),
+                        fontSize: '0.92rem',
+                        fontWeight: isChecked ? '700' : '500',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.15s'
+                      }}
+                    >
+                      <span>{prod}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 5. 상담내용 (선택) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <label style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>
+                  상담내용 <span style={{ fontSize: '0.72rem', fontWeight: '400', color: '#9ca3af' }}>(선택)</span>
+                </label>
+                <span style={{
+                  fontSize: '0.7rem',
+                  color: isDark ? '#64748b' : '#9ca3af',
+                  fontWeight: '400'
+                }}>
+                  {consultContent.length} / 500자
+                </span>
+              </div>
+              <div style={{
+                position: 'relative',
+                border: 'none',
+                borderBottom: isDark ? '1px solid #334155' : '1px solid #e5e7eb',
+                borderRadius: '0px',
+                backgroundColor: 'transparent',
+                padding: '10px 0px 8px 0px'
+              }}>
+                <textarea
+                  value={consultContent}
+                  onChange={(e) => setConsultContent(e.target.value.slice(0, 500))}
+                  placeholder="문의내용 입력"
+                  rows={consultContent ? 2 : 1}
+                  style={{
+                    width: '100%',
+                    border: 'none',
+                    outline: 'none',
+                    resize: 'none',
+                    backgroundColor: 'transparent',
+                    color: isDark ? '#f8fafc' : '#111827',
+                    fontSize: '1.0rem',
+                    fontWeight: '500',
+                    lineHeight: '1.45',
+                    padding: 0,
+                    display: 'block',
+                    fontFamily: 'var(--font-sans)'
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* 6. 연락받으실 전화번호 (필수) */}
+            <div ref={phoneRef} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <label style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>
+                연락받으실 전화번호
+              </label>
+              <div style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                border: 'none',
+                borderBottom: highlightedField === '연락받으실 전화번호'
+                  ? '2px solid #de201e'
+                  : (isDark ? '1px solid #334155' : '1px solid #e5e7eb'),
+                borderRadius: '0px',
+                backgroundColor: 'transparent',
+                padding: '10px 0px 8px 0px'
+              }}>
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={handlePhoneChange}
+                  placeholder="- 없이 입력"
+                  style={{
+                    width: '100%',
+                    border: 'none',
+                    outline: 'none',
+                    backgroundColor: 'transparent',
+                    color: isDark ? '#f8fafc' : '#111827',
+                    fontSize: '1.0rem',
+                    fontWeight: '500',
+                    padding: '0 28px 0 0',
+                    fontFamily: 'var(--font-sans)'
+                  }}
+                />
+                {phoneNumber && (
+                  <button
+                    type="button"
+                    onClick={() => setPhoneNumber('')}
+                    title="전화번호 초기화"
+                    style={{
+                      position: 'absolute',
+                      right: '2px',
+                      border: 'none',
+                      background: 'none',
+                      padding: '2px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="#cbd5e1">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M9 9l6 6M15 9l-6 6" stroke="#ffffff" strokeWidth="2.4" strokeLinecap="round" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* 7. 유의사항 안내 영역 */}
+            <div style={{
+              backgroundColor: isDark ? '#121826' : '#f4f5f7',
+              margin: '12px -16px -24px -16px',
+              padding: '24px 18px 28px 18px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
+              <div style={{
+                fontSize: '0.84rem',
+                fontWeight: '700',
+                color: isDark ? '#cbd5e1' : '#555555'
+              }}>
+                상담예약 유의사항
+              </div>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                fontSize: '0.76rem',
+                color: isDark ? '#94a3b8' : '#777777',
+                lineHeight: '1.55',
+                wordBreak: 'keep-all'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: isDark ? '#64748b' : '#888888', lineHeight: '1.55', flexShrink: 0 }}>•</span>
+                  <span>상담예약은 신청일 기준 익영업일부터 30일 이내(주말·공휴일 제외)까지 선택 가능합니다.</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: isDark ? '#64748b' : '#888888', lineHeight: '1.55', flexShrink: 0 }}>•</span>
+                  <span>예약하신 시간대에 전문 상담원이 등록하신 전화번호로 연락을 드리며, 부재 시 상담이 취소될 수 있습니다.</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: isDark ? '#64748b' : '#888888', lineHeight: '1.55', flexShrink: 0 }}>•</span>
+                  <span>
+                    긴급한 문의나 즉시 상담이 필요하신 경우 퇴직연금 고객센터(
+                    <a
+                      href="tel:1588-4488"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (addNotification) addNotification('고객센터(1588-4488) 전화 연결을 호출합니다.', 'info');
+                      }}
+                      style={{
+                        color: isDark ? '#cbd5e1' : '#555555',
+                        fontWeight: '700',
+                        textDecoration: 'underline',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      1588-4488
+                    </a>
+                    )로 문의해 주시기 바랍니다.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 8. 하단 고정 CTA (Sticky Bottom Bar) */}
+          <div style={{
+            flexShrink: 0,
+            display: 'flex',
+            width: '100%',
+            height: '52px',
+            borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+            backgroundColor: isDark ? '#111827' : '#ffffff'
+          }}>
+            {!existingReservation ? (
+              <button
+                type="button"
+                onClick={handleReserveOrUpdate}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                  backgroundColor: '#1c1c1e',
+                  color: '#ffffff',
+                  fontSize: '0.96rem',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+              >
+                상담 예약하기
+              </button>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setCancelConfirmModal(true)}
+                  style={{
+                    flex: 1,
+                    height: '100%',
+                    border: 'none',
+                    backgroundColor: isDark ? '#334155' : '#f1f5f9',
+                    color: isDark ? '#e2e8f0' : '#334155',
+                    fontSize: '0.94rem',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0'
+                  }}
+                >
+                  예약 취소
+                </button>
+                <button
+                  type="button"
+                  onClick={handleReserveOrUpdate}
+                  style={{
+                    flex: 1,
+                    height: '100%',
+                    border: 'none',
+                    backgroundColor: '#1c1c1e',
+                    color: '#ffffff',
+                    fontSize: '0.94rem',
+                    fontWeight: '700',
+                    cursor: 'pointer'
+                  }}
+                >
+                  예약 변경
+                </button>
+              </>
+            )}
+          </div>
+        </>
+      ) : (
+        /* [탭 2] 상담내역 화면 */
+        <div style={{
+          flex: isFigmaExportMode ? 'none' : 1,
+          overflowY: isFigmaExportMode ? 'visible' : 'auto',
+          backgroundColor: isDark ? '#0b0f19' : '#f8fafc',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          {/* 1. 조회 필터 영역 (5페이지 적립식 투자 > 적립투자 내역 기간 선택과 동일) */}
+          <div style={{
+            backgroundColor: isDark ? '#111827' : '#ffffff',
+            paddingTop: '12px',
+            paddingBottom: '4px',
+            borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0'
+          }}>
+            {/* 4-Segmented Period Filter Bar */}
+            <div style={{
+              display: 'flex',
+              border: '1px solid #d1d5db',
+              borderRadius: '2px',
+              backgroundColor: '#ffffff',
+              margin: '0 12px 8px 12px',
+              overflow: 'hidden'
+            }}>
+              {['1개월', '3개월', '6개월', '기간설정'].map((period, idx) => {
+                const isActive = historyPeriodChip === period;
+                return (
+                  <button
+                    key={period}
+                    type="button"
+                    onClick={() => handleSelectPeriodChip(period)}
+                    style={{
+                      flex: 1,
+                      padding: '7.5px 0',
+                      fontSize: '0.84rem',
+                      fontWeight: isActive ? '700' : '400',
+                      color: isActive ? '#111827' : '#6b7280',
+                      backgroundColor: '#ffffff',
+                      border: 'none',
+                      borderRight: idx < 3 ? '1px solid #e5e7eb' : 'none',
+                      outline: isActive ? '1.5px solid #111827' : 'none',
+                      outlineOffset: '-1.5px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {period}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Date Range Selector (Shown when '기간설정' is selected) */}
+            {historyPeriodChip === '기간설정' && (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                margin: '0 12px 8px 12px'
+              }}>
+                {/* Start Date Box */}
+                <div
+                  onClick={() => openCalendar('filterStart')}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '2px',
+                    padding: '6.5px 10px',
+                    backgroundColor: '#ffffff',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>
+                    {formatDotDate(filterStartDate)}
+                  </span>
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
+                    <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+
+                <span style={{ color: '#9ca3af', fontSize: '0.86rem', fontWeight: '400', flexShrink: 0 }}>-</span>
+
+                {/* End Date Box */}
+                <div
+                  onClick={() => openCalendar('filterEnd')}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '2px',
+                    padding: '6.5px 10px',
+                    backgroundColor: '#ffffff',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span style={{ fontSize: '0.86rem', color: '#111827', fontWeight: '400' }}>
+                    {formatDotDate(filterEndDate)}
+                  </span>
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ flexShrink: 0 }}>
+                    <path d="M1 1L5 5L9 1" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 2. 상담내역 카드 리스트 */}
+          <div style={{ padding: '12px 14px 20px 14px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
+            {/* 상단 총 건수(총 N건) 표시 */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '2px 2px' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: '700', color: isDark ? '#cbd5e1' : '#475569' }}>
+                총 <span style={{ color: '#2563eb', fontWeight: '800' }}>{filteredHistory.length}</span>건
+              </span>
+            </div>
+
+            {filteredHistory.length === 0 ? (
+              /* Empty State: 조회 결과 0건일 때 안내 문구 노출 */
+              <div style={{
+                backgroundColor: isDark ? '#111827' : '#ffffff',
+                border: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                borderRadius: '10px',
+                padding: '44px 20px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                gap: '12px',
+                marginTop: '4px'
+              }}>
+                <div style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  backgroundColor: isDark ? '#1e293b' : '#f1f5f9',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#94a3b8',
+                  fontSize: '1.2rem',
+                  fontWeight: '800'
+                }}>
+                  !
+                </div>
+                <div style={{ fontSize: '0.88rem', fontWeight: '600', color: isDark ? '#94a3b8' : '#64748b', lineHeight: '1.5' }}>
+                  조회하신 기간 내 상담 예약 내역이 없습니다.
+                </div>
+              </div>
+            ) : (
+              filteredHistory.map(item => {
+                const hasQuestion = Boolean(item.question && item.question.trim());
+                const managerDisplay =
+                  item.manager && item.manager !== '-'
+                    ? item.manager
+                    : item.status === '상담예약'
+                    ? '담당자 배정 대기'
+                    : '-';
+
+                const statusColor =
+                  item.status === '상담예약'
+                    ? '#2563eb'
+                    : item.status === '상담취소'
+                    ? '#de201e'
+                    : item.status === '상담보류'
+                    ? '#d97706'
+                    : (isDark ? '#f8fafc' : '#111827');
+
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => setSelectedHistoryItem(item)}
+                    style={{
+                      backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                      borderRadius: '10px',
+                      padding: '16px 16px 18px 16px',
+                      border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '10px',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {/* Row 1: 예약일시 */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem' }}>
+                      <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>예약일시</span>
+                      <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>{item.date} · {item.time}</span>
+                    </div>
+
+                    {/* Row 2: 상담상품 */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem' }}>
+                      <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>상담상품</span>
+                      <span style={{ fontWeight: '700', color: isDark ? '#cbd5e1' : '#1a202c' }}>{item.products.join(', ')}</span>
+                    </div>
+
+                    {/* Row 3: 담당자 */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem' }}>
+                      <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>담당상담원</span>
+                      <span style={{ fontWeight: '600', color: isDark ? '#cbd5e1' : '#1a202c' }}>{managerDisplay}</span>
+                    </div>
+
+                    {/* Row 4: 질문내용 -> 내용보기(언더라인) 선택시에 상세 화면 호출 */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem' }}>
+                      <span style={{ color: isDark ? '#94a3b8' : '#718096' }}>질문내용</span>
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedHistoryItem(item);
+                        }}
+                        style={{
+                          fontWeight: '700',
+                          color: '#2563eb',
+                          textDecoration: 'underline',
+                          textUnderlineOffset: '3px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        내용보기
+                      </span>
+                    </div>
+
+                    {/* Divider line (4페이지 연금수령 신청 조회/취소 스타일) */}
+                    <div style={{ height: '1px', backgroundColor: isDark ? '#334155' : '#f1f5f9', margin: '4px 0 2px 0' }} />
+
+                    {/* Bottom Centered Status Row */}
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '4px 0 2px 0' }}>
+                      <span style={{ color: statusColor, fontWeight: '800', fontSize: '0.92rem' }}>
+                        {item.status}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* KOSDAQ Ticker Bar */}
+      <div style={{
+        height: '24px',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+        backgroundColor: isDark ? '#111827' : '#f8fafc',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 12px',
+        fontSize: '0.72rem',
+        flexShrink: 0
+      }}>
+        <span style={{ fontWeight: '800', color: isDark ? '#f8fafc' : '#0f172a' }}>KOSDAQ</span>
+        <span style={{ color: '#de201e', fontWeight: '700' }}>818.71 ▲ 34.73 (4.43%)</span>
+      </div>
+
+      {/* Bottom Navigation Tab Bar */}
+      <div style={{
+        height: '46px',
+        display: 'flex',
+        alignItems: 'stretch',
+        borderTop: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+        backgroundColor: isDark ? '#121826' : '#ffffff',
+        flexShrink: 0
+      }}>
+        <button onClick={onBackClick} style={{ width: '48px', border: 'none', background: 'none', borderRight: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#cbd5e1' : '#222'} strokeWidth="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+        </button>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
+          {[
+            { key: '보유상품 현황', label: `보유상품\n현황` },
+            { key: 'ETF/리츠 잔고', label: `ETF/리츠\n잔고` },
+            { key: 'ETF/리츠 체결/미체결', label: `ETF/리츠\n체결/미체결` },
+            { key: 'ETF/리츠 주문', label: `ETF/리츠\n주문` }
+          ].map((tab, idx) => (
+            <button
+              key={tab.key}
+              style={{
+                flex: 1,
+                border: 'none',
+                background: 'none',
+                borderRight: idx < 3 ? (isDark ? '1px solid #1e293b' : '1px solid #f1f5f9') : 'none',
+                fontSize: '0.68rem',
+                fontWeight: '600',
+                color: isDark ? '#cbd5e1' : '#475569',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                whiteSpace: 'pre-line',
+                lineHeight: '1.15',
+                cursor: 'pointer'
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        <button onClick={onBackClick} style={{ width: '48px', border: 'none', background: 'none', borderLeft: isDark ? '1px solid #1e293b' : '1px solid #f1f5f9', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#cbd5e1' : '#222'} strokeWidth="2.2"><path d="M9 14L4 9l5-5" /><path d="M4 9h10a5 5 0 0 1 5 5v5" /></svg>
+        </button>
+      </div>
+
+      {/* ================= OVERLAYS & BOTTOM SHEETS ================= */}
+
+      {/* 1. 계좌 선택 바텀시트 */}
+      {showAccountBottomSheet && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
+          zIndex: 2000,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end'
+        }}>
+          <div style={{ flex: 1 }} onClick={() => setShowAccountBottomSheet(false)} />
+          <div style={{
+            backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            padding: '22px 20px 28px 20px',
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            animation: 'slideUp 0.22s ease-out'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <span style={{ fontSize: '1.1rem', fontWeight: '800', color: isDark ? '#f8fafc' : '#111827' }}>사용하실 계좌 선택</span>
+              <button
+                onClick={() => setShowAccountBottomSheet(false)}
+                style={{ border: 'none', background: 'none', fontSize: '1.3rem', color: '#64748b', cursor: 'pointer', lineHeight: 1 }}
+              >
+                &times;
+              </button>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {accountOptions.map(acc => {
+                const isSelected = selectedAccount === acc.label;
+                return (
+                  <div
+                    key={acc.id}
+                    onClick={() => {
+                      setSelectedAccount(acc.label);
+                      setShowAccountBottomSheet(false);
+                    }}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: '12px 4px',
+                      borderBottom: isDark ? '1px solid #334155' : '1px solid #f1f5f9',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: '700', color: isDark ? '#f8fafc' : '#111827' }}>
+                        {acc.label}
+                      </div>
+                      <div style={{ fontSize: '0.76rem', color: '#94a3b8', marginTop: '3px' }}>
+                        {acc.type} · 최근사용일자 : {acc.recentDate}
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 2. Date Picker Modal Overlay (4페이지 연금수령 신청 > 수령개시 일자 휠 칼렌더와 동일) */}
+      {calendarModal.open && (() => {
+        const { selectedYear, selectedMonth, selectedDate } = calendarModal;
+        const maxDays = new Date(selectedYear, selectedMonth, 0).getDate();
+        const prevMonth = selectedMonth - 1 < 1 ? 12 : selectedMonth - 1;
+        const nextMonth = selectedMonth + 1 > 12 ? 1 : selectedMonth + 1;
+        const prevDate = selectedDate - 1 < 1 ? maxDays : selectedDate - 1;
+        const nextDate = selectedDate + 1 > maxDays ? 1 : selectedDate + 1;
+
+        return (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            zIndex: 2100,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxSizing: 'border-box'
+          }}>
+            {/* Modal Container */}
+            <div style={{
+              width: '280px',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              border: '1px solid #e2e8f0'
+            }}>
+              {/* Picker Wheels Area */}
+              <div style={{
+                display: 'flex',
+                padding: '24px 16px',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                position: 'relative',
+                backgroundColor: '#ffffff',
+                height: '160px',
+                boxSizing: 'border-box',
+                userSelect: 'none'
+              }}>
+                {/* Highlight Lines */}
+                <div style={{
+                  position: 'absolute',
+                  top: '62px',
+                  left: '16px',
+                  right: '16px',
+                  height: '1.5px',
+                  backgroundColor: '#3b82f6',
+                  pointerEvents: 'none'
+                }} />
+                <div style={{
+                  position: 'absolute',
+                  top: '94px',
+                  left: '16px',
+                  right: '16px',
+                  height: '1.5px',
+                  backgroundColor: '#3b82f6',
+                  pointerEvents: 'none'
+                }} />
+
+                {/* Year Column */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                  <span
+                    onClick={() => setCalendarModal(prev => ({ ...prev, selectedYear: prev.selectedYear - 1 }))}
+                    style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer', transition: 'color 0.2s' }}
+                  >
+                    {selectedYear - 1}
+                  </span>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#1a202c' }}>
+                    {selectedYear}
+                  </span>
+                  <span
+                    onClick={() => setCalendarModal(prev => ({ ...prev, selectedYear: prev.selectedYear + 1 }))}
+                    style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer', transition: 'color 0.2s' }}
+                  >
+                    {selectedYear + 1}
+                  </span>
+                </div>
+
+                {/* Month Column */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                  <span
+                    onClick={() => setCalendarModal(prev => ({ ...prev, selectedMonth: prevMonth }))}
+                    style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                  >
+                    {prevMonth}
+                  </span>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#1a202c' }}>
+                    {selectedMonth}
+                  </span>
+                  <span
+                    onClick={() => setCalendarModal(prev => ({ ...prev, selectedMonth: nextMonth }))}
+                    style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                  >
+                    {nextMonth}
+                  </span>
+                </div>
+
+                {/* Date Column */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                  <span
+                    onClick={() => setCalendarModal(prev => ({ ...prev, selectedDate: prevDate }))}
+                    style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                  >
+                    {String(prevDate).padStart(2, '0')}
+                  </span>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#1a202c' }}>
+                    {String(selectedDate).padStart(2, '0')}
+                  </span>
+                  <span
+                    onClick={() => setCalendarModal(prev => ({ ...prev, selectedDate: nextDate }))}
+                    style={{ fontSize: '0.88rem', color: '#d2d6dc', cursor: 'pointer' }}
+                  >
+                    {String(nextDate).padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+
+              {/* Buttons Area */}
+              <div style={{
+                display: 'flex',
+                borderTop: '1px solid #f0f4f8',
+                height: '48px',
+                backgroundColor: '#fbfcfd'
+              }}>
+                <button
+                  type="button"
+                  onClick={() => setCalendarModal(prev => ({ ...prev, open: false }))}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    background: 'none',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    color: '#4a5568',
+                    cursor: 'pointer',
+                    borderRight: '1px solid #f0f4f8'
+                  }}
+                >
+                  취소
+                </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmWheelDate}
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    background: 'none',
+                    fontSize: '0.9rem',
+                    fontWeight: '700',
+                    color: '#2b6cb0',
+                    cursor: 'pointer'
+                  }}
+                >
+                  확인
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* 3. 상세 상담내역 화면 (5페이지 > 상세신청 내역화면 레이아웃과 동일) */}
+      {selectedHistoryItem && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: '#ffffff',
+          color: '#111111',
+          fontFamily: 'sans-serif',
+          zIndex: 2200,
+          display: 'flex',
+          flexDirection: 'column',
+          boxSizing: 'border-box'
+        }}>
+          {/* Status Bar */}
+          <div style={{
+            ...styles.phoneHeaderBar,
+            backgroundColor: '#ffffff',
+            color: '#333333',
+            borderBottom: 'none',
+            flexShrink: 0
+          }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 10:15</span>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>5G</span>
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1px', height: '10px' }}>
+                <div style={{ width: '2px', height: '3px', backgroundColor: '#333' }}></div>
+                <div style={{ width: '2px', height: '5px', backgroundColor: '#333' }}></div>
+                <div style={{ width: '2px', height: '7px', backgroundColor: '#333' }}></div>
+                <div style={{ width: '2px', height: '9px', backgroundColor: '#333' }}></div>
+              </div>
+              <div style={{
+                border: '1px solid #333',
+                borderRadius: '3px',
+                padding: '0px 3px',
+                fontSize: '0.62rem',
+                fontWeight: '900',
+                height: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#333',
+                color: '#fff',
+                lineHeight: 1
+              }}>
+                92
+              </div>
+            </div>
+          </div>
+
+          {/* Top Header Bar (5페이지 상세신청 내역화면과 동일한 뒤로가기 헤더) */}
+          <div style={{
+            height: '46px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 12px',
+            borderBottom: '1px solid #eee',
+            backgroundColor: '#ffffff',
+            flexShrink: 0
+          }}>
+            <button
+              type="button"
+              onClick={() => setSelectedHistoryItem(null)}
+              style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0 }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Detailed Screen Body (5페이지 상세 신청내역입니다. 레이아웃 승계) */}
+          <div style={{
+            flex: 1,
+            padding: '24px 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '26px',
+            backgroundColor: '#ffffff',
+            overflowY: 'auto'
+          }}>
+            <div>
+              <h2 style={{ fontSize: '1.45rem', fontWeight: '700', margin: '0 0 8px 0', color: '#111827' }}>
+                상세 상담내역입니다.
+              </h2>
+              <p style={{ fontSize: '1.02rem', color: '#4b5563', margin: 0 }}>
+                현재 <span style={{
+                  color: selectedHistoryItem.status === '상담취소'
+                    ? '#ef4444'
+                    : selectedHistoryItem.status === '상담보류'
+                    ? '#d97706'
+                    : '#2563eb',
+                  fontWeight: '700'
+                }}>{selectedHistoryItem.status}</span> 상태입니다.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '4px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>상태</span>
+                <span style={{
+                  fontWeight: '600',
+                  color: selectedHistoryItem.status === '상담취소'
+                    ? '#ef4444'
+                    : selectedHistoryItem.status === '상담보류'
+                    ? '#f59e0b'
+                    : '#2563eb'
+                }}>
+                  {selectedHistoryItem.status}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>예약일시</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>
+                  {selectedHistoryItem.date} · {selectedHistoryItem.time}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>상담상품</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>
+                  {selectedHistoryItem.products.join(', ')}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>담당상담원</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>
+                  {selectedHistoryItem.manager && selectedHistoryItem.manager !== '-'
+                    ? selectedHistoryItem.manager
+                    : selectedHistoryItem.status === '상담예약'
+                    ? '담당자 배정 대기'
+                    : '-'}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
+                <span style={{ color: '#64748b', fontWeight: '500' }}>연락처</span>
+                <span style={{ fontWeight: '600', color: '#111827' }}>
+                  {selectedHistoryItem.phone || '010-1111-2222'}
+                </span>
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '4px 0' }} />
+
+              {/* 질문내용 섹션 */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <span style={{ fontSize: '0.92rem', color: '#64748b', fontWeight: '600' }}>질문내용</span>
+                <div style={{
+                  backgroundColor: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  padding: '12px 14px',
+                  fontSize: '0.88rem',
+                  color: selectedHistoryItem.question ? '#111827' : '#94a3b8',
+                  lineHeight: '1.55',
+                  wordBreak: 'keep-all'
+                }}>
+                  {selectedHistoryItem.question || '입력된 질문 내용이 없습니다.'}
+                </div>
+              </div>
+
+              {/* 상담내용(답변) 섹션 */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <span style={{ fontSize: '0.92rem', color: '#64748b', fontWeight: '600' }}>상담내용</span>
+                <div style={{
+                  backgroundColor: selectedHistoryItem.status === '상담완료' ? '#eff6ff' : '#f8fafc',
+                  border: selectedHistoryItem.status === '상담완료' ? '1px solid #bfdbfe' : '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  padding: '12px 14px',
+                  fontSize: '0.88rem',
+                  color: selectedHistoryItem.status === '상담완료' ? '#1e3a8a' : '#94a3b8',
+                  lineHeight: '1.55',
+                  wordBreak: 'keep-all'
+                }}>
+                  {selectedHistoryItem.status === '상담완료' && selectedHistoryItem.answer
+                    ? selectedHistoryItem.answer
+                    : '상담 완료 후 답변 내용이 등록됩니다.'}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Two Buttons Footer: 확인 / 다시예약 (5페이지 상세신청 내역화면 하단 버튼 비율 승계) */}
+          <div style={{ display: 'flex', width: '100%', flexShrink: 0 }}>
+            <button
+              type="button"
+              onClick={() => setSelectedHistoryItem(null)}
+              style={{
+                flex: '0.38',
+                height: '56px',
+                backgroundColor: '#f3f6f9',
+                color: '#334155',
+                border: 'none',
+                borderRadius: '0',
+                fontSize: '1.02rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              확인
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedHistoryItem(null);
+                setActiveTab('reserve');
+              }}
+              style={{
+                flex: '0.62',
+                height: '56px',
+                backgroundColor: '#212b36',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '0',
+                fontSize: '1.02rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              {selectedHistoryItem.status === '상담예약' ? '예약 변경하기' : '다시 예약하기'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 4. 예약 완료 / 변경 완료 모달 (첨부 이미지 스타일) */}
+      {completeModal.open && completeModal.data && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.48)',
+          zIndex: 2500,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            width: '286px',
+            backgroundColor: '#ffffff',
+            borderRadius: '16px',
+            padding: '28px 20px 20px 20px',
+            boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <div style={{
+              fontSize: '0.94rem',
+              fontWeight: '700',
+              color: '#222222',
+              lineHeight: '1.48',
+              textAlign: 'center',
+              letterSpacing: '-0.3px',
+              marginBottom: '22px'
+            }}>
+              {completeModal.isUpdate ? '변경된 상담 예약 정보를' : '상담 예약 신청 정보를'}
+              <br />
+              확인해주세요
+            </div>
+
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              padding: '0 10px',
+              marginBottom: '24px',
+              fontSize: '0.86rem',
+              color: '#444444',
+              textAlign: 'left'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#555555', fontWeight: '700' }}>•</span>
+                <span style={{ fontWeight: '700', color: '#333333' }}>예약일자 :</span>
+                <span style={{ color: '#555555', fontWeight: '500' }}>{formatDotDate(completeModal.data.date)}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#555555', fontWeight: '700' }}>•</span>
+                <span style={{ fontWeight: '700', color: '#333333' }}>예약시각 :</span>
+                <span style={{ color: '#555555', fontWeight: '500' }}>{completeModal.data.time}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#555555', fontWeight: '700' }}>•</span>
+                <span style={{ fontWeight: '700', color: '#333333' }}>상담상품 :</span>
+                <span style={{ color: '#555555', fontWeight: '500' }}>{completeModal.data.products.join(', ')}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#555555', fontWeight: '700' }}>•</span>
+                <span style={{ fontWeight: '700', color: '#333333' }}>휴대폰번호 :</span>
+                <span style={{ color: '#555555', fontWeight: '500' }}>{completeModal.data.phone}</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setCompleteModal({ open: false, isUpdate: false, data: null })}
+              style={{
+                width: '100%',
+                height: '46px',
+                border: 'none',
+                borderRadius: '8px',
+                backgroundColor: '#1f1f1f',
+                color: '#ffffff',
+                fontWeight: '700',
+                fontSize: '0.88rem',
+                cursor: 'pointer'
+              }}
+            >
+              확인했어요
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 5. 예약 취소 Confirm 팝업 */}
+      {cancelConfirmModal && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
+          zIndex: 2500,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            width: '270px',
+            backgroundColor: '#ffffff',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.18)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              padding: '28px 20px 24px 20px',
+              textAlign: 'center',
+              fontSize: '0.94rem',
+              fontWeight: '600',
+              color: '#222222',
+              lineHeight: '1.5'
+            }}>
+              신청하신 퇴직연금 상담예약을
+              <br />
+              취소하시겠습니까?
+            </div>
+            <div style={{ display: 'flex', height: '46px' }}>
+              <button
+                type="button"
+                onClick={() => setCancelConfirmModal(false)}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  backgroundColor: '#f3f4f6',
+                  color: '#333333',
+                  fontWeight: '700',
+                  fontSize: '0.88rem',
+                  cursor: 'pointer'
+                }}
+              >
+                아니오
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmCancelReservation}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  backgroundColor: '#222222',
+                  color: '#ffffff',
+                  fontWeight: '700',
+                  fontSize: '0.88rem',
+                  cursor: 'pointer'
+                }}
+              >
+                예약 취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. 유효성 검사 및 알림 알럿 팝업 */}
+      {alertPopup.open && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
+          zIndex: 2600,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            width: '270px',
+            backgroundColor: '#ffffff',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.18)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              padding: '28px 18px 24px 18px',
+              textAlign: 'center',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              color: '#222222',
+              lineHeight: '1.5',
+              wordBreak: 'keep-all'
+            }}>
+              {alertPopup.message}
+            </div>
+            <button
+              type="button"
+              onClick={() => setAlertPopup({ open: false, title: '', message: '' })}
+              style={{
+                width: '100%',
+                height: '46px',
+                border: 'none',
+                backgroundColor: '#222222',
+                color: '#ffffff',
+                fontWeight: '700',
+                fontSize: '0.9rem',
+                cursor: 'pointer'
+              }}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PcWebView() {
 
   // State Machine matching Specification Diagram & User Directives
@@ -10638,6 +12616,11 @@ function App() {
   const [screen6ProductAgreed2, setScreen6ProductAgreed2] = useState(true);
   const [screen6ProductAgreed3, setScreen6ProductAgreed3] = useState(true);
   const [screen6ProductAgreed4, setScreen6ProductAgreed4] = useState(true);
+  const [screen7ToBeSubScreen, setScreen7ToBeSubScreen] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('screen7tobe') || 'consultation';
+  });
+  const [screen7SelectedCategory, setScreen7SelectedCategory] = useState('IRP/퇴직연금');
   const [screen5ToBeSubScreen, setScreen5ToBeSubScreen] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('screen5sub') || params.get('screen5tobe') || 'menu';
@@ -22492,7 +24475,7 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
       </button>
 
       {/* Floating Figma Export Mode Toggle Button */}
-      {(activeScreen === 1 || activeScreen === 4 || activeScreen === 5 || activeScreen === 6) && (
+      {(activeScreen === 1 || activeScreen === 4 || activeScreen === 5 || activeScreen === 6 || activeScreen === 7) && (
         <button
           onClick={() => setIsFigmaExportMode(!isFigmaExportMode)}
           style={{
@@ -25427,6 +27410,354 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
               </button>
             </div>
           </div>
+        ) : activeScreen === 7 ? (
+          /* Screen 7: 퇴직연금 상담예약 시스템 */
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '32px',
+            flexShrink: 0
+          }}>
+            {/* Emulators Row */}
+            <div style={{
+              display: 'flex',
+              gap: '60px',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: isFigmaExportMode ? 'flex-start' : 'center'
+            }}>
+              {/* Left Emulator: 전체메뉴 [연금] > [상담 예약] 진입 경로 */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>AS IS / 진입경로</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
+                  borderRadius: '0px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
+                }}>
+                  {/* Status Bar */}
+                  <div style={{
+                    ...styles.phoneHeaderBar,
+                    backgroundColor: '#4750b3',
+                    color: '#ffffff',
+                    borderBottom: 'none'
+                  }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>SKT 10:15</span>
+                    <span style={{ fontSize: '0.65rem', fontWeight: '800' }}>92%</span>
+                  </div>
+
+                  {/* Top user bar (French Blue Theme) */}
+                  <div style={{
+                    backgroundColor: '#4750b3',
+                    padding: '16px 15px 12px 15px',
+                    color: '#ffffff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '1.2rem', fontWeight: '500' }}>김대진님</span>
+                        <span style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          fontSize: '0.82rem',
+                          opacity: 0.9,
+                          color: '#ffffff',
+                          cursor: 'pointer'
+                        }}>
+                          내 정보
+                          <svg width="6" height="10" viewBox="0 0 10 18" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '2px' }}><polyline points="3 3 8 9 3 15" /></svg>
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+                          <span style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: '#00c3a5', width: '5px', height: '5px', borderRadius: '50%' }}></span>
+                        </div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      backgroundColor: '#ffffff',
+                      borderRadius: '4px',
+                      padding: '8px 12px',
+                      gap: '8px'
+                    }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888888" strokeWidth="3"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                      <input type="text" placeholder="메뉴를 검색하세요." disabled style={{ border: 'none', background: 'none', outline: 'none', width: '100%', fontSize: '0.82rem', fontWeight: '600' }} />
+                    </div>
+                  </div>
+
+                  {/* Main Category Tabs */}
+                  <div style={{
+                    display: 'flex',
+                    borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                    backgroundColor: isDark ? '#121826' : '#ffffff'
+                  }}>
+                    {['최근', '트레이딩', '상품', '연금', '자산/뱅킹'].map((tab) => {
+                      const isSelected = tab === '연금';
+                      return (
+                        <div
+                          key={tab}
+                          style={{
+                            flex: 1,
+                            textAlign: 'center',
+                            padding: '13px 0',
+                            fontSize: '0.96rem',
+                            fontWeight: '500',
+                            color: isSelected ? '#4750b3' : (isDark ? '#cbd5e1' : '#888888'),
+                            borderBottom: isSelected ? '3px solid #4750b3' : '3px solid transparent'
+                          }}
+                        >
+                          {tab}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Split Content Area */}
+                  <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+                    {/* Left Submenu Navigation */}
+                    <div style={{
+                      width: '115px',
+                      backgroundColor: isDark ? '#0f172a' : '#f1f3f5',
+                      borderRight: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      paddingBottom: '12px',
+                      boxSizing: 'border-box'
+                    }}>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        {['IRP/퇴직연금', '연금저축', '공지사항'].map((catName, idx) => {
+                          const isSelected = catName === screen7SelectedCategory;
+                          return (
+                            <div
+                              key={idx}
+                              onClick={() => setScreen7SelectedCategory(catName)}
+                              style={{
+                                padding: '18px 12px',
+                                fontSize: '0.96rem',
+                                fontWeight: isSelected ? '800' : '500',
+                                color: isSelected ? (isDark ? '#ffffff' : '#4750b3') : (isDark ? '#94a3b8' : '#777777'),
+                                backgroundColor: isSelected ? (isDark ? '#121826' : '#ffffff') : 'transparent',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {catName}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* 상담예약 Banner (replacing RIA 가입) */}
+                      <div
+                        onClick={() => setScreen7ToBeSubScreen('consultation')}
+                        style={{
+                          margin: '0 8px',
+                          borderRadius: '6px',
+                          background: 'linear-gradient(125deg, #0b5d2b 0%, #3aa83a 60%, #0275b8 100%)',
+                          padding: '10px 8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          boxShadow: '0 2px 5px rgba(0,0,0,0.08)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                          <span style={{ fontSize: '0.78rem', fontWeight: '800', color: '#ffffff', lineHeight: '1.15', letterSpacing: '-0.3px' }}>상담</span>
+                          <span style={{ fontSize: '0.78rem', fontWeight: '800', color: '#ffffff', lineHeight: '1.15', letterSpacing: '-0.3px' }}>예약</span>
+                        </div>
+                        <img
+                          src="/savings_hero.png"
+                          alt="상담예약"
+                          style={{ width: '36px', height: '36px', objectFit: 'contain', flexShrink: 0 }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Right menu content */}
+                    <div style={{
+                      flex: 1,
+                      padding: '18px 16px',
+                      overflowY: 'auto',
+                      backgroundColor: isDark ? '#121826' : '#ffffff',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '24px',
+                      boxSizing: 'border-box'
+                    }}>
+                      {screen7SelectedCategory === 'IRP/퇴직연금' ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                          {/* 1. 상품 매매 */}
+                          <div style={{ borderBottom: isDark ? '1px solid #1e293b' : '1px solid #e2e8f0', paddingBottom: '20px' }}>
+                            <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>상품 매매</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                              {[
+                                { name: '전체상품검색' },
+                                { name: '금융상품 투자하기', action: () => { setScreen5ToBeSubScreen('invest'); setActiveScreen(5); } },
+                                { name: '장내채권 매매', action: () => { setScreen6ToBeSubScreen('etfTermsAgreement'); setActiveScreen(6); } },
+                                { name: '디폴트옵션 매매' },
+                                { name: 'ELB 청약예약' }
+                              ].map((item, idx) => (
+                                <span key={idx} onClick={item.action} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                                  {item.name}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* 2. IRP 관리 */}
+                          <div>
+                            <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>IRP 관리</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                              {[
+                                '연금수령 신청',
+                                '연금수령 신청 조회/취소',
+                                '연금수령 현황',
+                                'IRP 해지신청'
+                              ].map((item, idx) => (
+                                <span key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500', cursor: 'pointer' }}>
+                                  {item}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ) : screen7SelectedCategory === '연금저축' ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                          <div>
+                            <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#4750b3', marginBottom: '16px' }}>MY 연금</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                              {['연금저축 보유잔고', '연금저축 한도/기간 설정', '연금저축 출금'].map((name, idx) => (
+                                <span key={idx} style={{ fontSize: '1.02rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>{name}</span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                          <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#4750b3', marginBottom: '8px' }}>공지사항</div>
+                          {[
+                            '[안내] 퇴직연금 및 연금저축 전문 상담예약 서비스 오픈',
+                            '[안내] 퇴직연금 실물이전 서비스 이용 안내'
+                          ].map((item, idx) => (
+                            <div key={idx} style={{ fontSize: '0.95rem', color: isDark ? '#cbd5e1' : '#222222', fontWeight: '500' }}>
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Footer Bar */}
+                  <div style={{
+                    height: '48px',
+                    backgroundColor: '#000000',
+                    color: '#ffffff',
+                    display: 'flex',
+                    fontSize: '0.78rem',
+                    fontWeight: '800',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+                  }}>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                        <line x1="12" y1="2" x2="12" y2="12" />
+                      </svg>
+                      <span>고객지원</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <span>이벤트</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', borderRight: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <span>업무/거래신청</span>
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}>
+                      <span>인증/OTP</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Emulator: TO BE 퇴직연금 상담예약 화면 */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '900',
+                  color: isDark ? '#f8fafc' : '#0f172a',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  padding: '8px 24px',
+                  borderRadius: '99px',
+                  letterSpacing: '1px',
+                  border: '1px solid var(--border-color)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+                }}>TO BE</div>
+                <div style={{
+                  ...styles.phoneMockup,
+                  backgroundColor: isDark ? '#0b0f19' : '#fff',
+                  width: '360px',
+                  height: isFigmaExportMode ? 'auto' : '800px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
+                  borderRadius: '0px',
+                  overflow: isFigmaExportMode ? 'visible' : 'hidden'
+                }}>
+                  {screen7ToBeSubScreen === 'menu' ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                      {renderScreen6ToBeMenu(false, true)}
+                    </div>
+                  ) : (
+                    <PensionConsultationView
+                      isDark={isDark}
+                      isToBe={true}
+                      isFigmaExportMode={isFigmaExportMode}
+                      onBackClick={() => setScreen7ToBeSubScreen('menu')}
+                      addNotification={addNotification}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Task Title */}
+            <div style={{
+              fontSize: '1.35rem',
+              fontWeight: '600',
+              color: isDark ? '#94a3b8' : '#475569',
+              letterSpacing: '-0.5px',
+              textAlign: 'center',
+              opacity: 0.85,
+              marginTop: '8px',
+              wordBreak: 'keep-all'
+            }}>
+              퇴직연금 상담예약
+            </div>
+          </div>
         ) : (
           /* Original Screen 2 */
           <div style={{
@@ -26196,6 +28527,100 @@ const renderScreen6Balance = (mode, isSwitchOff = false) => {
                     <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
                     <div>
                       <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>장내·외 통합 잔고 화면 신설:</strong> 기존 장외채권 잔고와 신규 장내채권 잔고를 한눈에 볼 수 있는 독립된 통합 잔고 화면을 신설하고, 그리드에 주문가능수량, 매수단가, 만기일, 잔고구분(납입금구분)을 필수 표출합니다.
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </>
+          ) : activeScreen === 7 ? (
+            /* Descriptions for Screen 7: 퇴직연금 상담예약 */
+            <>
+              {isAsIsToBeExpanded && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#de201e', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>AS-IS</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>유선 고객센터 대기 및 모바일 예약 부재</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      기존에는 퇴직연금 및 연금저축 관련 전문 상담이 필요할 때 고객센터(1588-4488)로 직접 전화하여 대기해야 했으며, 원하는 일시나 문의 내용을 사전에 남기고 예약 현황을 관리할 수 있는 모바일 전용 화면이 없었습니다.
+                    </p>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ backgroundColor: '#00c3a5', color: '#fff', fontSize: '13px', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', lineHeight: 1 }}>TO-BE</span>
+                      <span style={{ fontWeight: '700', fontSize: '19px', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>원스톱 퇴직연금 상담예약 및 내역 관리 신설</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '17px', color: '#6b7280', lineHeight: '1.65', paddingLeft: '58px', wordBreak: 'keep-all' }}>
+                      전체메뉴 [연금] 탭 하단에 [상담 예약] 메뉴를 신설하여 원하는 날짜(영업일 30일 이내)와 시간대, 상담상품(퇴직연금/연금저축)을 선택해 간편하게 예약·변경·취소하고 상담 답변 내역까지 한눈에 조회할 수 있습니다.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div
+                onClick={() => setIsAsIsToBeExpanded(!isAsIsToBeExpanded)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '8px 0',
+                  userSelect: 'none',
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  transition: 'opacity 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                {isAsIsToBeExpanded ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="18 15 12 9 6 15" />
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: isDark ? '#9ca3af' : '#6b7280' }}>
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                )}
+              </div>
+
+              <div style={{
+                backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                borderRadius: '12px',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '14px',
+                border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)'
+              }}>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: isDark ? '#cbd5e1' : '#374151', wordBreak: 'keep-all' }}>
+                  주요 핵심 구현 사항
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: '0px', listStyle: 'none', fontSize: '16px', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.5', wordBreak: 'keep-all' }}>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>1</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>신규 예약 ↔ 기 예약 정정/취소 상태 전환:</strong> 예약 완료 시 상단 예약 상태 배너(`ⓘ 현재 예약`)가 노출되며 하단 고정 CTA가 `[예약 취소]` / `[예약 변경]` 2분할 버튼으로 자동 전환됩니다.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>2</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>영업일 달력 제어 및 시간대별 마감 처리:</strong> 주말(토·일)과 오늘 기준 30일 초과 날짜 선택을 원천 차단하고, 6개 상담 시간대 그리드에서 신청 가능·선택(단일 선택/재클릭 해제)·마감(`14:00~15:00`) 상태를 직관적으로 구분합니다.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>3</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>유효성 검사 및 전화번호 포맷팅:</strong> 필수 항목 누락 시 해당 항목 강조 및 {'"필수 입력 사항을 입력하세요.({항목명})"'} 알럿을 노출하며, 연락처 자동 하이픈(-) 포맷팅과 글자 수 카운터(0 / 500자)를 지원합니다.
+                    </div>
+                  </li>
+                  <li style={{ wordBreak: 'keep-all', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#00c3a5', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>4</span>
+                    <div>
+                      <strong style={{ color: isDark ? '#cbd5e1' : '#374151' }}>카드형 상담내역 조회 및 상세 바텀시트:</strong> 기간 필터와 연동된 카드 리스트에서 상태별 뱃지(`상담예약`, `상담완료`, `상담취소`, `상담보류`)를 제공하고, 클릭 시 질문 및 답변 상세 바텀시트를 호출합니다.
                     </div>
                   </li>
                 </ul>
