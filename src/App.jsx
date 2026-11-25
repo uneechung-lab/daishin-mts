@@ -9453,13 +9453,22 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
   });
   const [selectedTime, setSelectedTime] = useState(() => {
     const p = new URLSearchParams(window.location.search);
-    const t = p.get('screen7time');
-    return t !== null ? t : '10:00~11:30';
+    if (p.has('screen7time')) return p.get('screen7time') || '';
+    if (p.get('screen7mode') === 'reserved' || p.get('screen7modal') === 'complete' || p.get('screen7modal') === 'cancel') {
+      return '10:00~11:30';
+    }
+    return '';
   });
   const [selectedProducts, setSelectedProducts] = useState(() => {
     const p = new URLSearchParams(window.location.search);
-    const prods = p.get('screen7products');
-    return prods ? prods.split(',').filter(Boolean) : ['퇴직연금'];
+    if (p.has('screen7products')) {
+      const prods = p.get('screen7products');
+      return prods ? prods.split(',').filter(Boolean) : [];
+    }
+    if (p.get('screen7mode') === 'reserved' || p.get('screen7modal') === 'complete' || p.get('screen7modal') === 'cancel') {
+      return ['퇴직연금'];
+    }
+    return [];
   });
   const [consultContent, setConsultContent] = useState(() => {
     const p = new URLSearchParams(window.location.search);
@@ -9631,8 +9640,16 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
     if (params.get('screen') === '7') {
       params.set('screen7tab', activeTab);
       params.set('screen7date', reserveDate);
-      params.set('screen7time', selectedTime);
-      params.set('screen7products', selectedProducts.join(','));
+      if (selectedTime) {
+        params.set('screen7time', selectedTime);
+      } else {
+        params.delete('screen7time');
+      }
+      if (selectedProducts.length > 0) {
+        params.set('screen7products', selectedProducts.join(','));
+      } else {
+        params.delete('screen7products');
+      }
       if (consultContent) {
         params.set('screen7content', consultContent);
       } else {
@@ -9843,8 +9860,8 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
     setCancelConfirmModal(false);
     // Reset form to initial new reservation defaults
     setReserveDate(getInitialBusinessDay());
-    setSelectedTime('10:00~11:30');
-    setSelectedProducts(['퇴직연금']);
+    setSelectedTime('');
+    setSelectedProducts([]);
     setConsultContent('');
     setPhoneNumber('');
     setHighlightedField(null);
@@ -10430,16 +10447,16 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
               }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                   <span style={{ color: isDark ? '#64748b' : '#888888', lineHeight: '1.55', flexShrink: 0 }}>•</span>
-                  <span>상담예약은 신청일 기준 익영업일부터 30일 이내(주말·공휴일 제외)까지 선택 가능합니다.</span>
+                  <span>입력하신 정보는 전화 업무상담 외 다른 용도로 사용되지 않습니다.</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                   <span style={{ color: isDark ? '#64748b' : '#888888', lineHeight: '1.55', flexShrink: 0 }}>•</span>
-                  <span>예약하신 시간대에 전문 상담원이 등록하신 전화번호로 연락을 드리며, 부재 시 상담이 취소될 수 있습니다.</span>
+                  <span>상담이 집중되는 경우 예약시간보다 지연될 수 있으니 이점 양해해 주시기 바랍니다.</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                   <span style={{ color: isDark ? '#64748b' : '#888888', lineHeight: '1.55', flexShrink: 0 }}>•</span>
                   <span>
-                    긴급한 문의나 즉시 상담이 필요하신 경우 퇴직연금 고객센터(
+                    본 상담예약 서비스는 연금 업무 관련 상담이오니 투자상담은{' '}
                     <a
                       href="tel:1588-4488"
                       onClick={(e) => {
@@ -10455,7 +10472,7 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
                     >
                       1588-4488
                     </a>
-                    )로 문의해 주시기 바랍니다.
+                    {' '}을 이용해 주시기 바랍니다.
                   </span>
                 </div>
               </div>
