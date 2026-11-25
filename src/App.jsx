@@ -9437,38 +9437,111 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
     { id: '102-111111[43]', label: '102-111111[43] 김대진', number: '102-111111', type: '[43] 퇴직연금(IRP)', recentDate: '2026.11.24' },
     { id: '200-233354[32]', label: '200-233354[32] 김대진', number: '200-233354', type: '[32] 연금저축', recentDate: '2026.11.18' }
   ];
-  const [selectedAccount, setSelectedAccount] = useState(accountOptions[0].label);
-  const [showAccountBottomSheet, setShowAccountBottomSheet] = useState(false);
-
-  // Reservation State (신규 예약 ↔ 기 예약 조회/정정/취소)
-  const [existingReservation, setExistingReservation] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7account') || accountOptions[0].label;
+  });
+  const [showAccountBottomSheet, setShowAccountBottomSheet] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7modal') === 'account';
+  });
 
   // Form States for Tab 1 (상담예약)
-  const [reserveDate, setReserveDate] = useState(getInitialBusinessDay);
-  const [selectedTime, setSelectedTime] = useState('10:00~11:30');
-  const [selectedProducts, setSelectedProducts] = useState(['퇴직연금']);
-  const [consultContent, setConsultContent] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('010-1111-2222');
+  const [reserveDate, setReserveDate] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7date') || getInitialBusinessDay();
+  });
+  const [selectedTime, setSelectedTime] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    const t = p.get('screen7time');
+    return t !== null ? t : '10:00~11:30';
+  });
+  const [selectedProducts, setSelectedProducts] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    const prods = p.get('screen7products');
+    return prods ? prods.split(',').filter(Boolean) : ['퇴직연금'];
+  });
+  const [consultContent, setConsultContent] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7content') || '';
+  });
   const [highlightedField, setHighlightedField] = useState(null);
 
+  // Reservation State (신규 예약 ↔ 기 예약 조회/정정/취소)
+  const [existingReservation, setExistingReservation] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('screen7mode') === 'reserved' || p.get('screen7modal') === 'complete' || p.get('screen7modal') === 'cancel') {
+      const initDate = p.get('screen7date') || getInitialBusinessDay();
+      const initTime = p.get('screen7time') || '10:00~11:30';
+      const initProds = p.get('screen7products') ? p.get('screen7products').split(',').filter(Boolean) : ['퇴직연금'];
+      const initContent = p.get('screen7content') || '';
+      const initAcc = p.get('screen7account') || accountOptions[0].label;
+      return {
+        id: 999,
+        date: initDate,
+        time: initTime,
+        products: initProds,
+        content: initContent,
+        account: initAcc
+      };
+    }
+    return null;
+  });
+
   // Calendar Wheel Modal State for Tab 1 & Tab 2 (4페이지 연금수령 신청 > 수령개시 일자 휠 피커와 동일)
-  const [calendarModal, setCalendarModal] = useState({
-    open: false,
-    target: 'reserve',
-    selectedYear: new Date().getFullYear(),
-    selectedMonth: new Date().getMonth() + 1,
-    selectedDate: new Date().getDate()
+  const [calendarModal, setCalendarModal] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return {
+      open: p.get('screen7modal') === 'calendar',
+      target: 'reserve',
+      selectedYear: new Date().getFullYear(),
+      selectedMonth: new Date().getMonth() + 1,
+      selectedDate: new Date().getDate()
+    };
   });
 
   // Popups / Modals State
   const [alertPopup, setAlertPopup] = useState({ open: false, title: '', message: '' });
-  const [completeModal, setCompleteModal] = useState({ open: false, isUpdate: false, data: null });
-  const [cancelConfirmModal, setCancelConfirmModal] = useState(false);
+  const [completeModal, setCompleteModal] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('screen7modal') === 'complete') {
+      const initDate = p.get('screen7date') || getInitialBusinessDay();
+      const initTime = p.get('screen7time') || '10:00~11:30';
+      const initProds = p.get('screen7products') ? p.get('screen7products').split(',').filter(Boolean) : ['퇴직연금'];
+      const initContent = p.get('screen7content') || '';
+      const initAcc = p.get('screen7account') || accountOptions[0].label;
+      return {
+        open: true,
+        isUpdate: false,
+        data: {
+          id: 999,
+          date: initDate,
+          time: initTime,
+          products: initProds,
+          content: initContent,
+          account: initAcc
+        }
+      };
+    }
+    return { open: false, isUpdate: false, data: null };
+  });
+  const [cancelConfirmModal, setCancelConfirmModal] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7modal') === 'cancel';
+  });
 
   // Tab 2 (상담내역) States (5페이지 적립식 투자 > 적립투자 내역 기간 선택과 동일)
-  const [historyPeriodChip, setHistoryPeriodChip] = useState('1개월');
-  const [filterStartDate, setFilterStartDate] = useState('2025/08/01');
+  const [historyPeriodChip, setHistoryPeriodChip] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7period') || '1개월';
+  });
+  const [filterStartDate, setFilterStartDate] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get('screen7period') === '기간설정' ? '2025/01/01' : '2025/08/01';
+  });
   const [filterEndDate, setFilterEndDate] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('screen7period') === '기간설정') return '2025/01/31';
     const d = new Date();
     return formatSlashDate(d);
   });
@@ -9529,14 +9602,69 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
     }
   ]);
 
-  // Detail BottomSheet State
-  const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
+  // Detail Screen State
+  const [selectedHistoryItem, setSelectedHistoryItem] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    const detailId = p.get('screen7detail');
+    if (detailId) {
+      const numId = parseInt(detailId, 10);
+      return historyList.find(it => it.id === numId) || historyList[0];
+    }
+    return null;
+  });
+
+  // Sync Screen 7 state to URL query parameters for Figma Import
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('screen') === '7') {
+      params.set('screen7tab', activeTab);
+      params.set('screen7date', reserveDate);
+      params.set('screen7time', selectedTime);
+      params.set('screen7products', selectedProducts.join(','));
+      if (consultContent) {
+        params.set('screen7content', consultContent);
+      } else {
+        params.delete('screen7content');
+      }
+      params.set('screen7account', selectedAccount);
+
+      if (existingReservation) {
+        params.set('screen7mode', 'reserved');
+      } else {
+        params.delete('screen7mode');
+      }
+      if (completeModal.open) {
+        params.set('screen7modal', 'complete');
+      } else if (cancelConfirmModal) {
+        params.set('screen7modal', 'cancel');
+      } else if (calendarModal.open) {
+        params.set('screen7modal', 'calendar');
+      } else if (showAccountBottomSheet) {
+        params.set('screen7modal', 'account');
+      } else {
+        params.delete('screen7modal');
+      }
+      if (activeTab === 'history') {
+        params.set('screen7period', historyPeriodChip);
+      } else {
+        params.delete('screen7period');
+      }
+      if (selectedHistoryItem) {
+        params.set('screen7detail', String(selectedHistoryItem.id));
+      } else {
+        params.delete('screen7detail');
+      }
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      if (window.location.search !== `?${params.toString()}`) {
+        window.history.replaceState({}, '', newUrl);
+      }
+    }
+  }, [activeTab, reserveDate, selectedTime, selectedProducts, consultContent, selectedAccount, existingReservation, completeModal.open, cancelConfirmModal, calendarModal.open, showAccountBottomSheet, historyPeriodChip, selectedHistoryItem]);
 
   //Refs for smooth scroll on validation fail
   const dateRef = useRef(null);
   const timeRef = useRef(null);
   const productRef = useRef(null);
-  const phoneRef = useRef(null);
 
   const timeSlots = [
     { label: '09:00~10:00', closed: false },
@@ -9546,19 +9674,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
     { label: '15:00~16:00', closed: false },
     { label: '16:00~17:00', closed: false }
   ];
-
-  // Phone Auto-formatting
-  const handlePhoneChange = (e) => {
-    const raw = e.target.value.replace(/\D/g, '').slice(0, 11);
-    let formatted = raw;
-    if (raw.length > 3 && raw.length <= 7) {
-      formatted = `${raw.slice(0, 3)}-${raw.slice(3)}`;
-    } else if (raw.length > 7) {
-      formatted = `${raw.slice(0, 3)}-${raw.slice(3, 7)}-${raw.slice(7)}`;
-    }
-    setPhoneNumber(formatted);
-    if (highlightedField === '연락받으실 전화번호') setHighlightedField(null);
-  };
 
   // Toggle Consultation Product (복수 선택 가능)
   const handleToggleProduct = (prod) => {
@@ -9594,11 +9709,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
       triggerValidationAlert('상담상품', productRef);
       return;
     }
-    const cleanPhone = phoneNumber.replace(/\D/g, '');
-    if (!cleanPhone || cleanPhone.length < 10) {
-      triggerValidationAlert('연락받으실 전화번호', phoneRef);
-      return;
-    }
 
     // If in existing reservation mode, check if anything changed
     if (existingReservation) {
@@ -9608,9 +9718,8 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
         existingReservation.products.length === selectedProducts.length &&
         existingReservation.products.every(p => selectedProducts.includes(p));
       const isSameContent = existingReservation.content === consultContent.trim();
-      const isSamePhone = existingReservation.phone === phoneNumber;
 
-      if (isSameDate && isSameTime && isSameProducts && isSameContent && isSamePhone) {
+      if (isSameDate && isSameTime && isSameProducts && isSameContent) {
         setAlertPopup({ open: true, title: '알림', message: '변경된 내용이 없습니다.' });
         if (addNotification) addNotification('변경된 내용이 없습니다.', 'warning');
         return;
@@ -9623,7 +9732,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
         time: selectedTime,
         products: [...selectedProducts],
         content: consultContent.trim(),
-        phone: phoneNumber,
         account: selectedAccount
       };
       setExistingReservation(updatedRes);
@@ -9639,7 +9747,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
                 timeSlot: selectedTime,
                 products: [...selectedProducts],
                 question: consultContent.trim(),
-                phone: phoneNumber,
                 account: selectedAccount
               }
             : item
@@ -9659,7 +9766,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
       time: selectedTime,
       products: [...selectedProducts],
       content: consultContent.trim(),
-      phone: phoneNumber,
       account: selectedAccount
     };
     setExistingReservation(newRes);
@@ -9674,7 +9780,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
       manager: '',
       question: consultContent.trim(),
       answer: '',
-      phone: phoneNumber,
       account: selectedAccount
     };
 
@@ -9700,7 +9805,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
     setSelectedTime('10:00~11:30');
     setSelectedProducts(['퇴직연금']);
     setConsultContent('');
-    setPhoneNumber('010-1111-2222');
     setHighlightedField(null);
     if (addNotification) addNotification('상담 예약이 취소되었습니다.', 'info');
   };
@@ -10206,66 +10310,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
                     fontFamily: 'var(--font-sans)'
                   }}
                 />
-              </div>
-            </div>
-
-            {/* 6. 연락받으실 전화번호 (필수) */}
-            <div ref={phoneRef} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <label style={{ fontSize: '0.78rem', fontWeight: '600', color: isDark ? '#cbd5e1' : '#333333' }}>
-                연락받으실 전화번호
-              </label>
-              <div style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                border: 'none',
-                borderBottom: highlightedField === '연락받으실 전화번호'
-                  ? '2px solid #de201e'
-                  : (isDark ? '1px solid #334155' : '1px solid #e5e7eb'),
-                borderRadius: '0px',
-                backgroundColor: 'transparent',
-                padding: '10px 0px 8px 0px'
-              }}>
-                <input
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={handlePhoneChange}
-                  placeholder="- 없이 입력"
-                  style={{
-                    width: '100%',
-                    border: 'none',
-                    outline: 'none',
-                    backgroundColor: 'transparent',
-                    color: isDark ? '#f8fafc' : '#111827',
-                    fontSize: '1.0rem',
-                    fontWeight: '500',
-                    padding: '0 28px 0 0',
-                    fontFamily: 'var(--font-sans)'
-                  }}
-                />
-                {phoneNumber && (
-                  <button
-                    type="button"
-                    onClick={() => setPhoneNumber('')}
-                    title="전화번호 초기화"
-                    style={{
-                      position: 'absolute',
-                      right: '2px',
-                      border: 'none',
-                      background: 'none',
-                      padding: '2px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="#cbd5e1">
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M9 9l6 6M15 9l-6 6" stroke="#ffffff" strokeWidth="2.4" strokeLinecap="round" />
-                    </svg>
-                  </button>
-                )}
               </div>
             </div>
 
@@ -11075,13 +11119,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
                 </span>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', color: '#4b5563' }}>
-                <span style={{ color: '#64748b', fontWeight: '500' }}>연락처</span>
-                <span style={{ fontWeight: '600', color: '#111827' }}>
-                  {selectedHistoryItem.phone || '010-1111-2222'}
-                </span>
-              </div>
-
               {/* Divider */}
               <div style={{ height: '1px', backgroundColor: '#e2e8f0', margin: '4px 0' }} />
 
@@ -11231,11 +11268,6 @@ function PensionConsultationView({ isDark, isToBe = true, isFigmaExportMode = fa
                 <span style={{ color: '#555555', fontWeight: '700' }}>•</span>
                 <span style={{ fontWeight: '700', color: '#333333' }}>상담상품 :</span>
                 <span style={{ color: '#555555', fontWeight: '500' }}>{completeModal.data.products.join(', ')}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ color: '#555555', fontWeight: '700' }}>•</span>
-                <span style={{ fontWeight: '700', color: '#333333' }}>휴대폰번호 :</span>
-                <span style={{ color: '#555555', fontWeight: '500' }}>{completeModal.data.phone}</span>
               </div>
             </div>
 
